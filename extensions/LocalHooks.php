@@ -88,6 +88,70 @@ class LocalHooks {
 		}
 		return true;
 	}
+
+	static public function blockPage( &$pagePriv ) {
+		$setPerms = array(
+			'Listusers', 'Statistics', 'Randompage', 'Lonelypages',
+			'Uncategorizedpages', 'Uncategorizedcategories',
+			'Uncategorizedimages', 'Uncategorizedtemplates',
+			'Unusedcategories', 'Unusedimages', 'Wantedpages',
+			'Wantedcategories', 'Mostlinked', 'Mostlinkedcategories',
+			'Mostlinkedtemplates', 'Mostcategories', 'Mostimages',
+			'Mostrevisions', 'Fewestrevisions', 'Shortpages',
+			'Longpages', 'Newpages', 'Ancientpages', 'Deadendpages',
+			'Protectedpages', 'Protectedtitles', 'Allpages',
+			'Prefixindex', 'Ipblocklist', 'Categories', 'Export',
+			'Allmessages', 'Log', 'MIMEsearch', 'Listredirects',
+			'Unusedtemplates', 'Withoutinterwiki', 'Filepath'
+			);
+
+		foreach( $setPerms as $page ) {
+			if( isset( $pagePriv[ $page ] ) ) {
+				$priv = $pagePriv[ $page ];
+				if( !is_array( $priv ) ) {
+					$pagePriv[$page] = array( "SpecialPage", $page, "block" );
+				} elseif( !in_array( "block", $priv ) ) {
+					$pagePriv[$page][] = "block";
+				}
+			}
+		}
+		return true;
+	}
+
+	public static function loginMessage( &$user, &$html ) {
+		global $wgScriptPath;
+
+		# Run any hooks; ignore results
+		$addr = $user->getEmail();
+		$name = $user->getName();
+		$realname = $user->getRealName();
+		$prefs = $wgScriptPath . '/index.php/Special:Preferences';
+		$watch = $wgScriptPath . '/index.php/Special:Watchlist/edit';
+		$injected_html = "<p>You are now logged in as:
+<ul><li><i>Username:</i> <b>$name</b>
+<li><i>Real name:</i> <b>$realname</b> (<a href=$prefs>change</a>)
+<li><i>Email:</i> <b>$addr</b> (<a href=$prefs>change</a>)</ul></p>
+<p>Your <i>real name</i> will show up in the author list of any
+pathway you create or edit.  Your <i>email</i> will not be shown
+to other users, but it will be used to contact you if a pathway
+you have created or added to your <a href=$watch>watchlist</a> is
+altered or commented on by other users. Your <i>email</i> is the
+only means by which WikiPathways can contact you if any of your
+content requires special attention. <b>Please keep your
+<i>email</i> up-to-date.</b></p>";
+		return true;
+	}
+
+	public static function addSnoopLink( &$item, $row ) {
+		//AP20081006 - replaced group info with links to User_snoop
+		$snoop = Title::makeTitle( NS_SPECIAL, 'User_snoop');
+		$snooplink = $this->getSkin()->makeKnownLinkObj( $snoop, 'info', wfArrayToCGI( array('username' => $row->user_name)), '','','');
+
+		$item = wfSpecialList( $name, $snooplink);
+		return true;
+	}
+
+
 }
 
 $wgHooks['LinkerMakeExternalLink'][] = 'LocalHooks::externalLink';
