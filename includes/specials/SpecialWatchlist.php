@@ -156,7 +156,7 @@ function wfSpecialWatchlist( $par ) {
   # Toggle watchlist content (all recent edits or just the latest)
 	if( $wgUser->getOption( 'extendwatchlist' )) {
 		$andLatest='';
- 		$limitWatchlist = 'LIMIT ' . intval( $wgUser->getOption( 'wllimit' ) );
+		$limitWatchlist = 'LIMIT ' . intval( $wgUser->getOption( 'wllimit' ) );
 	} else {
 	# Top log Ids for a page are not stored
 		$andLatest = 'AND (rc_this_oldid=page_latest OR rc_type=' . RC_LOG . ') ';
@@ -183,6 +183,7 @@ function wfSpecialWatchlist( $par ) {
 	} else {
 		$wltsfield = '';
 	}
+## WPI Mod 2013-Aug-22
 	$sql = "SELECT ${recentchanges}.* ${wltsfield}
 	  FROM $watchlist,$recentchanges
 	  LEFT JOIN $page ON rc_cur_id=page_id

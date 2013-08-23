@@ -97,10 +97,10 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 			$data['rightscode'] = $wgRightsCode;
 		$data['rights'] = $wgRightsText;
 		$data['lang'] = $wgLanguageCode;
-		if( $wgContLang->isRTL() ) 
+		if( $wgContLang->isRTL() )
 			$data['rtl'] = '';
 		$data['fallback8bitEncoding'] = $wgLang->fallback8bitEncoding();
-		
+
 		if( wfReadOnly() )
 			$data['readonly'] = '';
 		if( $wgEnableWriteAPI )
@@ -314,6 +314,6 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQuerySiteinfo.php 37034 2008-07-04 09:21:11Z vasilievvv $';
+		return __CLASS__ . ': $Id$';
 	}
 }

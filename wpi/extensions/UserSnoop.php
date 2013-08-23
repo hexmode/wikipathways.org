@@ -138,8 +138,12 @@ class UserSnoop extends SpecialPage
 
 	#do your stuff
 	function execute( $par ) {
-		global $wgRequest, $wgOut;
+		global $wgRequest, $wgOut, $wgUser;
 		$wgOut->setPageTitle('User snoop');
+		if( !$wgUser->isAllowed( 'block' ) ) {
+			$wgOut->permissionRequired( 'usersnoop' );
+			return;
+		}
 
 		list( $limit, $offset ) = wfCheckLimits();
 

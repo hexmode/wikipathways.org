@@ -72,7 +72,7 @@ abstract class ApiQueryBase extends ApiBase {
 			$this->tables[] = $tables;
 		}
 	}
-	
+
 	/**
 	 * Get the SQL for a table name with alias
 	 * @param string $table Table name
@@ -82,7 +82,7 @@ abstract class ApiQueryBase extends ApiBase {
 	protected function getAliasedName($table, $alias) {
 		return $this->getDB()->tableName($table) . ' ' . $alias;
 	}
-	
+
 	/**
 	 * Add a set of JOIN conditions to the internal array
 	 *
@@ -264,7 +264,7 @@ abstract class ApiQueryBase extends ApiBase {
 	/**
 	 * Add a sub-element under the page element with the given page ID
 	 * @param int $pageId Page ID
-	 * @param array $data Data array à la ApiResult 
+	 * @param array $data Data array à la ApiResult
 	 */
 	protected function addPageSubItems($pageId, $data) {
 		$result = $this->getResult();
@@ -304,7 +304,7 @@ abstract class ApiQueryBase extends ApiBase {
 	 * @param string $name Name to assign to the database connection
 	 * @param int $db One of the DB_* constants
 	 * @param array $groups Query groups
-	 * @return Database 
+	 * @return Database
 	 */
 	public function selectNamedDB($name, $db, $groups) {
 		$this->mDb = $this->getQuery()->getNamedDB($name, $db, $groups);
@@ -348,7 +348,7 @@ abstract class ApiQueryBase extends ApiBase {
 	 * @return string
 	 */
 	public static function getBaseVersion() {
-		return __CLASS__ . ': $Id: ApiQueryBase.php 37083 2008-07-05 11:18:50Z catrope $';
+		return __CLASS__ . ': $Id$';
 	}
 }
 

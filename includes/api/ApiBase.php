@@ -532,7 +532,7 @@ abstract class ApiBase {
 				if($allowMultiple)
 				{
 					$s = count($unknown) > 1 ? "s" : "";
-					$vals = implode(", ", $unknown); 
+					$vals = implode(", ", $unknown);
 					$this->setWarning("Unrecognized value$s for parameter '$valueName': $vals");
 				}
 				else
@@ -814,6 +814,6 @@ abstract class ApiBase {
 	 * Returns a String that identifies the version of this class.
 	 */
 	public static function getBaseVersion() {
-		return __CLASS__ . ': $Id: ApiBase.php 36309 2008-06-15 20:37:28Z catrope $';
+		return __CLASS__ . ': $Id$';
 	}
 }

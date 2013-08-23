@@ -198,8 +198,8 @@ class SiteStatsUpdate {
 			# Update schema if required
 			if ( $row->ss_total_pages == -1 && !$this->mViews ) {
 				$dbr = wfGetDB( DB_SLAVE, array( 'SpecialStatistics', 'vslow') );
-
-                                //AP20071027: counting only non-blocked users
+## WPI Mod 2013-Aug-22
+				//AP20071027: counting only non-blocked users
 				list( $page, $user, $ipblocks ) = $dbr->tableNamesN( 'page', 'user', 'ipblocks' );
 
 				$sql = "SELECT COUNT(page_namespace) AS total FROM $page";
@@ -207,8 +207,9 @@ class SiteStatsUpdate {
 				$pageRow = $dbr->fetchObject( $res );
 				$pages = $pageRow->total + $this->mPages;
 
-                                //AP20071027: counting only non-blocked users
-                                $sql = "SELECT COUNT(user_id) AS total FROM $user LEFT JOIN $ipblocks ON user_id=ipb_user WHERE ipb_id IS NULL ";
+## WPI Mod 2013-Aug-22
+				//AP20071027: counting only non-blocked users
+				$sql = "SELECT COUNT(user_id) AS total FROM $user LEFT JOIN $ipblocks ON user_id=ipb_user WHERE ipb_id IS NULL ";
 				$res = $dbr->query( $sql, $fname );
 				$userRow = $dbr->fetchObject( $res );
 				$users = $userRow->total + $this->mUsers;

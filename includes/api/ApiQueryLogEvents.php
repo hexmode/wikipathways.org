@@ -83,12 +83,12 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		$this->addFieldsIf('log_params', $this->fld_details);
 
 		$this->addWhereFld('log_deleted', 0);
-		
+
 		if( !is_null($params['type']) ) {
 			$this->addWhereFld('log_type', $params['type']);
 			$this->addOption('USE INDEX', array('logging' => array('type_time')));
 		}
-		
+
 		$this->addWhereRange('log_timestamp', $params['dir'], $params['start'], $params['end']);
 
 		$limit = $params['limit'];
@@ -277,6 +277,6 @@ class ApiQueryLogEvents extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryLogEvents.php 35098 2008-05-20 17:13:28Z ialex $';
+		return __CLASS__ . ': $Id$';
 	}
 }

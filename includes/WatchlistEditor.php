@@ -143,13 +143,14 @@ class WatchlistEditor {
 			if( !$title instanceof Title )
 				$title = Title::newFromText( $title );
 			if( $title instanceof Title ) {
+## WPI Mod 2013-Aug-22
 				$name = $title->getText();
 				try {
 					$pathway = Pathway::newFromTitle($title);
 					$name = $pathway->getSpecies().":".$pathway->getName();
 				} catch(Exception $e) {}
-                                $output->addHtml( "<li>" . $skin->makeKnownLinkObj( $title, $name )
-                                . ' (' . $skin->makeLinkObj( $title->getTalkPage(), $talk ) . ")</li>\n" );
+				$output->addHtml( "<li>" . $skin->makeKnownLinkObj( $title, $name )
+					. ' (' . $skin->makeLinkObj( $title->getTalkPage(), $talk ) . ")</li>\n" );
 			}
 		}
 		$output->addHtml( "</ul>\n" );
@@ -384,10 +385,11 @@ class WatchlistEditor {
 	 * @return string
 	 */
 	private function buildRemoveLine( $title, $redirect, $skin ) {
+## WPI Mod 2013-Aug-22
 		$name = $title->getText();
 		if (preg_match("/^WP\d+$/", $name)){
-                	$pathway = Pathway::newFromTitle($title);
-                	$name = $pathway->getSpecies().":".$pathway->getName();
+					$pathway = Pathway::newFromTitle($title);
+					$name = $pathway->getSpecies().":".$pathway->getName();
 		}
 		$link = $skin->makeKnownLinkObj( $title, $name );
 		if( $redirect )

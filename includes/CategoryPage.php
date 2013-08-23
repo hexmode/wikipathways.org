@@ -143,7 +143,7 @@ class CategoryViewer {
 	}
 
 	/**
-	 * Add a subcategory to the internal lists, using a title object 
+	 * Add a subcategory to the internal lists, using a title object
 	 * @deprectated kept for compatibility, please use addSubcategoryObject instead
 	 */
 	function addSubcategory( $title, $sortkey, $pageLength ) {
@@ -164,6 +164,7 @@ class CategoryViewer {
 	*/
 	function getSubcategorySortChar( $title, $sortkey ) {
 		global $wgContLang;
+## WPI Mod 2013-Aug-22
 		/** AP20070502 */
 		$trim_title = ltrim(strstr($title->getBaseText(), ':'), ':');
 		$firstChar = $wgContLang->firstChar( $trim_title );
@@ -198,8 +199,9 @@ class CategoryViewer {
 	 */
 	function addPage( $title, $sortkey, $pageLength, $isRedirect = false ) {
 		global $wgContLang;
+## WPI Mod 2013-Aug-22
 /** AP20070502 */
-                $trim_title = ltrim(strstr($title->getBaseText(), ':'), ':');
+		$trim_title = ltrim(strstr($title->getBaseText(), ':'), ':');
 
 		$this->articles[] = $isRedirect
 			? '<span class="redirect-in-category">' . $this->getSkin()->makeKnownLinkObj( $title ) . '</span>'
@@ -233,13 +235,13 @@ class CategoryViewer {
 			array( 'page_title', 'page_namespace', 'page_len', 'page_is_redirect', 'cl_sortkey',
 				'cat_id', 'cat_title', 'cat_subcats', 'cat_pages', 'cat_files' ),
 			array( $pageCondition,
-			       'cl_to' => $this->title->getDBkey() ),
+				   'cl_to' => $this->title->getDBkey() ),
 			__METHOD__,
 			array( 'ORDER BY' => $this->flip ? 'cl_sortkey DESC' : 'cl_sortkey',
-			       'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
-			       'LIMIT'    => $this->limit + 1 ),
+				   'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
+				   'LIMIT'    => $this->limit + 1 ),
 			array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
-		               'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY ) ) );
+					   'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY ) ) );
 
 		$count = 0;
 		$this->nextPage = null;
@@ -423,53 +425,53 @@ class CategoryViewer {
 		return $r;
 	}
 
-        /** AP20070821
-         * Format a list of articles chunked in a three-column
-         * list, ordered vertically, WITHOUT HEADERS.
-         *
-         * @param array $articles
-         * @return string
-         * @private
-         */
-        function columnListSimple( $articles) {
-                // divide list into three equal chunks
-                $chunk = (int) (count ( $articles ) / 3);
+## WPI Mod 2013-Aug-22
+	/** AP20070821
+	 * Format a list of articles chunked in a three-column
+	 * list, ordered vertically, WITHOUT HEADERS.
+	 *
+	 * @param array $articles
+	 * @return string
+	 * @private
+	 */
+	function columnListSimple( $articles) {
+		// divide list into three equal chunks
+		$chunk = (int) (count ( $articles ) / 3);
 
-                // get and display header
-                $r = '<table width="100%"><tr valign="top">';
+		// get and display header
+		$r = '<table width="100%"><tr valign="top">';
 
-                // loop through the chunks
-                for($startChunk = 0, $endChunk = $chunk, $chunkIndex = 0;
-                        $chunkIndex < 3;
-                        $chunkIndex++, $startChunk = $endChunk, $endChunk += $chunk + 1)
-                {
-                        $r .= "<td>\n";
-                        $atColumnTop = true;
+		// loop through the chunks
+		for($startChunk = 0, $endChunk = $chunk, $chunkIndex = 0;
+		$chunkIndex < 3;
+		$chunkIndex++, $startChunk = $endChunk, $endChunk += $chunk + 1)
+			{
+		$r .= "<td>\n";
+		$atColumnTop = true;
 
-                        // output all articles in category
-                        for ($index = $startChunk ;
-                                $index < $endChunk && $index < count($articles);
-                                $index++ )
-                        {
-                               if( $atColumnTop ) {
-                                       $atColumnTop = false;
-                                } else {
-                                       $r .= "</ul>\n";
-                                }
-                                $r .= "<ul>";
-                                $r .= "<li>{$articles[$index]}</li>";
-                        }
-                        if( !$atColumnTop ) {
-                                $r .= "</ul>\n";
-                        }
-                        $r .= "</td>\n";
+		// output all articles in category
+		for ($index = $startChunk ;
+		$index < $endChunk && $index < count($articles);
+		$index++ )
+			{
+		if( $atColumnTop ) {
+		$atColumnTop = false;
+	} else {
+		$r .= "</ul>\n";
+	}
+		$r .= "<ul>";
+		$r .= "<li>{$articles[$index]}</li>";
+	}
+		if( !$atColumnTop ) {
+		$r .= "</ul>\n";
+	}
+		$r .= "</td>\n";
 
 
-                }
-                $r .= '</tr></table>';
-                return $r;
-        }
-
+	}
+		$r .= '</tr></table>';
+		return $r;
+	}
 
 	/**
 	 * Format a list of articles chunked by letter in a bullet list.
@@ -494,22 +496,22 @@ class CategoryViewer {
 		return $r;
 	}
 
-        /** AP20070822
-         * Format a list of articles in a bullet list, WITHOUT HEADERS.
-         * @param array $articles
-         * @return string
-         * @private
-         */
-        function shortListSimple( $articles ) {
-                $r = '<ul><li>'.$articles[0].'</li>';
-                for ($index = 1; $index < count($articles); $index++ )
-                {
-                        $r .= "<li>{$articles[$index]}</li>";
-                }
-                $r .= '</ul>';
-                return $r;
-        }
-
+## WPI Mod 2013-Aug-22
+	/** AP20070822
+	 * Format a list of articles in a bullet list, WITHOUT HEADERS.
+	 * @param array $articles
+	 * @return string
+	 * @private
+	 */
+	function shortListSimple( $articles ) {
+		$r = '<ul><li>'.$articles[0].'</li>';
+		for ($index = 1; $index < count($articles); $index++ )
+			{
+		$r .= "<li>{$articles[$index]}</li>";
+	}
+		$r .= '</ul>';
+		return $r;
+	}
 
 	/**
 	 * @param Title  $title

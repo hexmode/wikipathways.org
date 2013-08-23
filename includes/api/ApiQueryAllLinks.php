@@ -66,7 +66,7 @@ class ApiQueryAllLinks extends ApiQueryGeneratorBase {
 
 		$this->addTables('pagelinks');
 		$this->addWhereFld('pl_namespace', $params['namespace']);
-		
+
 		if (!is_null($params['from']) && !is_null($params['continue']))
 			$this->dieUsage('alcontinue and alfrom cannot be used together', 'params');
 		if (!is_null($params['continue']))
@@ -77,7 +77,7 @@ class ApiQueryAllLinks extends ApiQueryGeneratorBase {
 			$params['from'] = $arr[0]; // Handled later
 			$id = intval($arr[1]);
 			$this->addWhere("pl_from >= $id");
-		}		
+		}
 
 		if (!is_null($params['from']))
 			$this->addWhere('pl_title>=' . $db->addQuotes($this->titleToKey($params['from'])));
@@ -187,6 +187,6 @@ class ApiQueryAllLinks extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllLinks.php 37258 2008-07-07 14:48:40Z catrope $';
+		return __CLASS__ . ': $Id$';
 	}
 }

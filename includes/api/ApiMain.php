@@ -218,7 +218,7 @@ class ApiMain extends ApiBase {
 			$this->executeAction();
 		else
 			$this->executeActionWithErrorHandling();
-	
+
 		$this->profileOut();
 	}
 
@@ -328,7 +328,7 @@ class ApiMain extends ApiBase {
 					'code' => 'internal_api_error_'. get_class($e),
 					'info' => $info,
 				);
-				ApiResult :: setContent($errMessage, $wgShowExceptionDetails ? "\n\n{$e->getTraceAsString()}\n\n" : "" );				
+				ApiResult :: setContent($errMessage, $wgShowExceptionDetails ? "\n\n{$e->getTraceAsString()}\n\n" : "" );
 			}
 
 			$this->getResult()->reset();
@@ -603,7 +603,7 @@ class ApiMain extends ApiBase {
 	public function getVersion() {
 		$vers = array ();
 		$vers[] = 'MediaWiki ' . SpecialVersion::getVersion();
-		$vers[] = __CLASS__ . ': $Id: ApiMain.php 37349 2008-07-08 20:53:41Z catrope $';
+		$vers[] = __CLASS__ . ': $Id$';
 		$vers[] = ApiBase :: getBaseVersion();
 		$vers[] = ApiFormatBase :: getBaseVersion();
 		$vers[] = ApiQueryBase :: getBaseVersion();

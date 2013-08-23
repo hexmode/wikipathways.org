@@ -440,6 +440,7 @@ class WebRequest {
 			$base = substr( $base, 0, $hash );
 		}
 		if( $base{0} == '/' ) {
+## WPI Mod 2013-Aug-22 ??
 			if( isset($base[1]) && $base[1] == '/' ) { /* More than one slash will look like it is protocol relative */
 				return preg_replace( '!//*!', '/', $base );
 			}
@@ -510,7 +511,9 @@ class WebRequest {
 		unset( $newquery['title'] );
 		$newquery = array_merge( $newquery, $array );
 		$query = wfArrayToCGI( $newquery );
-		return $onlyquery ? $query : $wgTitle->getLocalURL( $query );
+## WPI Mod 2013-Aug-22 ??
+//		return $onlyquery ? $query : $wgTitle->getLocalURL( $query );
+		return $onlyquery ? $query : $wgTitle->getLocalURL( $basequery );
 	}
 
 	/**

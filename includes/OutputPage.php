@@ -103,7 +103,7 @@ class OutputPage {
 		$encPath = htmlspecialchars( $path );
 		$this->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$path?$wgStyleVersion\"></script>\n" );
 	}
-	
+
 	/**
 	 * Add a self-contained script tag with the given contents
 	 * @param string $script JavaScript text, no <script> tags
@@ -790,12 +790,12 @@ class OutputPage {
 			if( $wgAjaxWatch && $wgUser->isLoggedIn() ) {
 				$this->addScriptFile( 'ajaxwatch.js' );
 			}
-			
+
 			if ( $wgEnableMWSuggest && !$wgUser->getOption( 'disablesuggest', false ) ){
 				$this->addScriptFile( 'mwsuggest.js' );
 			}
 		}
-		
+
 		if( $wgUser->getBoolOption( 'editsectiononrightclick' ) ) {
 			$this->addScriptFile( 'rightclickedit.js' );
 		}
@@ -1178,10 +1178,10 @@ class OutputPage {
 			$this->addWikiMsg( 'viewsourcetext' );
 			$text = Xml::openElement( 'textarea',
 						array( 'id'   => 'wpTextbox1',
-						       'name' => 'wpTextbox1',
-						       'cols' => $wgUser->getOption( 'cols' ),
-						       'rows' => $wgUser->getOption( 'rows' ),
-						       'readonly' => 'readonly' ) );
+							   'name' => 'wpTextbox1',
+							   'cols' => $wgUser->getOption( 'cols' ),
+							   'rows' => $wgUser->getOption( 'rows' ),
+							   'readonly' => 'readonly' ) );
 			$text .= htmlspecialchars( $source );
 			$text .= Xml::closeElement( 'textarea' );
 			$this->addHTML( $text );
@@ -1272,6 +1272,7 @@ class OutputPage {
 	 */
 	public function addReturnTo( $title ) {
 		global $wgUser;
+## WPI Mod 2013-Aug-22
 		if($title && $title->getNamespace() == NS_PATHWAY) {
 			$p = Pathway::newFromTitle($title);
 			$pn = "{$p->getName()} ({$p->getSpecies()})";
@@ -1365,7 +1366,7 @@ class OutputPage {
 		$ret .= "xml:lang=\"$wgContLanguageCode\" lang=\"$wgContLanguageCode\" $rtl>\n";
 		$ret .= "<head>\n<title>" . htmlspecialchars( $this->getHTMLTitle() ) . "</title>\n";
 		$this->addMeta( "http:Content-type", "$wgMimeType; charset={$wgOutputEncoding}" );
-		
+
 		$ret .= $this->getHeadLinks();
 		global $wgStylePath;
 		if( $this->isPrintable() ) {
@@ -1388,11 +1389,11 @@ class OutputPage {
 		$ret .= "</head>\n";
 		return $ret;
 	}
-	
+
 	protected function addDefaultMeta() {
 		global $wgVersion;
 		$this->addMeta( "generator", "MediaWiki $wgVersion" );
-		
+
 		$p = $this->mRobotpolicy;
 		if( $p !== '' && $p != 'index,follow' ) {
 			// http://www.robotstxt.org/wc/meta-user.html
@@ -1414,12 +1415,12 @@ class OutputPage {
 	 */
 	public function getHeadLinks() {
 		global $wgRequest, $wgFeed;
-		
+
 		// Ideally this should happen earlier, somewhere. :P
 		$this->addDefaultMeta();
-		
+
 		$tags = array();
-		
+
 		foreach ( $this->mMetatags as $tag ) {
 			if ( 0 == strcasecmp( 'http:', substr( $tag[0], 0, 5 ) ) ) {
 				$a = 'http-equiv';
@@ -1450,15 +1451,15 @@ class OutputPage {
 					wfMsg( "page-{$format}-feed", $wgTitle->getPrefixedText() ) ); # Used messages: 'page-rss-feed' and 'page-atom-feed' (for an easier grep)
 			}
 
-			# Recent changes feed should appear on every page (except recentchanges, 
-			# that would be redundant). Put it after the per-page feed to avoid 
-			# changing existing behavior. It's still available, probably via a 
+			# Recent changes feed should appear on every page (except recentchanges,
+			# that would be redundant). Put it after the per-page feed to avoid
+			# changing existing behavior. It's still available, probably via a
 			# menu in your browser.
 
 			$rctitle = SpecialPage::getTitleFor( 'Recentchanges' );
 			if ( $wgTitle->getPrefixedText() != $rctitle->getPrefixedText() ) {
 				global $wgSitename;
-				
+
 				$tags[] = $this->feedLink(
 					'rss',
 					$rctitle->getFullURL( 'feed=rss' ),

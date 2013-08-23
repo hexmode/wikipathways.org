@@ -157,7 +157,8 @@ class ContribsPager extends ReverseChronologicalPager {
 		$rev = new Revision( $row );
 
 		$page = Title::makeTitle( $row->page_namespace, $row->page_title );
-                $name = $page->getText();
+## WPI Mod 2013-Aug-22
+		$name = $page->getText();
 		if (!$page->isRedirect() && $row->page_namespace == NS_PATHWAY){
 			$pathway = Pathway::newFromTitle($row->page_title );
 			$name = $pathway->getSpecies() .":". $pathway->getName();
@@ -214,14 +215,16 @@ class ContribsPager extends ReverseChronologicalPager {
 			$mflag = '';
 		}
 
+## WPI Mod 2013-Aug-22
 		//AP20090116 - skip making native history and diff links
-		$ret = "{$d} {$nflag}{$mflag} {$link}{$userlink}{$comment} {$topmarktext}";
+		/* $ret = "{$d} {$nflag}{$mflag} {$link}{$userlink}{$comment} {$topmarktext}"; */
+		$ret = "{$d} {$histlink} {$difftext} {$nflag}{$mflag} {$link}{$userlink}{$comment} {$topmarktext}";
 		if( $rev->isDeleted( Revision::DELETED_TEXT ) ) {
 			$ret .= ' ' . wfMsgHtml( 'deletedrev' );
 		}
 		// Let extensions add data
 		wfRunHooks( 'ContributionsLineEnding', array( &$this, &$ret, $row ) );
-		
+
 		$ret = "<li>$ret</li>\n";
 		wfProfileOut( __METHOD__ );
 		return $ret;
@@ -325,9 +328,10 @@ function wfSpecialContributions( $par = null ) {
 
 	$wgOut->addHTML( contributionsForm( $options ) );
 
+## WPI Mod 2013-Aug-22
 	//TK: add new hook that allows us to add content right after the form
 	wfRunHooks( 'SpecialContributionsAfterForm', $id);
-	
+
 	$pager = new ContribsPager( $target, $options['namespace'], $options['year'], $options['month'] );
 	if ( !$pager->getNumRows() ) {
 		$wgOut->addWikiMsg( 'nocontribs' );

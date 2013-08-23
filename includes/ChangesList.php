@@ -147,6 +147,7 @@ class ChangesList {
 	}
 
 	protected function insertDiffHist(&$s, &$rc, $unpatrolled) {
+## WPI Mod 2013-Aug-22
 		global $wgLang, $wgContLang;
 		# Diff link customizations for WPI
 		//AP20090116 - skip making native history link
@@ -175,6 +176,7 @@ class ChangesList {
 		# Article link
 		# If it's a new article, there is no diff link, but if it hasn't been
 		# patrolled yet, we need to give users a way to do so
+## WPI Mod 2013-Aug-22
 		if ($rc->getTitle()->getNamespace() == NS_PATHWAY){
 			$pathway = Pathway::newFromTitle($rc->getTitle());
 			if(!$pathway->isReadable()) { //Keep private pathway names obscured

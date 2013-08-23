@@ -295,18 +295,7 @@ wfProfileIn( $fname.'-extensions' );
 # of the extension file. This allows the extension to perform
 # any necessary initialisation in the fully initialised environment
 foreach ( $wgExtensionFunctions as $func ) {
-	# Allow closures in PHP 5.3+
-	if ( is_object( $func ) && $func instanceof Closure ) {
-		$profName = $fname . '-extensions-closure';
-	} elseif ( is_array( $func ) ) {
-		if ( is_object( $func[0] ) )
-			$profName = $fname . '-extensions-' . get_class( $func[0] ) . '::' . $func[1];
-		else
-			$profName = $fname . '-extensions-' . implode( '::', $func );
-	} else {
-		$profName = $fname . '-extensions-' . strval( $func );
-	}
-
+	$profName = $fname.'-extensions-'.strval( $func );
 	wfProfileIn( $profName );
 	call_user_func( $func );
 	wfProfileOut( $profName );

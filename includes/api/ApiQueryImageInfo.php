@@ -46,7 +46,7 @@ class ApiQueryImageInfo extends ApiQueryBase {
 
 		if($params['urlheight'] != -1 && $params['urlwidth'] == -1)
 			$this->dieUsage("iiurlheight cannot be used without iiurlwidth", 'iiurlwidth');
-		
+
 		if ( $params['urlwidth'] != -1 ) {
 			$scale = array();
 			$scale['width'] = $params['urlwidth'];
@@ -57,12 +57,12 @@ class ApiQueryImageInfo extends ApiQueryBase {
 
 		$pageIds = $this->getPageSet()->getAllTitlesByNamespace();
 		if (!empty($pageIds[NS_IMAGE])) {
-			
+
 			$result = $this->getResult();
 			$images = RepoGroup::singleton()->findFiles( array_keys( $pageIds[NS_IMAGE] ) );
 			foreach ( $images as $img ) {
 				$data = array();
-				
+
 				// Get information about the current version first
 				// Check that the current version is within the start-end boundaries
 				if((is_null($params['start']) || $img->getTimestamp() <= $params['start']) &&
@@ -92,7 +92,7 @@ class ApiQueryImageInfo extends ApiQueryBase {
 				);
 				$this->addPageSubItems($pageId, $data);
 			}
-			
+
 			$missing = array_diff( array_keys( $pageIds[NS_IMAGE] ), array_keys( $images ) );
 			foreach ( $missing as $title )
 				$result->addValue(
@@ -143,9 +143,9 @@ class ApiQueryImageInfo extends ApiQueryBase {
 			$vals['metadata'] = $metadata ? unserialize( $metadata ) : null;
 			$result->setIndexedTagName_recursive( $vals['metadata'], 'meta' );
 		}
-		if( isset( $prop['mime'] ) ) 
+		if( isset( $prop['mime'] ) )
 			$vals['mime'] = $file->getMimeType();
-		
+
 		if( isset( $prop['archivename'] ) && $file->isOld() )
 			$vals['archivename'] = $file->getArchiveName();
 
@@ -200,7 +200,7 @@ class ApiQueryImageInfo extends ApiQueryBase {
 			'start' => 'Timestamp to start listing from',
 			'end' => 'Timestamp to stop listing at',
 			'urlwidth' => array('If iiprop=url is set, a URL to an image scaled to this width will be returned.',
-					    'Only the current version of the image can be scaled.'),
+						'Only the current version of the image can be scaled.'),
 			'urlheight' => 'Similar to iiurlwidth. Cannot be used without iiurlwidth',
 		);
 	}
@@ -219,6 +219,6 @@ class ApiQueryImageInfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryImageInfo.php 37504 2008-07-10 14:28:09Z catrope $';
+		return __CLASS__ . ': $Id$';
 	}
 }

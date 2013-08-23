@@ -100,7 +100,7 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 
 				$this->dieUsage("Incorrect parameter - mutually exclusive values may not be supplied", 'show');
 			}
-			
+
 			// Check permissions
 			global $wgUser;
 			if((isset($show['patrolled']) || isset($show['!patrolled'])) && !$wgUser->isAllowed('patrol'))
@@ -409,6 +409,6 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryRecentChanges.php 37909 2008-07-22 13:26:15Z catrope $';
+		return __CLASS__ . ': $Id$';
 	}
 }

@@ -24,8 +24,8 @@
  */
 
 if (!defined('MEDIAWIKI')) {
-    // Eclipse helper - will be ignored in production
-    require_once ("ApiBase.php");
+	// Eclipse helper - will be ignored in production
+	require_once ("ApiBase.php");
 }
 
 /**
@@ -82,7 +82,7 @@ class ApiEditPage extends ApiBase {
 		if(isset($params['md5']))
 			if(md5($toMD5) !== $params['md5'])
 				$this->dieUsageMsg(array('hashcheckfailed'));
-		
+
 		$ep = new EditPage($articleObj);
 		// EditPage wants to parse its stuff from a WebRequest
 		// That interface kind of sucks, but it's workable
@@ -279,7 +279,7 @@ class ApiEditPage extends ApiBase {
 			'captchaid' => 'CAPTCHA ID from previous request',
 			'captchaword' => 'Answer to the CAPTCHA',
 			'md5' => array(	'The MD5 hash of the text parameter, or the prependtext and appendtext parameters concatenated.',
-				 	'If set, the edit won\'t be done unless the hash is correct'),
+					'If set, the edit won\'t be done unless the hash is correct'),
 			'prependtext' => array( 'Add this text to the beginning of the page. Overrides text.',
 						'Don\'t use together with section: that won\'t do what you expect.'),
 			'appendtext' => 'Add this text to the end of the page. Overrides text',
@@ -294,6 +294,6 @@ class ApiEditPage extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiEditPage.php 36309 2008-06-15 20:37:28Z catrope $';
+		return __CLASS__ . ': $Id$';
 	}
 }

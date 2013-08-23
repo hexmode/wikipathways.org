@@ -76,7 +76,7 @@ class ApiUndelete extends ApiBase {
 			$this->dieUsageMsg(array('cannotundelete'));
 
 		if($retval[1])
-			wfRunHooks( 'FileUndeleteComplete', 
+			wfRunHooks( 'FileUndeleteComplete',
 				array($titleObj, array(), $wgUser, $params['reason']) );
 
 		$info['title'] = $titleObj->getPrefixedText();
@@ -123,6 +123,6 @@ class ApiUndelete extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiUndelete.php 35348 2008-05-26 10:51:31Z catrope $';
+		return __CLASS__ . ': $Id$';
 	}
 }

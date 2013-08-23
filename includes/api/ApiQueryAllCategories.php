@@ -158,6 +158,6 @@ class ApiQueryAllCategories extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllCategories.php 36790 2008-06-29 22:26:23Z catrope $';
+		return __CLASS__ . ': $Id$';
 	}
 }

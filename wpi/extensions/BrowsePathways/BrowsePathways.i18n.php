@@ -1,5 +1,6 @@
 <?php
 $messages['en'] = array(
+	'nstab-pathway'   => 'Pathway',
 	'browsepathways' => 'Browse pathways',
 	'browsepathways-select-species' => 'Species:',
 	'browsepathways-select-collection' => 'Collection:',

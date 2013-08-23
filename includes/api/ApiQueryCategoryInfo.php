@@ -39,7 +39,7 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 		parent :: __construct($query, $moduleName, 'ci');
 	}
 
-	public function execute() {			
+	public function execute() {
 		$alltitles = $this->getPageSet()->getAllTitlesByNamespace();
 		$categories = $alltitles[NS_CATEGORY];
 		if(empty($categories))
@@ -56,7 +56,7 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 
 		$this->addTables('category');
 		$this->addFields(array('cat_title', 'cat_pages', 'cat_subcats', 'cat_files', 'cat_hidden'));
-		$this->addWhere(array('cat_title' => $cattitles));			
+		$this->addWhere(array('cat_title' => $cattitles));
 
 		$db = $this->getDB();
 		$res = $this->select(__METHOD__);
@@ -86,6 +86,6 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryCategoryInfo.php 37504 2008-07-10 14:28:09Z catrope $';
+		return __CLASS__ . ': $Id$';
 	}
 }
