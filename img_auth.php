@@ -42,12 +42,14 @@ if( preg_match( '!\d+px-(.*)!i', $name, $m ) )
 	$name = $m[1];
 wfDebugLog( 'img_auth', "\$name is {$name}" );
 
+## WPI Mod 2013-Aug-22
 //Check for pathway cache
 $id = Pathway::parseIdentifier($name);
 if($id) {
 	//Check pathway permissions
 	$pwTitle = Title::newFromText($id, NS_PATHWAY);
-// This will need to change to userCan('read') for 1.19 or later.
+
+	// This will need to change to userCan('read') for 1.19 or later.
 	if(!$pwTitle->userCanRead()) {
 		wfDebugLog( 'img_auth', "User not permitted to view pathway $id" );
 		wfForbidden();
@@ -55,7 +57,6 @@ if($id) {
 }
 
 $title = Title::makeTitleSafe( NS_IMAGE, $name );
-
 if( !$title instanceof Title ) {
 	wfDebugLog( 'img_auth', "Unable to construct a valid Title from `{$name}`" );
 	wfForbidden();

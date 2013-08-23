@@ -205,9 +205,9 @@ See <a href='http://www.mediawiki.org/wiki/API'>complete documentation</a>, or
 		$text = preg_replace("#api\\.php\\?[^ \\()<\n\t]+#", '<a href="\\0">\\0</a>', $text);
 		if( $this->mHelp ) {
 			// make strings inside * bold
-			$text = preg_replace("/\\*[^<>\n]+\\*/", '<b>\\0</b>', $text);
+			$text = ereg_replace("\\*[^<>\n]+\\*", '<b>\\0</b>', $text);
 			// make strings inside $ italic
-			$text = preg_replace("/\\$[^<>\n]+\\$/", '<b><i>\\0</i></b>', $text);
+			$text = ereg_replace("\\$[^<>\n]+\\$", '<b><i>\\0</i></b>', $text);
 		}
 
 		/* Temporary fix for bad links in help messages. As a special case,
@@ -232,7 +232,7 @@ See <a href='http://www.mediawiki.org/wiki/API'>complete documentation</a>, or
 	}
 
 	public static function getBaseVersion() {
-		return __CLASS__ . ': $Id: ApiFormatBase.php 36153 2008-06-10 15:20:22Z tstarling $';
+		return __CLASS__ . ': $Id$';
 	}
 }
 
@@ -293,6 +293,6 @@ class ApiFormatFeedWrapper extends ApiFormatBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiFormatBase.php 36153 2008-06-10 15:20:22Z tstarling $';
+		return __CLASS__ . ': $Id$';
 	}
 }

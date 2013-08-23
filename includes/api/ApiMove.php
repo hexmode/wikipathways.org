@@ -165,6 +165,6 @@ class ApiMove extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiMove.php 35619 2008-05-30 19:59:47Z btongminh $';
+		return __CLASS__ . ': $Id$';
 	}
 }

@@ -115,7 +115,7 @@ class Article {
 		$text = $this->getContent();
 		return self::followRedirectText( $text );
 	}
-	
+
 	/**
 	 * Get the Title object this text redirects to
 	 *
@@ -149,7 +149,8 @@ class Article {
 						return $rt->getFullURL();
 					}
 				}
-				return $rt->getFullURL();
+## WPI Mod 2013-Aug-22 Removed by mah
+				return $rt;
 			}
 		}
 		// No or invalid redirect
@@ -550,9 +551,9 @@ class Article {
 	 */
 	function isRedirect( $text = false ) {
 		if ( $text === false ) {
-			if ( $this->mDataLoaded ) 
+			if ( $this->mDataLoaded )
 				return $this->mIsRedirect;
-			
+
 			// Apparently loadPageData was never called
 			$this->loadContent();
 			$titleObj = Title::newFromRedirect( $this->fetchContent() );
@@ -657,7 +658,7 @@ class Article {
 
 		if ($limit > 0) { $sql .= ' LIMIT '.$limit; }
 		if ($offset > 0) { $sql .= ' OFFSET '.$offset; }
-		
+
 		$sql .= ' '. $this->getSelectOptions();
 
 		$res = $dbr->query($sql, __METHOD__);
@@ -840,7 +841,7 @@ class Article {
 					}
 				}
 			}
-			
+
 			$wgOut->setRevisionId( $this->getRevIdFetched() );
 
 			 // Pages containing custom CSS or JavaScript get special treatment
@@ -905,7 +906,7 @@ class Article {
 					wfMsgHtml( 'markaspatrolledlink',
 					$sk->makeKnownLinkObj( $this->mTitle, wfMsgHtml('markaspatrolledtext'),
 						"action=markpatrolled&rcid=$rcid" )
-			 		) .
+					) .
 				'</div>'
 			 );
 		}
@@ -917,13 +918,13 @@ class Article {
 		$this->viewUpdates();
 		wfProfileOut( __METHOD__ );
 	}
-	
-	/* 
+
+	/*
 	* Should the parser cache be used?
 	*/
 	protected function useParserCache( $oldid ) {
 		global $wgUser, $wgEnableParserCache;
-		
+
 		return $wgEnableParserCache
 			&& intval( $wgUser->getOption( 'stubthreshold' ) ) == 0
 			&& $this->exists()
@@ -931,14 +932,14 @@ class Article {
 			&& !$this->mTitle->isCssOrJsPage()
 			&& !$this->mTitle->isCssJsSubpage();
 	}
-	
+
 	protected function viewRedirect( $target, $appendSubtitle = true, $forceKnown = false ) {
 		global $wgParser, $wgOut, $wgContLang, $wgStylePath, $wgUser;
-		
+
 		# Display redirect
 		$imageDir = $wgContLang->isRTL() ? 'rtl' : 'ltr';
 		$imageUrl = $wgStylePath.'/common/images/redirect' . $imageDir . '.png';
-		
+
 		if( $appendSubtitle ) {
 			$wgOut->appendSubtitle( wfMsgHtml( 'redirectpagesub' ) );
 		}
@@ -950,7 +951,7 @@ class Article {
 
 		$wgOut->addHTML( '<img src="'.$imageUrl.'" alt="#REDIRECT " />' .
 			'<span class="redirectText">'.$link.'</span>' );
-		
+
 	}
 
 	function addTrackbacks() {
@@ -1109,7 +1110,7 @@ class Article {
 	 *
 	 * @param Database $dbw
 	 * @param Revision $revision For ID number, and text used to set
-	                             length and redirect status fields
+								 length and redirect status fields
 	 * @param int $lastRevision If given, will not overwrite the page field
 	 *                          when different from the currently set value.
 	 *                          Giving 0 indicates the new page flag should
@@ -1530,7 +1531,7 @@ class Article {
 
 			# Update the page record with revision data
 			$this->updateRevisionOn( $dbw, $revision, 0 );
-			
+
 			wfRunHooks( 'NewRevisionFromEditComplete', array($this, $revision, false) );
 
 			if( !( $flags & EDIT_SUPPRESS_RC ) ) {
@@ -1698,12 +1699,12 @@ class Article {
 			$wgOut->setPagetitle( wfMsg( 'addedwatch' ) );
 			$wgOut->setRobotpolicy( 'noindex,nofollow' );
 			$title = $this->mTitle;
-	               $titleName = $title->getBaseText();
-        	       try {
-                	        $pathway = Pathway::newFromTitle($title);
-                        	$titleName = $pathway->getName();
-                	} catch(Exception $e) {}
-                	$addedwatchtext = "The pathway \"[[$title|$titleName]]\" has been added to [[Special:Watchlist|your watchlist]].";
+			$titleName = $title->getBaseText();
+			try {
+				$pathway = Pathway::newFromTitle($title);
+				$titleName = $pathway->getName();
+			} catch(Exception $e) {}
+				$addedwatchtext = "The pathway \"[[$title|$titleName]]\" has been added to [[Special:Watchlist|your watchlist]].";
 			$wgOut->addWikiText( $addedwatchtext);
 		}
 
@@ -1748,14 +1749,15 @@ class Article {
 		if( $this->doUnwatch() ) {
 			$wgOut->setPagetitle( wfMsg( 'removedwatch' ) );
 			$wgOut->setRobotpolicy( 'noindex,nofollow' );
-                        $title = $this->mTitle;
-                       $titleName = $title->getBaseText();
-                       try {
-                                $pathway = Pathway::newFromTitle($title);
-                                $titleName = $pathway->getName();
-                        } catch(Exception $e) {}
-                        $removedwatchtext = "The pathway \"[[$title|$titleName]]\" has been removed from [[Special:Watchlist|your watchlist]].";
-                        $wgOut->addWikiText( $removedwatchtext);
+## WPI Mod 2013-Aug-22
+			$title = $this->mTitle;
+			$titleName = $title->getBaseText();
+			try {
+				$pathway = Pathway::newFromTitle($title);
+				$titleName = $pathway->getName();
+			} catch(Exception $e) {}
+			$removedwatchtext = "The pathway \"[[$title|$titleName]]\" has been removed from [[Special:Watchlist|your watchlist]].";
+			$wgOut->addWikiText( $removedwatchtext);
 		}
 
 		$wgOut->returnToMain( true, $this->mTitle->getPrefixedText() );
@@ -1905,14 +1907,14 @@ class Article {
 						'page_id' => $id
 					), 'Article::protect'
 				);
-				
+
 				wfRunHooks( 'NewRevisionFromEditComplete', array($this, $nullRevision, false) );
 				wfRunHooks( 'ArticleProtectComplete', array( &$this, &$wgUser, $limit, $reason ) );
 
 				# Update the protection log
 				$log = new LogPage( 'protect' );
 				if( $protect ) {
-					$log->addEntry( $modified ? 'modify' : 'protect', $this->mTitle, 
+					$log->addEntry( $modified ? 'modify' : 'protect', $this->mTitle,
 						trim( $reason . " [$updated]$cascade_description$expiry_description" ) );
 				} else {
 					$log->addEntry( 'unprotect', $this->mTitle, $reason );
@@ -2129,7 +2131,7 @@ class Article {
 		//return $dbr->selectField( 'revision', 'COUNT(*)',
 		//	array( 'rev_page' => $this->getId() ), __METHOD__ );
 		return $dbr->estimateRowCount( 'revision', '*',
-		 	array( 'rev_page' => $this->getId() ), __METHOD__ );
+			array( 'rev_page' => $this->getId() ), __METHOD__ );
 	}
 
 	/**
@@ -2266,9 +2268,9 @@ class Article {
 	function doDelete( $reason, $suppress = false ) {
 		global $wgOut, $wgUser;
 		wfDebug( __METHOD__."\n" );
-		
+
 		$id = $this->getId();
-		
+
 		$error = '';
 
 		if (wfRunHooks('ArticleDelete', array(&$this, &$wgUser, &$reason, &$error))) {
@@ -2543,14 +2545,14 @@ class Article {
 		if( empty( $summary ) ){
 			$summary = wfMsgForContent( 'revertpage' );
 		}
-		
+
 		# Allow the custom summary to use the same args as the default message
 		$args = array(
 			$target->getUserText(), $from, $s->rev_id,
 			$wgLang->timeanddate(wfTimestamp(TS_MW, $s->rev_timestamp), true),
 			$current->getId(), $wgLang->timeanddate($current->getTimestamp())
 		);
-		$summary = wfMsgReplaceArgs( $summary, $args ); 
+		$summary = wfMsgReplaceArgs( $summary, $args );
 
 		# Save
 		$flags = EDIT_UPDATE;
@@ -2638,7 +2640,7 @@ class Article {
 			. $wgUser->getSkin()->userToolLinks( $target->getUser(), $target->getUserText() );
 		$wgOut->addHtml( wfMsgExt( 'rollback-success', array( 'parse', 'replaceafter' ), $old, $new ) );
 		$wgOut->returnToMain( false, $this->mTitle );
-		
+
 		if( !$wgRequest->getBool( 'hidediff', false ) ) {
 			$de = new DifferenceEngine( $this->mTitle, $current->getId(), 'next', false, true );
 			$de->showDiff( '', '' );
@@ -2821,9 +2823,10 @@ class Article {
 		$lnk = $current
 			? wfMsg( 'currentrevisionlink' )
 			: $sk->makeKnownLinkObj( $this->mTitle, wfMsg( 'currentrevisionlink' ) );
-                $curdiff = "<a href='" . SITE_URL .
-                                "/index.php?title=Special:DiffAppletPage&old={$oldid}&new={$this->mLatest}" .
-                                "&pwTitle={$this->mTitle}'>diff</a>";
+## WPI Mod 2013-Aug-22
+		$curdiff = "<a href='" . SITE_URL .
+			"/index.php?title=Special:DiffAppletPage&old={$oldid}&new={$this->mLatest}" .
+			"&pwTitle={$this->mTitle}'>diff</a>";
 		//$curdiff = $current
 		//	? wfMsg( 'diff' )
 		//	: $sk->makeKnownLinkObj( $this->mTitle, wfMsg( 'diff' ), 'diff=cur&oldid='.$oldid );
@@ -2831,19 +2834,21 @@ class Article {
 		$prevlink = $prev
 			? $sk->makeKnownLinkObj( $this->mTitle, wfMsg( 'previousrevision' ), 'direction=prev&oldid='.$oldid )
 			: wfMsg( 'previousrevision' );
-                $prevdiff = "<a href='" . SITE_URL .
-                                "/index.php?title=Special:DiffAppletPage&old={$oldid}&new={$prev}" .
-                                "&pwTitle={$this->mTitle}'>diff</a>";
+## WPI Mod 2013-Aug-22
+		$prevdiff = "<a href='" . SITE_URL .
+			"/index.php?title=Special:DiffAppletPage&old={$oldid}&new={$prev}" .
+			"&pwTitle={$this->mTitle}'>diff</a>";
 		//$prevdiff = $prev
 		//	? $sk->makeKnownLinkObj( $this->mTitle, wfMsg( 'diff' ), 'diff=prev&oldid='.$oldid )
 		//	: wfMsg( 'diff' );
-                $next = $this->mTitle->getNextRevisionID( $oldid ) ;
+		$next = $this->mTitle->getNextRevisionID( $oldid ) ;
 		$nextlink = $current
 			? wfMsg( 'nextrevision' )
 			: $sk->makeKnownLinkObj( $this->mTitle, wfMsg( 'nextrevision' ), 'direction=next&oldid='.$oldid );
-                $nextdiff = "<a href='" . SITE_URL .
-                                "/index.php?title=Special:DiffAppletPage&old={$oldid}&new={$next}" .
-                                "&pwTitle={$this->mTitle}'>diff</a>";
+## WPI Mod 2013-Aug-22
+		$nextdiff = "<a href='" . SITE_URL .
+			"/index.php?title=Special:DiffAppletPage&old={$oldid}&new={$next}" .
+			"&pwTitle={$this->mTitle}'>diff</a>";
 		//$nextdiff = $current
 		//	? wfMsg( 'diff' )
 		//	: $sk->makeKnownLinkObj( $this->mTitle, wfMsg( 'diff' ), 'diff=next&oldid='.$oldid );
@@ -2879,7 +2884,7 @@ class Article {
 
 		$r = "\n\t\t\t\t<div id=\"mw-{$infomsg}\">" . wfMsg( $infomsg, $td, $userlinks ) . "</div>\n" .
 
-		     "\n\t\t\t\t<div id=\"mw-revision-nav\">" . $cdel . wfMsg( 'revision-nav', $prevdiff, $prevlink, $lnk, $curdiff, $nextlink, $nextdiff ) . "</div>\n\t\t\t";
+			 "\n\t\t\t\t<div id=\"mw-revision-nav\">" . $cdel . wfMsg( 'revision-nav', $prevdiff, $prevlink, $lnk, $curdiff, $nextlink, $nextdiff ) . "</div>\n\t\t\t";
 		$wgOut->setSubtitle( $r );
 	}
 
@@ -3020,7 +3025,7 @@ class Article {
 		$revision->insertOn( $dbw );
 		$this->updateRevisionOn( $dbw, $revision );
 		$dbw->commit();
-		
+
 		wfRunHooks( 'NewRevisionFromEditComplete', array($this, $revision, false) );
 
 		wfProfileOut( __METHOD__ );

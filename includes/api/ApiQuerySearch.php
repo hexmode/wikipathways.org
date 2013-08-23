@@ -80,7 +80,7 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 
 			// Silently skip broken titles
 			if ($result->isBrokenTitle()) continue;
-			
+
 			$title = $result->getTitle();
 			if (is_null($resultPageSet)) {
 				$data[] = array(
@@ -151,6 +151,6 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQuerySearch.php 35098 2008-05-20 17:13:28Z ialex $';
+		return __CLASS__ . ': $Id$';
 	}
 }

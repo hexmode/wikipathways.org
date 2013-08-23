@@ -399,6 +399,6 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryBacklinks.php 37504 2008-07-10 14:28:09Z catrope $';
+		return __CLASS__ . ': $Id$';
 	}
 }

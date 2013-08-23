@@ -429,3 +429,6 @@ $wgGroupPermissions[ 'curator'    ][ 'autocurate'     ] = true;
 // If a pathway has been editted within this number of days, it will
 // be highlighted on the browse page
 $wgPathwayRecentSinceDays = 30;
+
+/* For UserMailer mod in older WikiPathways */
+$wgPasswordSenderName = "WikiPathways";

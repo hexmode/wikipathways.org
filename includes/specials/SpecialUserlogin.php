@@ -56,9 +56,9 @@ class LoginForm {
 		$this->mPosted = $request->wasPosted();
 		$this->mCreateaccount = $request->getCheck( 'wpCreateaccount' );
 		$this->mCreateaccountMail = $request->getCheck( 'wpCreateaccountMail' )
-		                            && $wgEnableEmail;
+									&& $wgEnableEmail;
 		$this->mMailmypassword = $request->getCheck( 'wpMailmypassword' )
-		                         && $wgEnableEmail;
+								 && $wgEnableEmail;
 		$this->mLoginattempt = $request->getCheck( 'wpLoginattempt' );
 		$this->mAction = $request->getVal( 'action' );
 		$this->mRemember = $request->getCheck( 'wpRemember' );
@@ -71,9 +71,9 @@ class LoginForm {
 			$this->mEmail = '';
 		}
 		if( $wgAllowRealName ) {
-		    $this->mRealName = $request->getText( 'wpRealName' );
+			$this->mRealName = $request->getText( 'wpRealName' );
 		} else {
-		    $this->mRealName = '';
+			$this->mRealName = '';
 		}
 
 		if( !$wgAuth->validDomain( $this->mDomain ) ) {
@@ -373,10 +373,10 @@ class LoginForm {
 			return self::NO_NAME;
 		}
 
-		// Load $wgUser now, and check to see if we're logging in as the same name. 
+		// Load $wgUser now, and check to see if we're logging in as the same name.
 		// This is necessary because loading $wgUser (say by calling getName()) calls
-		// the UserLoadFromSession hook, which potentially creates the user in the 
-		// database. Until we load $wgUser, checking for user existence using 
+		// the UserLoadFromSession hook, which potentially creates the user in the
+		// database. Until we load $wgUser, checking for user existence using
 		// User::newFromName($name)->getId() below will effectively be using stale data.
 		if ( $wgUser->getName() === $this->mName ) {
 			wfDebug( __METHOD__.": already logged in as {$this->mName}\n" );
@@ -646,29 +646,18 @@ class LoginForm {
 	 * @private
 	 */
 	function successfulLogin( $msg, $params, $auto = true ) {
-		global $wgUser, $wgOut, $wgScriptPath;
+		global $wgUser;
+		global $wgOut;
 
 		# Run any hooks; ignore results
 
-		$addr = $wgUser->getEmail();
-		$name = $wgUser->getName();
-		$realname = $wgUser->getRealName();
-		$prefs = $wgScriptPath . '/index.php/Special:Preferences';
-		$watch = $wgScriptPath . '/index.php/Special:Watchlist/edit';
-		$injected_html = "<p>You are now logged in as:
-				<ul><li><i>Username:</i> <b>$name</b>
-				<li><i>Real name:</i> <b>$realname</b> (<a href=$prefs>change</a>)
-				<li><i>Email:</i> <b>$addr</b> (<a href=$prefs>change</a>)</ul></p> 
-				<p>Your <i>real name</i> will show up in the author list of any pathway you create or edit.
-				Your <i>email</i> will not be shown to other users, but it will be used to contact you if a pathway you have created
-				or added to your <a href=$watch>watchlist</a> is altered or commented on by other users. Your <i>email</i> is the only means by which
-				WikiPathways can contact you if any of your content requires special attention. <b>Please keep your <i>email</i> up-to-date.</b></p>";
+		$injected_html = '';
 		wfRunHooks('UserLoginComplete', array(&$wgUser, &$injected_html));
 
 		$wgOut->setPageTitle( wfMsg( 'loginsuccesstitle' ) );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
-		//$wgOut->addWikiMsgArray( $msg, $params );
+		$wgOut->addWikiMsgArray( $msg, $params );
 		$wgOut->addHtml( $injected_html );
 		if ( !empty( $this->mReturnTo ) ) {
 			$wgOut->returnToMain( $auto, $this->mReturnTo );
@@ -726,12 +715,12 @@ class LoginForm {
 		global $wgUser, $wgOut, $wgAllowRealName, $wgEnableEmail;
 		global $wgCookiePrefix, $wgAuth, $wgLoginLanguageSelector;
 		global $wgAuth, $wgEmailConfirmToEdit;
-		
+
 		$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
-		
+
 		if ( $this->mType == 'signup' ) {
-			// Block signup here if in readonly. Keeps user from 
-			// going through the process (filling out data, etc) 
+			// Block signup here if in readonly. Keeps user from
+			// going through the process (filling out data, etc)
 			// and being informed later.
 			if ( wfReadOnly() ) {
 				$wgOut->readOnlyPage();

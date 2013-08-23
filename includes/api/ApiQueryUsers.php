@@ -164,6 +164,6 @@ if (!defined('MEDIAWIKI')) {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryUsers.php 38183 2008-07-29 12:58:04Z rotem $';
+		return __CLASS__ . ': $Id$';
 	}
 }

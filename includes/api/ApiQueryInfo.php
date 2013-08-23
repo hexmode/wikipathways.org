@@ -53,7 +53,7 @@ class ApiQueryInfo extends ApiQueryBase {
 		// tokenname => function
 		// function prototype is func($pageid, $title)
 		// should return token or false
-		
+
 		// Don't call the hooks twice
 		if(isset($this->tokenFunctions))
 			return $this->tokenFunctions;
@@ -81,7 +81,7 @@ class ApiQueryInfo extends ApiQueryBase {
 		global $wgUser;
 		if(!$wgUser->isAllowed('edit'))
 			return false;
-		
+
 		// The edit token is always the same, let's exploit that
 		static $cachedEditToken = null;
 		if(!is_null($cachedEditToken))
@@ -90,12 +90,12 @@ class ApiQueryInfo extends ApiQueryBase {
 		$cachedEditToken = $wgUser->editToken();
 		return $cachedEditToken;
 	}
-	
+
 	public static function getDeleteToken($pageid, $title)
 	{
 		global $wgUser;
 		if(!$wgUser->isAllowed('delete'))
-			return false;			
+			return false;
 
 		static $cachedDeleteToken = null;
 		if(!is_null($cachedDeleteToken))
@@ -197,7 +197,7 @@ class ApiQueryInfo extends ApiQueryBase {
 				$protections[$row->pr_page][] = $a;
 			}
 			$db->freeResult($res);
-			
+
 			$imageIds = array();
 			foreach ($titles as $id => $title)
 				if ($title->getNamespace() == NS_IMAGE)
@@ -212,14 +212,14 @@ class ApiQueryInfo extends ApiQueryBase {
 					'ids' => array_diff(array_keys($titles), $imageIds)
 				),
 				array(
-				 	'prefix' => 'il',
-				 	'table' => 'imagelinks',
-				 	'ns' => NS_IMAGE,
-				 	'title' => 'il_to',
-				 	'ids' => $imageIds
+					'prefix' => 'il',
+					'table' => 'imagelinks',
+					'ns' => NS_IMAGE,
+					'title' => 'il_to',
+					'ids' => $imageIds
 				)
 			);
-			
+
 			foreach ($cascadeTypes as $type)
 			{
 				if (count($type['ids']) != 0) {
@@ -227,18 +227,18 @@ class ApiQueryInfo extends ApiQueryBase {
 					$this->addTables(array('page_restrictions', $type['table']));
 					$this->addTables('page', 'page_source');
 					$this->addTables('page', 'page_target');
-					$this->addFields(array('pr_type', 'pr_level', 'pr_expiry', 
+					$this->addFields(array('pr_type', 'pr_level', 'pr_expiry',
 							'page_target.page_id AS page_target_id',
 							'page_source.page_namespace AS page_source_namespace',
 							'page_source.page_title AS page_source_title'));
-					$this->addWhere(array("{$type['prefix']}_from = pr_page", 
-							'page_target.page_namespace = '.$type['ns'], 
+					$this->addWhere(array("{$type['prefix']}_from = pr_page",
+							'page_target.page_namespace = '.$type['ns'],
 							'page_target.page_title = '.$type['title'],
 							'page_source.page_id = pr_page'
 					));
 					$this->addWhereFld('pr_cascade', 1);
 					$this->addWhereFld('page_target.page_id', $type['ids']);
-				
+
 					$res = $this->select(__METHOD__);
 					while($row = $db->fetchObject($res)) {
 						$source = Title::makeTitle($row->page_source_namespace, $row->page_source_title);
@@ -274,27 +274,27 @@ class ApiQueryInfo extends ApiQueryBase {
 				);
 			}
 			$db->freeResult($res);
-			
+
 			$images = array();
 			$others = array();
 			foreach ($missing as $title)
 				if ($title->getNamespace() == NS_IMAGE)
 					$images[] = $title->getDbKey();
 				else
-					$others[] = $title;					
-			
+					$others[] = $title;
+
 			if (count($others) != 0) {
 				$lb = new LinkBatch($others);
 				$this->resetQueryParams();
 				$this->addTables(array('page_restrictions', 'page', 'templatelinks'));
-				$this->addFields(array('pr_type', 'pr_level', 'pr_expiry', 
+				$this->addFields(array('pr_type', 'pr_level', 'pr_expiry',
 						'page_title', 'page_namespace',
 						'tl_title', 'tl_namespace'));
 				$this->addWhere($lb->constructSet('tl', $db));
 				$this->addWhere('pr_page = page_id');
 				$this->addWhere('pr_page = tl_from');
 				$this->addWhereFld('pr_cascade', 1);
-				
+
 				$res = $this->select(__METHOD__);
 				while($row = $db->fetchObject($res)) {
 					$source = Title::makeTitle($row->page_namespace, $row->page_title);
@@ -308,17 +308,17 @@ class ApiQueryInfo extends ApiQueryBase {
 				}
 				$db->freeResult($res);
 			}
-			
+
 			if (count($images) != 0) {
 				$this->resetQueryParams();
 				$this->addTables(array('page_restrictions', 'page', 'imagelinks'));
-				$this->addFields(array('pr_type', 'pr_level', 'pr_expiry', 
+				$this->addFields(array('pr_type', 'pr_level', 'pr_expiry',
 						'page_title', 'page_namespace', 'il_to'));
 				$this->addWhere('pr_page = page_id');
 				$this->addWhere('pr_page = il_from');
 				$this->addWhereFld('pr_cascade', 1);
 				$this->addWhereFld('il_to', $images);
-				
+
 				$res = $this->select(__METHOD__);
 				while($row = $db->fetchObject($res)) {
 					$source = Title::makeTitle($row->page_namespace, $row->page_title);
@@ -450,7 +450,7 @@ class ApiQueryInfo extends ApiQueryBase {
 		{
 			$res = &$result->getData();
 			foreach($missing as $pageid => $title) {
-				if(!is_null($params['token'])) 
+				if(!is_null($params['token']))
 				{
 					$tokenFunctions = $this->getTokenFunctions();
 					foreach($params['token'] as $t)
@@ -521,6 +521,6 @@ class ApiQueryInfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryInfo.php 37191 2008-07-06 18:43:06Z brion $';
+		return __CLASS__ . ': $Id$';
 	}
 }

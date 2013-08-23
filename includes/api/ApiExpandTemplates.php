@@ -67,7 +67,7 @@ class ApiExpandTemplates extends ApiBase {
 			}
 			$xml_result = array();
 			$result->setContent( $xml_result, $xml );
-            $result->addValue( null, 'parsetree', $xml_result);
+			$result->addValue( null, 'parsetree', $xml_result);
 		}
 		$retval = $wgParser->preprocess( $text, $title_obj, $options );
 
@@ -106,6 +106,6 @@ class ApiExpandTemplates extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiExpandTemplates.php 35098 2008-05-20 17:13:28Z ialex $';
+		return __CLASS__ . ': $Id$';
 	}
 }

@@ -34,7 +34,7 @@ if (!defined('MEDIAWIKI')) {
  * @ingroup API
  */
 class ApiQueryBlocks extends ApiQueryBase {
-	
+
 	var $users;
 
 	public function __construct($query, $moduleName) {
@@ -181,7 +181,7 @@ class ApiQueryBlocks extends ApiQueryBase {
 		$result->setIndexedTagName($data, 'block');
 		$result->addValue('query', $this->getModuleName(), $data);
 	}
-	
+
 	protected function prepareUsername($user)
 	{
 		if(!$user)
@@ -279,6 +279,6 @@ class ApiQueryBlocks extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryBlocks.php 37892 2008-07-21 21:37:11Z catrope $';
+		return __CLASS__ . ': $Id$';
 	}
 }

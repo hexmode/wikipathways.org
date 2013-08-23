@@ -170,7 +170,7 @@ class ApiQueryCategoryMembers extends ApiQueryGeneratorBase {
 
 		$encSortKey = $this->getDB()->addQuotes($continueList[0]);
 		$encFrom = $this->getDB()->addQuotes($from);
-		
+
 		$op = ($dir == 'desc' ? '<' : '>');
 
 		if ($from != 0) {
@@ -257,6 +257,6 @@ class ApiQueryCategoryMembers extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryCategoryMembers.php 35098 2008-05-20 17:13:28Z ialex $';
+		return __CLASS__ . ': $Id$';
 	}
 }

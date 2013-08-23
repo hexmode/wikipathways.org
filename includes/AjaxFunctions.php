@@ -62,13 +62,13 @@ function js_unescape($source, $iconv_to = 'UTF-8') {
  */
 function code2utf($num){
    if ( $num<128 )
-   	return chr($num);
+	return chr($num);
    if ( $num<2048 )
-   	return chr(($num>>6)+192).chr(($num&63)+128);
+	return chr(($num>>6)+192).chr(($num&63)+128);
    if ( $num<65536 )
-   	return chr(($num>>12)+224).chr((($num>>6)&63)+128).chr(($num&63)+128);
+	return chr(($num>>12)+224).chr((($num>>6)&63)+128).chr(($num&63)+128);
    if ( $num<2097152 )
-   	return chr(($num>>18)+240).chr((($num>>12)&63)+128).chr((($num>>6)&63)+128) .chr(($num&63)+128);
+	return chr(($num>>18)+240).chr((($num>>12)&63)+128).chr((($num>>6)&63)+128) .chr(($num&63)+128);
    return '';
 }
 
@@ -166,7 +166,6 @@ function wfSajaxSearch( $term ) {
  *   '<err#>' on error
  */
 function wfAjaxWatch($pagename = "", $watch = "") {
-global $wgOut;
 	if(wfReadOnly()) {
 		// redirect to action=(un)watch, which will display the database lock
 		// message
@@ -201,18 +200,19 @@ global $wgOut;
 			$dbw->commit();
 		}
 	}
-        $titleName = $title->getBaseText();
-        try {
-              $pathway = Pathway::newFromTitle($title);
-              $titleName = $pathway->getName();
-        } catch(Exception $e) {}
+## WPI Mod 2013-Aug-22
+	$titleName = $title->getBaseText();
+	try {
+		$pathway = Pathway::newFromTitle($title);
+		$titleName = $pathway->getName();
+	} catch(Exception $e) {}
 	if( $watch ) {
 		$addedwatchtext = "-- The pathway \"[[{$title}|{$titleName}]]\" has been added to [[Special:Watchlist|your watchlist]] --";
 		return '<w#>'.wfMsgWikiHTML( $addedwatchtext);
 		//return '<w#>'.wfMsgExt( 'addedwatchtext', array( 'parse' ), $title->getPrefixedText() );
 	} else {
-                $removedwatchtext = "-- The pathway \"[[$title|$titleName]]\" has been removed from [[Special:Watchlist|your watchlist]] --";
-                return '<u#>'.wfMsgWikiHTML( $removedwatchtext);
+		$removedwatchtext = "-- The pathway \"[[$title|$titleName]]\" has been removed from [[Special:Watchlist|your watchlist]] --";
+		return '<u#>'.wfMsgWikiHTML( $removedwatchtext);
 		//return '<u#>'.wfMsgExt( 'removedwatchtext', array( 'parse' ), $title->getPrefixedText() );
 	}
 }

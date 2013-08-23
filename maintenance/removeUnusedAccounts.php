@@ -1,4 +1,5 @@
 <?php
+## WPI Mod 2013-Aug-22 Removed by mah
 /**
  * Remove unused user accounts from the database
  * An unused account is one which has made no edits
@@ -12,7 +13,7 @@
  * @todo Don't delete sysops or bureaucrats
  */
 
-$options = array( 'help', 'delete', 'ignore-touched' );
+$options = array( 'help', 'delete' );
 require_once( 'commandLine.inc' );
 require_once( 'removeUnusedAccounts.inc' );
 echo( "Remove Unused Accounts\n\n" );
@@ -22,21 +23,15 @@ if( isset( $options['help'] ) ) {
 	showHelp();
 	exit();
 }
-$touchedSeconds = 0;
-if( isset( $options['ignore-touched'] ) ) {
-    $touchedSeconds = 86400 * $options["ignore-touched"];
-}
 
 # Do an initial scan for inactive accounts and report the result
 echo( "Checking for unused user accounts...\n" );
 $del = array();
 $dbr = wfGetDB( DB_SLAVE );
-$res = $dbr->select( 'user', array( 'user_id', 'user_name', 'user_touched' ), '', $fname );
-$since = wfTimestamp( TS_UNIX, time() - $touchedSeconds );
+$res = $dbr->select( 'user', array( 'user_id', 'user_name' ), '', $fname );
 while( $row = $dbr->fetchObject( $res ) ) {
 	# Check the account, but ignore it if it's the primary administrator
-	if( $row->user_id > 1 && isInactiveAccount( $row->user_id, true )
- 	       && wfTimestamp( TS_UNIX, $row->user_touched ) < $since ) {
+	if( $row->user_id > 1 && isInactiveAccount( $row->user_id, true ) ) {
 		# Inactive; print out the name and flag it
 		$del[] = $row->user_id;
 		echo( $row->user_name . "\n" );
@@ -59,5 +54,3 @@ if( $count > 0 && isset( $options['delete'] ) ) {
 		echo( "\nRun the script again with --delete to remove them from the database.\n" );
 }
 echo( "\n" );
-
-

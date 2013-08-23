@@ -50,7 +50,7 @@ class ApiQueryAllUsers extends ApiQueryBase {
 			$fld_editcount = isset($prop['editcount']);
 			$fld_groups = isset($prop['groups']);
 			$fld_registration = isset($prop['registration']);
-		} else { 
+		} else {
 			$fld_blockinfo = $fld_editcount = $fld_groups = $fld_registration = false;
 		}
 
@@ -219,6 +219,6 @@ class ApiQueryAllUsers extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllUsers.php 36790 2008-06-29 22:26:23Z catrope $';
+		return __CLASS__ . ': $Id$';
 	}
 }

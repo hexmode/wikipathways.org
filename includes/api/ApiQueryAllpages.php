@@ -244,6 +244,6 @@ class ApiQueryAllpages extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllpages.php 37775 2008-07-17 09:26:01Z brion $';
+		return __CLASS__ . ': $Id$';
 	}
 }

@@ -477,13 +477,11 @@ class EmailNotification {
 		# global configuration level.
 		$editor = $this->editor;
 		$name    = $editor->getName();
-		//TK-20081030: replace 'WikiAdmin' with 'WikiPathways'
-		$adminAddress = new MailAddress( $wgPasswordSender, 'WikiPathways' );
-		//$adminAddress = new MailAddress( $wgPasswordSender, 'WikiAdmin' );
+		$adminAddress = new MailAddress( $wgPasswordSender, 'WikiAdmin' );
 		$editorAddress = new MailAddress( $editor );
 		if( $wgEnotifRevealEditorAddress
-		    && ( $editor->getEmail() != '' )
-		    && $editor->getOption( 'enotifrevealaddr' ) ) {
+			&& ( $editor->getEmail() != '' )
+			&& $editor->getOption( 'enotifrevealaddr' ) ) {
 			if( $wgEnotifFromEditor ) {
 				$from    = $editorAddress;
 			} else {

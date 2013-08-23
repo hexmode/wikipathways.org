@@ -1,5 +1,5 @@
 <?php
-
+## WPI Mod 2013-Aug-22 Removed by mah
 /**
  * Maintenance script to create an account and grant it administrator rights
  *
@@ -8,30 +8,21 @@
  * @author Rob Church <robchur@gmail.com>
  */
 
-$options = array( 'help', 'bureaucrat', 'promote' );
+$options = array( 'help', 'bureaucrat' );
 require_once( 'commandLine.inc' );
 
-$promote = false;
 if( isset( $options['help'] ) ) {
 	showHelp();
 	exit( 1 );
-} elseif( isset( $options['promote'] ) ) {
-	$promote = true;
 }
 
-if( !$promote && count( $args ) < 2 ) {
+if( count( $args ) < 2 ) {
 	echo( "Please provide a username and password for the new account.\n" );
 	die( 1 );
 }
 
-$username = isset( $args[0] ) ? $args[0] : null;
-$password = isset( $args[1] ) ? $args[0] : null;
-$promoteOnly = false;
-
-if( $username === null ) {
-	showHelp();
-	exit( 1 );
-}
+$username = $args[0];
+$password = $args[1];
 
 echo( wfWikiID() . ": Creating and promoting User:{$username}..." );
 
@@ -41,26 +32,14 @@ if( !is_object( $user ) ) {
 	echo( "invalid username.\n" );
 	die( 1 );
 } elseif( 0 != $user->idForName() ) {
-	if( $promote ) {
-		echo( "account exists, promoting only.\n" );
-		$promoteOnly = true;
-	} else {
-		echo( "account exists.\n" );
-		die( 1 );
-	}
+	echo( "account exists.\n" );
+	die( 1 );
 }
 
-if( !$promoteOnly ) {
-	if( count( $args ) < 2 ) {
-		echo( "Please provide a username and password for the new account.\n" );
-		die( 1 );
-	}
-
-	# Insert the account into the database
-	$user->addToDatabase();
-	$user->setPassword( $password );
-	$user->saveSettings();
-}
+# Insert the account into the database
+$user->addToDatabase();
+$user->setPassword( $password );
+$user->saveSettings();
 
 # Promote user
 $user->addGroup( 'sysop' );

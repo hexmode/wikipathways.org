@@ -873,7 +873,6 @@ class Linker {
 		if( $wgNoFollowLinks && !(isset($ns) && in_array($ns, $wgNoFollowNsExceptions)) ) {
 			$style .= ' rel="nofollow"';
 		}
-
 		$url = htmlspecialchars( $url );
 		if( $escape ) {
 			$text = htmlspecialchars( $text );

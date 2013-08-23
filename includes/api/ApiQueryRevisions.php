@@ -281,7 +281,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 
 		if ($this->fld_comment) {
 			$comment = $revision->getComment();
-			if (!empty($comment))		
+			if (!empty($comment))
 				$vals['comment'] = $comment;
 		}
 
@@ -424,6 +424,6 @@ class ApiQueryRevisions extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryRevisions.php 37300 2008-07-08 08:42:27Z btongminh $';
+		return __CLASS__ . ': $Id$';
 	}
 }

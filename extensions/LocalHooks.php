@@ -154,6 +154,9 @@ content requires special attention. <b>Please keep your
 
 }
 
+$wgHooks['SpecialListusersFormatRow'][] = 'LocalHooks::addSnoopLink';
+$wgHooks['UserLoginComplete'][] = 'LocalHooks::loginMessage';
+$wgHooks['SpecialPage_initList'][] = 'LocalHooks::blockPage';
 $wgHooks['LinkerMakeExternalLink'][] = 'LocalHooks::externalLink';
 $wgHooks['BeforePageDisplay'][] = 'LocalHooks::stopDisplay';
 $wgHooks['ArticleSaveComplete'][] = 'LocalHooks::updateTags';
