@@ -17,12 +17,6 @@ require_once( dirname( __FILE__ ) . '/includes/WebStart.php' );
 wfProfileIn( 'img_auth.php' );
 require_once( dirname( __FILE__ ) . '/includes/StreamFile.php' );
 
-$perms = User::getGroupPermissions( array( '*' ) );
-if ( in_array( 'read', $perms, true ) ) {
-	wfDebugLog( 'img_auth', 'Public wiki' );
-	wfPublicError();
-}
-
 // Extract path and image information
 if( !isset( $_SERVER['PATH_INFO'] ) ) {
 	wfDebugLog( 'img_auth', 'Missing PATH_INFO' );
@@ -119,7 +113,7 @@ function wfPublicError() {
 <body>
 <h1>Access Denied</h1>
 <p>The function of img_auth.php is to output files from a private wiki. This wiki
-is configured as a public wiki. For optimal security, img_auth.php is disabled in 
+is configured as a public wiki. For optimal security, img_auth.php is disabled in
 this case.
 </p>
 </body>
@@ -128,4 +122,3 @@ ENDS;
 	wfLogProfilingData();
 	exit;
 }
-
