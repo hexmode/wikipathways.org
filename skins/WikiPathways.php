@@ -13,9 +13,6 @@
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
-/** */
-require_once('includes/SkinTemplate.php');
-
 /**
  * Inherit main code from SkinTemplate, set the CSS and template filter.
  * @todo document
@@ -23,7 +20,7 @@ require_once('includes/SkinTemplate.php');
  */
 class SkinWikiPathways extends SkinTemplate {
 	/** Using monobook. */
-	function initPage( &$out ) {
+	function initPage( OutputPage $out ) {
 		SkinTemplate::initPage( $out );
 		$this->skinname  = 'wikipathways';
 		$this->stylename = 'wikipathways';

@@ -46,7 +46,7 @@ class ApiQueryImageInfo extends ApiQueryBase {
 
 		if($params['urlheight'] != -1 && $params['urlwidth'] == -1)
 			$this->dieUsage("iiurlheight cannot be used without iiurlwidth", 'iiurlwidth');
-
+		
 		if ( $params['urlwidth'] != -1 ) {
 			$scale = array();
 			$scale['width'] = $params['urlwidth'];
@@ -56,13 +56,13 @@ class ApiQueryImageInfo extends ApiQueryBase {
 		}
 
 		$pageIds = $this->getPageSet()->getAllTitlesByNamespace();
-		if (!empty($pageIds[NS_IMAGE])) {
-
+		if (!empty($pageIds[NS_FILE])) {
+			
 			$result = $this->getResult();
-			$images = RepoGroup::singleton()->findFiles( array_keys( $pageIds[NS_IMAGE] ) );
+			$images = RepoGroup::singleton()->findFiles( array_keys( $pageIds[NS_FILE] ) );
 			foreach ( $images as $img ) {
 				$data = array();
-
+				
 				// Get information about the current version first
 				// Check that the current version is within the start-end boundaries
 				if((is_null($params['start']) || $img->getTimestamp() <= $params['start']) &&
@@ -78,25 +78,25 @@ class ApiQueryImageInfo extends ApiQueryBase {
 					if(++$count > $params['limit']) {
 						// We've reached the extra one which shows that there are additional pages to be had. Stop here...
 						// Only set a query-continue if there was only one title
-						if(count($pageIds[NS_IMAGE]) == 1)
+						if(count($pageIds[NS_FILE]) == 1)
 							$this->setContinueEnumParameter('start', $oldie->getTimestamp());
 						break;
 					}
 					$data[] = self::getInfo( $oldie, $prop, $result );
 				}
 
-				$pageId = $pageIds[NS_IMAGE][ $img->getOriginalTitle()->getDBkey() ];
+				$pageId = $pageIds[NS_FILE][ $img->getOriginalTitle()->getDBkey() ];
 				$result->addValue(
 					array( 'query', 'pages', intval( $pageId ) ),
 					'imagerepository', $img->getRepoName()
 				);
 				$this->addPageSubItems($pageId, $data);
 			}
-
-			$missing = array_diff( array_keys( $pageIds[NS_IMAGE] ), array_keys( $images ) );
+			
+			$missing = array_diff( array_keys( $pageIds[NS_FILE] ), array_keys( $images ) );
 			foreach ( $missing as $title )
 				$result->addValue(
-					array( 'query', 'pages', intval( $pageIds[NS_IMAGE][$title] ) ),
+					array( 'query', 'pages', intval( $pageIds[NS_FILE][$title] ) ),
 					'imagerepository', ''
 				);
 		}
@@ -123,12 +123,12 @@ class ApiQueryImageInfo extends ApiQueryBase {
 		}
 		if( isset( $prop['url'] ) ) {
 			if( !is_null( $scale ) && !$file->isOld() ) {
-				$thumb = $file->getThumbnail( $scale['width'], $scale['height'] );
-				if( $thumb )
+				$mto = $file->transform( array( 'width' => $scale['width'], 'height' => $scale['height'] ) );
+				if( $mto && !$mto->isError() )
 				{
-					$vals['thumburl'] = wfExpandUrl( $thumb->getURL() );
-					$vals['thumbwidth'] = $thumb->getWidth();
-					$vals['thumbheight'] = $thumb->getHeight();
+					$vals['thumburl'] = $mto->getUrl();
+					$vals['thumbwidth'] = $mto->getWidth();
+					$vals['thumbheight'] = $mto->getHeight();
 				}
 			}
 			$vals['url'] = $file->getFullURL();
@@ -143,11 +143,14 @@ class ApiQueryImageInfo extends ApiQueryBase {
 			$vals['metadata'] = $metadata ? unserialize( $metadata ) : null;
 			$result->setIndexedTagName_recursive( $vals['metadata'], 'meta' );
 		}
-		if( isset( $prop['mime'] ) )
+		if( isset( $prop['mime'] ) ) 
 			$vals['mime'] = $file->getMimeType();
-
+		
 		if( isset( $prop['archivename'] ) && $file->isOld() )
 			$vals['archivename'] = $file->getArchiveName();
+			
+		if( isset( $prop['bitdepth'] ) )
+			$vals['bitdepth'] = $file->getBitDepth();
 
 		return $vals;
 	}
@@ -166,7 +169,8 @@ class ApiQueryImageInfo extends ApiQueryBase {
 					'sha1',
 					'mime',
 					'metadata',
-					'archivename'
+					'archivename',
+					'bitdepth',
 				)
 			),
 			'limit' => array(
@@ -200,7 +204,7 @@ class ApiQueryImageInfo extends ApiQueryBase {
 			'start' => 'Timestamp to start listing from',
 			'end' => 'Timestamp to stop listing at',
 			'urlwidth' => array('If iiprop=url is set, a URL to an image scaled to this width will be returned.',
-						'Only the current version of the image can be scaled.'),
+					    'Only the current version of the image can be scaled.'),
 			'urlheight' => 'Similar to iiurlwidth. Cannot be used without iiurlwidth',
 		);
 	}

@@ -52,6 +52,8 @@ $messages = array(
 'tog-watchlisthideown'        => 'قایم کردن اصلاحات مو  زه لیست پیگیریها',
 'tog-watchlisthidebots'       => 'قایم کردن اصلاحات بوت زه لیست پیگیریها',
 'tog-watchlisthideminor'      => 'قایم کردن اصلاحات ریز زه لیست پیگیریها',
+'tog-watchlisthideliu'        => 'قایم کردن اصلاحات انجام وابیده  بوسیله کاربران داخل سیستم وابیده زه لیست پیگیریها',
+'tog-watchlisthideanons'      => 'قایم کردن اصلاحات انجام شده بوسیله کاربران داخل سیستم نشده زه لیست پیگیری',
 'tog-ccmeonemails'            => 'ارسال کپی امیلهایی که مو به  کاربران دیه ارسال کردم به مو',
 'tog-diffonly'                => 'نشو نده صفحه ای که دارای محتوای متفاوت زیره',
 'tog-showhiddencats'          => 'نشودادن دسته بندیهای قایم شده',
@@ -182,8 +184,6 @@ $messages = array(
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'درباره {{SITENAME}}',
 'aboutpage'            => 'Project:درباره',
-'bugreports'           => 'گزارشهای مهم',
-'bugreportspage'       => 'Project:گزارشهای مهم',
 'copyright'            => 'محتوا باای شماره قابل دسترسیه
  $1.',
 'copyrightpagename'    => '{{SITENAME}} کپی رایت',
@@ -207,6 +207,8 @@ $messages = array(
 
 'badaccess'        => 'خطا :اجازه بگیر',
 'badaccess-group0' => 'ایسا اجازه انجام کاری که خواستین را ندارین',
+'badaccess-groups' => 'او کاری که ایسا درخواست کردین فقط سی کاربرانیه که من ای  گروهن
+{{PLURAL:$2|آن گروه|یکی زه گروهها}}: $1.',
 
 'versionrequired'     => 'یه نسخه زه نیازمندیهای ویکی مدیا 
 $1',
@@ -261,10 +263,10 @@ $1',
 'userlogin'               => 'اویدن به سیستم / درست کردن حساب کاربری',
 'logout'                  => 'رهدن زه سیستم',
 'userlogout'              => 'رهدن زه سیستم',
-'nologin'                 => 'آیا ایسا حساب کاربری ندارین? $1.',
+'nologin'                 => "آیا ایسا حساب کاربری ندارین? '''$1'''.",
 'nologinlink'             => 'درست کردن یه حساب کاربری',
 'createaccount'           => 'درست کردن حساب کاربری',
-'gotaccount'              => 'آیا تقریبا یه حساب کاربری دارین? $1.',
+'gotaccount'              => "آیا تقریبا یه حساب کاربری دارین? '''$1'''.",
 'gotaccountlink'          => 'اویدن به',
 'yourrealname'            => 'نام واقعی:',
 'prefs-help-realname'     => 'ذکر نام واقعی اختیاریه ایر تصمیم به گدن بگیرین هنگام ارجاع به آثارتو و انتساب هونو به ایسا زه نام واقعیتو استفاده ابوه',
@@ -293,6 +295,9 @@ $1',
 لطفا بعد از دریافت آن داخل سیستم بوین.',
 'eauthentsent'            => 'یه نامه الکترونیکی سی تایید نشانی پست الکترونیکی به نشانی مورنظر ارسال وابید. قبل زه یو که نامه دیگری قابل ارسال به این نشانی بوه، وا دستورهایی که در آن نامه اویده را جهت تأیید ای مساله که ای نشانی مال ایسانه اجرا کنین.',
 
+# Password reset dialog
+'retypenew' => 'تایپ دوباره رمز:',
+
 # Edit page toolbar
 'bold_sample'     => 'متن گپ نما',
 'bold_tip'        => 'متن گپ نما',
@@ -315,6 +320,8 @@ $1',
 'hr_tip'          => 'خط افقی (کم استفاده کنین)',
 
 # Edit pages
+'summary'                => 'خلاصه:',
+'subject'                => 'موضوع/سرخط:',
 'minoredit'              => 'ای یه اصلاح ریزه-رز',
 'watchthis'              => 'پیگیری ای صفحه',
 'savearticle'            => 'صفحه ضبط بوه',
@@ -323,6 +330,7 @@ $1',
 'showdiff'               => 'نشودادن تغییرات',
 'anoneditwarning'        => "'''توجه:''' ایسا داخل سیستم نوابیدین.
 آی پی آدرستو درگزارش اصلاح صفحه ضبط ابوه.",
+'summary-preview'        => 'پیش نمایش - خلاصه:',
 'blockedtext'            => ' "<big>\'\'\'دسترسی نام کاربری یا نشانی اینترنتی ایسا بسته وابیده.\'\'\'</big>
 ای کار توسط $1 انجام شده‌است.
 دلیلی که گده اینه: $2\'\'
@@ -366,7 +374,7 @@ $1',
 'viewpagelogs'        => 'نشودادن نمایه ها سی ای صفحه',
 'currentrev'          => 'نسخه جاری',
 'revisionasof'        => 'اصلاح $1',
-'revision-info'       => 'یه نسخه اصلاح شده درتاریخ  $1 بوسیله $2',
+'revision-info'       => 'یه نسخه اصلاح شده درتاریخ  $1 بوسیله $2', # Additionally available: $3: revision id
 'previousrevision'    => '← اصلاح قبلی',
 'nextrevision'        => 'نسخه بعدی →',
 'currentrevisionlink' => 'نسخه جاری',
@@ -392,17 +400,17 @@ $1',
 'diff-multi'              => '({{PLURAL:$1|یه اصلاح میانی|$1 اصلاحات میانی}} نشو داده نوابیده.)',
 
 # Search results
-'noexactmatch' => "'''صفحه ای باای عنوان نه  \"\$1\".'''
+'noexactmatch'   => "'''صفحه ای باای عنوان نه  \"\$1\".'''
 ایسا ترین [[:\$1| ای صفحه را ایجاد کنین]].",
-'prevn'        => 'قبلی $1',
-'nextn'        => 'بعدی $1',
-'viewprevnext' => 'مشاهده ($1) ($2) ($3)',
-'powersearch'  => 'جستجوی کاملتر',
+'prevn'          => 'قبلی $1',
+'nextn'          => 'بعدی $1',
+'viewprevnext'   => 'مشاهده ($1 {{int:pipe-separator}} $2) ($3)',
+'searchhelp-url' => 'Help:محتوا',
+'powersearch'    => 'جستجوی کاملتر',
 
 # Preferences page
 'preferences'   => 'اولویتها',
 'mypreferences' => 'اولویتهای مو',
-'retypenew'     => 'تایپ دوباره رمز:',
 
 'grouppage-sysop' => '{{ns:project}}:مدیران',
 
@@ -444,10 +452,10 @@ $1',
 'uploadlogpage' => 'نمایه آپلود',
 'uploadedimage' => 'آپلود وابید "[[$1]]"',
 
-# Special:ImageList
-'imagelist' => 'لیست فایل',
+# Special:ListFiles
+'listfiles' => 'لیست فایل',
 
-# Image description page
+# File description page
 'filehist'                  => 'گزارش تاریخی فایل',
 'filehist-help'             => 'رو تاریخ‌ها کلیک کنید تا نسخه مرتبط را ببینین.',
 'filehist-current'          => 'جاری',
@@ -549,45 +557,47 @@ $2',
 'emailuser' => 'امیل ای کاربر',
 
 # Watchlist
-'watchlist'            => 'لیست پیگیریهای مو',
-'mywatchlist'          => 'لیست پیگیریهای مو',
-'watchlistfor'         => "(سی '''$1''')",
-'addedwatch'           => 'اضاف وابید به لیست پیگیری',
-'addedwatchtext'       => "صفحه «<nowiki>$1</nowiki>» به [[Special:Watchlist|لیست پی‌گیری‌های ]] ایسا   
+'watchlist'         => 'لیست پیگیریهای مو',
+'mywatchlist'       => 'لیست پیگیریهای مو',
+'watchlistfor'      => "(سی '''$1''')",
+'addedwatch'        => 'اضاف وابید به لیست پیگیری',
+'addedwatchtext'    => "صفحه «<nowiki>$1</nowiki>» به [[Special:Watchlist|لیست پی‌گیری‌های ]] ایسا   
 اضاف وابید.
 تغییرات این صفحه و صفحه صحبت مر بوطه اش در آینده ایچو لیست ابوه. به‌علاوه، ای صفحه، سی واضح‌تر دیده وابیدن در [[Special:RecentChanges|فهرست تغییرات اخیر]] به شکل <b>سیاه</b> ایا.
 
 ایر بعدا خواستین ای  صفحه زه لیست پی‌گیریهاتو ورداشته بوه، رو «'''عدم پی‌گیری'''» در بالای صفحه کلیک کنین.",
-'removedwatch'         => 'زه لیست پیگیری حذف وابید',
-'removedwatchtext'     => 'آن صفحه"[[:$1]]" جابجا وابیده زه[[Special:لیست پیگیری|لیست پیگیری ایسا]].',
-'watch'                => 'پی‌گیری',
-'watchthispage'        => 'پیگیری ای صفحه',
-'unwatch'              => 'عدم پیگیری',
-'watchlist-details'    => '{{PLURAL:$1|$1 صفحه|$1 صفحات}} درلیست پیگیری ایسا, صفحات صحبت حساب نیبوه.',
-'wlshowlast'           => 'نمایش آخرین $1 ساعت $2 روز $3',
-'watchlist-hide-bots'  => 'قایم کردن اصلاحات بوت یا ربات',
-'watchlist-hide-own'   => 'قایم کردن اصلاحات مو',
-'watchlist-hide-minor' => 'قایم کردن اصلاحات ریز',
+'removedwatch'      => 'زه لیست پیگیری حذف وابید',
+'removedwatchtext'  => 'آن صفحه"[[:$1]]" جابجا وابیده زه[[Special:لیست پیگیری|لیست پیگیری ایسا]].',
+'watch'             => 'پی‌گیری',
+'watchthispage'     => 'پیگیری ای صفحه',
+'unwatch'           => 'عدم پیگیری',
+'watchlist-details' => '{{PLURAL:$1|$1 صفحه|$1 صفحات}} درلیست پیگیری ایسا, صفحات صحبت حساب نیبوه.',
+'wlshowlast'        => 'نمایش آخرین $1 ساعت $2 روز $3',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'درحال پیگیری...',
 'unwatching' => 'درحالت عدم پیگیری...',
 
-# Delete/protect/revert
-'deletepage'                  => 'حذف صفحه',
-'historywarning'              => 'توجه: آن صفحه ای که ایسا اخوین حذف کنین گزارش تاریخی داره:',
-'confirmdeletetext'           => 'ایسا اخوین یه صفحه بلند با همه گزارش تاریخی هونه حذف کنین.
+# Delete
+'deletepage'            => 'حذف صفحه',
+'historywarning'        => 'توجه: آن صفحه ای که ایسا اخوین حذف کنین گزارش تاریخی داره:',
+'confirmdeletetext'     => 'ایسا اخوین یه صفحه بلند با همه گزارش تاریخی هونه حذف کنین.
 لطفا کانفیرم یا تائید کنین که تمایل وقصد ای کار را دارین, وایسا دوین یا می دانید نتایج وآثار ای کار را, و ایسا انجام ادین ای کار را مطابق با [[{{MediaWiki:Policy-url}}|سیاست‌ها]].',
-'actioncomplete'              => 'عمل  مربوطه راکامل کن',
-'deletedtext'                 => '"<nowiki>$1</nowiki>" حذف وابیده.
+'actioncomplete'        => 'عمل  مربوطه راکامل کن',
+'deletedtext'           => '"<nowiki>$1</nowiki>" حذف وابیده.
 بوین $2 سی ثبت حذف آخر.',
-'deletedarticle'              => 'حذف وابید "[[$1]]"',
-'dellogpage'                  => 'نمایه _ حذف',
-'deletecomment'               => 'دلیل سی حذف:',
-'deleteotherreason'           => 'دیه/دلیل اضافی:',
-'deletereasonotherlist'       => 'دلیل دیه',
-'rollbacklink'                => 'عقب گرد',
+'deletedarticle'        => 'حذف وابید "[[$1]]"',
+'dellogpage'            => 'نمایه _ حذف',
+'deletecomment'         => 'دلیل سی حذف:',
+'deleteotherreason'     => 'دیه/دلیل اضافی:',
+'deletereasonotherlist' => 'دلیل دیه',
+
+# Rollback
+'rollbacklink' => 'عقب گرد',
+
+# Protect
 'protectlogpage'              => 'نمایه حفاظت وحمایت',
+'prot_1movedto2'              => '[[$1]] جابجا وابید به[[$2]]',
 'protectcomment'              => 'توضیح:',
 'protectexpiry'               => 'سپری وابیده ها:',
 'protect_expiry_invalid'      => 'با سپری وابیدن وقت غیر معتبره.',
@@ -608,6 +618,7 @@ $2',
 'protect-expiring'            => 'سپری وابیده $1 (UTC)',
 'protect-cascade'             => 'حمایت صفحات دربرگیرنده در ای صفحه (cascading protection)',
 'protect-cantedit'            => 'ایسا نترین تغییر بدین سطوح حمایتی ای صفحه را, زیرا ایسا اجازه اصلاح آن را ندارین.',
+'protect-expiry-options'      => '۲ ساعت:2 hours,۱ روز:1 day,۳ روز:3 days,۱ هفته:1 week,۲ هفته:2 weeks,۱ ماه:1 month,۳ ماه:3 months,۶ ماه:6 months,۱ سال:1 year,بی‌پایان:infinite', # display1:time1,display2:time2,...
 'restriction-type'            => 'اجازه:',
 'restriction-level'           => 'سطح محدودیت:',
 
@@ -757,6 +768,7 @@ $2',
 'tooltip-watch'                   => 'اضاف کردن ای صفحه به فهرست مشاهداتتان',
 'tooltip-recreate'                => 'دوباره درست کردن صفحه ای که زه رو کینه وغرض پاک وابیده',
 'tooltip-upload'                  => 'شروع آپلود',
+'tooltip-rollback'                => '"اعاده" برگرداندن به وضع اولیه سی ای صفحه که بخاطر مشارکت  آخر اصلاح وابیده بایک کلیک',
 
 # Browsing diffs
 'previousdiff' => '← اصلاح قدیمی',
@@ -769,7 +781,7 @@ $2',
 'show-big-image'       => 'تصویر با قابلیت تفکیک کامل',
 'show-big-image-thumb' => '<کوچیک>اندازه پیش نمایش: $1 × $2 پیکسلها</کوچیک>',
 
-# Special:NewImages
+# Special:NewFiles
 'newimages' => 'گالری فایلهای تازه',
 
 # Bad image list

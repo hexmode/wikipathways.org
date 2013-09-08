@@ -2,3 +2,8 @@ pass.php
 *~
 \#*#
 .#*
+images/?
+images/archive
+images/thumb
+images/cache
+wpi/tmp

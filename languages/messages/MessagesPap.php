@@ -61,7 +61,7 @@ $messages = array(
 'mytalk'        => 'Mi diskushon',
 'anontalk'      => 'Diskushon pa e IP aki',
 'navigation'    => 'Nabegashon',
-'and'           => 'i',
+'and'           => '&#32;i',
 
 'errorpagetitle'    => 'Eror',
 'returnto'          => 'Bai bèk $1.',
@@ -150,9 +150,9 @@ $messages = array(
 
 # Main script and global functions
 'nosuchspecialpage' => 'E página spesial no ta eksistí',
-'nospecialpagetext' => "<big>'''Bo a pidi un página spesial inválido.'''</big>
+'nospecialpagetext' => '<strong>Bo a pidi un página spesial inválido.</strong>
 
-Bo por haña un lista di tur [[Special:SpecialPages|{{int:specialpages}}]].",
+Bo por haña un lista di tur [[Special:SpecialPages|{{int:specialpages}}]].',
 
 # General errors
 'error'         => 'Eror',
@@ -218,7 +218,8 @@ Bo por kambia página libremente, pero tene kuenta ku lo nota bo IP adrès den e
 'histlast'            => 'Último',
 
 # Search results
-'nextn' => 'siguiente $1',
+'nextn'          => 'siguiente $1',
+'searchhelp-url' => 'Help:Kontenido',
 
 # Preferences page
 'preferences'    => 'Preferensianan',
@@ -242,9 +243,8 @@ Bo por kambia página libremente, pero tene kuenta ku lo nota bo IP adrès den e
 'unwatchedpages' => 'Páginanan no observá',
 
 # Statistics
-'statistics' => 'Estadístika',
-'sitestats'  => 'Estadístika di {{SITENAME}}',
-'userstats'  => 'Estadístika di uzadónan',
+'statistics'              => 'Estadístika',
+'statistics-header-users' => 'Estadístika di uzadónan',
 
 # Miscellaneous special pages
 'ncategories'             => '$1 {{PLURAL:$1|kategoria|kategorianan}}',
@@ -311,9 +311,12 @@ Si despues bo ke kita e página for di bo lista di observashon, primi \"Stop di 
 'changed' => 'kambiá',
 'created' => 'trahá',
 
-# Delete/protect/revert
+# Delete
 'confirm'        => 'Konfirmá',
 'actioncomplete' => 'Akshon kompletá',
+
+# Protect
+'prot_1movedto2' => '[[$1]] mové pa [[$2]]',
 'protect-legend' => 'Konfirmá protekshon',
 
 # Undelete
@@ -406,10 +409,6 @@ E kódigo di konfirmashon aki lo kaduká riba $4.',
 'confirmrecreate' => "[[User:$1|$1]] ([[User talk:$1|diskushon]]) a kita e artíkulo aki despues ku bo ta kuminsá editá. E rason ta:
 : ''$2''
 Por fabor konfirmá ku bo ke traha e artíkulo aki di nobo.",
-
-# AJAX search
-'articletitles' => "Artíkulonan kuminsando ku ''$1''",
-'hideresults'   => 'Skonde resultado',
 
 # Special:SpecialPages
 'specialpages' => 'Páginanan Spesial',

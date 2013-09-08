@@ -28,8 +28,6 @@ $messages = array(
 'underline-always' => 'Pirmi',
 'underline-never'  => 'Indi',
 
-'skinpreview' => '(Ipakita subong)',
-
 # Dates
 'sunday'        => 'Domingo',
 'monday'        => 'Lunes',
@@ -100,7 +98,7 @@ $messages = array(
 'qbspecialpages' => 'Pinasahi nga mga panid',
 'mytalk'         => 'Akon paghisayranay',
 'navigation'     => 'Nabigayson',
-'and'            => 'kag',
+'and'            => '&#32;kag',
 
 'errorpagetitle'   => 'Sala/Eror',
 'returnto'         => 'Balik sa $1.',
@@ -161,6 +159,8 @@ $messages = array(
 'youhavenewmessagesmulti' => 'May mga bag-ong mensahe ka sa $1',
 'editsection'             => 'ilisan',
 'editold'                 => 'ilisan',
+'editlink'                => 'islan',
+'viewsourcelink'          => 'tan-awon ang ginhalinan',
 'editsectionhint'         => 'Islan ining bahin: $1',
 'toc'                     => 'Kontents',
 'showtoc'                 => 'ipakita',
@@ -237,7 +237,8 @@ Indi pagkalimti ang pag ilis sang imo mga pagpasulabi sa {{SITENAME}}.',
 'hr_tip'          => 'Gapahigda nga linya (gamiton laka lang)',
 
 # Edit pages
-'summary'                          => 'Kabilogan',
+'summary'                          => 'Kabilogan:',
+'subject'                          => 'Ginatukoy/Pangulong-dinalang:',
 'minoredit'                        => 'Ini menor nga pag-ilis',
 'watchthis'                        => 'Bantayan ining panid',
 'savearticle'                      => 'Tiponon ining panid',
@@ -246,6 +247,7 @@ Indi pagkalimti ang pag ilis sang imo mga pagpasulabi sa {{SITENAME}}.',
 'showdiff'                         => 'Ipakita ang inislan',
 'anoneditwarning'                  => "'''Pa-andam:''' Wala ka pa nakasulod.
 Igasulat ang imo IP adres sa historya sini nga inislan na pahina.",
+'summary-preview'                  => 'Kabilugan nga prebyu:',
 'whitelistedittitle'               => 'Kinahanglan Magsulod para maka ilis',
 'loginreqlink'                     => 'mag sulod',
 'newarticle'                       => '(Bag-o)',
@@ -254,7 +256,7 @@ Para maghimo sang sina na pahina, sugod ka lang sa pagtayp sa sulod sang kahon n
 Pero kung nakasulod nga aksidente lamang, palihog lang i-klik sa imo internet nga may ngalan ukon simbolo nga '''back''' button.",
 'noarticletext'                    => 'Wala subong sang teksto ang ini nga pahina.
 Pwede ka [[Special:Search/{{PAGENAME}}|mangita para sa titulo sang ini nga pahina]] sa iban man nga pahina,
-<span class="plainlinks">[{{fullurl:Special:Log|page={{urlencode:{{FULLPAGENAME}}}}}} mangita ka sang kaparehas nga logs],
+<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} mangita ka sang kaparehas nga logs],
 o [{{fullurl:{{FULLPAGENAME}}|action=edit}} islan ini nga pahina]</span>.',
 'previewnote'                      => "'''Tandaan nga prebyu lamang ini.'''
 Wala pa nabutang ang imo nga ginbag-o!",
@@ -264,27 +266,26 @@ Wala pa nabutang ang imo nga ginbag-o!",
 Kung indi mo naluyagan ang imo mga ginsulat nga islan kag palaptahon sang imo gid nga gusto, te indi mo pagpadala diri.<br />
 Naga promisa ka man sa amon nga ikaw mismo ang nagsulat sina, o ginkopya mo ini sa publiko nga domain o kaparehas nga libre na ginkuhaan.
 '''Indi ka maghatag sang na kapirayt nga na obra sing wala lisensiya!'''",
-'templatesused'                    => 'Mga Templeyts nga nagamit na sa sini nga pahina:',
-'templatesusedpreview'             => 'Ang mga ginagamit na Templeyts sa sini na prebyu:',
 'template-protected'               => '(protektado)',
 'template-semiprotected'           => '(medyo-protektado)',
 'hiddencategories'                 => 'Ini nga pahina ay membro sang {{PLURAL:$1|1 tago nga kategorya|$1 mga tago nga kategorya}}:',
 'permissionserrorstext-withaction' => 'Wala ka sang permiso para mag $2, sa mga nagasunod {{PLURAL:$1|rason|mga rason}}:',
 
 # History pages
-'viewpagelogs'        => 'Tan-awon ang mga log para sa sini nga pahina',
-'currentrev'          => 'Mga Inislan Subong',
-'previousrevision'    => '← Daan nga rebisyon',
-'nextrevision'        => 'Mas bag-o nga rebisyon →',
-'currentrevisionlink' => 'Mga Inislan Subong',
-'cur'                 => 'karon',
-'last'                => 'ulihi',
-'page_last'           => 'ulihi',
-'histlegend'          => "Diff pililian: markahan ang mga radyo kahon sa mga ginrebisyon para makompara kag pinduton ang sulod ukon ang pindut sa idalum.<br />
+'viewpagelogs'           => 'Tan-awon ang mga log para sa sini nga pahina',
+'currentrev'             => 'Mga Inislan Subong',
+'previousrevision'       => '← Daan nga rebisyon',
+'nextrevision'           => 'Mas bag-o nga rebisyon →',
+'currentrevisionlink'    => 'Mga Inislan Subong',
+'cur'                    => 'karon',
+'last'                   => 'ulihi',
+'page_last'              => 'ulihi',
+'histlegend'             => "Diff pililian: markahan ang mga radyo kahon sa mga ginrebisyon para makompara kag pinduton ang sulod ukon ang pindut sa idalum.<br />
 Legend: '''({{int:cur}})''' = ang ginalain niya sa bag-o nga na rebisyon,
 '''({{int:last}})''' = ang ginalain niya sa gapadayun nga rebisyon, '''{{int:minoreditletter}}''' = menor nga inislan.",
-'histfirst'           => 'Pinaka timprano',
-'histlast'            => 'Pinaka Bag-o',
+'history-fieldset-title' => 'Historya sa mga nalantawan',
+'histfirst'              => 'Pinaka timprano',
+'histlast'               => 'Pinaka Bag-o',
 
 # Revision deletion
 'rev-delundel'   => 'pakita/tagu-on',
@@ -302,14 +303,16 @@ Legend: '''({{int:cur}})''' = ang ginalain niya sa bag-o nga na rebisyon,
 
 # Search results
 'searchresults'             => 'Resulta sang Pagpangita',
+'searchresults-title'       => 'Resulta sang Pagpangita para "$1"',
 'searchresulttext'          => 'Para sa madamu pa nga impormasyon parti sa pagpangita {{SITENAME}}, lantawa [[{{MediaWiki:Helppage}}|{{int:bulig}}]].',
+'searchsubtitle'            => 'Nagpangita ka para \'\'\'[[:$1]]\'\'\' ([[Special:Prefixindex/$1|tanan nga pahina gasugod sa "$1"]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|tanan nga pahina nga naga tabid kay "$1"]])',
 'searchsubtitleinvalid'     => "Nangita ka para '''$1'''",
 'noexactmatch'              => "'''Wala diri sang titulo nga pahina \"\$1\".'''
 Pwede ka [[:\$1|makahimo sini nga pahina]].",
 'noexactmatch-nocreate'     => "'''Wala sang titulo na pahina \"\$1\".'''",
 'notitlematches'            => 'Wala sang parehas nga titulo ka pahina',
 'notextmatches'             => 'Wala sang pahina nga parehas teksto',
-'viewprevnext'              => 'Tan-awon ($1) ($2) ($3)',
+'viewprevnext'              => 'Tan-awon ($1 {{int:pipe-separator}} $2) ($3)',
 'search-result-size'        => '$1 ({{PLURAL:$2|1 pulong|$2 pulong}})',
 'search-redirect'           => '(gindirekta liwat $1)',
 'search-section'            => '(seksiyon $1)',
@@ -319,6 +322,7 @@ Pwede ka [[:\$1|makahimo sini nga pahina]].",
 'search-interwiki-more'     => '(damu)',
 'search-mwsuggest-enabled'  => 'may suhestiyon',
 'search-mwsuggest-disabled' => 'wala suhestiyon',
+'showingresultstotal'       => "Nagapakita sa dalum {{PLURAL:$4|resulta '''$1''' of '''$3'''|mga resulta '''$1 - $2''' sang '''$3'''}}",
 'nonefound'                 => "'''Tandaan''': Ang iban lang nga mga ngalan-espasyo ay ginapangita nga daan.
 Testingan mo i-prefiks ang imo pamangkot upod sang ''tanan:'' para makita mo ang tanan nga unod (dala na dira ang pahina paghisayranay, templeyts, etc), o gamita amg imo nanamian nga ngalan-espasyo bilang prefiks.",
 'powersearch'               => 'Abanse nga pagpangita',
@@ -331,6 +335,7 @@ Testingan mo i-prefiks ang imo pamangkot upod sang ''tanan:'' para makita mo ang
 'preferences'       => 'Mga Ginabasehan',
 'mypreferences'     => 'Akon pagpalabi',
 'prefsnologin'      => 'Wala naka-sulod',
+'skin-preview'      => 'Ipakita subong',
 'prefs-rc'          => 'Mga Bag-o nga Inislan',
 'searchresultshead' => 'Pangita-a',
 
@@ -342,9 +347,13 @@ Testingan mo i-prefiks ang imo pamangkot upod sang ''tanan:'' para makita mo ang
 # User rights log
 'rightslog' => 'Karapatan sang naga-usar log',
 
+# Associated actions - in the sentence "You do not have permission to X"
+'action-edit' => 'islan ini nga pahina',
+
 # Recent changes
 'nchanges'                       => '$1 {{PLURAL:$1|bag-ohon|mga ginbag-o}}',
 'recentchanges'                  => 'Mga Bag-o nga Inislan',
+'recentchanges-legend'           => 'Mga pililian sa bag-o lang na himo',
 'recentchanges-feed-description' => 'La-uton ang pina gid ka bag-o nga nahimo sa may wiki sa ini nga feed.',
 'rcnote'                         => "Diri sa idalum {{PLURAL:$1|ay '''1''' na bag-o|sang nagligad '''$1''' mga nabag-o}} sa naligad {{PLURAL:$2|adlaw|'''$2''' adlaw}}, sang mga $5, $4.",
 'rclistfrom'                     => 'Ipakita ang bag-o lang nahimo halin sa $1',
@@ -361,6 +370,8 @@ Testingan mo i-prefiks ang imo pamangkot upod sang ''tanan:'' para makita mo ang
 'minoreditletter'                => 'm',
 'newpageletter'                  => 'B',
 'boteditletter'                  => 'b',
+'rc-enhanced-expand'             => 'Ipakita ang mga detalye (nagakilanlan sang JavaScript)',
+'rc-enhanced-hide'               => 'Tagu-on ang mga detalye',
 
 # Recent changes linked
 'recentchangeslinked'         => 'May labot nga pag-ilis',
@@ -380,11 +391,12 @@ Mga Pahina sa [[Special:Watchlist|imo lista-lantaw]] ay '''dukot'''.",
 'uploadedimage'     => 'na-uplod "[[$1]]"',
 'watchthisupload'   => 'Bantayan ining panid',
 
-# Image description page
+# File description page
 'filehist'                  => 'Historya file',
 'filehist-help'             => 'I-klik sa may petsa/oras para makita ang file sa ina nga oras.',
 'filehist-current'          => 'subong',
 'filehist-datetime'         => 'Petsa/Oras',
+'filehist-thumb'            => 'Thumbnail',
 'filehist-user'             => 'Naga-usar',
 'filehist-dimensions'       => 'Mga Takus',
 'filehist-comment'          => 'Komentar',
@@ -421,16 +433,24 @@ Mga Pahina sa [[Special:Watchlist|imo lista-lantaw]] ay '''dukot'''.",
 'booksources-go'            => 'Lakat',
 
 # Special:Log
-'log'               => 'Logs',
-'log-search-submit' => 'Lakat',
+'log' => 'Logs',
 
 # Special:AllPages
 'allpages'       => 'Tanan nga mga pahina',
 'alphaindexline' => '$1 sa $2',
 'prevpage'       => 'Antes nga pahina ($1)',
 'allpagesfrom'   => 'Ipakita ang mga pahina sugod sa:',
+'allpagesto'     => 'Ipakita ang mga pahina nga nagakatapos sa:',
 'allarticles'    => 'Tanan nga mga pahina',
 'allpagessubmit' => 'Sige',
+
+# Special:LinkSearch
+'linksearch'    => 'Eksternal na mga tabid',
+'linksearch-ok' => 'Pangita-a',
+
+# Special:Log/newusers
+'newuserlogpage'          => 'Naga-usar nga ginhimo log',
+'newuserlog-create-entry' => 'Bag-o na akawnt nga naga-usar',
 
 # Special:ListGroupRights
 'listgrouprights-members' => '(lista sang mga membro)',
@@ -453,28 +473,34 @@ Buwas-damlag nga pagbag-o sang pahina kag ang iya upod na hisayrany pahina ay ip
 'unwatch'           => 'Di maglantaw',
 'watchlist-details' => '{{PLURAL:$1|$1 pahina|$1 mga pahina}} sa imo nga lista sang paglantaw, indi ang pag-isip sang imo ginahambal nga mga pahina.',
 'wlshowlast'        => 'Ipakita ang nagligad nga $1 oras $2 adlaw $3',
+'watchlist-options' => 'Pililian sa lista sang nagalantaw',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'Nagalantaw...',
 'unwatching' => 'Di-paglantaw...',
 
-# Delete/protect/revert
-'deletepage'                  => 'Panason ang pahina',
-'delete-legend'               => 'Panason',
-'confirmdeletetext'           => 'Ikaw ay magapanas sang pahina upod sang tanan niya nga historya.
+# Delete
+'deletepage'            => 'Panason ang pahina',
+'delete-legend'         => 'Panason',
+'confirmdeletetext'     => 'Ikaw ay magapanas sang pahina upod sang tanan niya nga historya.
 Palihog lang nga sigurado nga kinagusto mo ini nga himuon, nga na-intindihan mo ang resulta sang ginahimo mo, kag ang gina obra mo ga santo upod sa [[{{MediaWiki:Policy-url}}|polisiya]].',
-'actioncomplete'              => 'Kompleto nga aksiyon',
-'deletedtext'                 => '"<nowiki>$1</nowiki>" ay nakakas na.
+'actioncomplete'        => 'Kompleto nga aksiyon',
+'deletedtext'           => '"<nowiki>$1</nowiki>" ay nakakas na.
 Lantawa $2 para sa mga lista sang mga bag-o lang ginkakas.',
-'deletedarticle'              => 'ginkakas "[[$1]]"',
-'dellogpage'                  => 'Ginkakas na log',
-'deletecomment'               => 'Rason kun nga panason:',
-'deleteotherreason'           => 'Iban/dugang nga rason:',
-'deletereasonotherlist'       => 'Iban nga rason',
-'rollbacklink'                => 'panumbalik',
+'deletedarticle'        => 'ginkakas "[[$1]]"',
+'dellogpage'            => 'Ginkakas na log',
+'deletecomment'         => 'Rason kun nga panason:',
+'deleteotherreason'     => 'Iban/dugang nga rason:',
+'deletereasonotherlist' => 'Iban nga rason',
+
+# Rollback
+'rollbacklink' => 'panumbalik',
+
+# Protect
 'protectlogpage'              => 'Proteksiyon log',
 'protectedarticle'            => 'protektado "[[$1]]"',
 'modifiedarticleprotection'   => 'bag-ohon ang proteksiyon lebel para "[[$1]]"',
+'prot_1movedto2'              => '[[$1]] gin saylo na sa [[$2]]',
 'protectcomment'              => 'Rason:',
 'protectexpiry'               => 'Ekspayr:',
 'protect_expiry_invalid'      => 'Ang Oras sang pag-ekspayr ay hindi tuod.',
@@ -510,12 +536,13 @@ Pwede mo mabag-o ang lebel sang proteksiyon sang pahina, pero indi ini ma apektu
 'blanknamespace' => '(Mayor)',
 
 # Contributions
-'contributions' => 'Naga-usar nga mga kontribusyon',
-'mycontris'     => 'Akon contribusyon',
-'contribsub2'   => 'Para $1 ($2)',
-'uctop'         => '(ibabaw)',
-'month'         => 'Halin sa bulan (kag sang timprano):',
-'year'          => 'Halin sa tu-ig (kag sang timprano):',
+'contributions'       => 'Naga-usar nga mga kontribusyon',
+'contributions-title' => 'Mga Kontribusyon sang Naga-Usar para $1',
+'mycontris'           => 'Akon contribusyon',
+'contribsub2'         => 'Para $1 ($2)',
+'uctop'               => '(ibabaw)',
+'month'               => 'Halin sa bulan (kag sang timprano):',
+'year'                => 'Halin sa tu-ig (kag sang timprano):',
 
 'sp-contributions-newbies'  => 'Ipakita ang mga kontribusyon sang mga bag-o nga akawnts lamang',
 'sp-contributions-blocklog' => 'pugong log',
@@ -547,6 +574,7 @@ Pwede mo mabag-o ang lebel sang proteksiyon sang pahina, pero indi ini ma apektu
 'ipblocklist-submit'       => 'Pangita-a',
 'blocklink'                => 'harang',
 'unblocklink'              => 'di pagpugong',
+'change-blocklink'         => 'pagbag-o sang pugong',
 'contribslink'             => 'contribuyson',
 'blocklogpage'             => 'Pugong log',
 'blocklogentry'            => 'napunggan [[$1]] nga may-ara oras nga pag-ekspayr na $2 $3',
@@ -574,6 +602,7 @@ palihog siguradohon mo nga naintindihan ang resulta antes mo ini pagahimuon.",
 
 Sa sini nga mga kaso, kilanlan mo gid isaylo o isahon ang pahina sang pag-amat amat kun gusto mo gid ini himuon.",
 'movearticle'      => 'Saylohon ining panid:',
+'movenologin'      => 'Wala naka-sulod',
 'newtitle'         => 'Sa bag-o nga titulo:',
 'move-watch'       => 'Bantayan ining panid',
 'movepagebtn'      => 'Saylohon ining panid',
@@ -652,6 +681,9 @@ Pwede mo matan-aw ang iya ginhalinan',
 'tooltip-diff'                    => 'Ipakita ang mga bag-o nga nahimo mo sa teksto',
 'tooltip-compareselectedversions' => 'Lantawa ang ginalian sang duwa ka napilian nga rebisyon sa sini nga pahina',
 'tooltip-watch'                   => 'Idugang ini nga pahina sa imo lista nga ginabantayan',
+'tooltip-rollback'                => '"Panumbalik" ginabalik ang (mga) na-islan sa sini nga pahina sa pinaka ulihi nga kontributor sa isa lang ka klik',
+'tooltip-undo'                    => '"Indi pag-obrahon" ginabalik ang gin-islan kag gabukas sa isaln form sa may prebyu mode.
+Gapasugot sa pagdugang sang rason sa kabilugan.',
 
 # Browsing diffs
 'previousdiff' => '← Mas daan nga na-islan',
@@ -664,7 +696,7 @@ Pwede mo matan-aw ang iya ginhalinan',
 'show-big-image'       => 'Kabilogan nga resolusyon',
 'show-big-image-thumb' => '<small>Kadakuon sa sini nga prebyu: $1 × $2 piksels</small>',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Pangita-a',
 
 # Bad image list

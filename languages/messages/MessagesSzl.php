@@ -57,15 +57,16 @@ $messages = array(
 'tog-watchlisthideown'        => 'Schow moje pomjyńańa we artiklach, na kere dowom pozůr',
 'tog-watchlisthidebots'       => 'Schow pomjyńańa sprowjone bez boty we artiklach, na kere dowom pozůr',
 'tog-watchlisthideminor'      => 'Schow ńywjelge pomjyńańa w artiklach, na kere dowom pozůr',
+'tog-watchlisthideliu'        => 'Schow sprowjyńo zalůgowanych sprowjaczy na pozorliśće',
+'tog-watchlisthideanons'      => 'Schow sprowjyńa anůńimowych sprowjoczy na liśće artikli, na kere dowom pozůr',
 'tog-ccmeonemails'            => 'Przesyłej mi kopje e-brifůw co żech je posłoł inkszym sprowjaczom',
 'tog-diffonly'                => 'Ńy pokozuj treśći zajtůw půnižyj porůwnańo pomjyńań',
 'tog-showhiddencats'          => 'Pokoż schowane kategoryje',
+'tog-norollbackdiff'          => 'Uomiń pokozywańy pomjyńań po użyću funkcyje „cofej”',
 
 'underline-always'  => 'Dycki',
 'underline-never'   => 'Ńigdy',
 'underline-default' => 'Podug sztalowańo uoglůndarki',
-
-'skinpreview' => '(podglůnd)',
 
 # Dates
 'sunday'        => 'Ńedźela',
@@ -159,7 +160,7 @@ $messages = array(
 'mytalk'         => 'Moja dyskusyjo',
 'anontalk'       => 'Godka tygo IP',
 'navigation'     => 'Nawigacyjo',
-'and'            => 'a',
+'and'            => '&#32;a',
 
 # Metadata in edit box
 'metadata_help' => 'Metadane:',
@@ -203,7 +204,7 @@ $messages = array(
 'toolbox'           => 'Werkcojg',
 'userpage'          => 'Zajta sprowjorza',
 'projectpage'       => 'Zajta projekta',
-'imagepage'         => 'Zajta grafiki',
+'imagepage'         => 'Zobejrz zajte pliku',
 'mediawikipage'     => 'Zajta komuńikata',
 'templatepage'      => 'Zajta šablůna',
 'viewhelppage'      => 'Zajta pomocy',
@@ -222,8 +223,6 @@ $messages = array(
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'Uo {{GRAMMAR:MS.lp|{{SITENAME}}}}',
 'aboutpage'            => 'Project:Uo serwiśe',
-'bugreports'           => 'Raport uo felerach',
-'bugreportspage'       => 'Project:Felery',
 'copyright'            => 'Tekst udostympńany na licencyji $1.',
 'copyrightpagename'    => 'prawami autorskimi {{GRAMMAR:D.lp|{{SITENAME}}}}',
 'copyrightpage'        => '{{ns:project}}:Prawa autorske',
@@ -246,9 +245,7 @@ $messages = array(
 
 'badaccess'        => 'Felerne uprawńyńo',
 'badaccess-group0' => 'Ńy moš uprawńyń coby wykůnać ta uoperacyjo.',
-'badaccess-group1' => 'Ta uoperacyjo mogům wykůnać ino užytkownicy z grupy $1',
-'badaccess-group2' => 'Ta uoperacyjo mogům wykůnać ino užytkownicy s keryjś z grup $1.',
-'badaccess-groups' => 'Ta uoperacyjo mogům wykůnać ino užytkownicy s keryjś z grup $1.',
+'badaccess-groups' => 'Ta uoperacyjo mogům wykůnać ino užytkownicy s keryjś z grup {{PLURAL:$2|grupa|grupy}}:$1.',
 
 'versionrequired'     => 'Wymagano MediaWiki we wersyji $1',
 'versionrequiredtext' => 'Wymagano jest MediaWiki we wersji $1 coby skořistać s tyj zajty. Uoboč [[Special:Version]]',
@@ -262,6 +259,8 @@ $messages = array(
 'editsection'             => 'sprowjej',
 'editold'                 => 'sprowjej',
 'viewsourceold'           => 'pokoż zdrzůdło',
+'editlink'                => 'sprowjej',
+'viewsourcelink'          => 'zdrzůdłowy tekst',
 'editsectionhint'         => 'Sprowjej tajla: $1',
 'toc'                     => 'Wykoz',
 'showtoc'                 => 'pokož',
@@ -294,9 +293,9 @@ $messages = array(
 'nosuchaction'      => 'Ńy mo takij uoperacyji',
 'nosuchactiontext'  => 'Uoprogramowańy ńy rozpoznowo uoperacyji takij kej podano w URL',
 'nosuchspecialpage' => 'Ńy mo takij špecyjalnyj zajty',
-'nospecialpagetext' => "<big>'''Uoprogramowańy ńy rozpoznowo takij špecyjalnyj zajty.'''</big>
+'nospecialpagetext' => '<strong>Uoprogramowańy ńy rozpoznowo takij špecyjalnyj zajty.</strong>
 
-Lista špecyjalnych zajtůw znejdźeš na [[Special:SpecialPages|{{int:specialpages}}]].",
+Lista špecyjalnych zajtůw znejdźeš na [[Special:SpecialPages|{{int:specialpages}}]].',
 
 # General errors
 'error'                => 'Feler',
@@ -341,7 +340,6 @@ Jeli tak ńy je, moguo śe trefić coś znod feler we uoprůgramowańu MediaWiki
 'cannotdelete'         => 'Ńy idźe wyćepać podanyj zajty abo grafiki.',
 'badtitle'             => 'Felerno tytůua',
 'badtitletext'         => 'Podano felerny titel zajty. Prawdopodańy sům w ńim znoki, kerych ńy wolno užywać we titlach abo je pusty.',
-'perfdisabled'         => 'Přeprašomy! Coby uodćůnžyć serwer w godźinach ščytu, časowo zawarlimy wykůnańy tyj čynnośći.',
 'perfcached'           => 'To co sam je naškryflane, to ino kopja s pamjyńći podrynčnyj a može ńy być aktualne.',
 'perfcachedts'         => 'To co sam je naškryflane, to ino kopja s pamjyńći podrynčnyj a bůuo uaktualńůne $1.',
 'querypage-no-updates' => 'Uaktualńyńo lo tyj zajty sům terozki zawarte. Dane, kere sam sům, ńy zostouy uodśwjyžůne.',
@@ -372,7 +370,10 @@ Powůd zawarćo: ''$2''.",
 
 # Login and logout pages
 'logouttitle'                => 'Wylůgowańy užytkowńika',
-'logouttext'                 => "'''Terozki ježeś wylůgowany'''.<br />Možeš dali sam sprowjać zajty we {{SITENAME}} kej ńyzalůgowany užytkowńik, abo [[Special:UserLogin|zalůgować śe nazod]] kej tyn som abo inkšy užytkowńik. Dej pozůr, co na ńykerych zajtach přeglůndarka može dali pokozywać co ježeś zalůgowany, a bydźe tak aže uodśwjyžyš jeij cache.",
+'logouttext'                 => "'''Terozki ježeś wylůgowany'''.
+
+Možeš dali sam sprowjać zajty we {{SITENAME}} kej ńyzalůgowany užytkowńik, abo [[Special:UserLogin|zalůgować śe nazod]] kej tyn som abo inkšy užytkowńik.
+Dej pozůr, co na ńykerych zajtach přeglůndarka može dali pokozywać co ježeś zalůgowany, a bydźe tak aže uodśwjyžyš jeij cache.",
 'welcomecreation'            => '== Witej, $1! ==
 Uotwarli my sam lo Ćebje kůnto.
 Ńy zapomńij poštalować [[Special:Preferences|preferencyji lo {{GRAMMAR:D.lp|{{SITENAME}}}}]].',
@@ -383,7 +384,6 @@ Uotwarli my sam lo Ćebje kůnto.
 'remembermypassword'         => 'Zapamjyntej moje hasuo na tym kůmputře',
 'yourdomainname'             => 'Twoja domyna',
 'externaldberror'            => 'Je jaki feler we zewnyntřnyj baźe autentyfikacyjnyj, abo ńy moš uprawńyń potřebnych do aktualizacyji zewnyntřnego kůnta.',
-'loginproblem'               => '<b>Zdořiu śe problym při průbje zalůgowańo.</b><br />Sprůbuj zaś!',
 'login'                      => 'Zaloguj śe',
 'nav-login-createaccount'    => 'Logowańy / tworzyńy kůnta',
 'loginprompt'                => 'Muśiš mjeć zouůnčůne cookies coby můc śe sam zalůgować.',
@@ -391,10 +391,10 @@ Uotwarli my sam lo Ćebje kůnto.
 'logout'                     => 'Wyloguj',
 'userlogout'                 => 'Wylogowańy',
 'notloggedin'                => 'Ńy ježeś zalůgowany',
-'nologin'                    => 'Ńy moš kůnta? $1.',
+'nologin'                    => "Ńy moš kůnta? '''$1'''.",
 'nologinlink'                => 'Twůř kůnto',
 'createaccount'              => 'Zouůž nowe kůnto',
-'gotaccount'                 => 'Moš juž kůnto? $1.',
+'gotaccount'                 => "Moš juž kůnto? '''$1'''.",
 'gotaccountlink'             => 'Zalůguj śe',
 'createaccountmail'          => 'e-brifym',
 'badretype'                  => 'Hasua kere žeś naškryflou ńy zgodzajům śe jydne s drugim.',
@@ -443,8 +443,8 @@ Jak bydźeš chćou, coby wysyuouo Ći e-brify, pjyrwyj go přečytej. Bydźeš 
 'throttled-mailpassword'     => 'Připůmńyńy hasua bůuo juž wysuane bez {{PLURAL:$1|uostatńo godźina|uostatńe $1 godźin}}.
 Coby powstřimać nadužyća, možliwość wysyuańa připůmńeń naštalowano na jydne bez {{PLURAL:$1|godźina|$1 godźiny}}.',
 'mailerror'                  => 'Při wysyuańu e-brifa zdořiu śe feler: $1',
-'acct_creation_throttle_hit' => 'Přikro nom, zauožyu(a)žeś juž $1 kont(a). Ńy možeš zauožyć kolejnygo.',
-'emailauthenticated'         => 'Twůj adres e-brifa zostou uwjeřitelńůny $1.',
+'acct_creation_throttle_hit' => 'Přikro nom, zauožyu(a)žeś juž {{PLURAL:$1|1 kůnto|$1 kůnta}}. Ńy možeš zauožyć kolejnygo.',
+'emailauthenticated'         => 'Twůj adres e-brifa zostou uwjeřitelńůny $2 uo $3.',
 'emailnotauthenticated'      => 'Twůj adres e-brifa ńy je uwjeřitelńůny. Půnižše funkcyje počty ńy bydům dźauać.',
 'noemailprefs'               => 'Muśiš podać adres e-brifa, coby te funkcyje dźouauy.',
 'emailconfirmlink'           => 'Potwjerdź swůj adres e-brifa',
@@ -453,17 +453,25 @@ Coby powstřimać nadužyća, možliwość wysyuańa připůmńeń naštalowano 
 'accountcreatedtext'         => 'Kůnto lo $1 zostouo utwůřůne.',
 'createaccount-title'        => 'Stwořyńy kůnta na {{GRAMMAR:MS.lp|{{SITENAME}}}}',
 'createaccount-text'         => 'Ktoś utwořiu na {{GRAMMAR:MS.lp|{{SITENAME}}}} ($4) dla Twojego adresa e-brif kůnto "$2". Aktualne hasuo to "$3". Powińežeś śe terozki zalogůwać a je zmjyńić.',
+'login-throttled'            => 'Wykonoužeś za wjela průb zalůgowańo śe na te kůnto. Počekej chwila ńym zaś sprůbuješ.',
 'loginlanguagelabel'         => 'Godka: $1',
 
 # Password reset dialog
-'resetpass'               => 'Resetuj hasuo',
-'resetpass_announce'      => 'Zalůgowoužeś śe s tymčasowym kodym uotřimanym bez e-brif. Coby zakůńčyć proces logůwańo muśiš naštalować nowe hasuo:',
-'resetpass_header'        => 'Zmjyń hasło lů swojygo kůnta',
-'resetpass_submit'        => 'Naštaluj hasuo a zalůguj',
-'resetpass_success'       => 'Twoje hasuo zostouo půmyślńy pomjyńone! Trwo logůwańe...',
-'resetpass_bad_temporary' => 'Felerne hasuo tymčasowe. Abo možeś juž zakůńčyu proces pomjyńańo hasua, abo poprośiužeś uo nowe hasuo tymčasowe.',
-'resetpass_forbidden'     => 'Ńy idźe sam půmjyńyć hasuůw.',
-'resetpass_missing'       => 'Formuloř ńy mo danych.',
+'resetpass'                 => 'Zmjyń hasło',
+'resetpass_announce'        => 'Zalůgowoužeś śe s tymčasowym kodym uotřimanym bez e-brif. Coby zakůńčyć proces logůwańo muśiš naštalować nowe hasuo:',
+'resetpass_header'          => 'Zmjyń hasło lů swojygo kůnta',
+'oldpassword'               => 'Stare hasuo',
+'newpassword'               => 'Nowe hasuo',
+'retypenew'                 => 'Naškryflej ješče roz nowe hasuo:',
+'resetpass_submit'          => 'Naštaluj hasuo a zalůguj',
+'resetpass_success'         => 'Twoje hasuo zostouo půmyślńy pomjyńone! Trwo logůwańe...',
+'resetpass_bad_temporary'   => 'Felerne hasuo tymčasowe. Abo možeś juž zakůńčyu proces pomjyńańo hasua, abo poprośiužeś uo nowe hasuo tymčasowe.',
+'resetpass_forbidden'       => 'Ńy idźe sam půmjyńyć hasuůw.',
+'resetpass-no-info'         => 'Muśysz być zalogowany, coby uzyskać bezpostrzedńi dostymp do tyj zajty.',
+'resetpass-submit-loggedin' => 'Zmjyń hasło',
+'resetpass-wrong-oldpass'   => 'Felerne tymczasowe abo aktualne hasło. 
+Możliwe co właśńy zmjyńiłżeś swoje hasło abo poprosiłżeś uo nowe tymczasowe hasło.',
+'resetpass-temp-password'   => 'Tymczasowe hasło:',
 
 # Edit page toolbar
 'bold_sample'     => 'Ruby tekst',
@@ -486,8 +494,8 @@ Coby powstřimać nadužyća, možliwość wysyuańa připůmńeń naštalowano 
 'hr_tip'          => 'Lińja poźůmo (užywej s ůmjarym)',
 
 # Edit pages
-'summary'                          => 'Uopis pomjyńań',
-'subject'                          => 'Tymat/naguůwek',
+'summary'                          => 'Uopis pomjyńań:',
+'subject'                          => 'Tymat/naguůwek:',
 'minoredit'                        => 'To je ńywjelge sprowjyńy',
 'watchthis'                        => 'Dej pozůr',
 'savearticle'                      => 'Spamjyntej',
@@ -499,8 +507,8 @@ Coby powstřimać nadužyća, možliwość wysyuańa připůmńeń naštalowano 
 'missingsummary'                   => "'''Připomńyńy:''' Ńy wprowadźiužeś uopisu pomjyńań. Kej go ńy chceš wprowadzać, naćiś knefel Škryflej ješče roz.",
 'missingcommenttext'               => 'Wćepej kůmyntoř půńižyj.',
 'missingcommentheader'             => "'''Dej pozůr:''' Treść naguůwka je pusto - uzupeuńij go! Jeli tego ńy zrobiš, Twůj kůmyntoř bydźe naškryflany bez naguůwka.",
-'summary-preview'                  => 'Podglůnd uopisu',
-'subject-preview'                  => 'Podglůnd tematu/naguůwka',
+'summary-preview'                  => 'Podglůnd uopisu:',
+'subject-preview'                  => 'Podglůnd tematu/naguůwka:',
 'blockedtitle'                     => 'Užytkowńik je zawarty uod sprowjyń',
 'blockedtext'                      => '<big>\'\'\'Twoje kůnto abo adres IP sům zawarte.\'\'\'</big>
 
@@ -535,7 +543,7 @@ Twůj adres IP je terozki $3. Idyntyfikator Twojij blokady to $5. Zanotuj śe go
 'confirmedittext'                  => 'Muśiš podać a potwjerdźić swůj e-brif, coby můc sam sprowjać.
 Možeš to zrobić we [[Special:Preferences|swojich štalowańach]].',
 'nosuchsectiontitle'               => 'Ńy mo takij tajli',
-'nosuchsectiontext'                => 'Průbowoužeś sprowjać tajla kero ńy istńeje. Jak sam ńy ma tajli $1, ńy ma tyž kaj naškryflać twojigo sprowjyńo.',
+'nosuchsectiontext'                => 'Průbowoužeś sprowjać tajla kero ńy istńeje.',
 'loginreqtitle'                    => 'Muśiš śe zalůgować',
 'loginreqlink'                     => 'zalůguj śe',
 'loginreqpagetext'                 => 'Muśiš $1 coby můc přeglůndać inkše zajty.',
@@ -586,7 +594,9 @@ By wćepać swoje pomjyńańo muśiš pomjyńać tekst w polu na wjyrchu.
 '''PROŠA ŃY WĆEPYWAĆ SAM MATYRJOUŮW KERE SŮM CHRŮŃONE PRAWYM AUTORSKIM BEZ DOZWOLEŃO WUAŚĆIĆELA!'''",
 'longpagewarning'                  => "'''Dej pozůr: Ta zajta je $1 kilobajt-y/-ůw wjelgo; w ńykerych přyglůndarkach můgům wystůmpić problymy w sprowjańu zajtůw kere majům wjyncyj jak 32 kilobajty. Kejbyś ůmjou, podźel tekst na myńše tajle.'''",
 'longpageerror'                    => "'''Feler: Tekst kery žeś sam wćepywou mo $1 kilobajtůw. Maksymalno dugość tekstu ńy može być wjynkšo kej $2 kilobajtůw. Twůj tekst ńy bydźe sam naškryflany.'''",
-'readonlywarning'                  => '<strong>Dej pozůr: Baza danych zostoua filowo zawarto skuli potřeb admińistracyjnych. Bestůž ńy do śe terozki naškryflać Twojich pomjyńań. Radzymy přećepać nowy tekst kajś do plika tekstowego (wytnij/wklej) a wćepać sam zaś po uodymkńyńću bazy.</strong>',
+'readonlywarning'                  => "'''Dej pozůr: Baza danych zostoua filowo zawarto skuli potřeb admińistracyjnych. Bestůž ńy do śe terozki naškryflać Twojich pomjyńań. Radzymy přećepać nowy tekst kajś do plika tekstowego (wytnij/wklej) a wćepać sam zaś po uodymkńyńću bazy.'''
+
+Admińistrator kery zawar baza dou take wyjaśńyńe: $1",
 'protectedpagewarning'             => "'''Dej pozůr: Sprowjańe tyj zajty zostouo zawarte. Mogům jům sprowjać ino užytkowńicy s uprawńyńami admińistratora.'''",
 'semiprotectedpagewarning'         => "'''Pozůr:''' Ta zajta zostoua zawarto a ino zaregišterowani užytkownicy mogům jům sprowjać.",
 'cascadeprotectedwarning'          => "'''Dej pozůr:''' Ta zajta zostoua zawarto a ino užytkowńicy s uprawńyńami admińistratora mogům jům sprowjać. Zajta ta je podpjynto pod {{PLURAL:$1|nastympujůnco zajta, kero zostoua zawarto|nastympujůncych zajtach, kere zostouy zawarte}} ze zauůnčonům opcjům dźedźičyńo:",
@@ -607,17 +617,29 @@ Možeš sprowjać te co juž sům, abo [[Special:UserLogin|zalogować śe, abo z
 'recreate-deleted-warn'            => "'''Dej pozůr: Průbuješ wćepać nazod zajta kero juž bůua wyćepano.'''
 
 Zastanůw śe, eli sprowjańy nazod tyj zajty mo uzasadńyńy. Lo wygody užytkowńikůw, ńižyj pokozano rejer wyćepńyńć tyj zajty:",
+'deleted-notice'                   => 'Ta zajta zostoua wyćepńynto. Rejer wyćepań tyj zajty je pokozany půńižyj.',
+'deletelog-fulllog'                => 'Uobejzdřyj couki rejer.',
+'edit-hook-aborted'                => 'Sprowjyńy štopńynte skiž hoka.
+Ńy je wjadůme pů jakymu.',
+'edit-gone-missing'                => 'Ńy idźe zaktualizować zajty.
+Zdowo śe, co zostoua wyćepano.',
+'edit-conflict'                    => 'Kůnflikt sprowjyń.',
+'edit-no-change'                   => 'Twoje sprowjyńe uostouo zignorowane pů takymu, co ńic žeś we tekśće ńy zmjyńiu.',
+'edit-already-exists'              => 'Ńy idźe utwořić nowyj zajty.
+Tako zajta juž sam je.',
 
 # Parser/template warnings
 'expensive-parserfunction-warning'        => 'Dej pozůr: ta zajta mo za dužo uodwouań do funkcyji parsera, kere mocno uobćůnžajům systym.
 
-Powinno jejich być myńi jak $2, a terozki je $1.',
+Powinno być myńi jak $2 {{PLURAL:$2|wywouańy|wywouańo|wywouań}}, a terozki {{PLURAL:$1|je $1 wywouańy|sům $1 wywouańo|je $1 wywouań}}.',
 'expensive-parserfunction-category'       => 'Zajty kere majům za dužo uodwouań do funkcyji parsera, kere mocno uobćůnžajům systym.',
 'post-expand-template-inclusion-warning'  => 'Dej pozůr: Rozmjar doůunčonych šablůnůw je za wjelgi.
 Ńykere šablůny ńy bydům sam doůunčone.',
 'post-expand-template-inclusion-category' => 'Zajty na kerych rozmjar doůunčonych šablůnůw je za wjelgi.',
 'post-expand-template-argument-warning'   => 'Dej pozůr: Ta zajta zawjyro přinojmyńi jedyn argument we šablůńe kery powoduje co je ůun za wjelgi. Te argumynty bydům pomińynte.',
 'post-expand-template-argument-category'  => 'Zajty na kerych sům šablůny s pomińyntymi argumyntůma.',
+'parser-template-loop-warning'            => 'Wykryto szablůn zapyntlyńo: [[$1]]',
+'parser-template-recursion-depth-warning' => 'Przekroczůno limit głymbokośći rekurencyji szablona ($1)',
 
 # "Undo" feature
 'undo-success' => 'Sprowjyńy zostouo wycůfane. Proša pomjarkować ukozane půnižyj dyferencyje mjyndzy wersyjami, coby zweryfikować jejich poprawność, potym zaś naškryflać pomjyńańo coby zakońčyć uoperacyjo.',
@@ -632,28 +654,28 @@ Powinno jejich być myńi jak $2, a terozki je $1.',
 Skuli: ''$2''",
 
 # History pages
-'viewpagelogs'        => 'Uoboč rejery uoperacyji lo tyj zajty',
-'nohistory'           => 'Ta zajta ńy mo swojij historyje sprowjyń.',
-'revnotfound'         => 'Wersyjo ńy zostoua znejdźůno',
-'revnotfoundtext'     => 'Ńy idźe znejść staršyj wersyji zajty. Sprawdź, proša, URL kery žeś užůu coby uzyskać dostymp do tyj zajty.',
-'currentrev'          => 'Aktualno wersyjo',
-'revisionasof'        => 'Wersyjo s dńa $1',
-'revision-info'       => 'Wersyjo s dńa $1; $2',
-'previousrevision'    => '← starszo wersyjo',
-'nextrevision'        => 'Nastympno wersyjo→',
-'currentrevisionlink' => 'Aktualno wersyjo',
-'cur'                 => 'bjež.',
-'next'                => 'nastympno',
-'last'                => 'popř.',
-'page_first'          => 'počůnek',
-'page_last'           => 'kůńec',
-'histlegend'          => 'Wybůr růžńic do porůwnańo: postow kropki we boksach a naćiś enter abo knefel na dole.<br />
+'viewpagelogs'           => 'Uoboč rejery uoperacyji lo tyj zajty',
+'nohistory'              => 'Ta zajta ńy mo swojij historyje sprowjyń.',
+'currentrev'             => 'Aktualno wersyjo',
+'currentrev-asof'        => 'Aktualno wersyjo na dźyń $1',
+'revisionasof'           => 'Wersyjo s dńa $1',
+'revision-info'          => 'Wersyjo s dńa $1; $2', # Additionally available: $3: revision id
+'previousrevision'       => '← starszo wersyjo',
+'nextrevision'           => 'Nastympno wersyjo→',
+'currentrevisionlink'    => 'Aktualno wersyjo',
+'cur'                    => 'bjež.',
+'next'                   => 'nastympno',
+'last'                   => 'popř.',
+'page_first'             => 'počůnek',
+'page_last'              => 'kůńec',
+'histlegend'             => 'Wybůr růžńic do porůwnańo: postow kropki we boksach a naćiś enter abo knefel na dole.<br />
 Legynda: (bjež.) - růžńice s wersyjům bježůncům, (popř.) - růžńice s wersyjům popředzajůncům, d - drobne zmjany',
-'deletedrev'          => '[wyćepano]',
-'histfirst'           => 'uod počůnku',
-'histlast'            => 'uod uostatka',
-'historysize'         => '({{PLURAL:$1|1 bajt|$1 bajty|$1 bajtůw}})',
-'historyempty'        => '(pusto)',
+'history-fieldset-title' => 'Přeglůndej historyjo',
+'deletedrev'             => '[wyćepano]',
+'histfirst'              => 'uod počůnku',
+'histlast'               => 'uod uostatka',
+'historysize'            => '({{PLURAL:$1|1 bajt|$1 bajty|$1 bajtůw}})',
+'historyempty'           => '(pusto)',
 
 # Revision feed
 'history-feed-title'          => 'Gyszichta wersyjůw',
@@ -735,6 +757,7 @@ Inkśi admińistratoři {{GRAMMAR:D.lp|{{SITENAME}}}} dali bydům mjeć dostymp 
 'mergehistory-invalid-destination' => 'Zajta docelowo muśi mjeć poprowne mjano.',
 'mergehistory-autocomment'         => 'Historyjo [[:$1]] scalono ze [[:$2]]',
 'mergehistory-comment'             => 'Historyjo [[:$1]] pouůnčůno ze [[:$2]]: $3',
+'mergehistory-same-destination'    => 'Zajta zdřuduowo a docelowo ńy mogům być te same.',
 
 # Merge log
 'mergelog'           => 'Pouůnčůne',
@@ -747,122 +770,201 @@ Inkśi admińistratoři {{GRAMMAR:D.lp|{{SITENAME}}}} dali bydům mjeć dostymp 
 'difference'              => '(Růžńice mjyndzy škryflańami)',
 'lineno'                  => 'Lińja $1:',
 'compareselectedversions' => 'porůwnej wybrane wersyje',
+'visualcomparison'        => 'Porůwnońy treśći',
+'wikicodecomparison'      => 'Porůwnońy wikiteksta',
 'editundo'                => 'cofej',
 'diff-multi'              => '(Ńy pokozano {{PLURAL:$1|jydnyj wersyji postředńij|$1 wersyji postředńich}}.)',
+'diff-movedto'            => 'přećepano do $1',
+'diff-styleadded'         => 'dodano styl: $1',
+'diff-added'              => 'dodano $1',
+'diff-changedto'          => 'zmjyńůno na $1',
+'diff-movedoutof'         => 'překludzůne s $1',
+'diff-styleremoved'       => 'wyćepano styl: $1',
+'diff-removed'            => 'wyćepano $1',
+'diff-changedfrom'        => 'zmjyńůno s $1',
+'diff-src'                => 'zdřuduo',
+'diff-withdestination'    => 's přeznočyńym $1',
+'diff-with'               => '&#32;s $1 $2',
+'diff-with-final'         => '&#32;a $1 $2',
+'diff-width'              => 'šyřka',
+'diff-height'             => 'wysokość',
+'diff-p'                  => "'''paragraf'''",
+'diff-blockquote'         => "'''cytot'''",
+'diff-h1'                 => "'''naguůwek (poźům 1)'''",
+'diff-h2'                 => "'''naguůwek (poźům 2)'''",
+'diff-h3'                 => "'''naguůwek (poźům 3)'''",
+'diff-h4'                 => "'''naguůwek (poźům 4)'''",
+'diff-h5'                 => "'''naguůwek (poźům 5)'''",
+'diff-pre'                => "'''tekst preformatowany'''",
+'diff-div'                => "'''dźelyńe'''",
+'diff-ul'                 => "'''ńyupořůndkowano lista'''",
+'diff-ol'                 => "'''upořůndkowano lista'''",
+'diff-li'                 => "'''elymynt listy'''",
+'diff-table'              => "'''tabůlka'''",
+'diff-tbody'              => "'''zawartość tabůlki'''",
+'diff-tr'                 => "'''wjyrš'''",
+'diff-td'                 => "'''komůrka'''",
+'diff-th'                 => "'''naguůwek'''",
+'diff-br'                 => "'''přerwa'''",
+'diff-hr'                 => "'''lińja poźůmo'''",
+'diff-code'               => "'''blok kodu'''",
+'diff-dl'                 => "'''lista defińicyji'''",
+'diff-dt'                 => "'''termin we defińicyji'''",
+'diff-dd'                 => "'''defińicyjo'''",
+'diff-input'              => "'''wkludzańe'''",
+'diff-form'               => "'''formulař'''",
+'diff-img'                => "'''grafika'''",
+'diff-span'               => "'''uodstymp'''",
+'diff-a'                  => "'''link'''",
+'diff-i'                  => "'''kursywa'''",
+'diff-b'                  => "'''pogrubjyńy'''",
+'diff-strong'             => "'''rube buchštaby'''",
+'diff-em'                 => "'''podkreślyńy'''",
+'diff-font'               => "'''čćůnka'''",
+'diff-big'                => "'''pogrubjyńy'''",
+'diff-del'                => "'''wyćepane'''",
+'diff-tt'                 => "'''naprawjůno šyřka'''",
+'diff-sub'                => "'''indeks spodńi'''",
+'diff-sup'                => "'''indeks wjyrchńi'''",
+'diff-strike'             => "'''překreślyńy'''",
 
 # Search results
-'searchresults'             => 'Wyńiki šnupańo',
-'searchresulttext'          => 'Coby dowjydźeć śe wjyncyj uo šnupańu w {{GRAMMAR:D.lp|{{SITENAME}}}}, uobezdřij [[{{MediaWiki:Helppage}}|{{int:help}}]].',
-'searchsubtitle'            => 'Wyńiki šnupańo za "[[:$1]]"
-([[Special:Prefixindex/$1|zajty kere začynajům śe uod „$1”]] |
-[[Special:WhatLinksHere/$1|zajty kere sům adresowane do „$1”]])',
-'searchsubtitleinvalid'     => 'Lo zapytańo "$1"',
-'noexactmatch'              => "'''Ńy mo sam zajtůw nazwanych \"\$1\".'''
+'searchresults'                    => 'Wyńiki šnupańo',
+'searchresults-title'              => 'Wyniki sznupańo za „$1”',
+'searchresulttext'                 => 'Coby dowjydźeć śe wjyncyj uo šnupańu w {{GRAMMAR:D.lp|{{SITENAME}}}}, uobezdřij [[{{MediaWiki:Helppage}}|{{int:help}}]].',
+'searchsubtitle'                   => 'Wyńiki šnupańo za "[[:$1]]" ([[Special:Prefixindex/$1|zajty kere začynajům śe uod „$1”]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|zajty kere sům adresowane do „$1”]])',
+'searchsubtitleinvalid'            => 'Lo zapytańo "$1"',
+'noexactmatch'                     => "'''Ńy mo sam zajtůw nazwanych \"\$1\".'''
 Možeš [[:\$1|tako utwořyć]], abo sprůbować pounygo šnupańo.",
-'noexactmatch-nocreate'     => "'''Ńy mo sam zajty uo mjańe \"\$1\".'''",
-'toomanymatches'            => 'Za dužo elymyntůw kere pasujům do wzorca, wćep inkše zapytańy',
-'titlematches'              => 'Znejdźono we titlach:',
-'notitlematches'            => 'Ńy znejdźono we titlach',
-'textmatches'               => 'Znejdźono na zajtach:',
-'notextmatches'             => 'Ńy znejdźono we tekście zajtůw',
-'prevn'                     => 'popředńe $1',
-'nextn'                     => 'nastympne $1',
-'viewprevnext'              => 'Uobezdřij ($1) ($2) ($3)',
-'search-result-size'        => '$1 ({{PLURAL:$2|1 suowo|$2 suowa|$2 suůw}})',
-'search-result-score'       => 'Akuratność: $1%',
-'search-redirect'           => '(překerowańy $1)',
-'search-section'            => '(tajla $1)',
-'search-suggest'            => 'Mjoužeś na myśli: $1 ?',
-'search-interwiki-caption'  => 'Śostřane projekty',
-'search-interwiki-default'  => '$1 wyńiki:',
-'search-interwiki-more'     => '(wjyncyj)',
-'search-mwsuggest-enabled'  => 'ze sůgestyjůma',
-'search-mwsuggest-disabled' => 'ńy mo sůgestyji',
-'search-relatedarticle'     => 'Podane',
-'mwsuggest-disable'         => 'Wyuůnč sůgestyje AJAX',
-'searchrelated'             => 'podane',
-'searchall'                 => 'wšyjske',
-'showingresults'            => "To lista na keryj je {{PLURAL:$1|'''1''' wyńik|'''$1''' wyńikůw}}, počynojůnc uod nůmeru '''$2'''.",
-'showingresultsnum'         => "To lista na keryj je {{PLURAL:$3|'''1''' wyńik|'''$3''' wyńikůw}}, počynojůnc uod nůmeru '''$2'''.",
-'showingresultstotal'       => "Půńižej znojdujům śe wyńiki šnupańo '''$1 - $2''' ze '''$3'''",
-'nonefound'                 => "'''Dej pozůr''': Důmyślńy přešukiwane sům ino ńykere přestřyńy mjan. Poprůbuj popředźić wyšukiwano fraza předrostkym ''all:'', co spowoduje přešukańy coukij zawartośći {{GRAMMAR:D.lp|{{SITENAME}}}} (wůunčńy ze zajtami godki, šablůnůma atp.), abo poprůbuj užyć kej předrostka wybranyj, jydnyj přestřyńi mjan.",
-'powersearch'               => 'Sznupańy zaawansowane',
-'powersearch-legend'        => 'Šnupańy zaawansowane',
-'powersearch-ns'            => 'Šnupej we přestřyńach mjan:',
-'powersearch-redir'         => 'Pokož překerowańa',
-'powersearch-field'         => 'Šnupej',
-'search-external'           => 'Šnupańy zewnyntřne',
-'searchdisabled'            => 'Šnupańy we {{GRAMMAR:MS.lp|{{SITENAME}}}} zostouo zawarte. Zańim go zouůnčům, možeš sprůbować šnupańo bez Google. Ino zauwaž, co informacyje uo treśći {{GRAMMAR:MS.lp|{{SITENAME}}}} můgům być we Google ńyakuratne.',
+'noexactmatch-nocreate'            => "'''Ńy mo sam zajty uo mjańe \"\$1\".'''",
+'toomanymatches'                   => 'Za dužo elymyntůw kere pasujům do wzorca, wćep inkše zapytańy',
+'titlematches'                     => 'Znejdźono we titlach:',
+'notitlematches'                   => 'Ńy znejdźono we titlach',
+'textmatches'                      => 'Znejdźono na zajtach:',
+'notextmatches'                    => 'Ńy znejdźono we tekście zajtůw',
+'prevn'                            => 'popředńe $1',
+'nextn'                            => 'nastympne $1',
+'viewprevnext'                     => 'Uobezdřij ($1 {{int:pipe-separator}} $2) ($3)',
+'searchmenu-legend'                => 'Uopcyje sznupańo',
+'searchmenu-exists'                => "'''Ńy ma zajty uo mjańy \"[[:\$1]]\" na tyj wiki'''",
+'searchmenu-new'                   => "'''Stwůrz zajta „[[:$1|$1]]” na tyj wiki!'''",
+'searchhelp-url'                   => 'Help:Pomoc',
+'searchmenu-prefix'                => '[[Special:PrefixIndex/$1|Przeglůndej zajty kere s anfanga majům tyn przedrostek]]',
+'searchprofile-articles'           => 'Zajty',
+'searchprofile-articles-and-proj'  => 'Wszyjstke zajty projekta',
+'searchprofile-project'            => 'Zajty kere ńy sům we głůwnyj przestrzyńi mjan',
+'searchprofile-images'             => 'Pliki',
+'searchprofile-everything'         => 'Wszyjstko',
+'searchprofile-advanced'           => 'Zaawansowane',
+'searchprofile-articles-tooltip'   => 'Sznupańy we przestrzyńi mjan $1',
+'searchprofile-project-tooltip'    => 'Sznupańy we przestrzyńach mjan $1',
+'searchprofile-images-tooltip'     => 'Sznupańy za plikůma',
+'searchprofile-everything-tooltip' => 'Sznupej we cołkij zawartości (wroz ze zajtami godki)',
+'searchprofile-advanced-tooltip'   => 'Sznupańy we wybranych przestrzyńach mjan',
+'prefs-search-nsdefault'           => 'Domyślńy sznupej we przestrzyńach mjan:',
+'prefs-search-nscustom'            => 'Sznupej we wybranych przestrzyńach mjan:',
+'search-result-size'               => '$1 ({{PLURAL:$2|1 suowo|$2 suowa|$2 suůw}})',
+'search-result-score'              => 'Akuratność: $1%',
+'search-redirect'                  => '(překerowańy $1)',
+'search-section'                   => '(tajla $1)',
+'search-suggest'                   => 'Mjoužeś na myśli: $1 ?',
+'search-interwiki-caption'         => 'Śostřane projekty',
+'search-interwiki-default'         => '$1 wyńiki:',
+'search-interwiki-more'            => '(wjyncyj)',
+'search-mwsuggest-enabled'         => 'ze sůgestyjůma',
+'search-mwsuggest-disabled'        => 'ńy mo sůgestyji',
+'search-relatedarticle'            => 'Podane',
+'mwsuggest-disable'                => 'Wyuůnč sůgestyje AJAX',
+'searchrelated'                    => 'podane',
+'searchall'                        => 'wšyjske',
+'showingresults'                   => "To lista na keryj je {{PLURAL:$1|'''1''' wyńik|'''$1''' wyńikůw}}, počynojůnc uod nůmeru '''$2'''.",
+'showingresultsnum'                => "To lista na keryj je {{PLURAL:$3|'''1''' wyńik|'''$3''' wyńikůw}}, počynojůnc uod nůmeru '''$2'''.",
+'showingresultstotal'              => "Půńižej {{PLURAL:$4|znojduje śe wynik šnupańo numer '''$1''' s '''$3'''|znojdujům śe wyńiki šnupańo '''$1 - $2''' ze '''$3'''}}",
+'nonefound'                        => "'''Dej pozůr''': Důmyślńy přešukiwane sům ino ńykere přestřyńy mjan. Poprůbuj popředźić wyšukiwano fraza předrostkym ''all:'', co spowoduje přešukańy coukij zawartośći {{GRAMMAR:D.lp|{{SITENAME}}}} (wůunčńy ze zajtami godki, šablůnůma atp.), abo poprůbuj užyć kej předrostka wybranyj, jydnyj přestřyńi mjan.",
+'search-nonefound'                 => 'Ńy ma wynikůw kere społńajům kryterja podane we zapytańu.',
+'powersearch'                      => 'Sznupańy zaawansowane',
+'powersearch-legend'               => 'Šnupańy zaawansowane',
+'powersearch-ns'                   => 'Šnupej we přestřyńach mjan:',
+'powersearch-redir'                => 'Pokož překerowańa',
+'powersearch-field'                => 'Šnupej',
+'search-external'                  => 'Šnupańy zewnyntřne',
+'searchdisabled'                   => 'Šnupańy we {{GRAMMAR:MS.lp|{{SITENAME}}}} zostouo zawarte. Zańim go zouůnčům, možeš sprůbować šnupańo bez Google. Ino zauwaž, co informacyje uo treśći {{GRAMMAR:MS.lp|{{SITENAME}}}} můgům być we Google ńyakuratne.',
 
 # Preferences page
-'preferences'              => 'Preferyncyje',
-'mypreferences'            => 'Moje preferyncyje',
-'prefs-edits'              => 'Ličba sprowjyń:',
-'prefsnologin'             => 'Ńy ježeś zalůgowany',
-'prefsnologintext'         => 'Muśiš śe <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} zalůgować]</span> coby štalować swoje preferyncyje.',
-'prefsreset'               => 'Preferyncyje důmyślne zostouy uodtwořůne.',
-'qbsettings'               => 'Gurt šybkigo dostympu',
-'qbsettings-none'          => 'Brak',
-'qbsettings-fixedleft'     => 'Stouy, s lewyj',
-'qbsettings-fixedright'    => 'Stouy, s prawyj',
-'qbsettings-floatingleft'  => 'Unošůncy śe, s lewyj',
-'qbsettings-floatingright' => 'Unošůncy śe, s prawyj',
-'changepassword'           => 'Zmjana hasua',
-'skin'                     => 'Skůrka',
-'math'                     => 'Wzory',
-'dateformat'               => 'Format daty',
-'datedefault'              => 'Důmyślny',
-'datetime'                 => 'Data a czas',
-'math_failure'             => 'Parser ńy můg rozpoznać',
-'math_unknown_error'       => 'ńyznany feler',
-'math_unknown_function'    => 'ńyznano funkcyjo',
-'math_lexing_error'        => 'feler leksera',
-'math_syntax_error'        => 'felerno skuadńa',
-'math_image_error'         => 'kůnwersyjo do formatu PNG ńy powjodua śe; uobadej, eli poprawńy zainštalowane sům lotex, dvips, gs i convert',
-'math_bad_tmpdir'          => 'Ńy idźe utwořić abo naškryflać w tymčasowym katalůgu do wzorůw matymatyčnych',
-'math_bad_output'          => 'Ńy idźe utwořić abo naškryflać we wyjśćowym katalůgu do wzorůw matymatyčnych',
-'math_notexvc'             => 'Ńy ma sam texvc; zapoznej śe z math/README w celu kůnfiguracyje.',
-'prefs-personal'           => 'Dane užytkowńika',
-'prefs-rc'                 => 'Ńydowno pomjyńane',
-'prefs-watchlist'          => 'Pozůrlista',
-'prefs-watchlist-days'     => 'Ličba dńi widočnych na liśće artikli, na kere dowoš pozůr:',
-'prefs-watchlist-edits'    => 'Ličba půmjyńań pokazywanych we rozšyřůnyj liśće artiklůw, na kere dowoš pozůr:',
-'prefs-misc'               => 'Roztůmajte',
-'saveprefs'                => 'Naškryflej',
-'resetprefs'               => 'Preferencyje důmyślne',
-'oldpassword'              => 'Stare hasuo',
-'newpassword'              => 'Nowe hasuo',
-'retypenew'                => 'Naškryflej ješče roz nowe hasuo:',
-'textboxsize'              => 'Sprowjańy',
-'rows'                     => 'Wjerše:',
-'columns'                  => 'Kůlumny:',
-'searchresultshead'        => 'Šnupańy',
-'resultsperpage'           => 'Ličba wyńikůw na zajće',
-'contextlines'             => 'Pjyrše wjerše artikla',
-'contextchars'             => 'Buchštaby kůnteksta we lińijce',
-'stub-threshold'           => 'Maksymalny rozmjar artikla uoznačanygo kej <a href="#" class="stub">stub (kůnsek)</a>',
-'recentchangesdays'        => 'Ličba dńi do pokazańo we půmjyńanych na uostatku:',
-'recentchangescount'       => 'Ličba pozycyji na liśće půmjyńanych na uostatku, we historyje zajtůw a zajtach rejerůw:',
-'savedprefs'               => 'Twoje štalowańo we preferyncyjach zostouy naškryflane.',
-'timezonelegend'           => 'Strefa časowo',
-'timezonetext'             => '¹Podej uo wjela godźin růžńi śe Twůj čas uod ůńiwersalnygo (UTC).',
-'localtime'                => 'Twůj čas:',
-'timezoneoffset'           => 'Dyferencyjo ¹',
-'servertime'               => 'Aktualny čas serwera',
-'guesstimezone'            => 'Pobjer z přeglůndarki',
-'allowemail'               => 'Inkśi užytkowńicy můgům přesyuać mje e-brify',
-'prefs-searchoptions'      => 'Uopcyje šnupańo',
-'prefs-namespaces'         => 'Přystřyńe mjan',
-'defaultns'                => 'Důmyślńy šnupej we nastympujůncych přystřyńach mjan:',
-'default'                  => 'důmyślńy',
-'files'                    => 'Pliki',
+'preferences'               => 'Preferyncyje',
+'mypreferences'             => 'Moje preferyncyje',
+'prefs-edits'               => 'Ličba sprowjyń:',
+'prefsnologin'              => 'Ńy ježeś zalůgowany',
+'prefsnologintext'          => 'Muśiš śe <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} zalůgować]</span> coby štalować swoje preferyncyje.',
+'prefsreset'                => 'Preferyncyje důmyślne zostouy uodtwořůne.',
+'qbsettings'                => 'Gurt šybkigo dostympu',
+'qbsettings-none'           => 'Brak',
+'qbsettings-fixedleft'      => 'Stouy, s lewyj',
+'qbsettings-fixedright'     => 'Stouy, s prawyj',
+'qbsettings-floatingleft'   => 'Unošůncy śe, s lewyj',
+'qbsettings-floatingright'  => 'Unošůncy śe, s prawyj',
+'changepassword'            => 'Zmjana hasua',
+'skin'                      => 'Skůrka',
+'skin-preview'              => 'podglůnd',
+'math'                      => 'Wzory',
+'dateformat'                => 'Format daty',
+'datedefault'               => 'Důmyślny',
+'datetime'                  => 'Data a czas',
+'math_failure'              => 'Parser ńy můg rozpoznać',
+'math_unknown_error'        => 'ńyznany feler',
+'math_unknown_function'     => 'ńyznano funkcyjo',
+'math_lexing_error'         => 'feler leksera',
+'math_syntax_error'         => 'felerno skuadńa',
+'math_image_error'          => 'kůnwersyjo do formatu PNG ńy powjodua śe; uobadej, eli poprawńy zainštalowane sům lotex, dvips, gs i convert',
+'math_bad_tmpdir'           => 'Ńy idźe utwořić abo naškryflać w tymčasowym katalůgu do wzorůw matymatyčnych',
+'math_bad_output'           => 'Ńy idźe utwořić abo naškryflać we wyjśćowym katalůgu do wzorůw matymatyčnych',
+'math_notexvc'              => 'Ńy ma sam texvc; zapoznej śe z math/README w celu kůnfiguracyje.',
+'prefs-personal'            => 'Dane užytkowńika',
+'prefs-rc'                  => 'Ńydowno pomjyńane',
+'prefs-watchlist'           => 'Pozůrlista',
+'prefs-watchlist-days'      => 'Ličba dńi widočnych na liśće artikli, na kere dowoš pozůr:',
+'prefs-watchlist-days-max'  => '(maksimum 7 dńi)',
+'prefs-watchlist-edits'     => 'Ličba půmjyńań pokazywanych we rozšyřůnyj liśće artiklůw, na kere dowoš pozůr:',
+'prefs-watchlist-edits-max' => '(maksymalno liczba: 1000)',
+'prefs-misc'                => 'Roztůmajte',
+'prefs-resetpass'           => 'Zmjyń hasło',
+'saveprefs'                 => 'Naškryflej',
+'resetprefs'                => 'Preferencyje důmyślne',
+'textboxsize'               => 'Sprowjańy',
+'prefs-edit-boxsize'        => 'Rozmjor uokna edycyji.',
+'rows'                      => 'Wjerše:',
+'columns'                   => 'Kůlumny:',
+'searchresultshead'         => 'Šnupańy',
+'resultsperpage'            => 'Ličba wyńikůw na zajće',
+'contextlines'              => 'Pjyrše wjerše artikla',
+'contextchars'              => 'Buchštaby kůnteksta we lińijce',
+'stub-threshold'            => 'Maksymalny rozmjar artikla uoznačanygo kej <a href="#" class="stub">stub (kůnsek)</a>',
+'recentchangesdays'         => 'Ličba dńi do pokazańo we půmjyńanych na uostatku:',
+'recentchangesdays-max'     => '(maksymalńy $1 {{PLURAL:$1|dźyń|dńi}})',
+'recentchangescount'        => 'Ličba pozycyji na liśće půmjyńanych na uostatku, we historyje zajtůw a zajtach rejerůw:',
+'savedprefs'                => 'Twoje štalowańo we preferyncyjach zostouy naškryflane.',
+'timezonelegend'            => 'Strefa časowo',
+'timezonetext'              => '¹Podej uo wjela godźin růžńi śe Twůj čas uod ůńiwersalnygo (UTC).',
+'localtime'                 => 'Lokalny czas:',
+'timezoneselect'            => 'Sztrefa czasowo:',
+'timezoneuseserverdefault'  => 'Użyj domyślnygo czasu serwera',
+'timezoneuseoffset'         => 'Inkszo (uokryśl różnica czasu)',
+'timezoneoffset'            => 'Dyferencyjo ¹:',
+'servertime'                => 'Czas serwera:',
+'guesstimezone'             => 'Pobjer z přeglůndarki',
+'allowemail'                => 'Inkśi užytkowńicy můgům přesyuać mje e-brify',
+'prefs-searchoptions'       => 'Uopcyje šnupańo',
+'prefs-namespaces'          => 'Přystřyńe mjan',
+'defaultns'                 => 'Důmyślńy šnupej we nastympujůncych přystřyńach mjan:',
+'default'                   => 'důmyślńy',
+'files'                     => 'Pliki',
 
 # User rights
 'userrights'                  => 'Zařůndzańy prowami užytkowńikůw', # Not used as normal message but as header for the special page itself
 'userrights-lookup-user'      => 'Zařůndzej prowami užytkownika',
 'userrights-user-editname'    => 'Wklepej sam nazwa užytkowńika:',
 'editusergroup'               => 'Sprowjej grupy užytkowńika',
-'editinguser'                 => "Zmjana uprawńyń užytkowńika '''[[User:$1|$1]]''' ([[User talk:$1|{{int:talkpagelinktext}}]] | [[Special:Contributions/$1|{{int:contribslink}}]])",
+'editinguser'                 => "Zmjana uprawńyń užytkowńika '''[[User:$1|$1]]''' ([[User talk:$1|{{int:talkpagelinktext}}]]{{int:pipe-separator}}[[Special:Contributions/$1|{{int:contribslink}}]])",
 'userrights-editusergroup'    => 'Sprowjej grupy užytkowńika',
 'saveusergroups'              => 'Zapisz',
 'userrights-groupsmember'     => 'Noležy do:',
@@ -911,6 +1013,7 @@ Možeš [[:\$1|tako utwořyć]], abo sprůbować pounygo šnupańo.",
 'right-minoredit'            => 'Uoznoč půmjyńańo kej drobne',
 'right-move'                 => 'Přećepane zajty',
 'right-move-subpages'        => 'Přećep zajty wroz s jejich podzajtůma',
+'right-move-rootuserpages'   => 'Překludzańy zajtůw uod užytkowńikůw',
 'right-suppressredirect'     => 'Ńy twůř překerowańo ze starygo mjana jak přećepuješ zajta',
 'right-upload'               => 'Wćepane pliki',
 'right-reupload'             => 'Nadpisuj pliki kere sam juž sům wćepane',
@@ -961,9 +1064,45 @@ Možeš [[:\$1|tako utwořyć]], abo sprůbować pounygo šnupańo.",
 'rightslogentry' => 'půmjyńiu/a uprawńyńo užytkowńika $1 ($2 → $3)',
 'rightsnone'     => 'podstawowo',
 
+# Associated actions - in the sentence "You do not have permission to X"
+'action-read'                 => 'přeglůndańo tyj zajty',
+'action-edit'                 => 'sprowjańo tyj zajty',
+'action-createpage'           => 'twořyńo zajtůw',
+'action-createtalk'           => 'twořyńo zajtůw godki',
+'action-createaccount'        => 'utwořyńo tygo kůnta užytkowńika',
+'action-minoredit'            => 'do uoznačyńo tygo sprowjyńo kej drobne půmjyńańe',
+'action-move'                 => 'přećepańe tyj zajty',
+'action-move-subpages'        => 'přećepańo tyj zajty uoroz s jeij podzajtůma',
+'action-move-rootuserpages'   => 'Překludzańy zajtůw uod užytkowńikůw (nale bes jeich podzajtůw)',
+'action-upload'               => 'wćepńyńćo tygo plika',
+'action-reupload'             => 'nadpisańo tygo plika',
+'action-reupload-shared'      => 'nadpisańo tygo plika we wspůlnym repozytorjům',
+'action-upload_by_url'        => 'wćepańo tygo plika s adresa URL',
+'action-writeapi'             => 'naškryflańo bez interfejs API',
+'action-delete'               => 'wyćepańo tyj zajty',
+'action-deleterevision'       => 'wyćepańo tyj wersyje',
+'action-deletedhistory'       => 'wejzdřyńo we historyjo wyćepań tyj zajty',
+'action-browsearchive'        => 'šnupańo za wyćepanymi zajtami',
+'action-undelete'             => 'wćepańo nazod tyj zajty',
+'action-suppressrevision'     => 'podglůndu a wćepańo nazod tyj wersyje schrůńůnyj',
+'action-suppressionlog'       => 'podglůndu rejera schrůńańo',
+'action-block'                => 'zawarća uod sprowjyń tygo spowjořa',
+'action-protect'              => 'půmjyńań poźůmu zawarćo tyj zajty',
+'action-import'               => 'importu tyj zajty s inkšyj wiki',
+'action-importupload'         => 'importu tyj zajty bez wćepańe plika',
+'action-patrol'               => 'označyńo sprowjyńo kej „sprowdzůne”',
+'action-autopatrol'           => 'uoznačyńo wuasnygo sprowjyńo kej „sprawdzonygo”',
+'action-unwatchedpages'       => 'podglůndu listy zajtůw na kere ńikt ńy dowo pozoru',
+'action-trackback'            => 'wysyuańo trackbacka',
+'action-mergehistory'         => 'skuplowańo historyje sprowjyń tyj zajty',
+'action-userrights'           => 'sprowjańo uprowńyń wšyjstkich sprowjořy',
+'action-userrights-interwiki' => 'sprowjańo uprowńyń sprowjořy na inkšych witrynach wiki',
+'action-siteadmin'            => 'zawarćo a uodymkńyńćo bazy danych',
+
 # Recent changes
 'nchanges'                          => '$1 {{PLURAL:$1|pomjyńańe|pomjyńańa|pomjyńań}}',
 'recentchanges'                     => 'Ńydowno pomjyńane',
+'recentchanges-legend'              => 'Uopcyje půmjyńanych na uostatku',
 'recentchangestext'                 => 'Ta zajta předstawjo historyjo uostatńich půmjyńań na tyj wiki',
 'recentchanges-feed-description'    => 'Dowej pozůr na půmjyńane na uostatku na tyj wiki.',
 'rcnote'                            => "Půńižej {{PLURAL:$1|pokozano uostatńo zmjano dokůnano|pokazano uostatńy '''$1''' zmjany naškryflane|pokozano uostatńich '''$1''' škryflań zrobjůnych}} bez {{PLURAL:$2|uostatńi dźyń|uostatńich '''$2''' dńi}}, začynojůnc uod $5 dńa $4.",
@@ -987,6 +1126,8 @@ Možeš [[:\$1|tako utwořyć]], abo sprůbować pounygo šnupańo.",
 'rc_categories'                     => 'Uůgrańič do katygorii (oddźelej za půmocům "|")',
 'rc_categories_any'                 => 'Wšyskie',
 'newsectionsummary'                 => '/* $1 */ nowo tajla',
+'rc-enhanced-expand'                => 'Pokož ščygůuy (wymogo JavaScript)',
+'rc-enhanced-hide'                  => 'Schrůń ščygůuy',
 
 # Recent changes linked
 'recentchangeslinked'          => 'Pomjyńańa we adresowanych',
@@ -1009,11 +1150,11 @@ Artikle na [[Special:Watchlist|pozorliśće]] sům '''rube'''.",
 'upload_directory_read_only'  => 'Serwer ńy može škryflać do katalůgu ($1) kery je přeznačůny na wćepywane pliki.',
 'uploaderror'                 => 'Feler při wćepywańu',
 'uploadtext'                  => "Ůžyj formulařa půńižej do wćepywańo plikůw.
-Jak chceš přejřeć dotychčas wćepane pliki, abo w ńich šnupać, přeńdź do [[Special:ImageList|listy douůnčůnych plikůw]]. Wšyjstke wćepańo uodnotowane sům we [[Special:Log/upload|rejeře přesůuanych plikůw]], a jygo wyćepańy we [[Special:Log/delete|rejeře wyćepanych]].
+Jak chceš přejřeć dotychčas wćepane pliki, abo w ńich šnupać, přeńdź do [[Special:FileList|listy douůnčůnych plikůw]]. Wšyjstke wćepańo uodnotowane sům we [[Special:Log/upload|rejeře přesůuanych plikůw]], a jygo wyćepańy we [[Special:Log/delete|rejeře wyćepanych]].
 
 Plik pojawi śe na zajće, jak užyješ linka wedle jydnygo s nastympujůncych wzorůw:
-'''<nowiki>[[</nowiki>{{ns:image}}<nowiki>:Plik.jpg]]</nowiki>''' pokože plik we pounyj postaći,
-'''<nowiki>[[</nowiki>{{ns:image}}<nowiki>:Plik.png|tekst uopisu]]</nowiki>''' pokože šyroko na 200 pikseli mińjaturka umjyščůno při lewym margineśe, uotočůno bez ramka, s podpisym „podpis grafiki”
+'''<nowiki>[[</nowiki>{{ns:file}}<nowiki>:Plik.jpg]]</nowiki>''' pokože plik we pounyj postaći,
+'''<nowiki>[[</nowiki>{{ns:file}}<nowiki>:Plik.png|tekst uopisu]]</nowiki>''' pokože šyroko na 200 pikseli mińjaturka umjyščůno při lewym margineśe, uotočůno bez ramka, s podpisym „podpis grafiki”
 '''<nowiki>[[</nowiki>{{ns:media}}<nowiki>:Plik.ogg]]</nowiki>''' dowo bezpostředńi link do plika ńy pokozujůnc go.",
 'upload-permitted'            => 'Dopuščalne formaty plikůw: $1.',
 'upload-preferred'            => 'Zalecane formaty plikůw: $1.',
@@ -1021,7 +1162,7 @@ Plik pojawi śe na zajće, jak užyješ linka wedle jydnygo s nastympujůncych w
 'uploadlog'                   => 'Wykoz wćepywań',
 'uploadlogpage'               => 'Wćepane sam',
 'uploadlogpagetext'           => 'Půńižej znojdowo śe lista plikůw wćepanych na uostatku.
-Přelyź na zajta [[Special:NewImages|galeryje nowych plikůw]], coby uobejzdřeć pliki kej mińjatůrki.',
+Přelyź na zajta [[Special:NewFiles|galeryje nowych plikůw]], coby uobejzdřeć pliki kej mińjatůrki.',
 'filename'                    => 'Mjano pliku',
 'filedesc'                    => 'Uopis',
 'fileuploadsummary'           => 'Uopis:',
@@ -1041,22 +1182,25 @@ Přelyź na zajta [[Special:NewImages|galeryje nowych plikůw]], coby uobejzdře
 'large-file'                  => 'Zaleco śe coby rozmjar plika ńy bůu wjynkšy jak $1 bajtůw. Tyn plik mo rozmjar $2 bajtůw.',
 'largefileserver'             => 'Plik je wjynkšy ńiž maksymalny dozwolůny rozmjar.',
 'emptyfile'                   => 'Wćepywany plik cheba je pusty. Može to być bez tůž, co žeś wklepou zuo buchštaba w jygo mjańe. Sprowdź, čy mjano kere žeś wklepou je poprawne.',
-'fileexists'                  => "Plik uo takym mjańe juž je sam wćepany! Wćepańe nowyj grafiki ńyodwracalńe wyćepńe ta kero sam juž je wćepano ('''<tt>$1</tt>''')! Sprowdź čy žeś je pewny co chceš tyn plik sam wćepać.",
-'filepageexists'              => "Je juž sam zajta uopisu tygo plika utwořůno '''<tt>$1</tt>''', ino ńy ma terozki plika uo tym mjańy. Informacyje uo pliku, kere žeś wćepou, ńy bydům pokozane na zajće uopisu. Jakbyś chćou coby te informacyje zostouy pokozane, muśyš jeich sprowjać rynčńy.",
-'fileexists-extension'        => "Plik uo podobnym mjańe juž sam je:<br />
-Mjano wćepywanygo plika: '''<tt>$1</tt>'''<br />
-Mjano plika kery juž sam je: '''<tt>$2</tt>'''<br />
+'fileexists'                  => "Plik uo takym mjańe juž je sam wćepany! Wćepańe nowyj grafiki ńyodwracalńe wyćepńe ta kero sam juž je wćepano ('''<tt>[[:$1]]</tt>''')! Sprowdź čy žeś je pewny co chceš tyn plik sam wćepać.
+[[$1|thumb]]",
+'filepageexists'              => "Je juž sam zajta uopisu tygo plika utwořůno '''<tt>[[:$1]]</tt>''', ino ńy ma terozki plika uo tym mjańy. Informacyje uo pliku, kere žeś wćepou, ńy bydům pokozane na zajće uopisu. Jakbyś chćou coby te informacyje zostouy pokozane, muśyš jeich sprowjać rynčńy.",
+'fileexists-extension'        => "Plik uo podobnym mjańe juž sam je: [[$2|thumb]]
+* Mjano wćepywanygo plika: '''<tt>[[:$1]]</tt>'''
+* Mjano plika kery juž sam je: '''<tt>[[:$2]]</tt>'''
 Wybjer proša inkše mjano.",
 'fileexists-thumb'            => "<center>'''Istniejůnco grafika'''</center>",
-'fileexists-thumbnail-yes'    => "Zdowo śe co tyn plik je půmńijšůnům wersyjom grafiki ''(mińjaturkom)''. Uobejřij plik: '''<tt>$1</tt>'''.<br />
+'fileexists-thumbnail-yes'    => "Zdowo śe co tyn plik je půmńijšůnům wersyjom grafiki ''(mińjaturkom)''. [[$1|thumb]]
+Uobejřij plik: '''<tt>[[:$1]]</tt>'''.
 Jak to je ta sama grafika, ino wjelgo, ńy muśiš juž jei sam zaś wćepywać.",
 'file-thumbnail-no'           => "Mjano plika začyno śe uod '''<tt>$1</tt>'''. Zdowo śe, co to je půmńijšůna grafika ''(mińaturka)''.
 Jak moš ta grafika we peunym rozmjaře - wćepej ja sam.
 Jak chceš wćepać ta, bydźeš muśou zmjyńić mjano wćepywanygo terozki plika.",
-'fileexists-forbidden'        => 'Plik uo takym mjańy juž sům můmy! Idź nazod i wćepej tyn plik pod inkšym mjanym. [[Image:$1|thumb|center|$1]]',
+'fileexists-forbidden'        => 'Plik uo takym mjańy juž sům můmy! Idź nazod i wćepej tyn plik pod inkšym mjanym. [[File:$1|thumb|center|$1]]',
 'fileexists-shared-forbidden' => 'Plik uo takym mjańe juž je wćepany na wspůlne repozytorjům plikůw.
-Idź nazod i wćepej tyn plik pod inkšym mjanym. [[Image:$1|thumb|center|$1]]',
+Idź nazod i wćepej tyn plik pod inkšym mjanym. [[File:$1|thumb|center|$1]]',
 'file-exists-duplicate'       => 'Tyn plik je kopjům {{PLURAL:$1|plika|nastypujůncych plikůw:}}',
+'file-deleted-duplicate'      => 'Identyczny plik jak tyn plik ([[$1]]) zostoł wyćepany. Sprowdź historyja wyćepań tamtygo plika ńim wćepńesz go nazod.',
 'successfulupload'            => 'Wćepańe plika udouo śe',
 'uploadwarning'               => 'Uostřežyńe uo wćepywańu',
 'savefile'                    => 'Naškryflej plik',
@@ -1097,18 +1241,18 @@ Rejer wyćepań tygo plika je podany půńižej, cobyś miou wygoda:",
 'upload_source_url'  => ' (poprowny, publičńy dostympny URL)',
 'upload_source_file' => ' (plik na twojym komputře)',
 
-# Special:ImageList
-'imagelist-summary'     => 'To je ekstra zajta na kery sům pokazywane wšyske pliki wćepane na serwer. Důmyślńy na wiyrchu listy wyśwjetlajům śe pliki wćepane na uostatku. Coby půmjyńić sposůb sortowańo, klikńij na naguůwek kolůmny.',
-'imagelist_search_for'  => 'Šnupej za grafikům uo mjańe:',
+# Special:ListFiles
+'listfiles-summary'     => 'To je ekstra zajta na kery sům pokazywane wšyske pliki wćepane na serwer. Důmyślńy na wiyrchu listy wyśwjetlajům śe pliki wćepane na uostatku. Coby půmjyńić sposůb sortowańo, klikńij na naguůwek kolůmny.',
+'listfiles_search_for'  => 'Šnupej za grafikům uo mjańe:',
 'imgfile'               => 'plik',
-'imagelist'             => 'Lista plikůw',
-'imagelist_date'        => 'Data',
-'imagelist_name'        => 'Mjano',
-'imagelist_user'        => 'Užytkowńik',
-'imagelist_size'        => 'Rozmior (bajty)',
-'imagelist_description' => 'Uopis',
+'listfiles'             => 'Lista plikůw',
+'listfiles_date'        => 'Data',
+'listfiles_name'        => 'Mjano',
+'listfiles_user'        => 'Užytkowńik',
+'listfiles_size'        => 'Rozmior (bajty)',
+'listfiles_description' => 'Uopis',
 
-# Image description page
+# File description page
 'filehist'                       => 'Gyszichta pliku',
 'filehist-help'                  => 'Klikńij na data/čas, coby uobejřeć plik taki jak wtedy wyglůndou.',
 'filehist-deleteall'             => 'wyćep wszyske',
@@ -1116,12 +1260,18 @@ Rejer wyćepań tygo plika je podany půńižej, cobyś miou wygoda:",
 'filehist-revert'                => 'cofej',
 'filehist-current'               => 'aktůalny',
 'filehist-datetime'              => 'Data/čas',
+'filehist-thumb'                 => 'Mińjaturka',
+'filehist-thumbtext'             => 'Mińjaturka wersyje s $1',
+'filehist-nothumb'               => 'Ńy ma mińjaturki',
 'filehist-user'                  => 'Sprowjorz',
 'filehist-dimensions'            => 'Wymiary',
 'filehist-filesize'              => 'Rozmior plika',
 'filehist-comment'               => 'Komyntorz',
 'imagelinks'                     => 'Co sam linkuje',
 'linkstoimage'                   => '{{PLURAL:$1|Nastympujůnco zajta jeadrésowano|Nastympujůnce zajty sům adrésowane}} do tygo plika:',
+'linkstoimage-more'              => 'Wjyncyj jak $1 {{PLURAL:$1|zajta je adresowano|zajty sům adresowane|zajtůw je adresowanych}} do tygo plika.
+Půńižšo lista pokozuje yno {{PLURAL:$1|pjyršy link|pjyrše $1 linki|pjyršych $1 linkůw}} do tygo plika.
+Dostympno je tyž [[Special:WhatLinksHere/$2|pouno lista]].',
 'nolinkstoimage'                 => 'Žodno zajta ńy je adrésowano do tygo plika.',
 'morelinkstoimage'               => 'Pokož [[Special:WhatLinksHere/$1|wjyncy uodnośnikůw]] do tygo plika.',
 'redirectstofile'                => '{{PLURAL:$1|Nastympujůncy plik překerowuje|Nastympujůnce pliki překerowujům}} ku tymu plikowi:',
@@ -1160,7 +1310,6 @@ Rejer wyćepań tygo plika je podany půńižej, cobyś miou wygoda:",
 'filedelete-success-old'      => "Wyćepano plik '''[[Media:$1|$1]]''' we wersyje ze $3, $2.",
 'filedelete-nofile'           => "Plika '''$1''' ńy ma.",
 'filedelete-nofile-old'       => "Ńy ma sam zarchiwizowanyj wersje '''$1''' o atrybutach jake žeś podou.",
-'filedelete-iscurrent'        => 'Průbuješ wyćepać nojnowšo wersyjo tygo plika. Muśyš wpjyrw přiwrůćić staršo wersyjo.',
 'filedelete-otherreason'      => 'Inkšy powůd:',
 'filedelete-reason-otherlist' => 'Inkszy powůd',
 'filedelete-reason-dropdown'  => '* Nojčynstše powody wyćepańa
@@ -1187,27 +1336,31 @@ Rejer wyćepań tygo plika je podany půńižej, cobyś miou wygoda:",
 
 # Random page
 'randompage'         => 'Losuj zajta',
-'randompage-nopages' => 'W tej přestřyńi nazw ńy ma žodnych zajtůw.',
+'randompage-nopages' => 'We przestrzyńi mjan "$1" ńy ma żodnych zajtůw.',
 
 # Random redirect
 'randomredirect'         => 'Losowe překerowańy',
-'randomredirect-nopages' => 'W tej přestřyńi nazw ńy ma překerowań.',
+'randomredirect-nopages' => 'We przestrzyńi mjan "$1" ńy ma przekerowań.',
 
 # Statistics
-'statistics'             => 'Statystyka',
-'sitestats'              => 'Statystyki {{SITENAME}}',
-'userstats'              => 'Statystyka užytkowńikůw',
-'sitestatstext'          => "We baźe danych je cuzamyn '''\$1''' {{PLURAL:\$1|zajta|zajty|zajtůw}}.
-
-Ta ličba uwzglyndńo zajty godki, zajty na tymat {{GRAMMAR:D.lp|{{SITENAME}}}}, zajty prowizoryčne (\"stuby\"), zajty překerowujůnce, a inkše, kere trudno uwažać za artikle. Wůuůnčajůnc powyžše, je prawdopodobńy '''\$2''' {{PLURAL:\$2|zajta, kero idźe uwažać za artikel|zajty, kere idźe uwažać za artikle|zajtůw, kere idźe uwažać za artikle}}.
-
-Wćepano sam \$8 {{PLURAL:\$8|plik|pliki|plikůw}}.
-
-Uod uruchůmjyńo {{GRAMMAR:D.lp|{{SITENAME}}}} {{PLURAL:\$3|'''1''' raz filowano w zajty|'''\$3''' razy filowano w zajty|bůuo '''\$3''' filowań w zajty}} i wykůnano '''\$4''' {{PLURAL:\$4|sprowjyńy|sprowjyńa|sprowjyń}}. To dowo średńo '''\$5''' {{PLURAL:\$5|sprowjyńy|sprowjyńa|sprowjyń}} na zajta i '''\$6''' {{PLURAL:\$4|filowańy|filowańa|filowań}} na sprawjyńy.
-
-Duůgość [http://www.mediawiki.org/wiki/Manual:Job_queue kolejki zadań] je '''\$7'''.",
-'userstatstext'          => "Je sam {{PLURAL:$1|'''1''' zarejerowany užytkowńik|'''$1''' zarejerowanych užytkowńikůw}}. {{PLURAL:$1|Užytkowńik tyn|Spośrůd ńich '''$2''' ('''$4%''')}} mo status $5.",
-'statistics-mostpopular' => 'Zajty we kere nojčyńśći sam filujom',
+'statistics'                   => 'Statystyka',
+'statistics-header-pages'      => 'Statystyka zajtůw',
+'statistics-header-edits'      => 'Statystyka sprowjyń',
+'statistics-header-views'      => 'Statystyka bezuchůw',
+'statistics-header-users'      => 'Statystyka užytkowńikůw',
+'statistics-articles'          => 'Zajty',
+'statistics-pages'             => 'Zajty',
+'statistics-pages-desc'        => 'Wszyjstke zajty na wiki, wroz ze zajtami godki, przekerowańami a t.p.',
+'statistics-files'             => 'Wćepane pliki',
+'statistics-edits'             => 'Sprowjyńa wykůnane uod powstańo {{grammar:D.lp|{{SITENAME}}}}',
+'statistics-edits-average'     => 'Strzedńo liczba sprowjyń na zajta',
+'statistics-views-total'       => 'Cołkowito liczba bezuchůw',
+'statistics-views-peredit'     => 'Liczba bezuchůw na sprowjyńy',
+'statistics-jobqueue'          => 'Rozmjor [http://www.mediawiki.org/wiki/Manual:Job_queue raji zadań]',
+'statistics-users'             => 'Zarejerowanych [[Special:ListUsers|użytkowńikůw]]',
+'statistics-users-active'      => 'Aktywnych użytkowńikůw',
+'statistics-users-active-desc' => 'Użytkowńiki, kere bůły aktywne bez {{PLURAL:$1|uostatńi dźyń|uostatńich $1 dńi}}',
+'statistics-mostpopular'       => 'Zajty we kere nojčyńśći sam filujom',
 
 'disambiguations'      => 'Zajty ujydnoznačńajůnce',
 'disambiguationspage'  => '{{ns:template}}:disambig',
@@ -1250,7 +1403,8 @@ Zajta uznawano je za ujydnoznačńajůnco kej zawiyro šablůn uokreślůny we [
 'popularpages'            => 'Zajty we kere nojčynśćej sam filujům',
 'wantedcategories'        => 'Potřebne katygoryje',
 'wantedpages'             => 'Nojpotřebńijše zajty',
-'missingfiles'            => 'Brak plikůw',
+'wantedfiles'             => 'Potrzebne pliki',
+'wantedtemplates'         => 'Potrzebne szablůny',
 'mostlinked'              => 'Nojčyńśćej adrésowane',
 'mostlinkedcategories'    => 'Kategoryje we kerych je nojwjyncyi artikli',
 'mostlinkedtemplates'     => 'Nojčyńśćej adrésowane šablôny',
@@ -1264,12 +1418,15 @@ Zajta uznawano je za ujydnoznačńajůnco kej zawiyro šablůn uokreślůny we [
 'deadendpagestext'        => 'Zajty wymjyńůne půńižej ńy majům uodnośńikůw do žodnych inkšych zajtůw kere sům na tej wiki.',
 'protectedpages'          => 'Zawarte zajty',
 'protectedpages-indef'    => 'Yno zabezpječyńo ńyokreślůne',
+'protectedpages-cascade'  => 'Yno zajty zabezpjeczůne rekursywńy',
 'protectedpagestext'      => 'Zajty wymjyńůne půńižej sům zawarte uod prećepywańo i sprowjańo.',
 'protectedpagesempty'     => 'Žodno zajta ńy je terozki zawarto s podanymi parametrami.',
 'protectedtitles'         => 'Zawarte mjana artikli',
 'protectedtitlestext'     => 'Ůtwořyńy artikli uo nastympujůncych mjanach je zawarte',
 'protectedtitlesempty'    => 'Do tych štalowań utwořyńy artikla uo dowolnym mjańy ńy je zawarte',
 'listusers'               => 'Lista užytkowńikůw',
+'listusers-editsonly'     => 'Pokoż yno użytkowńikůw kere majům sprowjyńa',
+'usereditcount'           => '$1 {{PLURAL:$1|sprowjyńe|sprowjyńa|sprowjyń}}',
 'newpages'                => 'Nowe zajty',
 'newpages-username'       => 'Mjano užytkowńika:',
 'ancientpages'            => 'Nojstarše artikle',
@@ -1290,14 +1447,13 @@ Zajta uznawano je za ujydnoznačńajůnco kej zawiyro šablůn uokreślůny we [
 'booksources-search-legend' => 'Šnupej za zdřůduůma kśiůnžkowymi',
 'booksources-go'            => 'Pokož',
 'booksources-text'          => 'Půńižej znojdowo śe lista uodnośńikůw do inkšych witryn, kere pośredńičům we spředažy nowych i užywanych kśiąžek, a tyž můgům mjeć dalše informacyje uo pošukiwany bez ćebje kśůnžce',
+'booksources-invalid-isbn'  => 'Podany numer ISBN zostoł rozpoznany kej felerny. Sprowdź aże podany numer je zgodny s numerym kery je we zdrzůdle.',
 
 # Special:Log
 'specialloguserlabel'  => 'Užytkowńik:',
 'speciallogtitlelabel' => 'Titel:',
 'log'                  => 'Register dźołano',
 'all-logs-page'        => 'Wšyjstkie uoperacyje',
-'log-search-legend'    => 'Šnupej w rejeře',
-'log-search-submit'    => 'Šnupej',
 'alllogstext'          => 'Wspůlny rejer wszyjstkych typůw uoperacyji do {{SITENAME}}.
 Możesz zawyńźić liczba wyńikůw wybjerajůnc typ rejeru, mjano użytkowńika abo titel zajty (wjelge a mołe buchsztaby majům znoczyńy).',
 'logempty'             => 'Ńy ma wpisůw we rejeře',
@@ -1309,6 +1465,7 @@ Możesz zawyńźić liczba wyńikůw wybjerajůnc typ rejeru, mjano użytkowńik
 'nextpage'          => 'Nostympno zajta ($1)',
 'prevpage'          => 'Popředńo zajta ($1)',
 'allpagesfrom'      => 'Zajty začynojůnce śe na:',
+'allpagesto'        => 'Zajty uo titlach kere na zadku majům:',
 'allarticles'       => 'Wšyskie zajty',
 'allinnamespace'    => 'Wšyjstke zajty (we přestřyńi mjan $1)',
 'allnotinnamespace' => 'Wšyjstke zajty (ino bes přestřyńi mjan $1)',
@@ -1327,19 +1484,44 @@ Kukńij tyż [[Special:WantedCategories|ńyistńyjůnce kategoryje]].',
 'special-categories-sort-count' => 'sortowanie wedle ličby',
 'special-categories-sort-abc'   => 'sortowanie wedle alfabyta',
 
+# Special:DeletedContributions
+'deletedcontributions' => 'Wyćepane sprowjyńa użytkowńika',
+
+# Special:LinkSearch
+'linksearch'       => 'Necowe uodwołańa',
+'linksearch-pat'   => 'Wzorzec sznupańo',
+'linksearch-ns'    => 'Przestrzyń mjan',
+'linksearch-ok'    => 'Šnupej',
+'linksearch-text'  => 'Idźe użyć symbola wjeloznacznygo „*”. Lů bajszpila „*.wikipedia.org” spowoduje sznupańy za wszyjstkimi linkůma kere prowadzům ku důmyńy „wikipedia.org” a jeij poddůmyn.<br />
+Uobsůgiwane protokoły: <tt>$1</tt>',
+'linksearch-line'  => '$1 link na zajće $2',
+'linksearch-error' => 'Symbola wjeloznacznygo idźe użyć yno na anfangu mjana hosta.',
+
 # Special:ListUsers
 'listusersfrom'      => 'Pokaž užytkowńikůw začynojůnc uod:',
 'listusers-submit'   => 'Pokož',
 'listusers-noresult' => 'Ńy znejdźůno žodnygo užytkowńika.',
 
+# Special:Log/newusers
+'newuserlogpage'              => 'Nowe użytkowniki',
+'newuserlogpagetext'          => 'To je rejer uostatńo utworzůnych kůnt użytkowńikůw',
+'newuserlog-byemail'          => 'hasło uostało wysłane e-brifym',
+'newuserlog-create-entry'     => '– nowy użytkowńik',
+'newuserlog-create2-entry'    => '– utworzůł kůnto $1',
+'newuserlog-autocreate-entry' => '– kůnto utworzůne automatyczńy',
+
 # Special:ListGroupRights
-'listgrouprights'          => 'Uprawńyńo grup užytkowńikůw',
-'listgrouprights-summary'  => 'Půńiży znojdowo śe spis grup użytkowńikůw zdefińjowanych na tyj wiki, s wyszczygůlńyńym przidźelůnych im prow dostympu.
+'listgrouprights'                 => 'Uprawńyńo grup užytkowńikůw',
+'listgrouprights-summary'         => 'Půńiży znojdowo śe spis grup użytkowńikůw zdefińjowanych na tyj wiki, s wyszczygůlńyńym przidźelůnych im prow dostympu.
 Sprowdź zajta [[{{MediaWiki:Listgrouprights-helppage}}|s dodatkowymi informacjami]] uo uprowńyńach użytkowńikůw.',
-'listgrouprights-group'    => 'Grupa',
-'listgrouprights-rights'   => 'Uprawńyńo',
-'listgrouprights-helppage' => 'Help:Uprawńyńo grup užytkowńikůw',
-'listgrouprights-members'  => '(lista čuůnkůw grupy)',
+'listgrouprights-group'           => 'Grupa',
+'listgrouprights-rights'          => 'Uprawńyńo',
+'listgrouprights-helppage'        => 'Help:Uprawńyńo grup užytkowńikůw',
+'listgrouprights-members'         => '(lista čuůnkůw grupy)',
+'listgrouprights-addgroup'        => 'Idźe dodać do {{PLURAL:$2|grupy|grup}}: $1',
+'listgrouprights-removegroup'     => 'Idźe wyćepać s {{PLURAL:$2|grupy|grup}}: $1',
+'listgrouprights-addgroup-all'    => 'Idźe dodać do kożdyj grupy',
+'listgrouprights-removegroup-all' => 'Idźe wyćepać s wszyjstkich grup',
 
 # E-mail user
 'mailnologin'     => 'Brak adresu',
@@ -1352,6 +1534,7 @@ Adres e-brifa, kery zostoł bez Ćebje wkludzůny we [[Special:Preferences|Twoji
 'defemailsubject' => 'Wjadůmość uod {{GRAMMAR:D.pl|{{SITENAME}}}}',
 'noemailtitle'    => 'Brak adresu e-brif',
 'noemailtext'     => 'Tyn užytkowńik ńy podou poprawnygo adresu e-brif, albo zadecydowou, co ńy chce uotřimywać wjadůmośći e-brif uod inkšych užytkowńikůw',
+'email-legend'    => 'Wyślij e-brif ku inkszymu użytkowńikowi {{GRAMMAR:MS.lp|{{SITENAME}}}}',
 'emailfrom'       => 'Uod:',
 'emailto'         => 'Ku:',
 'emailsubject'    => 'Tyjma:',
@@ -1392,12 +1575,7 @@ Na tyi liśće bydźeš mjou rejer přišuych sprowjyń tyi zajty i jeji zajty g
 'iteminvalidname'      => 'Problym ze pozycjům „$1”, felerne mjano...',
 'wlnote'               => "Půńižy pokazano {{PLURAL:$1|ostatńy sprawjyńy dokůnane|ostatńy '''$1''' sprawjyńe dokůnane|ostatńych '''$1''' sprawjyń dokůnanych}} bez {{PLURAL:$2|uostatńo godźina|uostatńich '''$2''' godźin}}.",
 'wlshowlast'           => 'Pokož uostatńy $1 godźin $2 dńi ($3)',
-'watchlist-show-bots'  => 'pokaž sprowjyńo botůw',
-'watchlist-hide-bots'  => 'schowej sprowjyńa botůw',
-'watchlist-show-own'   => 'pokož bezy mje sprowjůne',
-'watchlist-hide-own'   => 'schowej moje sprawjyńa',
-'watchlist-show-minor' => 'pokož drobne pomjyńańa',
-'watchlist-hide-minor' => 'Schowej drobne pomjyńańa',
+'watchlist-options'    => 'Uopcyje artikli na kere dowosz pozůr',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'Dowom pozor...',
@@ -1437,62 +1615,68 @@ Kejbyś chćou půmjyńić štalowańo swojej listy zajtůw, na kere dowoš poz�
 Pomoc:
 {{fullurl:{{MediaWiki:Helppage}}}}',
 
-# Delete/protect/revert
-'deletepage'                  => 'Wyćep artikel',
-'confirm'                     => 'Potwjyrdź',
-'excontent'                   => 'zawartość zajty „$1”',
-'excontentauthor'             => 'treść: „$1” (jedyny aůtor: [[Special:Contributions/$2|$2]])',
-'exbeforeblank'               => 'popředńo zawartość uobecńy pustej zajty: „$1”',
-'exblank'                     => 'Zajta byua pusto',
-'delete-confirm'              => 'Wyćep „$1”',
-'delete-legend'               => 'Wyćep',
-'historywarning'              => 'Pozor! Ta zajta kerům chceš wyćepnůńć mo historjo:',
-'confirmdeletetext'           => 'Chceš wyćepnůńć trwale artikel abo plik s bazy danych s historią. Pokož, aže wjyš co robdza, i to aže to je tak jak godojům [[{{MediaWiki:Policy-url}}|zasady]].',
-'actioncomplete'              => 'Fertig',
-'deletedtext'                 => 'Wyćepano "<nowiki>$1</nowiki>". Rejer uostatnio zrobiůnych wyćepań možeš uobejžyć tukej: $2.',
-'deletedarticle'              => 'wyciepnjynto "[[$1]]"',
-'suppressedarticle'           => 'utajńjyu [[$1]]',
-'dellogpage'                  => 'Wyćepane',
-'dellogpagetext'              => 'To je lista uostatńo wykůnanych wyćepań.',
-'deletionlog'                 => 'rejer wyćepań',
-'reverted'                    => 'Přiwrůcůno popředńo wersyja',
-'deletecomment'               => 'Čymu chceš wyćepnůńć:',
-'deleteotherreason'           => 'Inkšy powůd:',
-'deletereasonotherlist'       => 'Inkszy powůd',
-'deletereason-dropdown'       => '* Nojčynstše přičyny wyćepańa
+# Delete
+'deletepage'             => 'Wyćep artikel',
+'confirm'                => 'Potwjyrdź',
+'excontent'              => 'zawartość zajty „$1”',
+'excontentauthor'        => 'treść: „$1” (jedyny aůtor: [[Special:Contributions/$2|$2]])',
+'exbeforeblank'          => 'popředńo zawartość uobecńy pustej zajty: „$1”',
+'exblank'                => 'Zajta byua pusto',
+'delete-confirm'         => 'Wyćep „$1”',
+'delete-legend'          => 'Wyćep',
+'historywarning'         => 'Pozor! Ta zajta kerům chceš wyćepnůńć mo historjo:',
+'confirmdeletetext'      => 'Chceš wyćepnůńć trwale artikel abo plik s bazy danych s historią. Pokož, aže wjyš co robdza, i to aže to je tak jak godojům [[{{MediaWiki:Policy-url}}|zasady]].',
+'actioncomplete'         => 'Fertig',
+'deletedtext'            => 'Wyćepano "<nowiki>$1</nowiki>". Rejer uostatnio zrobiůnych wyćepań možeš uobejžyć tukej: $2.',
+'deletedarticle'         => 'wyciepnjynto "[[$1]]"',
+'suppressedarticle'      => 'utajńjyu [[$1]]',
+'dellogpage'             => 'Wyćepane',
+'dellogpagetext'         => 'To je lista uostatńo wykůnanych wyćepań.',
+'deletionlog'            => 'rejer wyćepań',
+'reverted'               => 'Přiwrůcůno popředńo wersyja',
+'deletecomment'          => 'Čymu chceš wyćepnůńć:',
+'deleteotherreason'      => 'Inkšy powůd:',
+'deletereasonotherlist'  => 'Inkszy powůd',
+'deletereason-dropdown'  => '* Nojčynstše přičyny wyćepańa
 ** Prośba autora
 ** Narušyńy praw autorskych
 ** Wandalizm',
-'delete-edit-reasonlist'      => 'Sprowjańe listy powodůw wyćepańo zajty',
-'delete-toobig'               => 'Ta zajta mo fest dugo historyja sprowjyń, wjyncyj jak $1 {{PLURAL:$1|půmjyńańy|půmjyńańo|půmjyńań}}.
+'delete-edit-reasonlist' => 'Sprowjańe listy powodůw wyćepańo zajty',
+'delete-toobig'          => 'Ta zajta mo fest dugo historyja sprowjyń, wjyncyj jak $1 {{PLURAL:$1|půmjyńańy|půmjyńańo|půmjyńań}}.
 Jeij wyćepańy mogło by spowodować zakłucyńo we dźołańu {{GRAMMAR:D.lp|{{SITENAME}}}} a bez tůż zostało uograńiczůne.',
-'delete-warning-toobig'       => 'Ta zajta mo fest dugo historia sprowjyń, wjyncy kej $1 {{PLURAL:$1|půmjyńeńe|půmjyńańo|půmjyńań}}.
+'delete-warning-toobig'  => 'Ta zajta mo fest dugo historia sprowjyń, wjyncy kej $1 {{PLURAL:$1|půmjyńeńe|půmjyńańo|půmjyńań}}.
 Dej pozůr, bo jei wyćepańe może spowodować zakłůcyńo w pracy {{GRAMMAR:D.lp|{{SITENAME}}}}.',
-'rollback'                    => 'Wycofej sprowjyńe',
-'rollback_short'              => 'Cofej',
-'rollbacklink'                => 'cofej',
-'rollbackfailed'              => 'Ńy idźe wycofać sprowjyńo',
-'cantrollback'                => 'Ńy idże cofnůńć pomjyńeńo, sam je ino jedna wersyja tyi zajty.',
-'alreadyrolled'               => 'Ńy idźe lů zajty [[:$1|$1]] cofnůńć uostatńygo pomjyńeńa, kere wykonoł [[User:$2|$2]] ([[User talk:$2|godka]]) | [[Special:Contributions/$2|{{int:contribslink}}]]).
+
+# Rollback
+'rollback'         => 'Wycofej sprowjyńe',
+'rollback_short'   => 'Cofej',
+'rollbacklink'     => 'cofej',
+'rollbackfailed'   => 'Ńy idźe wycofać sprowjyńo',
+'cantrollback'     => 'Ńy idże cofnůńć pomjyńeńo, sam je ino jedna wersyja tyi zajty.',
+'alreadyrolled'    => 'Ńy idźe lů zajty [[:$1|$1]] cofnůńć uostatńygo pomjyńeńa, kere wykonoł [[User:$2|$2]] ([[User talk:$2|godka]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]).
 Kto inkszy zdůnżůł już to zrobić abo wprowadźił własne poprowki do treśći zajty.
 
-Autorym ostatńygo pomjyńyńo je terozki [[User:$3|$3]] ([[User talk:$3|godka]]) | [[Special:Contributions/$3|{{int:contribslink}}]]).',
-'editcomment'                 => "Sprowjyńe uopisano: „''$1''”.", # only shown if there is an edit comment
-'revertpage'                  => 'Wycofano sprowjyńe użytkowńika [[Special:Contributions/$2|$2]] ([[User talk:$2|godka]]).
-Autor prziwrůcůnej wersyji to [[User:$1|$1]].', # Additional available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
-'rollback-success'            => 'Wycofano sprowjyńa užytkowńika $1.
+Autorym ostatńygo pomjyńyńo je terozki [[User:$3|$3]] ([[User talk:$3|godka]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
+'editcomment'      => "Sprowjyńe uopisano: „''$1''”.", # only shown if there is an edit comment
+'revertpage'       => 'Wycofano sprowjyńe użytkowńika [[Special:Contributions/$2|$2]] ([[User talk:$2|godka]]).
+Autor prziwrůcůnej wersyji to [[User:$1|$1]].', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+'rollback-success' => 'Wycofano sprowjyńa užytkowńika $1.
 Přiwrůcůno uostatńo wersyja autorstwa  $2.',
-'sessionfailure'              => 'Feler weryfikacyji zalůgowańo.
+'sessionfailure'   => 'Feler weryfikacyji zalůgowańo.
 Polecyńy zostouo anulowane, aby ůńiknůńć přechwycyńo sesyji.
 
 Naćiś „cofej”, přeuaduj zajta, a potym zaś wydej polecyńy',
+
+# Protect
 'protectlogpage'              => 'Zawarte',
 'protectlogtext'              => 'Půńižej znojdowo śe lista zawarć i uodymkńjyńć pojydynčych zajtůw.
 Coby přejřeć lista uobecńy zawartych zajtůw, přeńdź na zajta wykazu [[Special:ProtectedPages|zawartych zajtůw]].',
 'protectedarticle'            => 'zawar [[$1]]',
 'modifiedarticleprotection'   => 'pomjyńiu poziům zawarćo [[$1]]',
 'unprotectedarticle'          => 'uodymknyu [[$1]]',
+'movedarticleprotection'      => 'przekludzůno sztalowańa zabezpjeczyńo s „[[$2]]” ku „[[$1]]”',
 'protect-title'               => 'Pomjyńeńe poźomu zawarćo „$1”',
+'prot_1movedto2'              => '[[$1]] přećepano do [[$2]]',
 'protect-legend'              => 'Potwjyrdź zawarće',
 'protectcomment'              => 'Kůmyntoř:',
 'protectexpiry'               => 'Wygaso:',
@@ -1510,8 +1694,21 @@ Coby přejřeć lista uobecńy zawartych zajtůw, přeńdź na zajta wykazu [[Sp
 'protect-level-sysop'         => 'Ino admini',
 'protect-summary-cascade'     => 'dźedźičyńy',
 'protect-expiring'            => 'wygaso $1 (UTC)',
+'protect-expiry-indefinite'   => 'na zowdy',
 'protect-cascade'             => 'Dźedźyčyńe zawarćo - zawřij wšyskie zajty kere sům na tyi zajće.',
 'protect-cantedit'            => 'Ńy možeš pomjyńyć poziůmu zawarća tyi zajty, po takiymu, co uona je dlo Ćebje zawarto uod pomjyńańa.',
+'protect-othertime'           => 'Inkszy uokres:',
+'protect-othertime-op'        => 'inkszy uokres',
+'protect-existing-expiry'     => 'Czas wygaśńyńćo nasztalowany terozki: $2 uo $3',
+'protect-otherreason'         => 'Inkszy/dodatkowy powůd:',
+'protect-otherreason-op'      => 'inkszy/dodatkowy powůd',
+'protect-dropdown'            => '*Nojczynstsze powody zawarćo uod sprowjyń
+** Czynste wandalizmy
+** Czynste spamowańy
+** Wojna edycyjno
+** Wygupy',
+'protect-edit-reasonlist'     => 'Sprowjej powody zawarćo uod sprowjyń',
+'protect-expiry-options'      => '2 godźiny:2 hours,1 dźyń:1 day,3 dńi:3 days,1 tydźyń:1 week,2 tygodńy:2 weeks,1 mjeśůnc:1 month,3 mjeśůnce:3 months,6 mjeśency:6 months,1 rok:1 year,ńyskůńčůny:infińite', # display1:time1,display2:time2,...
 'restriction-type'            => 'Pozwolyńy:',
 'restriction-level'           => 'Poźům:',
 'minimum-size'                => 'Min. wjelgość',
@@ -1534,8 +1731,7 @@ Coby přejřeć lista uobecńy zawartych zajtůw, přeńdź na zajta wykazu [[Sp
 'undeletepage'                 => 'Pokož a odtwůř wyćepńjynte zajty',
 'undeletepagetitle'            => "'''Půńižej znojdujům śe wyćepane wersyje zajty  [[:$1]]'''.",
 'viewdeletedpage'              => 'Pokož wyćepńjynte zajty',
-'undeletepagetext'             => 'Půńižše zajty zostouy wyćepane, nale jeich kopja wćůnž znojduje śe w archiwům.
-Archiwům co jakiś čas može być uočyščane.',
+'undeletepagetext'             => '{{PLURAL:$1|Nastympujůnco zajta uosroła wyćepano, nale jeij|Nastympujůnce $1 zajty uostoły wyćepane, nale jejich}} kopja dalij znojdujy śe we archiwum. Aechiwum roz za kedy trza uoczyszczać.',
 'undelete-fieldset-title'      => 'Wćepywańy nazod wersyji',
 'undeleteextrahelp'            => "Jak chcesz wćepać nazod couko zajta, pozostaw wszyjstke pola ńyzaznaczůne a naćiś '''Uodtwůrz'''.
 Aby wybrać tajlowe uodtworzyńy noleży zaznaczyć '''Uodtwůrz'''.
@@ -1548,13 +1744,14 @@ W takej sytuacyji noležy uodznačyć abo přiwrůćić widočność nojnowšym 
 'undeletehistorynoadmin'       => 'Ta zajta zostoua wyćepano.
 Powůd wyćepańo je podany w podsůmowańu půńižej, razym s danymi užytkowńika, kery sprawjou zajta před jei wyćepańym.
 Sama treść wyćepanych wersyji je dostympna ino do admińistratorůw',
-'undelete-revision'            => 'Wyćiepnjynto wersjo $1 z $2 uod $3:',
+'undelete-revision'            => 'Wyćepńynto wersyjo $1 (s $5 $4) keryj autorym je $3:',
 'undeleterevision-missing'     => 'Felerno abo brakujůnco wersyjo.
 Možeš mjeć felerny link abo wersyjo můgua zostać wćepano nazod, abo wyćepano s archiwům.',
 'undelete-nodiff'              => 'Ńy znejdźono popřednich wersyji.',
 'undeletebtn'                  => 'Uodtwůř',
 'undeletelink'                 => 'pokoż abo uodtwůrz',
 'undeletereset'                => 'Wyčyść',
+'undeleteinvert'               => 'Zaznocz na uopy',
 'undeletecomment'              => 'Powůd wćepańo nazod:',
 'undeletedarticle'             => 'wćepou nazod [[$1]]',
 'undeletedrevisions'           => 'Wćepano nazod {{PLURAL:$1|1 wersyja|$1 wersyje|$1 wersyji}}',
@@ -1588,26 +1785,27 @@ $1',
 'blanknamespace' => '(přodńo)',
 
 # Contributions
-'contributions' => 'Ajnzac sprowjorza',
-'mycontris'     => 'Uody mje sprowjane',
-'contribsub2'   => 'Do užytkowńika $1 ($2)',
-'nocontribs'    => 'Brak pomjyńań uodpowjadajůncych tym kryterjům.',
-'uctop'         => '(uostatnio)',
-'month'         => 'Uod mjeśůnca (i downiyjše):',
-'year'          => 'Uod roku (i dowńijše):',
+'contributions'       => 'Ajnzac sprowjorza',
+'contributions-title' => 'Wkłod użytkowńika $1',
+'mycontris'           => 'Uody mje sprowjane',
+'contribsub2'         => 'Do užytkowńika $1 ($2)',
+'nocontribs'          => 'Brak pomjyńań uodpowjadajůncych tym kryterjům.',
+'uctop'               => '(uostatnio)',
+'month'               => 'Uod mjeśůnca (i downiyjše):',
+'year'                => 'Uod roku (i dowńijše):',
 
-'sp-contributions-newbies'     => 'Pokož wkuod ino uod nowych užytkowńikůw',
-'sp-contributions-newbies-sub' => 'Dlo nowych užytkowńikůw',
-'sp-contributions-blocklog'    => 'zawarća',
-'sp-contributions-search'      => 'Šnupej za wkuodym',
-'sp-contributions-username'    => 'Adres IP abo mjano užytkowńika',
-'sp-contributions-submit'      => 'Šnupej',
+'sp-contributions-newbies'       => 'Pokož wkuod ino uod nowych užytkowńikůw',
+'sp-contributions-newbies-sub'   => 'Dlo nowych užytkowńikůw',
+'sp-contributions-newbies-title' => 'Wkłod nowych użytkowńików',
+'sp-contributions-blocklog'      => 'zawarća',
+'sp-contributions-search'        => 'Šnupej za wkuodym',
+'sp-contributions-username'      => 'Adres IP abo mjano užytkowńika',
+'sp-contributions-submit'        => 'Šnupej',
 
 # What links here
 'whatlinkshere'            => 'Co sam linkuje',
 'whatlinkshere-title'      => 'Zajty kere sům adrésowane do "$1"',
 'whatlinkshere-page'       => 'Zajta:',
-'linklistsub'              => '(Lista linków)',
 'linkshere'                => "Nastympůjůnce zajty sóm adrésůwane do '''[[:$1]]''':",
 'nolinkshere'              => "Žodno zajta ńy je adrésowana do '''[[:$1]]'''.",
 'nolinkshere-ns'           => "Žodno zajta ńy je adresowano do '''[[:$1]]''' we wybrany přestřyni mjan.",
@@ -1655,6 +1853,8 @@ Podej powůd (np. umješčajůnc mjana zajtůw, na kerych dopuščůno śe wanda
 'ipbotherreason'                  => 'Inkšy powůd:',
 'ipbhidename'                     => 'Schrůń mjano užytkowńika/adres IP w rejeře zawarć, na liśće aktywnych zawarć i liśće užytkowńikůw',
 'ipbwatchuser'                    => 'Dowej pozůr na zajta uosobisto i zajta godki tygo užytkowńika',
+'ipballowusertalk'                => 'Dozwól tymu użytkowńikowi sprowjać własno zajta godki, jak je zawarty uod sprowjyń',
+'ipb-change-block'                => 'Zmjyń sztalowańa zawarća uod sprowjyń',
 'badipaddress'                    => 'Felerny adres IP',
 'blockipsuccesssub'               => 'Zawarće uod sprowjyń udane',
 'blockipsuccesstext'              => 'Užytkowńik [[Special:Contributions/$1|$1]] zostou zawarty uod sprowjyń.<br />
@@ -1664,6 +1864,7 @@ Přyńdź do [[Special:IPBlockList|listy zawartych adresůw IP]] coby přejřeć
 'ipb-unblock'                     => 'Uodymknij užytkowńika abo adres IP',
 'ipb-blocklist-addr'              => 'Istńejůnce zawarća uod sprowjyń lů $1',
 'ipb-blocklist'                   => 'Zoboč istńijůnce zawarća',
+'ipb-blocklist-contribs'          => 'Wkłod $1',
 'unblockip'                       => 'Uodymkńij sprowjyńo užytkowńikowi',
 'unblockiptext'                   => 'Ůžyj formulořa půńižej coby přiwrůćić možliwość sprowjańo s wčeśńij zawartygo adresu IP abo užytkowńikowi.',
 'ipusubmit'                       => 'Uodymkńij sprowjyńo užytkowńikowi',
@@ -1672,6 +1873,9 @@ Přyńdź do [[Special:IPBlockList|listy zawartych adresůw IP]] coby přejřeć
 'ipblocklist'                     => 'Lista zawartych uod sprowjyń adresůw IP a užytkowńikůw.',
 'ipblocklist-legend'              => 'Znejdź zawartygo uod sprawjyń užytkowńika',
 'ipblocklist-username'            => 'Mjano užytkowńika abo adres IP',
+'ipblocklist-sh-userblocks'       => '$1 zawarća uod sprowjyń kůnt',
+'ipblocklist-sh-tempblocks'       => '$1 tymczasowe zawarća uod sprowjyń',
+'ipblocklist-sh-addressblocks'    => '$1 zawarća uod sprowjyń lů pojedynczych adresůw IP',
 'ipblocklist-submit'              => 'Šnupej',
 'blocklistline'                   => '$1, $2 zawar uod sprowjyń $3 ($4)',
 'infiniteblock'                   => 'na zawše',
@@ -1680,15 +1884,19 @@ Přyńdź do [[Special:IPBlockList|listy zawartych adresůw IP]] coby přejřeć
 'noautoblockblock'                => 'autůmatyčne zawjyrańy uod sprowjyń wůuůnčůne',
 'createaccountblock'              => 'zawarto twořyńe kont',
 'emailblock'                      => 'zawarty e-brif',
+'blocklist-nousertalk'            => 'ńy mogům sprowjać własnych zajtůw godki',
 'ipblocklist-empty'               => 'Lista zawarć je pusto.',
 'ipblocklist-no-results'          => 'Podany adres IP abo užytkowńik ńy je zawarty uod sprowjyń.',
 'blocklink'                       => 'zablokuj',
 'unblocklink'                     => 'uodymknij',
+'change-blocklink'                => 'zmjyń zawarće uod sprowjyń',
 'contribslink'                    => 'ajnzac',
 'autoblocker'                     => 'Zawarto Ci sprowjyńo autůmatyčńy, bez tůž co užywaš tygo samygo adresu IP, co užytkowńik „[[User:$1|$1]]”.
 Powůd zawarća $1 to: „$2”',
 'blocklogpage'                    => 'Gyszichta zawjyrańo',
+'blocklog-fulllog'                => 'Połny rejer zawarć',
 'blocklogentry'                   => 'zawarto [[$1]], bydźe uodymkńynty: $2 $3',
+'reblock-logentry'                => 'půmjyńił sztalowańa zawarća uod sprowjyń lů [[$1]], czas zawarćo: $2 $3',
 'blocklogtext'                    => "Půńižej znojdowo śe lista zawarć zouožůnych i zdjyntych s poščygůlnych adresůw IP.
 Na li'śće ńy mo adresůw IP, kere zawarto w sposůb autůmatyčny.
 Coby přejřeć lista uobecńy aktywnych zawarć, přyńdź na zajta [[Special:IPBlockList|zawartych adresůw i užytkowńikůw]].",
@@ -1697,11 +1905,14 @@ Coby přejřeć lista uobecńy aktywnych zawarć, přyńdź na zajta [[Special:I
 'block-log-flags-nocreate'        => 'twořyńe kůnta je zawarte',
 'block-log-flags-noautoblock'     => 'autůmatyčne zawjerańy uod sprawjyń wůuůnčůne',
 'block-log-flags-noemail'         => 'e-brif zawarty',
+'block-log-flags-nousertalk'      => 'ńy może sprowjać włosnyj zajty godki',
 'block-log-flags-angry-autoblock' => 'rozszerzůne automatyczne zawjyrańe załůnczůne',
 'range_block_disabled'            => 'Možliwość zawjerańo zakresu adresůw IP zostoua wůuůnčůno.',
 'ipb_expiry_invalid'              => 'Felerny čas wygaśńjyńćo zawarća.',
 'ipb_expiry_temp'                 => 'Schrůńůne mjano użytkowńika noleży zawrzić trwale.',
 'ipb_already_blocked'             => '"$1" je już zawarty uod sprowjyń',
+'ipb-needreblock'                 => '== Istńejůnce zawarće ==
+$1 je już zawarty uod sprowjyń. Chcesz půmjyńić sztalowańa zawarćo?',
 'ipb_cant_unblock'                => 'Feler: Zawarće uo ID $1 ńy zostouo znejdźone. Moguo uone zostać oudymkńynte wčeśnij.',
 'ipb_blocked_as_range'            => 'Feler: Adres IP $1 ńy zostou zawarty bezpośredńo i ńy može zostać uodymkńjynty.
 Noležy uůn do zawartygo zakresu adresůw $2. Uodymknůńć možno ino couki zakres.',
@@ -1715,6 +1926,7 @@ Sprawa noležy wyjaśńić s dostawcům Internetu abo půmocům techńičnům in
 'sorbsreason'                     => 'Twůj adres IP znojdowo śe na liśće serwerůw open proxy w DNSBL, užywanej bez {{GRAMMAR:B.lp|{{SITENAME}}}}.',
 'sorbs_create_account_reason'     => 'Twůj adres IP znojdowo śe na liśće serwerůw open proxy w DNSBL, užywanej bez {{GRAMMAR:B.lp|{{SITENAME}}}}.
 Ńy možeš utwořić kůnta',
+'cant-block-while-blocked'        => 'Ńy możesz zawjyrać uod sprowjyń inkszych użytkowńikůw, jak sam jeżeś uod ńich zawarty.',
 
 # Developer tools
 'lockdb'              => 'Zawryj baza danych',
@@ -1737,9 +1949,9 @@ Zawjerańy i uodmykańy bazy danych wymogo coby plik můgu być naškreflany bez
 'databasenotlocked'   => 'Baza danych ńy je zawarto.',
 
 # Move page
-'move-page'               => 'Przećep $1',
-'move-page-legend'        => 'Přećiś artikel',
-'movepagetext'            => "Při půmocy formulařa půńižej možeš půmjyńyć nazwa zajty i přećepnůńć jei historja. Pod downym titlym uostańe zajta překerowujůnca. Zajty adresowane na stary titel uostanům jak bůuy.
+'move-page'                    => 'Przećep $1',
+'move-page-legend'             => 'Přećiś artikel',
+'movepagetext'                 => "Při půmocy formulařa půńižej možeš půmjyńyć nazwa zajty i přećepnůńć jei historja. Pod downym titlym uostańe zajta překerowujůnca. Zajty adresowane na stary titel uostanům jak bůuy.
 
 Jak śe na to decyduješ, sprowdź, eli ńy je to [[Special:DoubleRedirects|podwůjne]] abo [[Special:BrokenRedirects|zuomane překerowańy]].
 Uodpowjadoš za to, coby linki wjoduy ku prawiduowym artiklům!
@@ -1751,49 +1963,57 @@ Zajta '''ńy''' bydźe přećepano, jak:
 
 '''DEJ POZŮR!'''
 To može być drastyčno abo i ńypřewidywalno zmjano, jak přećepńyš jako popularno zajta. Bydź pewny, aže wješ co robiyš, ńim klikńyš knefel \"přećep\"!",
-'movepagetalktext'        => 'Uodpowiednio zajta godki, jeśli jest, bydzie přećepano automatyčńe, pod warůnkiem, že:
+'movepagetalktext'             => 'Uodpowiednio zajta godki, jeśli jest, bydzie přećepano automatyčńe, pod warůnkiem, že:
 *ńy přećepuješ zajty do inkšy přestřeńy mjan
 *ńy ma sam zajty godki o takiym mjańe
 W takiych razach tekst godki třa přećepać, a jak třeba to i pouůnčyć z tym co juž sam jest, rynčńe. Abo možeš sie namyślić i nie přećepywać wcale ("checkbox" půnižyi).',
-'movearticle'             => 'Přećiś artikel:',
-'movenotallowed'          => 'Ńy moš uprownień do přećepywańo zajtůw.',
-'newtitle'                => 'Nowy titel:',
-'move-watch'              => 'Dej pozůr',
-'movepagebtn'             => 'Přećiś artikel',
-'pagemovedsub'            => 'Přećiśńjyńće gotowe',
-'movepage-moved'          => '<big>\'\'\'"$1" přećiśńjynto ku "$2"\'\'\'</big>', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
-'articleexists'           => 'Artikel s takym mjanym juž je, abo mjano je zue.
+'movearticle'                  => 'Přećiś artikel:',
+'movenologin'                  => 'Ńy jestžeś zalůgowany',
+'movenologintext'              => 'Muśyš być zarejerowanym i [[Special:UserLogin|zalůgowanym]] užytkowńikym coby můc přećepnůńć zajta.',
+'movenotallowed'               => 'Ńy moš uprownień do přećepywańo zajtůw.',
+'cant-move-user-page'          => 'Ńy mosz uprowńyń do przekludzańo zajtůw użytkowńikůw (wyjůntkym sům jejich podstrony).',
+'cant-move-to-user-page'       => 'Ńy mosz uprowńyń coby przekludźić zajta na plac kaj je zajta użytkowńika (wyjůntkym sům podzajty użytkowńika).',
+'newtitle'                     => 'Nowy titel:',
+'move-watch'                   => 'Dej pozůr',
+'movepagebtn'                  => 'Přećiś artikel',
+'pagemovedsub'                 => 'Přećiśńjyńće gotowe',
+'movepage-moved'               => '<big>\'\'\'"$1" přećiśńjynto ku "$2"\'\'\'</big>', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'articleexists'                => 'Artikel s takym mjanym juž je, abo mjano je zue.
 Wybjer inkše mjano.',
-'cantmove-titleprotected' => 'Ńy možeš přećepnůńć zajty, bez tůž co jei nowe mjano je ńydozwolůne s kuli zabezpječyńo před utwořyńym',
-'talkexists'              => 'Zajta artikla zostaua přećepano, ale zajta godki ńy - zajta godki uo nowym mjańe juž sam jest. Poůunč, proša, teksty oubydwůch godek rynčńe.',
-'movedto'                 => 'přećiśńjynto ku',
-'movetalk'                => 'Přećiś godke, jak možno.',
-'move-subpages'           => 'Přećepńij podzajty, jak śe do',
-'move-talk-subpages'      => 'Jeli je to możliwe przekludź wszyjstke zajty godki podzajtůw',
-'movepage-page-exists'    => 'Zajta $1 już istńeje a ńy idźe jeij autůmatyczńy nadszkryflać.',
-'movepage-page-moved'     => 'Zajta $1 uostoła przekludzůno ku $2.',
-'movepage-page-unmoved'   => 'Mjana zajty $1 ńy idźe půmjyńić na $2.',
-'movepage-max-pages'      => 'Przekludzůnych uostało $1 {{PLURAL:$1|zajta|zajty|zajtůw}}. Wjynkszyj liczby ńy idźe przekludźić automatyczńy.',
-'1movedto2'               => '[[$1]] přećepano do [[$2]]',
-'1movedto2_redir'         => 'zajta [[$1]] přećepnůu do [[$2]] nad překerowańem',
-'movelogpage'             => 'Přećepńynte',
-'movelogpagetext'         => 'Uoto lista zajtůw, kere uostatńo zostouy přećepane.',
-'movereason'              => 'Čymu:',
-'revertmove'              => 'cofej',
-'delete_and_move'         => 'Wyćep i przećep',
-'delete_and_move_text'    => '== Přećepańy wymaga wyćepańo inkšyj zajty ==
+'cantmove-titleprotected'      => 'Ńy možeš přećepnůńć zajty, bez tůž co jei nowe mjano je ńydozwolůne s kuli zabezpječyńo před utwořyńym',
+'talkexists'                   => 'Zajta artikla zostaua přećepano, ale zajta godki ńy - zajta godki uo nowym mjańe juž sam jest. Poůunč, proša, teksty oubydwůch godek rynčńe.',
+'movedto'                      => 'přećiśńjynto ku',
+'movetalk'                     => 'Přećiś godke, jak možno.',
+'move-subpages'                => 'Přećepńij podzajty, jak śe do',
+'move-talk-subpages'           => 'Jeli je to możliwe przekludź wszyjstke zajty godki podzajtůw',
+'movepage-page-exists'         => 'Zajta $1 już istńeje a ńy idźe jeij autůmatyczńy nadszkryflać.',
+'movepage-page-moved'          => 'Zajta $1 uostoła przekludzůno ku $2.',
+'movepage-page-unmoved'        => 'Mjana zajty $1 ńy idźe půmjyńić na $2.',
+'movepage-max-pages'           => 'Przekludzůnych uostało $1 {{PLURAL:$1|zajta|zajty|zajtůw}}. Wjynkszyj liczby ńy idźe przekludźić automatyczńy.',
+'1movedto2'                    => '[[$1]] přećepano do [[$2]]',
+'1movedto2_redir'              => 'zajta [[$1]] přećepnůu do [[$2]] nad překerowańem',
+'movelogpage'                  => 'Přećepńynte',
+'movelogpagetext'              => 'Uoto lista zajtůw, kere uostatńo zostouy přećepane.',
+'movereason'                   => 'Čymu:',
+'revertmove'                   => 'cofej',
+'delete_and_move'              => 'Wyćep i przećep',
+'delete_and_move_text'         => '== Přećepańy wymaga wyćepańo inkšyj zajty ==
 Zajta docelowo „[[:$1]]” juž sam jest.
 Čy chceš jům wyćepać, coby zrobić plac do přećepywanej zajty?',
-'delete_and_move_confirm' => 'Toć, wyćep zajta',
-'delete_and_move_reason'  => 'Wyćepano coby zrobić plac do přećepywanyj zajty',
-'selfmove'                => 'Mjana zajtůw zdřůdowyj i docelowyj sům take same.
+'delete_and_move_confirm'      => 'Toć, wyćep zajta',
+'delete_and_move_reason'       => 'Wyćepano coby zrobić plac do přećepywanyj zajty',
+'selfmove'                     => 'Mjana zajtůw zdřůdowyj i docelowyj sům take same.
 Zajty ńy idźe přećepać na ńa samo.',
-'immobile_namespace'      => 'Zajta zdřůduowo abo zajta docelowo to ekstra zajta.
-Ńy idźe přećepać ze abo do tyi přestřyńi mjan',
-'imagenocrossnamespace'   => 'Ńy idźe přećepać grafiki do přestřyni mjan ńy přeznočonyj do grafik',
-'imagetypemismatch'       => 'Nowe rozšeřyńe mjana plika je inkšego typu kej jygo zawartość',
-'imageinvalidfilename'    => 'Mjano plika docelowygo je felerne',
-'fix-double-redirects'    => 'Poprow przekerowańa kere adresujům ku uoryginalnymu titlowi zajty',
+'immobile-source-namespace'    => 'Ńy idźe przekludzać zajtůw we przestrzyńi mjan "$1"',
+'immobile-target-namespace'    => 'Ńy idźe przekludzić zajtůw ku przestrzyńi mjan "$1"',
+'immobile-target-namespace-iw' => 'Link interwiki je felernym titlem pod kery mjołaby być przekludzůno zajta.',
+'immobile-source-page'         => 'Tyj zajty ńy idźe przekludźić.',
+'immobile-target-page'         => 'Ńy idźe przekludzić pod wskozany titel.',
+'imagenocrossnamespace'        => 'Ńy idźe přećepać grafiki do přestřyni mjan ńy přeznočonyj do grafik',
+'imagetypemismatch'            => 'Nowe rozšeřyńe mjana plika je inkšego typu kej jygo zawartość',
+'imageinvalidfilename'         => 'Mjano plika docelowygo je felerne',
+'fix-double-redirects'         => 'Poprow przekerowańa kere adresujům ku uoryginalnymu titlowi zajty',
+'move-leave-redirect'          => 'Uostow przekerowańy pode dotychczasowym titlem',
 
 # Export
 'export'            => 'Eksport zajtůw',
@@ -1838,9 +2058,12 @@ Uodwjydź [http://www.mediawiki.org/wiki/Localisation Tuůmačyńy MediaWiki] a 
 'import-interwiki-text'      => 'Wybjer wiki i nmjano zajty do importowańo.
 Daty a tyž mjana autorůw bydům zachowane.
 Wšyjstke uoperacyje importu transwiki sům uodnotowywane w [[Special:Log/import|rejeře importu]].',
+'import-interwiki-source'    => 'Zdrzůdło wiki/zajty:',
 'import-interwiki-history'   => 'Kopjuj couko historja sprowjyń tyi zajty',
 'import-interwiki-submit'    => 'Importuj',
 'import-interwiki-namespace' => 'Docelowo przestrzyń mjan:',
+'import-upload-filename'     => 'Mjano plika:',
+'import-comment'             => 'Kůmyntorz:',
 'importtext'                 => 'Używajůnc werkcojga [[Special:Export|eksportuj]] wyeksportuj plik ze zdrzůdłowyj wiki, naszkryflej go na swojym dysku, a potym wćepńij go tukej.',
 'importstart'                => 'Trwo importowańe zajtůw...',
 'import-revision-count'      => '$1 {{PLURAL:$1|wersyja|wersyje|wersyji}}',
@@ -1933,6 +2156,9 @@ Wšyjstke uoperacyje importu transwiki sům uodnotowywane w [[Special:Log/import
 'tooltip-watch'                   => 'Dodej tyn artikel do pozorlisty',
 'tooltip-recreate'                => 'Wćepej nazod zajta mimo aže bůua wčeśńij wyćepano.',
 'tooltip-upload'                  => 'Rozpočyńće wćepywańa',
+'tooltip-rollback'                => '"cofej" wycofuje jednym klikńyńćym půmjeńańe (-a) tyj zajty sprowjůne bez uostatnigo sprowjorza.',
+'tooltip-undo'                    => '"anuluj půmjyńańa" wycofuje ta zmjana a uodmyko uokno sprowjańa we trybje podglůndu.
+Dozwalo na naszkryflańy powodu we uopiśe půmjyńań.',
 
 # Metadata
 'nodublincore'      => 'Metadane zgodne s Dublin Core RDF zostouy wůuůnčůne do tygo serwera.',
@@ -1940,12 +2166,12 @@ Wšyjstke uoperacyje importu transwiki sům uodnotowywane w [[Special:Log/import
 'notacceptable'     => 'Serwer wiki ńy je w stańy dostarčyć danych we formaće, kerygo Twoja přyglůndarka uočekuje.',
 
 # Attribution
-'anonymous'        => 'Anůńimowe užytkowńiki {{GRAMMAR:D.lp|{{SITENAME}}}}',
+'anonymous'        => '{{PLURAL:$1|Anůńimowy użytkowńik|Anůńimowe użytkowńiki}} {{SITENAME}}',
 'siteuser'         => 'Užytkowńik {{GRAMMAR:D.lp|{{SITENAME}}}} – $1',
 'lastmodifiedatby' => 'Uostatńy sprowjyńy tej zajty: $2, $1 (autor půmjyńań: $3)', # $1 date, $2 time, $3 user
 'othercontribs'    => 'Inkše autory: $1.',
 'others'           => 'inkśi',
-'siteusers'        => 'Ůžytkowńiki {{GRAMMAR:D.lp|{{SITENAME}}}}: $1',
+'siteusers'        => '{{SITENAME}} {{PLURAL:$2|użytkowńik|użytkowńiki}} $1',
 'creditspage'      => 'Autořy',
 'nocredits'        => 'Brak informacyji uo autorach tyi zajty.',
 
@@ -1986,10 +2212,11 @@ Nojprawdopodobńij zostoło to spowodowane bez link do zewnyntrznyj zajty intern
 'markedaspatrollederror-noautopatrol' => 'Ńy moš uprawńyń wymaganych do uoznačańo swojich sprawjyń kej „sprawdzůne”.',
 
 # Patrol log
-'patrol-log-page'   => 'Dźynńik patrolowańo',
-'patrol-log-header' => 'Půniżej je dźeńńik patrolowańo zajtůw.',
-'patrol-log-line'   => 'označůu wersyja $1 artikla $2 kej sprawdzůno $3',
-'patrol-log-auto'   => '(autůmatyčńy)',
+'patrol-log-page'      => 'Dźynńik patrolowańo',
+'patrol-log-header'    => 'Půniżej je dźeńńik patrolowańo zajtůw.',
+'patrol-log-line'      => 'označůu wersyja $1 artikla $2 kej sprawdzůno $3',
+'patrol-log-auto'      => '(autůmatyčńy)',
+'log-show-hide-patrol' => '$1 rejer sprawdzańo',
 
 # Image deletion
 'deletedrevision'                 => 'Wyćepano popředńy wersyje $1',
@@ -2006,6 +2233,9 @@ $1',
 'previousdiff' => '← Popředńy sprowjyńy',
 'nextdiff'     => 'Nostympne sprowjyńy →',
 
+# Visual comparison
+'visual-comparison' => 'Porůwnańy treśći',
+
 # Media information
 'mediawarning'         => "'''Pozůr!''' Tyn plik može zawjerać zuośliwy kod. Jak go uodymkńyš možeš zaraźić swůj systym.<hr />",
 'imagemaxsize'         => 'Na zajtach uopisu plikůw uůgrańič rozmjar uobrazkůw do:',
@@ -2018,10 +2248,12 @@ $1',
 'show-big-image'       => 'Oryginalno rozdźelčość',
 'show-big-image-thumb' => '<small>Rozmiar podglůndu: $1 × $2 pikseli</small>',
 
-# Special:NewImages
+# Special:NewFiles
 'newimages'             => 'Galerjo nowych uobrozkůw',
 'imagelisttext'         => "Půnižyj na {{PLURAL:$1||posortowanyj $2}} liśće {{PLURAL:$1|znojdowo|znojdujům|znojdowo}} śe '''$1''' {{PLURAL:$1|plik|pliki|plikůw}}.",
 'newimages-summary'     => 'Na tyi ekstra zajće prezyntowane sům uostatńo wćepńynte pliki.',
+'newimages-legend'      => 'Filtruj',
+'newimages-label'       => 'Mjano plika (abo jygo tajla):',
 'showhidebots'          => '($1 boty)',
 'noimages'              => 'Brak plikůw do pokozańo.',
 'ilsubmit'              => 'Šnupej',
@@ -2227,6 +2459,18 @@ Nostympne linki w lińii uwažůmy za wyjůntki, to sům nazwy zajtůw, kaj plik
 'exif-lightsource-24'  => 'žarowe studyjne ISO',
 'exif-lightsource-255' => 'Inkše zdřuduo śwjotua',
 
+# Flash modes
+'exif-flash-fired-0'    => 'Bes błyska flesza',
+'exif-flash-fired-1'    => 'S błyskym flesza',
+'exif-flash-return-0'   => 'bes funkcyji wykrywańo śwjotła uodbitygo',
+'exif-flash-return-2'   => 'ńy wykryto śwjotła uodbitygo',
+'exif-flash-return-3'   => 'wykryto śwjotło uodbite',
+'exif-flash-mode-1'     => 'wymuszůny błysk flesza',
+'exif-flash-mode-2'     => 'wymuszůny brak błyska flesza',
+'exif-flash-mode-3'     => 'tryb autůmatyczny',
+'exif-flash-function-1' => 'Ńy ma funkcyji flesza',
+'exif-flash-redeye-1'   => 'tryb redukowańo efektu czyrwůnych ślypjůw',
+
 'exif-focalplaneresolutionunit-2' => 'cole',
 
 'exif-sensingmethod-1' => 'ńyzdefińjowano',
@@ -2370,21 +2614,10 @@ Kod zawarty w linku straći wažność $4.',
 Potwjerdź chęć wćepańo nazod tygo artikla.",
 'recreate'            => 'Wćepej nazod',
 
-# HTML dump
-'redirectingto' => 'Překerowańy do [[:$1]]...',
-
 # action=purge
-'confirm_purge'        => 'Wyčyśćić pamjyńć podrynčnům do tyi zajty?
-
-$1',
 'confirm_purge_button' => 'OK',
-
-# AJAX search
-'searchcontaining' => "Šnupej za artiklami we kerych je ''$1''.",
-'searchnamed'      => "Šnupej za artiklami uo mjańe ''$1''.",
-'articletitles'    => "Artikle uo titlu začynojůncym śe uod ''$1''",
-'hideresults'      => 'Schowej wyniki',
-'useajaxsearch'    => 'Užywej šnupańo AJAX',
+'confirm-purge-top'    => 'Wyčyśćić pamjyńć podrynčnům do tyi zajty?',
+'confirm-purge-bottom' => 'Uodśwjyżeńy zajty wyczyśći pamjyńć podrynczno a wymuśi pokozańy jeij aktualnyj wersyji.',
 
 # Multipage image navigation
 'imgmultipageprev' => '← popředńo zajta',
@@ -2446,6 +2679,7 @@ Možeš tyž [[Special:Watchlist/edit|užyć standardowygo edytora]].',
 
 # Core parser functions
 'unknown_extension_tag' => 'Ńyznany značńik rozšeřyńo „$1”',
+'duplicate-defaultsort' => 'Pozůr: Domyślnym kluczym sortowańo bydźe "$2" a zastůmpi uůn wcześńij wystympujůncy klucz "$1".',
 
 # Special:Version
 'version'                          => 'Wersjo', # Not used as normal message but as header for the special page itself
@@ -2475,13 +2709,13 @@ Možeš tyž [[Special:Watchlist/edit|užyć standardowygo edytora]].',
 'filepath-summary' => 'Ta ekstra zajta zwraco peuno śćyžka do plika.
 Grafiki sům pokazywane w peunyj rozdźelčośći, inkše typy plikůw sům uodmykane we skojařůnym ś ńimi průgramje.
 
-Naškryflej sam mjano plika bez prefiksu „{{ns:image}}:”.',
+Naškryflej sam mjano plika bez prefiksu „{{ns:file}}:”.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch'          => 'Šnupej za duplikatym plika',
 'fileduplicatesearch-summary'  => 'Šnupej za duplikatůma plika na podstawje wartośći fůnkcyji skrůtu.
 
-Wklepej mjano plika s půmińjyńćym prefiksu „{{ns:image}}:”.',
+Wklepej mjano plika s půmińjyńćym prefiksu „{{ns:file}}:”.',
 'fileduplicatesearch-legend'   => 'Šnupej za duplikatůma plika',
 'fileduplicatesearch-filename' => 'Mjano pliku:',
 'fileduplicatesearch-submit'   => 'Šnupej',
@@ -2510,5 +2744,14 @@ Wklepej mjano plika s půmińjyńćym prefiksu „{{ns:image}}:”.',
 # Special:BlankPage
 'blankpage'              => 'Pusto zajta',
 'intentionallyblankpage' => 'Ta zajta nauůmyślńy uostoua śe pusto',
+
+# External image whitelist
+'external_image_whitelist' => ' #Leave this line exactly as it is<pre>
+#Wstow půńiżyj tajle wyrażyń regularnych (yno to, co znojduje śe mjyndzy //)
+#Wyrażyńa te uostanům przipasowane ku URL-ům zewnyntrznym (bezpostrzredńo linkowanych) grafik
+#Dopasowane URL-e zostanům wyśwjetlůne kej grafiki, w przećiwnym raźe bydźe pokozany yno link ku grafice
+#Lińje kere s anfanga majům # sům traktowane kej kůmyntorze
+
+#Put all regex fragments above this line. Leave this line exactly as it is</pre>',
 
 );

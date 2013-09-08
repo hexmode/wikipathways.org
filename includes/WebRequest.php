@@ -40,6 +40,7 @@ if ( !function_exists( '__autoload' ) ) {
  * you want to pass arbitrary data to some function in place of the web
  * input.
  *
+ * @ingroup HTTP
  */
 class WebRequest {
 	var $data = array();
@@ -54,7 +55,7 @@ class WebRequest {
 
 		// POST overrides GET data
 		// We don't use $_REQUEST here to avoid interference from cookies...
-		$this->data = wfArrayMerge( $_GET, $_POST );
+		$this->data = $_POST + $_GET;
 	}
 
 	/**
@@ -257,6 +258,18 @@ class WebRequest {
 	}
 
 	/**
+	 * Set an aribtrary value into our get/post data.
+	 * @param $key string Key name to use
+	 * @param $value mixed Value to set
+	 * @return mixed old value if one was present, null otherwise
+	 */
+	function setVal( $key, $value ) {
+		$ret = isset( $this->data[$key] ) ? $this->data[$key] : null;
+		$this->data[$key] = $value;
+		return $ret;
+	}
+
+	/**
 	 * Fetch an array from the input or return $default if it's not set.
 	 * If source was scalar, will return an array with a single element.
 	 * If no source and no default, returns NULL.
@@ -440,10 +453,6 @@ class WebRequest {
 			$base = substr( $base, 0, $hash );
 		}
 		if( $base{0} == '/' ) {
-## WPI Mod 2013-Aug-22 ??
-			if( isset($base[1]) && $base[1] == '/' ) { /* More than one slash will look like it is protocol relative */
-				return preg_replace( '!//*!', '/', $base );
-			}
 			return $base;
 		} else {
 			// We may get paths with a host prepended; strip it.
@@ -511,9 +520,7 @@ class WebRequest {
 		unset( $newquery['title'] );
 		$newquery = array_merge( $newquery, $array );
 		$query = wfArrayToCGI( $newquery );
-## WPI Mod 2013-Aug-22 ??
-//		return $onlyquery ? $query : $wgTitle->getLocalURL( $query );
-		return $onlyquery ? $query : $wgTitle->getLocalURL( $basequery );
+		return $onlyquery ? $query : $wgTitle->getLocalURL( $query );
 	}
 
 	/**
@@ -642,11 +649,24 @@ class WebRequest {
 			}
 		}
 	}
+
+	/*
+	 * Get data from $_SESSION
+	 */
+	function getSessionData( $key ) {
+		if( !isset( $_SESSION[$key] ) )
+			return null;
+		return $_SESSION[$key];
+	}
+	function setSessionData( $key, $data ) {
+		$_SESSION[$key] = $data;
+	}
 }
 
 /**
  * WebRequest clone which takes values from a provided array.
  *
+ * @ingroup HTTP
  */
 class FauxRequest extends WebRequest {
 	var $wasPosted = false;
@@ -656,7 +676,7 @@ class FauxRequest extends WebRequest {
 	 *   fake GET/POST values
 	 * @param $wasPosted Bool: whether to treat the data as POST
 	 */
-	function FauxRequest( $data, $wasPosted = false ) {
+	function FauxRequest( $data, $wasPosted = false, $session = null ) {
 		if( is_array( $data ) ) {
 			$this->data = $data;
 		} else {
@@ -664,6 +684,11 @@ class FauxRequest extends WebRequest {
 		}
 		$this->wasPosted = $wasPosted;
 		$this->headers = array();
+		$this->session = $session ? $session : array();
+	}
+
+	function notImplemented( $method ) {
+		throw new MWException( "{$method}() not implemented" );
 	}
 
 	function getText( $name, $default = '' ) {
@@ -684,15 +709,24 @@ class FauxRequest extends WebRequest {
 	}
 
 	function getRequestURL() {
-		throw new MWException( 'FauxRequest::getRequestURL() not implemented' );
+		$this->notImplemented( __METHOD__ );
 	}
 
 	function appendQuery( $query ) {
-		throw new MWException( 'FauxRequest::appendQuery() not implemented' );
+		$this->notImplemented( __METHOD__ );
 	}
 
 	function getHeader( $name ) {
 		return isset( $this->headers[$name] ) ? $this->headers[$name] : false;
+	}
+
+	function getSessionData( $key ) {
+		if( !isset( $this->session[$key] ) )
+			return null;
+		return $this->session[$key];
+	}
+	function setSessionData( $key, $data ) {
+		$this->notImplemented( __METHOD__ );
 	}
 
 }

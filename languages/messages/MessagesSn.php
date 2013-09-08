@@ -103,7 +103,7 @@ Usakanganwe kuchinga [[Special:Preferences|mapreferences ako {{SITENAME}}]].',
 'username'           => 'Zita:',
 
 # Edit pages
-'summary'     => 'Muchidimbu',
+'summary'     => 'Muchidimbu:',
 'minoredit'   => 'Uku kushandurwa kudiki',
 'watchthis'   => 'Ringa peji rino',
 'savearticle' => 'Kotsa peji',
@@ -143,6 +143,9 @@ Usakanganwe kuchinga [[Special:Preferences|mapreferences ako {{SITENAME}}]].',
 'mywatchlist'   => 'Zvandakarinda',
 'watch'         => 'Rinda',
 'watchthispage' => 'Ringa peji rino',
+
+# Protect
+'prot_1movedto2' => '[[$1]] rachichinurwa ku [[$2]]',
 
 # Restrictions (nouns)
 'restriction-edit' => 'Chinja',

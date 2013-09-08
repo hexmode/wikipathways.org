@@ -36,18 +36,18 @@ class CategoryPage extends Article {
 			$this->closeShowCategory();
 		}
 	}
-
+	
 	/**
-	 * This page should not be cached if 'from' or 'until' has been used
-	 * @return bool
+	 * Don't return a 404 for categories in use.
 	 */
-	function isFileCacheable() {
-		global $wgRequest;
-
-		return ( ! Article::isFileCacheable()
-				|| $wgRequest->getVal( 'from' )
-				|| $wgRequest->getVal( 'until' )
-		) ? false : true;
+	function hasViewableContent() {
+		if( parent::hasViewableContent() ) {
+			return true;
+		} else {
+			$cat = Category::newFromTitle( $this->mTitle );
+			return $cat->getId() != 0;
+		}
+			
 	}
 
 	function openShowCategory() {
@@ -85,8 +85,6 @@ class CategoryViewer {
 	/**
 	 * Format the category data list.
 	 *
-	 * @param string $from -- return only sort keys from this item on
-	 * @param string $until -- don't return keys after this point.
 	 * @return string HTML output
 	 * @private
 	 */
@@ -143,8 +141,8 @@ class CategoryViewer {
 	}
 
 	/**
-	 * Add a subcategory to the internal lists, using a title object
-	 * @deprectated kept for compatibility, please use addSubcategoryObject instead
+	 * Add a subcategory to the internal lists, using a title object 
+	 * @deprecated kept for compatibility, please use addSubcategoryObject instead
 	 */
 	function addSubcategory( $title, $sortkey, $pageLength ) {
 		global $wgContLang;
@@ -164,17 +162,12 @@ class CategoryViewer {
 	*/
 	function getSubcategorySortChar( $title, $sortkey ) {
 		global $wgContLang;
-## WPI Mod 2013-Aug-22
-		/** AP20070502 */
-		$trim_title = ltrim(strstr($title->getBaseText(), ':'), ':');
-		$firstChar = $wgContLang->firstChar( $trim_title );
-		/*
+
 		if( $title->getPrefixedText() == $sortkey ) {
 			$firstChar = $wgContLang->firstChar( $title->getDBkey() );
 		} else {
 			$firstChar = $wgContLang->firstChar( $sortkey );
 		}
-		*/
 
 		return $wgContLang->convert( $firstChar );
 	}
@@ -199,14 +192,10 @@ class CategoryViewer {
 	 */
 	function addPage( $title, $sortkey, $pageLength, $isRedirect = false ) {
 		global $wgContLang;
-## WPI Mod 2013-Aug-22
-/** AP20070502 */
-		$trim_title = ltrim(strstr($title->getBaseText(), ':'), ':');
-
 		$this->articles[] = $isRedirect
 			? '<span class="redirect-in-category">' . $this->getSkin()->makeKnownLinkObj( $title ) . '</span>'
 			: $this->getSkin()->makeSizeLinkObj( $pageLength, $title );
-		$this->articles_start_char[] = $wgContLang->convert( $wgContLang->firstChar( $trim_title ) );
+		$this->articles_start_char[] = $wgContLang->convert( $wgContLang->firstChar( $sortkey ) );
 	}
 
 	function finaliseCategoryState() {
@@ -234,14 +223,14 @@ class CategoryViewer {
 			array( 'page', 'categorylinks', 'category' ),
 			array( 'page_title', 'page_namespace', 'page_len', 'page_is_redirect', 'cl_sortkey',
 				'cat_id', 'cat_title', 'cat_subcats', 'cat_pages', 'cat_files' ),
-			array( $pageCondition,
-				   'cl_to' => $this->title->getDBkey() ),
+			array( $pageCondition, 'cl_to' => $this->title->getDBkey() ),
 			__METHOD__,
 			array( 'ORDER BY' => $this->flip ? 'cl_sortkey DESC' : 'cl_sortkey',
-				   'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
-				   'LIMIT'    => $this->limit + 1 ),
+				'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
+				'LIMIT'    => $this->limit + 1 ),
 			array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
-					   'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY ) ) );
+				'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY ) )
+		);
 
 		$count = 0;
 		$this->nextPage = null;
@@ -258,7 +247,7 @@ class CategoryViewer {
 			if( $title->getNamespace() == NS_CATEGORY ) {
 				$cat = Category::newFromRow( $x, $title );
 				$this->addSubcategoryObject( $cat, $x->cl_sortkey, $x->page_len );
-			} elseif( $this->showGallery && $title->getNamespace() == NS_IMAGE ) {
+			} elseif( $this->showGallery && $title->getNamespace() == NS_FILE ) {
 				$this->addImage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
 			} else {
 				$this->addPage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
@@ -348,10 +337,10 @@ class CategoryViewer {
 	 * Format a list of articles chunked by letter, either as a
 	 * bullet list or a columnar format, depending on the length.
 	 *
-	 * @param array $articles
-	 * @param array $articles_start_char
-	 * @param int   $cutoff
-	 * @return string
+	 * @param $articles Array
+	 * @param $articles_start_char Array
+	 * @param $cutoff Int
+	 * @return String
 	 * @private
 	 */
 	function formatList( $articles, $articles_start_char, $cutoff = 6 ) {
@@ -368,9 +357,9 @@ class CategoryViewer {
 	 * Format a list of articles chunked by letter in a three-column
 	 * list, ordered vertically.
 	 *
-	 * @param array $articles
-	 * @param array $articles_start_char
-	 * @return string
+	 * @param $articles Array
+	 * @param $articles_start_char Array
+	 * @return String
 	 * @private
 	 */
 	function columnList( $articles, $articles_start_char ) {
@@ -425,59 +414,11 @@ class CategoryViewer {
 		return $r;
 	}
 
-## WPI Mod 2013-Aug-22
-	/** AP20070821
-	 * Format a list of articles chunked in a three-column
-	 * list, ordered vertically, WITHOUT HEADERS.
-	 *
-	 * @param array $articles
-	 * @return string
-	 * @private
-	 */
-	function columnListSimple( $articles) {
-		// divide list into three equal chunks
-		$chunk = (int) (count ( $articles ) / 3);
-
-		// get and display header
-		$r = '<table width="100%"><tr valign="top">';
-
-		// loop through the chunks
-		for($startChunk = 0, $endChunk = $chunk, $chunkIndex = 0;
-		$chunkIndex < 3;
-		$chunkIndex++, $startChunk = $endChunk, $endChunk += $chunk + 1)
-			{
-		$r .= "<td>\n";
-		$atColumnTop = true;
-
-		// output all articles in category
-		for ($index = $startChunk ;
-		$index < $endChunk && $index < count($articles);
-		$index++ )
-			{
-		if( $atColumnTop ) {
-		$atColumnTop = false;
-	} else {
-		$r .= "</ul>\n";
-	}
-		$r .= "<ul>";
-		$r .= "<li>{$articles[$index]}</li>";
-	}
-		if( !$atColumnTop ) {
-		$r .= "</ul>\n";
-	}
-		$r .= "</td>\n";
-
-
-	}
-		$r .= '</tr></table>';
-		return $r;
-	}
-
 	/**
 	 * Format a list of articles chunked by letter in a bullet list.
-	 * @param array $articles
-	 * @param array $articles_start_char
-	 * @return string
+	 * @param $articles Array
+	 * @param $articles_start_char Array
+	 * @return String
 	 * @private
 	 */
 	function shortList( $articles, $articles_start_char ) {
@@ -496,30 +437,13 @@ class CategoryViewer {
 		return $r;
 	}
 
-## WPI Mod 2013-Aug-22
-	/** AP20070822
-	 * Format a list of articles in a bullet list, WITHOUT HEADERS.
-	 * @param array $articles
-	 * @return string
-	 * @private
-	 */
-	function shortListSimple( $articles ) {
-		$r = '<ul><li>'.$articles[0].'</li>';
-		for ($index = 1; $index < count($articles); $index++ )
-			{
-		$r .= "<li>{$articles[$index]}</li>";
-	}
-		$r .= '</ul>';
-		return $r;
-	}
-
 	/**
-	 * @param Title  $title
-	 * @param string $first
-	 * @param string $last
-	 * @param int    $limit
-	 * @param array  $query - additional query options to pass
-	 * @return string
+	 * @param $title Title object
+	 * @param $first String
+	 * @param $last String
+	 * @param $limit Int
+	 * @param $query Array: additional query options to pass
+	 * @return String
 	 * @private
 	 */
 	function pagingLinks( $title, $first, $last, $limit, $query = array() ) {
@@ -551,10 +475,10 @@ class CategoryViewer {
 	 * category-subcat-count-limited, category-file-count,
 	 * category-file-count-limited.
 	 *
-	 * @param int $rescnt The number of items returned by our database query.
-	 * @param int $dbcnt The number of items according to the category table.
-	 * @param string $type 'subcat', 'article', or 'file'
-	 * @return string A message giving the number of items, to output to HTML.
+	 * @param $rescnt Int: The number of items returned by our database query.
+	 * @param $dbcnt Int: The number of items according to the category table.
+	 * @param $type String: 'subcat', 'article', or 'file'
+	 * @return String: A message giving the number of items, to output to HTML.
 	 */
 	private function getCountMessage( $rescnt, $dbcnt, $type ) {
 		global $wgLang;
@@ -574,8 +498,12 @@ class CategoryViewer {
 			# Case 1: seems sane.
 			$totalcnt = $dbcnt;
 		} elseif($totalrescnt < $this->limit && !$this->from && !$this->until){
-			# Case 2: not sane, but salvageable.
+			# Case 2: not sane, but salvageable.  Use the number of results.
+			# Since there are fewer than 200, we can also take this opportunity
+			# to refresh the incorrect category table entry -- which should be
+			# quick due to the small number of entries.
 			$totalcnt = $rescnt;
+			$this->cat->refreshCounts();
 		} else {
 			# Case 3: hopeless.  Don't give a total count at all.
 			return wfMsgExt("category-$type-count-limited", 'parse',

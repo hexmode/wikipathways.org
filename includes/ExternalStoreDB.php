@@ -122,12 +122,11 @@ class ExternalStoreDB {
 	 * @return string URL
 	 */
 	function store( $cluster, $data ) {
-		$fname = 'ExternalStoreDB::store';
-
-		$dbw =& $this->getMaster( $cluster );
-
+		$dbw = $this->getMaster( $cluster );
 		$id = $dbw->nextSequenceValue( 'blob_blob_id_seq' );
-		$dbw->insert( $this->getTable( $dbw ), array( 'blob_id' => $id, 'blob_text' => $data ), $fname );
+		$dbw->insert( $this->getTable( $dbw ), 
+			array( 'blob_id' => $id, 'blob_text' => $data ), 
+			__METHOD__ );
 		$id = $dbw->insertId();
 		if ( $dbw->getFlag( DBO_TRX ) ) {
 			$dbw->immediateCommit();

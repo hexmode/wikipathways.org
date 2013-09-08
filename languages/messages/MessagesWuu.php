@@ -43,8 +43,6 @@ $messages = array(
 'underline-never'   => '从来弗',
 'underline-default' => '浏览器默认',
 
-'skinpreview' => '(预览)',
-
 # Dates
 'sunday'        => '星期天',
 'monday'        => '星期一',
@@ -129,7 +127,7 @@ $messages = array(
 'mytalk'         => '我个讲张',
 'anontalk'       => '该IP个讲张',
 'navigation'     => '导航',
-'and'            => '搭仔',
+'and'            => '&#32;搭仔',
 
 'errorpagetitle'    => '错误',
 'returnto'          => '返回到$1。',
@@ -247,7 +245,10 @@ $messages = array(
 
 # Login and logout pages
 'logouttitle'                => '用户登出',
-'logouttext'                 => "'''倷已经登出哉。'''<br /> 倷可以继续匿名使用{{SITENAME}} ，倷也可以再次以相同或者两样个用户名登录。注意，有星页面作兴还是会搭倷登出前头一样显示，一脚到倷清脱倷个浏览器缓存。",
+'logouttext'                 => "'''倷已经登出哉。'''
+
+倷可以继续匿名使用{{SITENAME}} ，倷也可以再次以相同或者两样个用户名登录。
+注意，有星页面作兴还是会搭倷登出前头一样显示，一脚到倷清脱倷个浏览器缓存。",
 'welcomecreation'            => '== 欢迎， $1！ ==
 
 倷个户头已经建立哉。覅忘记脱改动倷个{{SITENAME}}偏好噢。',
@@ -262,10 +263,10 @@ $messages = array(
 'logout'                     => '登出',
 'userlogout'                 => '登出',
 'notloggedin'                => '朆登录',
-'nologin'                    => '您还没有账户吗？$1。',
+'nologin'                    => "您还没有账户吗？'''$1'''。",
 'nologinlink'                => '新开户头',
 'createaccount'              => '新开户头',
-'gotaccount'                 => '已经有仔帐号哉？ $1。',
+'gotaccount'                 => "已经有仔帐号哉？ '''$1'''。",
 'gotaccountlink'             => '登录',
 'badretype'                  => '倷输入个密码搭倪个档案弗配。',
 'userexists'                 => '输入个用户名已经拨人注脱哉。请再选个两样个用户名。',
@@ -290,6 +291,11 @@ $messages = array(
 'accountcreatedtext'         => '$1 个户头已经建立哉。',
 'loginlanguagelabel'         => '语言：$1',
 
+# Password reset dialog
+'oldpassword' => '旧密码:',
+'newpassword' => '新密码:',
+'retypenew'   => '再打一遍新密码:',
+
 # Edit page toolbar
 'bold_sample'    => '黑体文本',
 'bold_tip'       => '黑体文本',
@@ -304,7 +310,7 @@ $messages = array(
 'sig_tip'        => '倷个签名搭仔辰光记录',
 
 # Edit pages
-'summary'            => '总结',
+'summary'            => '总结:',
 'minoredit'          => '该个是个小改动',
 'watchthis'          => '监控该只页面',
 'savearticle'        => '保存页面',
@@ -368,6 +374,7 @@ $messages = array(
 'prevn'                     => '上个 $1',
 'nextn'                     => '下个 $1',
 'viewprevnext'              => '查看 （$1） （$2） （$3）',
+'searchhelp-url'            => 'Help:目录',
 'search-result-size'        => '$1（$2字）',
 'search-mwsuggest-enabled'  => '与建议',
 'search-mwsuggest-disabled' => ' 没有建议',
@@ -380,6 +387,7 @@ $messages = array(
 'qbsettings-none'       => '呒',
 'changepassword'        => '改密码',
 'skin'                  => '皮肤',
+'skin-preview'          => '预览',
 'math'                  => '数学公式',
 'datedefault'           => '呒拨偏好',
 'datetime'              => '日脚搭仔辰光',
@@ -389,9 +397,6 @@ $messages = array(
 'prefs-watchlist-days'  => '勒拉监控列表里向显示个日数：',
 'prefs-watchlist-edits' => '勒拉扩展个监控列表里向显示个编辑趟数：',
 'saveprefs'             => '保存',
-'oldpassword'           => '旧密码:',
-'newpassword'           => '新密码:',
-'retypenew'             => '再打一遍新密码:',
 'textboxsize'           => '编辑',
 'searchresultshead'     => '搜索',
 'recentchangescount'    => '近段辰光个改动标题数：',
@@ -453,11 +458,11 @@ $messages = array(
 'uploadnologin'     => '朆登录',
 'uploadnologintext' => '倷板定要[[Special:UserLogin|登录]]仔再好上载文件。',
 'uploaderror'       => '上载出错',
-'uploadtext'        => "拿下头只表格来上载文件。要查看或者搜寻之前上载个图片个说法，请到[[Special:ImageList|已上载文件列表]]，上载搭仔删脱也记录勒拉[[Special:Log/upload|上载日志]]里向。
+'uploadtext'        => "拿下头只表格来上载文件。要查看或者搜寻之前上载个图片个说法，请到[[Special:FileList|已上载文件列表]]，上载搭仔删脱也记录勒拉[[Special:Log/upload|上载日志]]里向。
 
 要勒拉页面里向摆进图片个说法，用下头该种形式个链接
-'''<nowiki>[[{{ns:image}}:文件.jpg]]</nowiki>'''，
-'''<nowiki>[[{{ns:image}}:文件.png|替代文本]]</nowiki>''' 或者用
+'''<nowiki>[[{{ns:file}}:文件.jpg]]</nowiki>'''，
+'''<nowiki>[[{{ns:file}}:文件.png|替代文本]]</nowiki>''' 或者用
 '''<nowiki>[[{{ns:media}}:文件.ogg]]</nowiki>''' 直接链到文件。",
 'uploadlog'         => '文件上载日志',
 'uploadlogpage'     => '文件上载日志',
@@ -477,17 +482,17 @@ $messages = array(
 'destfilename'      => '目标文件名:',
 'watchthisupload'   => '监控该只页面',
 
-# Special:ImageList
-'imagelist_search_for'  => '寻图片名字:',
+# Special:ListFiles
+'listfiles_search_for'  => '寻图片名字:',
 'imgfile'               => '源文件',
-'imagelist'             => '文件列表',
-'imagelist_date'        => '日脚',
-'imagelist_name'        => '名字',
-'imagelist_user'        => '用户',
-'imagelist_size'        => '尺寸 （bytes）',
-'imagelist_description' => '描述',
+'listfiles'             => '文件列表',
+'listfiles_date'        => '日脚',
+'listfiles_name'        => '名字',
+'listfiles_user'        => '用户',
+'listfiles_size'        => '尺寸 （bytes）',
+'listfiles_description' => '描述',
 
-# Image description page
+# File description page
 'filehist'                  => '文物历史',
 'filehist-deleteall'        => '全删',
 'filehist-deleteone'        => '删',
@@ -520,11 +525,9 @@ $messages = array(
 'randompage' => '随便望望',
 
 # Statistics
-'statistics'    => '统计',
-'sitestats'     => '{{SITENAME}}统计',
-'userstats'     => '用户资料',
-'sitestatstext' => "数据库里向亨白浪当有'''{{PLURAL:$1|一|$1}}'''只页面。 个包括'''讲张页'''，'''{{SITENAME}}'''个说明页，顶少个'''stub'''页，重定向页搭仔别个作兴还弗好算合格内容页面个页面。 弗包括该星个说话，有'''{{PLURAL:$2|一|$2}}'''只作兴是合格个内容页。 亨白浪当上载着 '''$8''' 只文件。",
-'userstatstext' => "亨白浪当有 '''{{PLURAL:$1|1|$1}}''' 个登记户头，搿里向 '''$2''' (或 '''$4%''') 个是 $5。",
+'statistics'              => '统计',
+'statistics-header-users' => '用户资料',
+'statistics-users-active' => '活跃用户',
 
 'brokenredirects'        => '坏脱个重定向',
 'brokenredirectstext'    => '下底个重定向链到弗存在个页面:',
@@ -589,28 +592,22 @@ $messages = array(
 'emailsenttext' => '倷个电子邮件讯息已经拨发送哉。',
 
 # Watchlist
-'watchlist'            => '监控列表',
-'mywatchlist'          => '我个监控列表',
-'watchlistfor'         => "（'''$1'''个监控列表）",
-'nowatchlist'          => '倷个监控列表是空个。',
-'watchnologin'         => '朆登录',
-'addedwatch'           => '加到监控列表哉',
-'addedwatchtext'       => "该个页面 \"[[:\$1]]\" 已经加到侬个[[Special:Watchlist|监控列表]]哉。
+'watchlist'         => '监控列表',
+'mywatchlist'       => '我个监控列表',
+'watchlistfor'      => "（'''$1'''个监控列表）",
+'nowatchlist'       => '倷个监控列表是空个。',
+'watchnologin'      => '朆登录',
+'addedwatch'        => '加到监控列表哉',
+'addedwatchtext'    => "该个页面 \"[[:\$1]]\" 已经加到侬个[[Special:Watchlist|监控列表]]哉。
 将来对该页面个改动搭仔搭界个讲张页个改动会列表垃该面，并且页面会垃拉[[Special:RecentChanges|近段辰光个改变列表]]里向显示成功'''黑体'''，实梗好外加便当拿渠拣出来。假使侬歇仔两日又想拿箇个页面登侬个监控列表里向拿脱个说法，垃侧条里向点击“弗要监控。",
-'removedwatch'         => '登监控列表里向拿脱哉',
-'removedwatchtext'     => '"[[:$1]]"已经从侬个监控列表移除。',
-'watch'                => '监控',
-'watchthispage'        => '监控该只页面',
-'unwatch'              => '覅监控',
-'unwatchthispage'      => '停止监控',
-'watchlistcontains'    => '倷个监控列表包括{{PLURAL:$1|1|$1}}只页面。',
-'wlshowlast'           => '显示上个 $1 个钟头 $2 日 $3',
-'watchlist-show-bots'  => '显示机器人个编辑',
-'watchlist-hide-bots'  => '隐藏机器人个编辑',
-'watchlist-show-own'   => '显示我个编辑',
-'watchlist-hide-own'   => '隐藏我个编辑',
-'watchlist-show-minor' => '显示小编辑',
-'watchlist-hide-minor' => '隐藏小编辑',
+'removedwatch'      => '登监控列表里向拿脱哉',
+'removedwatchtext'  => '"[[:$1]]"已经从侬个监控列表移除。',
+'watch'             => '监控',
+'watchthispage'     => '监控该只页面',
+'unwatch'           => '覅监控',
+'unwatchthispage'   => '停止监控',
+'watchlistcontains' => '倷个监控列表包括{{PLURAL:$1|1|$1}}只页面。',
+'wlshowlast'        => '显示上个 $1 个钟头 $2 日 $3',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => '监控……',
@@ -620,21 +617,26 @@ $messages = array(
 'changed'            => '改变哉',
 'created'            => '建立哉',
 
-# Delete/protect/revert
-'deletepage'      => '删脱页面',
-'confirm'         => '确认',
-'historywarning'  => '警告：倷要删脱个该只页面有历史：',
-'actioncomplete'  => '操作完成哉',
-'deletedarticle'  => '"[[$1]]" 已经删脱哉',
-'dellogpage'      => '删除记录',
-'deletionlog'     => '删除记录',
-'deletecomment'   => '删脱俚个理由',
-'rollback'        => '恢复编辑',
-'rollback_short'  => '恢复',
-'rollbacklink'    => '恢复',
-'rollbackfailed'  => '恢复失败',
-'revertpage'      => '恢复[[Special:Contributions/$2|$2]] （[[User talk:$2|讲张]]）个改动；恢复到[[User:$1|$1]]个上一版本', # Additional available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+# Delete
+'deletepage'     => '删脱页面',
+'confirm'        => '确认',
+'historywarning' => '警告：倷要删脱个该只页面有历史：',
+'actioncomplete' => '操作完成哉',
+'deletedarticle' => '"[[$1]]" 已经删脱哉',
+'dellogpage'     => '删除记录',
+'deletionlog'    => '删除记录',
+'deletecomment'  => '删脱俚个理由',
+
+# Rollback
+'rollback'       => '恢复编辑',
+'rollback_short' => '恢复',
+'rollbacklink'   => '恢复',
+'rollbackfailed' => '恢复失败',
+'revertpage'     => '恢复[[Special:Contributions/$2|$2]] （[[User talk:$2|讲张]]）个改动；恢复到[[User:$1|$1]]个上一版本', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+
+# Protect
 'protectlogpage'  => '保护日志',
+'prot_1movedto2'  => '[[$1]]捅到[[$2]]',
 'protectcomment'  => '保护理由:',
 'protect-default' => '（默认）',
 
@@ -694,10 +696,13 @@ $messages = array(
 个作兴会引起对一只热门页面剧烈个、想弗着个改变。
 来操作前头请倷确定倷已经充分了解个能做法个后果。",
 'movearticle'             => '页面捅荡:',
+'movenologin'             => '朆登录',
+'movenologintext'         => '倷板定要是已登记用户且勒拉[[Special:UserLogin|登录]]状态下头再好拿页面捅荡。',
 'newtitle'                => '新个题目:',
 'movepagebtn'             => '页面捅荡',
 'pagemovedsub'            => '捅荡成功哉',
 'articleexists'           => '叫该个名字个页面已经勒浪哉，要么倷拣个名字是无效个。请重新拣个名字。',
+'cantmove-titleprotected' => '侬弗可以移动迭个页面到个个位置，因为迭个新标题已经拨保护拉许以防止创建。',
 'movedto'                 => '捅到',
 'movetalk'                => '捅搭界个讲张页面',
 '1movedto2'               => '[[$1]]捅到[[$2]]',
@@ -775,7 +780,7 @@ $messages = array(
 # Image deletion
 'deletedrevision' => '拨删脱个旧修订 $1',
 
-# Special:NewImages
+# Special:NewFiles
 'newimages'    => '新文件陈列室',
 'showhidebots' => '（$1机器人）',
 'ilsubmit'     => '搜寻',
@@ -835,11 +840,6 @@ Variants for Chinese language
 
 # action=purge
 'confirm_purge_button' => '确定',
-
-# AJAX search
-'searchcontaining' => "搜寻里向有 ''$1'' 个页面。",
-'articletitles'    => "以 ''$1'' 开头个页面",
-'hideresults'      => '囥脱结果',
 
 # Separators for various lists, etc.
 'comma-separator' => '、',

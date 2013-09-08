@@ -51,8 +51,6 @@ class ApiUndelete extends ApiBase {
 			$this->dieUsageMsg(array('permdenied-undelete'));
 		if($wgUser->isBlocked())
 			$this->dieUsageMsg(array('blockedtext'));
-		if(wfReadOnly())
-			$this->dieUsageMsg(array('readonlytext'));
 		if(!$wgUser->matchEditToken($params['token']))
 			$this->dieUsageMsg(array('sessionfailure'));
 
@@ -69,14 +67,14 @@ class ApiUndelete extends ApiBase {
 			$params['timestamps'][$i] = wfTimestamp(TS_MW, $ts);
 
 		$pa = new PageArchive($titleObj);
-		$dbw = wfGetDb(DB_MASTER);
+		$dbw = wfGetDB(DB_MASTER);
 		$dbw->begin();
 		$retval = $pa->undelete((isset($params['timestamps']) ? $params['timestamps'] : array()), $params['reason']);
 		if(!is_array($retval))
 			$this->dieUsageMsg(array('cannotundelete'));
 
 		if($retval[1])
-			wfRunHooks( 'FileUndeleteComplete',
+			wfRunHooks( 'FileUndeleteComplete', 
 				array($titleObj, array(), $wgUser, $params['reason']) );
 
 		$info['title'] = $titleObj->getPrefixedText();

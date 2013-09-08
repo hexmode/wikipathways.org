@@ -55,7 +55,7 @@ $messages = array(
 # Watchlist
 'watch' => 'Rewindaande',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Yiilaade',
 
 );

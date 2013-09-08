@@ -8,6 +8,7 @@
  * @file
  *
  * @author Jon Harald Søby
+ * @author Reedy
  */
 
 $specialPageAliases = array(
@@ -27,7 +28,7 @@ $messages = array(
 'uncategorizedimages'     => 'Uncategorised files',
 'uncategorizedtemplates'  => 'Uncategorised templates',
 
-# Delete/protect/revert
+# Rollback
 'sessionfailure' => 'There seems to be a problem with your login session;
 this action has been cancelled as a precaution against session hijacking.
 Please hit "back" and reload the page you came from, then try again.',
@@ -44,6 +45,7 @@ If the file has been modified from its original state, some details may not full
 # EXIF tags
 'exif-ycbcrcoefficients'   => 'Colour space transformation matrix coefficients',
 'exif-colorspace'          => 'Colour space',
+'exif-datetimedigitized'   => 'Date and time of digitising',
 'exif-subsectimedigitized' => 'DateTimeDigitised subseconds',
 'exif-exposureprogram'     => 'Exposure programme',
 

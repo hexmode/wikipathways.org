@@ -86,10 +86,15 @@ $messages = array(
 'remembermypassword' => 'O nkgopole',
 'nologinlink'        => 'Ingodisetse',
 'createaccount'      => 'Ingodisetse',
-'gotaccount'         => 'O se o ingodisitse? $1.',
+'gotaccount'         => "O se o ingodisitse? '''$1'''.",
 'createaccountmail'  => 'ka e-mail',
 'badretype'          => 'Mapetjo a mabedi o a ngotseng ha a tshwane.',
 'mailmypassword'     => 'Nthomele password ya ka ka email',
+
+# Password reset dialog
+'oldpassword' => 'Lepetjo la kgale:',
+'newpassword' => 'Lepetjo le letjha:',
+'retypenew'   => 'Ngola lepetjo le letjha hape:',
 
 # Edit pages
 'savearticle'  => 'Le boloke',
@@ -104,9 +109,6 @@ $messages = array(
 
 # Preferences page
 'changepassword'    => 'Fetola lepetjo',
-'oldpassword'       => 'Lepetjo la kgale:',
-'newpassword'       => 'Lepetjo le letjha:',
-'retypenew'         => 'Ngola lepetjo le letjha hape:',
 'searchresultshead' => 'Phuputso',
 'allowemail'        => 'Dumella batho ba bang hore ba nthomelle di-email',
 

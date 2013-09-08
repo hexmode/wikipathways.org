@@ -42,10 +42,13 @@ $messages = array(
 'mainpage'             => 'ପ୍ରଧାନ ପ୍ରୁଷ୍ଟ୍ଆ',
 'mainpage-description' => 'ପ୍ରଧାନ ପ୍ରୁଷ୍ଟ୍ଆ',
 
+'viewsourcelink' => 'େଦଖ ଉର୍ସ',
+
 # General errors
 'viewsource' => 'େଦଖ ଉର୍ସ',
 
 # Edit pages
+'summary'  => 'ସାରକଥା:',
 'showdiff' => 'େଦଖାଅ ପରିବର୍ତନଗୁଡିକ',
 
 # Preferences page
@@ -57,6 +60,9 @@ $messages = array(
 # Upload
 'filedesc'          => 'ସାରକଥା',
 'fileuploadsummary' => 'ସାରକଥା:',
+
+# Special:LinkSearch
+'linksearch-ok' => 'ସନ୍ଧାନ',
 
 # Watchlist
 'watch' => 'େଦଖ',
@@ -75,7 +81,7 @@ $messages = array(
 # Tooltip help for the actions
 'tooltip-p-logo' => 'ପ୍ରଧାନ ପ୍ରୁଷ୍ଟ୍ଆ',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'ସନ୍ଧାନ',
 
 # Special:FileDuplicateSearch

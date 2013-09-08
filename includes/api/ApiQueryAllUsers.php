@@ -50,7 +50,7 @@ class ApiQueryAllUsers extends ApiQueryBase {
 			$fld_editcount = isset($prop['editcount']);
 			$fld_groups = isset($prop['groups']);
 			$fld_registration = isset($prop['registration']);
-		} else {
+		} else { 
 			$fld_blockinfo = $fld_editcount = $fld_groups = $fld_registration = false;
 		}
 
@@ -121,7 +121,7 @@ class ApiQueryAllUsers extends ApiQueryBase {
 			$row = $db->fetchObject($res);
 			$count++;
 
-			if (!$row || $lastUser != $row->user_name) {
+			if (!$row || $lastUser !== $row->user_name) {
 				// Save the last pass's user data
 				if (is_array($lastUserData))
 					$data[] = $lastUserData;

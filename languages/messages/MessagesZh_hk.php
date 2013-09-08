@@ -7,6 +7,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Wong128hk
  * @author Yuyu
  */
 
@@ -15,6 +16,7 @@ $fallback = 'zh-hant';
 $messages = array(
 # User preference toggles
 'tog-watchlisthidebots' => '監視列表中隱藏機械人的編輯',
+'tog-norollbackdiff'    => '進行回退後略過差異比較',
 
 # Dates
 'sunday'        => '星期日',
@@ -74,14 +76,13 @@ $messages = array(
 # Recent changes
 'rcshowhidebots' => '$1機械人的編輯',
 
-# Watchlist
-'watchlist-show-bots' => '顯示機械人的編輯',
-'watchlist-hide-bots' => '隱藏機械人的編輯',
+# Move page
+'move-redirect-suppressed' => '已禁止重新定向',
 
 # Tooltip help for the actions
 'tooltip-t-print' => '這個頁面的可打印版本',
 
-# Special:NewImages
+# Special:NewFiles
 'showhidebots' => '($1機械人)',
 
 );

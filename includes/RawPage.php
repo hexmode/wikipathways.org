@@ -21,7 +21,7 @@ class RawPage {
 	var $mContentType, $mExpandTemplates;
 
 	function __construct( &$article, $request = false ) {
-		global $wgRequest, $wgInputEncoding, $wgSquidMaxage, $wgJsMimeType, $wgForcedRawSMaxage, $wgGroupPermissions;
+		global $wgRequest, $wgInputEncoding, $wgSquidMaxage, $wgJsMimeType, $wgGroupPermissions;
 
 		$allowedCTypes = array('text/x-wiki', $wgJsMimeType, 'text/css', 'application/x-zope-edit');
 		$this->mArticle =& $article;
@@ -34,7 +34,7 @@ class RawPage {
 		}
 
 		$ctype = $this->mRequest->getVal( 'ctype' );
-		$smaxage = $this->mRequest->getIntOrNull( 'smaxage', $wgSquidMaxage );
+		$smaxage = $this->mRequest->getIntOrNull( 'smaxage' );
 		$maxage = $this->mRequest->getInt( 'maxage', $wgSquidMaxage );
 
 		$this->mExpandTemplates = $this->mRequest->getVal( 'templates' ) === 'expand';
@@ -86,6 +86,7 @@ class RawPage {
 
 		# Force caching for CSS and JS raw content, default: 5 minutes
 		if (is_null($smaxage) and ($ctype=='text/css' or $ctype==$wgJsMimeType)) {
+			global $wgForcedRawSMaxage;
 			$this->mSmaxage = intval($wgForcedRawSMaxage);
 		} else {
 			$this->mSmaxage = intval( $smaxage );
@@ -95,8 +96,7 @@ class RawPage {
 		# Output may contain user-specific data;
 		# vary generated content for open sessions and private wikis
 		if ($this->mGen or !$wgGroupPermissions['*']['read']) {
-			$this->mPrivateCache = ( $this->mSmaxage == 0 ) ||
-				( session_id() != '' );
+			$this->mPrivateCache = $this->mSmaxage == 0 || session_id() != '';
 		} else {
 			$this->mPrivateCache = false;
 		}
@@ -149,6 +149,18 @@ class RawPage {
 		# allow the client to cache this for 24 hours
 		$mode = $this->mPrivateCache ? 'private' : 'public';
 		header( 'Cache-Control: '.$mode.', s-maxage='.$this->mSmaxage.', max-age='.$this->mMaxage );
+		
+		if( HTMLFileCache::useFileCache() ) {
+			$cache = new HTMLFileCache( $this->mTitle, 'raw' );
+			if( $cache->isFileCacheGood( /* Assume up to date */ ) ) {
+				$cache->loadFromFileCache();
+				$wgOut->disable();
+				return;
+			} else {
+				ob_start( array(&$cache, 'saveToFileCache' ) );
+			}
+		}
+		
 		$text = $this->getRawText();
 
 		if( !wfRunHooks( 'RawPageViewBeforeOutput', array( &$this, &$text ) ) ) {
@@ -163,11 +175,13 @@ class RawPage {
 		global $wgUser, $wgOut, $wgRequest;
 		if($this->mGen) {
 			$sk = $wgUser->getSkin();
+			if( !StubObject::isRealObject( $wgOut ) )
+				$wgOut->_unstub( 2 );
 			$sk->initPage($wgOut);
 			if($this->mGen == 'css') {
-				return $sk->getUserStylesheet();
+				return $sk->generateUserStylesheet();
 			} else if($this->mGen == 'js') {
-				return $sk->getUserJs();
+				return $sk->generateUserJs();
 			}
 		} else {
 			return $this->getArticleText();

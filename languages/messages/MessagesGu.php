@@ -14,6 +14,25 @@
  * @author לערי ריינהארט
  */
 
+$namespaceNames = array(
+	NS_MEDIA            => 'દ્રશ્ય-શ્રાવ્ય_(મિડિયા)',
+	NS_SPECIAL          => 'વિશેષ',
+	NS_TALK             => 'ચર્ચા',
+	NS_USER             => 'સભ્ય',
+	NS_USER_TALK        => 'સભ્યની_ચર્ચા',
+	NS_PROJECT_TALK     => '$1_ચર્ચા',
+	NS_FILE             => 'ચિત્ર',
+	NS_FILE_TALK        => 'ચિત્રની_ચર્ચા',
+	NS_MEDIAWIKI        => 'મીડિયાવિકિ',
+	NS_MEDIAWIKI_TALK   => 'મીડિયાવિકિ_ચર્ચા',
+	NS_TEMPLATE         => 'ઢાંચો',
+	NS_TEMPLATE_TALK    => 'ઢાંચાની_ચર્ચા',
+	NS_HELP             => 'મદદ',
+	NS_HELP_TALK        => 'મદદની_ચર્ચા',
+	NS_CATEGORY         => 'શ્રેણી',
+	NS_CATEGORY_TALK    => 'શ્રેણીની_ચર્ચા',
+);
+
 $digitTransformTable = array(
 	'0' => '૦', # &#x0ae6;
 	'1' => '૧', # &#x0ae7;
@@ -64,16 +83,18 @@ $messages = array(
 'tog-watchlisthideown'        => "'મારી ધ્યાનસુચી'માં મે કરેલા ફેરફારો છુપાવો",
 'tog-watchlisthidebots'       => 'ધ્યાનસુચિમાં બોટ દ્વારા થયેલા ફેરફાર સંતાડો.',
 'tog-watchlisthideminor'      => "'મારી ધ્યાનસુચી'માં નાનાં ફેરફારો છુપાવો",
+'tog-watchlisthideliu'        => 'લોગ થયેલા સભ્ય દ્વારા કરવામાં આવેલ ફેરફાર ધ્યાનસુચીમાં છુપાવો.',
+'tog-watchlisthideanons'      => 'અજાણ્યાસભ્ય દ્વારા થયેલ ફેરફાર મારી ધ્યાનસુચીમાં છુપાવો.',
 'tog-nolangconversion'        => 'Fuzzy!! સામાન્ય તબદીલી રોકો.',
 'tog-ccmeonemails'            => 'મે અન્યોને મોકલેલા ઇ-મેઇલની નકલ મને મોકલો',
 'tog-diffonly'                => 'તફાવતની નીચે લેખ ન બતાવશો.',
 'tog-showhiddencats'          => 'છુપી શ્રેણીઓ દર્શાવો',
+'tog-noconvertlink'           => 'Disable link title conversion',
+'tog-norollbackdiff'          => 'રોલબેક કર્યા પછીના તફાવતો છુપાવો',
 
 'underline-always'  => 'હંમેશાં',
 'underline-never'   => 'કદી નહિ',
 'underline-default' => 'બ્રાઉઝરના સેટીંગ્સ પ્રમાણે',
-
-'skinpreview' => '(પ્રિવ્યુ બતાવો)',
 
 # Dates
 'sunday'        => 'રવિવાર',
@@ -168,7 +189,7 @@ $messages = array(
 'mytalk'         => 'મારી ચર્ચા',
 'anontalk'       => 'આ IP માટેનું ચર્ચા પાનું',
 'navigation'     => 'ભ્રમણ',
-'and'            => 'અને',
+'and'            => '&#32;અને',
 
 # Metadata in edit box
 'metadata_help' => 'મેટાડેટા:',
@@ -255,6 +276,7 @@ $messages = array(
 
 'badaccess'        => 'પરવાનગીની ખામી',
 'badaccess-group0' => 'તમને વિનંતી કરાયેલ ક્રિયાને ક્રિયાન્વિત કરવાની છૂટ નથી.',
+'badaccess-groups' => 'તમે જે ક્રિયા કરવા માંગો છો તે {{PLURAL:$2|સમુહ|આ સમુહો પૈકીના કોઇ}} માટે મર્યાદિત છે: $1.',
 
 'versionrequired'     => 'મીડીયાવિકિનું $1 સંસ્કરણ જરૂરી',
 'versionrequiredtext' => 'આ પાનાના વપરાશ માટે મીડિયાવિકિનું $1 સંસ્કરણ જરૂરી.
@@ -271,6 +293,8 @@ $messages = array(
 'editsection-brackets'    => '[$1]',
 'editold'                 => 'ફેરફાર કરો',
 'viewsourceold'           => 'સ્રોત જુઓ',
+'editlink'                => 'ફેરફાર',
+'viewsourcelink'          => 'સ્રોત જુઓ.',
 'editsectionhint'         => 'ફેરફાર કરો - પરિચ્છેદ: $1',
 'toc'                     => 'અનુક્રમણિકા',
 'showtoc'                 => 'બતાવો',
@@ -304,9 +328,9 @@ $messages = array(
 તમે કદાચ ખોટો URL છાપ્યો હશે અથવા ખોટી કડીથી અહીં આવ્યા હશો.
 તમે સોફ્ટવેરની આ ખામી {{SITENAME}} પર દર્શાવી શકો છો.',
 'nosuchspecialpage' => 'એવું ખાસ પાનું નથી',
-'nospecialpagetext' => "<big>'''તમે અયોગ્ય ખાસ પાનું માંગ્યું છે. '''</big>
+'nospecialpagetext' => '<strong>તમે અયોગ્ય ખાસ પાનું માંગ્યું છે. </strong>
 
-યોગ્ય ખાસ પાનાંની યાદી માટે ક્લિક કરો : [[Special:SpecialPages|{{int:specialpages}}]].",
+યોગ્ય ખાસ પાનાંની યાદી માટે ક્લિક કરો : [[Special:SpecialPages|{{int:specialpages}}]].',
 
 # General errors
 'error'                => 'ત્રુટિ',
@@ -374,7 +398,6 @@ $messages = array(
 'logouttext'                => "'''તમે (લોગ આઉટ કરીને) બહાર નિકળી ચુક્યા છો.'''
 
 તમે અનામી તરીકે {{SITENAME}} વાપરવાનું ચાલુ રાખી શકો છો, કે પછી તેના તેજ કે અલગ સભ્ય તરીકે [[Special:UserLogin|ફરી પ્રવેશ]] કરી શકો છો.
-
 ધ્યાન રાખો કે જ્યાં સુધી તમે તમારા બ્રાઉઝરનો  કૅશ સાફ નહીં કરો ત્યાં સુધી કેટલાક પાનાં તમે પ્રવેશી ચુક્યા છો તેમ બતાવશે.",
 'welcomecreation'           => '== તમારૂં સ્વાગત છે $1! ==
 તમારૂં ખાતું બની ગયું છે.
@@ -386,7 +409,6 @@ $messages = array(
 'remembermypassword'        => 'આ કોમ્યૂટર પર મારી લૉગ ઇન વિગતો ધ્યાનમાં રાખો',
 'yourdomainname'            => 'તમારૂં ડોમેઇન:',
 'externaldberror'           => 'પ્રમાણભૂતતાની ત્રુટી આવી અથવા તમારૂ બહારનુ ખાતું અપડેટ કરવાનો અધિકાર તમને નથી.',
-'loginproblem'              => '<b>લોગઇન થવામાં સમસ્યા છે.</b><br />ફરી પ્રયત્ન કરો!',
 'login'                     => 'પ્રવેશ કરો (લૉગ ઇન કરીને)',
 'nav-login-createaccount'   => 'પ્રવેશ કરો / નવું ખાતું ખોલો',
 'loginprompt'               => '{{SITENAME}}માં પ્રવેશ કરવા માટે તમારા બ્રાઉઝરમાં કુકીઝ એનેબલ કરેલી હોવી જોઇશે.',
@@ -394,10 +416,10 @@ $messages = array(
 'logout'                    => 'બહાર નીકળો',
 'userlogout'                => 'બહાર નીકળો/લૉગ આઉટ',
 'notloggedin'               => 'પ્રવેશ કરેલ નથી',
-'nologin'                   => 'શું તમારૂં ખાતું નથી? તો નવું $1.',
+'nologin'                   => "શું તમારૂં ખાતું નથી? તો નવું '''$1'''.",
 'nologinlink'               => 'ખાતું ખોલો',
 'createaccount'             => 'નવું ખાતું ખોલો',
-'gotaccount'                => 'પહેલેથી ખાતું ખોલેલું છે? $1.',
+'gotaccount'                => "પહેલેથી ખાતું ખોલેલું છે? '''$1'''.",
 'gotaccountlink'            => 'પ્રવેશો (લૉગ ઇન કરો)',
 'createaccountmail'         => 'ઇ-મેઇલ દ્વારા',
 'badretype'                 => 'તમે દાખલ કરેલ ગુપ્તસંજ્ઞા મળતી આવતી નથી.',
@@ -456,6 +478,12 @@ Please log in again after you receive it.
 'throttled-mailpassword'    => 'ગુપ્ત સંજ્ઞા યાદ અપાવતી ઇમેઇલ છેલ્લા {{PLURAL:$1|કલાક|$1 કલાકમાં}} મોકલેલી છે.
 દૂરુપયોગ રોકવા માટે, {{PLURAL:$1|કલાક|$1 કલાકમાં}} ફક્ત એક જ આવી મેઇલ કરવામાં આવે છે.',
 'mailerror'                 => 'મેઇલ મોકલવામાં ત્રુટિ: $1',
+'emailauthenticated'        => 'તમારૂં ઇ-મેઇલ સરનામું $2 ના $3 સમયે પ્રમાણિત કરેલું છે.',
+'emailnotauthenticated'     => 'તમારૂં ઇ-મેઇલ સરનામું હજુ સુધી પ્રમાણિત થયેલું નથી.
+
+નિમ્નલિખિત વિશેષતાઓમાંથી કોઇ માટે ઇ-મેઇલ મોકલવામાં આવશે નહીં.',
+'noemailprefs'              => "આ વિશેષતાઓ કાર્ય કરી શકે તે માટે 'તમારી પસંદ'માં ઇ-મેઇલ સરનામું દર્શાવો.",
+'emailconfirmlink'          => 'તમારા ઇ-મેઇલ સરનામાની પુષ્ટિ કરો',
 'accountcreated'            => 'ખાતું ખોલવામાં આવ્યું છે',
 'accountcreatedtext'        => '$1 માટે સભ્ય ખાતુ બનાવ્યું.',
 'createaccount-title'       => '{{SITENAME}} માટે ખાતુ બનાવ્યું',
@@ -464,15 +492,24 @@ Please log in again after you receive it.
 તમે હવે પ્રવેશ કરી અને ગુપ્તસંજ્ઞા બદલી શકો છો.
 
 જો આ ખાતુ ભુલથી બનેલું હોય તો,આ સંદેશને અવગણી શકો છો.',
+'login-throttled'           => 'તમે હાલમાં જ ઘણા પ્રવેશ પ્રયત્નો કર્યા.
+કૃપા કરી ફરી પ્રયાસ પહેલાં થોડી રાહ જુઓ.',
 'loginlanguagelabel'        => 'ભાષા: $1',
 
 # Password reset dialog
-'resetpass_announce' => 'તમે હંગામી ઇમેઇલ કોડ સાથે લોગ ઇન કર્યું.
+'resetpass'                 => 'ગુપ્તસંજ્ઞા બદલો',
+'resetpass_announce'        => 'તમે હંગામી ઇમેઇલ કોડ સાથે લોગ ઇન કર્યું.
 લોગીંગ પુરૂં કરવા માટે તમારે નવી ગુપ્ત સંજ્ઞા (પાસવર્ડ) આપવો પડશે:',
-'resetpass_text'     => '<!-- અહીં ટેક્સટ ઉમેરો -->',
-'resetpass_header'   => 'ખાતાની ગુપ્તસંજ્ઞા બદલો',
-'resetpass_submit'   => 'ગુપ્તસંજ્ઞા બદલીને પ્રવેશ કરો.',
-'resetpass_success'  => 'તમારી ગુપ્તસંજ્ઞા સફળતાપૂર્વક બદલાઇ ગઇ! હવે તમે ...માં પ્રવેશ કરી શકો છો',
+'resetpass_text'            => '<!-- અહીં ટેક્સટ ઉમેરો -->',
+'resetpass_header'          => 'ખાતાની ગુપ્તસંજ્ઞા બદલો',
+'oldpassword'               => 'જુની ગુપ્તસંજ્ઞા:',
+'newpassword'               => 'નવી ગુપ્તસંજ્ઞા:',
+'retypenew'                 => 'નવી ગુપ્ત સંજ્ઞા (પાસવર્ડ) ફરી લખો:',
+'resetpass_submit'          => 'ગુપ્તસંજ્ઞા બદલીને પ્રવેશ કરો.',
+'resetpass_success'         => 'તમારી ગુપ્તસંજ્ઞા સફળતાપૂર્વક બદલાઇ ગઇ! હવે તમે ...માં પ્રવેશ કરી શકો છો',
+'resetpass_forbidden'       => 'ગુપ્તસંજ્ઞા બદલી શકાશે નહીં',
+'resetpass-submit-loggedin' => 'ગુપ્તસંજ્ઞા બદલો',
+'resetpass-temp-password'   => 'કામચલાવ ગુપ્તસંજ્ઞા:',
 
 # Edit page toolbar
 'bold_sample'     => 'ઘાટા અક્ષર',
@@ -495,8 +532,8 @@ Please log in again after you receive it.
 'hr_tip'          => 'આડી લીટી (શક્ય તેટલો ઓછો ઉપયોગ કરો)',
 
 # Edit pages
-'summary'                          => 'સારાંશ',
-'subject'                          => 'વિષય/શિર્ષક',
+'summary'                          => 'સારાંશ:',
+'subject'                          => 'વિષય/શીર્ષક:',
 'minoredit'                        => 'આ એક નાનો સુધારો છે.',
 'watchthis'                        => 'આ પાનાને ધ્યાનમાં રાખો',
 'savearticle'                      => 'સાચવો',
@@ -507,6 +544,8 @@ Please log in again after you receive it.
 'anoneditwarning'                  => "'''ચેતવણી:''' તમે તમારા સભ્ય નામથી પ્રવેશ કર્યો નથી.
 આ પાનાનાં ઇતિહાસમાં તમારૂં આઇ.પી. (IP) એડ્રેસ નોંધવામાં આવશે.",
 'missingcommenttext'               => 'કૃપા કરી નીચે ટીપ્પણી લખો.',
+'summary-preview'                  => 'સારાંશ પૂર્વાવલોકન:',
+'subject-preview'                  => 'વિષય/શિર્ષક પૂર્વાવલોકન:',
 'blockedtitle'                     => 'સભ્ય પ્રતિબંધિત છે',
 'blockedtext'                      => "<big>'''આપનાં સભ્ય નામ અથવા આઇ.પી. એડ્રેસ પર પ્રતિબંધ મુકવામાં આવ્યો છે.'''</big>
 
@@ -530,8 +569,7 @@ Please log in again after you receive it.
 'confirmedittext'                  => 'પાનાંમાં ફેરફાર કરવા માટે તમારે તમારા ઇમેલની પુષ્ટિ કરવી પડશે.
 મહેરબાની કરી [[Special:Preferences|મારી પસંદ]]માં જઇને તમારું ઇમેલ આપવું પડશે અને પ્રમાણિત કરવું પડશે.',
 'nosuchsectiontitle'               => 'આવો કોઇ વિભાગ નથી',
-'nosuchsectiontext'                => 'તમે અસ્તિત્વ ન ધરાવતો વિભાગ સંપાદિત કરવાની કોશિશ કરી.</br>
-કેમકે કોઇ વિભાગ $1 અસ્તિત્વમાં નથી, અહીં તમારૂં સંપાદન સચવાશે નહીં.',
+'nosuchsectiontext'                => 'તમે અસ્તિત્વ ન ધરાવતો વિભાગ સંપાદિત કરવાની કોશિશ કરી.',
 'loginreqtitle'                    => 'પ્રવેશ (લોગ ઇન) જરૂરી',
 'loginreqlink'                     => 'લોગીન',
 'loginreqpagetext'                 => 'બીજા પાનાં જોવા માટે તમારે $1 કરવું પડશે.',
@@ -541,7 +579,7 @@ Please log in again after you receive it.
 <br />નવું પાનું બનાવવા માટે નીચે આપેલા ખાનામાં લખવાનું શરૂ કરો (વધુ માહિતિ માટે [[{{MediaWiki:Helppage}}|મદદ]] જુઓ).
 <br />જો આપ ભુલમાં અહીં આવી ગયા હોવ તો, આપનાં બ્રાઉઝર નાં '''બેક''' બટન પર ક્લિક કરીને પાછા વળો.",
 'noarticletext'                    => 'આ પાનામાં હાલમાં કોઇ માહિતિ નથી.
-તમે  [[Special:Search/{{PAGENAME}}|આ શબ્દ]] ધરાવતાં અન્ય લેખો શોધી શકો છો, <span class="plainlinks">[{{fullurl:Special:Log|page={{urlencode:{{FULLPAGENAME}}}}}} સંલગ્ન માહિતિ પત્રકોમાં શોધી શકો છો],
+તમે  [[Special:Search/{{PAGENAME}}|આ શબ્દ]] ધરાવતાં અન્ય લેખો શોધી શકો છો, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} સંલગ્ન માહિતિ પત્રકોમાં શોધી શકો છો],
 અથવા  [{{fullurl:{{FULLPAGENAME}}|action=edit}} આ પાનામાં ફેરફાર કરી] માહિતિ ઉમેરવાનું શરૂ કરી શકો છો</span>.',
 'note'                             => "'''નોંધ:'''",
 'previewnote'                      => "'''આ ફક્ત પૂર્વાવલોકન છે;'''
@@ -573,34 +611,53 @@ Please log in again after you receive it.
 
 આગળ વધતાં બે વખત વિચારજો અને જો તમને લાગે કે આ પાનું ફરી વાર બનાવવું ઉચિત છે, તો જ અહીં ફેરફાર કરજો.
 પાનું હટવ્યાં પહેલાનાં બધા ફેરફારોની સૂચિ તમારી સહુલીયત માટે અહીં આપી છે:",
+'edit-conflict'                    => 'સંપાદન સંઘર્ષ.',
 
 # Account creation failure
 'cantcreateaccounttitle' => 'ખાતું ખોલી શકાય તેમ નથી',
 
 # History pages
-'viewpagelogs'        => 'આ પાનાનાં લૉગ જુઓ',
-'nohistory'           => 'આ પાનાનાં ફેરફારનો ઇતિહાસ નથી.',
-'currentrev'          => 'હાલની આવૃત્તિ',
-'revisionasof'        => '$1 સુધીનાં પુનરાવર્તન',
-'revision-info'       => '$2 દ્વારા $1 સુધીમાં કરવામાં આવેલાં ફેરફારો',
-'previousrevision'    => '←જુના ફેરફારો',
-'nextrevision'        => 'આ પછીનું પુનરાવર્તન→',
-'currentrevisionlink' => 'વર્તમાન આવૃત્તિ',
-'cur'                 => 'વર્તમાન',
-'next'                => 'આગળ',
-'last'                => 'છેલ્લું',
-'page_first'          => 'પહેલું',
-'page_last'           => 'છેલ્લું',
-'histfirst'           => 'સૌથી જુનું',
-'histlast'            => 'સૌથી નવું',
-'historyempty'        => '(ખાલી)',
+'viewpagelogs'           => 'આ પાનાનાં લૉગ જુઓ',
+'nohistory'              => 'આ પાનાનાં ફેરફારનો ઇતિહાસ નથી.',
+'currentrev'             => 'હાલની આવૃત્તિ',
+'currentrev-asof'        => '$1એ જોઈ શકાતી હાલની આવૃત્તિ',
+'revisionasof'           => '$1 સુધીનાં પુનરાવર્તન',
+'revision-info'          => '$2 દ્વારા $1 સુધીમાં કરવામાં આવેલાં ફેરફારો', # Additionally available: $3: revision id
+'previousrevision'       => '←જુના ફેરફારો',
+'nextrevision'           => 'આ પછીનું પુનરાવર્તન→',
+'currentrevisionlink'    => 'વર્તમાન આવૃત્તિ',
+'cur'                    => 'વર્તમાન',
+'next'                   => 'આગળ',
+'last'                   => 'છેલ્લું',
+'page_first'             => 'પહેલું',
+'page_last'              => 'છેલ્લું',
+'histlegend'             => "વિવિધ પસંદગી:સરખામણી માટે સુધારેલી આવૃતિઓના રેડિયોબોક્ષોને ચિહ્નિત કરો અને એન્ટર અથવા તળીયાનું બટન દબાવો.<br />
+મુદ્રાલેખ:'''({{int:cur}})''' = વર્તમાન સુધારેલી આવૃતિઓનો તફાવત, '''({{int:last}})''' = પૂર્વવર્તી સુધારેલી આવૃતિઓનો તફાવત, '''{{int:minoreditletter}}''' = નાનું સંપાદન.",
+'history-fieldset-title' => 'ઇતિહાસ ઉખેળો',
+'histfirst'              => 'સૌથી જુનું',
+'histlast'               => 'સૌથી નવું',
+'historyempty'           => '(ખાલી)',
 
 # Revision feed
 'history-feed-item-nocomment' => '$1, $2 સમયે', # user at time
 
 # Revision deletion
-'rev-delundel'   => 'બતાવો/છુપાવો',
-'revdel-restore' => 'વિઝિબિલિટિ બદલો',
+'rev-delundel'      => 'બતાવો/છુપાવો',
+'revdel-restore'    => 'વિઝિબિલિટિ બદલો',
+'pagehist'          => 'પાનાનો ઇતિહાસ',
+'deletedhist'       => 'રદ કરેલનો ઇતિહાસ',
+'revdelete-content' => 'સામગ્રી',
+'revdelete-summary' => 'સંપાદનનો સંક્ષિપ્ત અહેવાલ',
+'revdelete-uname'   => 'સભ્યનામ',
+'revdelete-hid'     => 'છુપાવો $1',
+'revdelete-unhid'   => 'દર્શાવો $1',
+
+# Suppression log
+'suppressionlog' => 'દાબ નોંધ',
+
+# History merging
+'mergehistory'      => 'પાનાનાં ઇતિહાસોનું વિલીનીકરણ',
+'mergehistory-from' => 'સ્ત્રોત પાનું',
 
 # Merge log
 'revertmerge' => 'છુટુ પાડો',
@@ -612,10 +669,26 @@ Please log in again after you receive it.
 'compareselectedversions' => 'પસંદ કરેલા સરખાવો',
 'editundo'                => 'રદ કરો',
 'diff-multi'              => '({{PLURAL:$1|વચગાળાનું એક પુનરાવર્તન|વચગાળાનાં $1 પુનરાવર્તનો}} દર્શાવેલ નથી.)',
+'diff-img'                => "'''ચિત્ર'''",
+'diff-span'               => "'''ગાળો'''",
+'diff-a'                  => "'''કડી'''",
+'diff-i'                  => "'''ત્રાંસા'''",
+'diff-b'                  => "'''ઘાટા'''",
+'diff-strong'             => "'''સશકત'''",
+'diff-em'                 => "'''પ્રાધાન્ય'''",
+'diff-font'               => "'''લિપિ'''",
+'diff-big'                => "'''મોટા'''",
+'diff-del'                => "'''રદ કરેલ'''",
+'diff-tt'                 => "'''નિયત પહોળાઇ'''",
+'diff-sub'                => "'''ઉપલિપિ'''",
+'diff-sup'                => "'''અતિલિપિ'''",
+'diff-strike'             => "'''આરપારરેખાકૃત'''",
 
 # Search results
 'searchresults'             => 'પરિણામોમાં શોધો',
+'searchresults-title'       => 'પરિણામોમાં "$1" શોધો',
 'searchresulttext'          => '{{SITENAME}}માં કેવી રીતે શોધવું તેની વધુ માહિતિ માટે જુઓ: [[{{MediaWiki:Helppage}}|{{int:help}}]].',
+'searchsubtitle'            => 'તમે \'\'\'[[:$1]]\'\'\' માટે શોધ્યુ  ([[Special:Prefixindex/$1|"$1"થી શરૂ થતા બધા પાના]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|"$1"ની સાથે જોડાયેલા બધા પાના]])',
 'searchsubtitleinvalid'     => "તમે '''$1''' શોધ્યું",
 'noexactmatch'              => "'''\"\$1\" શિર્ષક વાળું કોઇ પાનું નથી.'''
 <br />તમે [[:\$1|આ પાનું બનાવી શકો છો]].",
@@ -624,7 +697,8 @@ Please log in again after you receive it.
 'notextmatches'             => 'આ શબ્દ કોઈ પાનાંમાં મળ્યો નથી',
 'prevn'                     => 'પાછળનાં $1',
 'nextn'                     => 'આગળનાં $1',
-'viewprevnext'              => 'જુઓ: ($1) ($2) ($3)',
+'viewprevnext'              => 'જુઓ: ($1 {{int:pipe-separator}} $2) ($3)',
+'searchhelp-url'            => 'Help:સૂચિ',
 'search-result-size'        => '$1 ({{PLURAL:$2|1 શબ્દ|$2 શબ્દો}})',
 'search-result-score'       => 'પ્રસ્તુતિ: $1%',
 'search-redirect'           => '(અન્યત્ર પ્રસ્થાન $1)',
@@ -635,6 +709,7 @@ Please log in again after you receive it.
 'search-interwiki-more'     => '(વધુ)',
 'search-mwsuggest-enabled'  => 'સુઝાવ સહિત',
 'search-mwsuggest-disabled' => 'સુઝાવ વિના',
+'showingresultstotal'       => "{{PLURAL:$4|'''$3'''નું '''$1''' પરિણામ |'''$3'''નાં '''$1 - $2''' પરિણામો}} નીચે દર્શાવ્યાં છે",
 'nonefound'                 => "'''નોંધ''':ફક્ત અમુકજ નામસ્થળોમાં આપોઆપ શોધાશે.
 તમારા શબ્દને ''બધા:'' ઉમેરી શોધવાનો પ્રયત્ન કરો, જેથી બધી માહિતિમાં (જેમકે ચર્ચાના પાના, ઢાંચા, વિગેરે)માં શોધ થઈ શકે, અથવાતો ઇચ્છિત નામસ્થળ પસંદ કરી શોધો બટન દબાવો.",
 'powersearch'               => 'શોધો (વધુ પર્યાય સાથે)',
@@ -652,13 +727,14 @@ Please log in again after you receive it.
 'mypreferences'       => 'મારી પસંદ',
 'qbsettings'          => 'શીઘ્રપટ્ટ',
 'qbsettings-none'     => 'કોઇપણ નહીં',
+'skin-preview'        => 'ફેરફાર બતાવો',
 'datetime'            => 'તારીખ અને સમય',
 'prefs-watchlist'     => 'ધ્યાનસૂચિ',
-'oldpassword'         => 'જુની ગુપ્તસંજ્ઞા:',
-'newpassword'         => 'નવી ગુપ્તસંજ્ઞા:',
-'retypenew'           => 'નવી ગુપ્ત સંજ્ઞા (પાસવર્ડ) ફરી લખો:',
 'searchresultshead'   => 'શોધો',
 'timezonelegend'      => 'સમય ક્ષેત્ર:',
+'localtime'           => 'સ્થાનીક સમય:',
+'servertime'          => 'સર્વર સમય:',
+'guesstimezone'       => 'બ્રાઉઝરમાંથી દાખલ કરો',
 'prefs-searchoptions' => 'શોધ વિકલ્પો',
 
 # User rights
@@ -681,9 +757,13 @@ Please log in again after you receive it.
 'rightslog'  => 'સભ્ય હક્ક માહિતિ પત્રક',
 'rightsnone' => '(કોઈ નહિ)',
 
+# Associated actions - in the sentence "You do not have permission to X"
+'action-edit' => 'આ પાનામાં ફેરફાર કરવાની',
+
 # Recent changes
 'nchanges'                       => '$1 {{PLURAL:$1|ફેરફાર|ફેરફારો}}',
 'recentchanges'                  => 'તાજા ફેરફારો',
+'recentchanges-legend'           => 'હાલમાં થયેલા ફેરફારોના વિકલ્પ',
 'recentchanges-feed-description' => 'આ ફીડ દ્વારા વિકિમાં થયેલા તાજા ફેરફારો પર ધ્યાન રાખો.',
 'rcnote'                         => "નીચે $5, $4 સુધીમાં અને તે પહેલાનાં '''$2''' દિવસમાં {{PLURAL:$1| થયેલો '''1''' માત્ર ફેરફાર|થયેલાં છેલ્લા  '''$1''' ફેરફારો}} દર્શાવ્યાં છે .",
 'rcnotefrom'                     => "નીચે '''$2'''થી થયેલાં '''$1''' ફેરફારો દર્શાવ્યાં છે.",
@@ -702,6 +782,8 @@ Please log in again after you receive it.
 'newpageletter'                  => 'નવું',
 'boteditletter'                  => 'બૉટ',
 'rc_categories_any'              => 'કોઇ પણ',
+'rc-enhanced-expand'             => 'વિગતો બતાવો (જાવા સ્ક્રિપ્ટ જરૂરી છે)',
+'rc-enhanced-hide'               => 'વિગતો છુપાવો',
 
 # Recent changes linked
 'recentchangeslinked'          => 'આની સાથે જોડાયેલા ફેરફાર',
@@ -720,23 +802,30 @@ Please log in again after you receive it.
 'filesource'    => 'સ્ત્રોત:',
 'uploadedimage' => '"[[$1]]" ચઢાવ્યું',
 
-# Special:ImageList
-'imagelist' => 'ફાઇલોની યાદી',
+# Special:ListFiles
+'listfiles' => 'ફાઇલોની યાદી',
 
-# Image description page
+# File description page
 'filehist'                  => 'ફાઇલનો ઇતિહાસ',
 'filehist-help'             => 'તારિખ/સમય ઉપર ક્લિક કરવાથી તે સમયે ફાઇલ કેવી હતી તે જોવા મળશે',
 'filehist-current'          => 'વર્તમાન',
 'filehist-datetime'         => 'તારીખ/સમય',
+'filehist-thumb'            => 'લઘુચિત્ર',
+'filehist-thumbtext'        => '$1ના સંસ્કરણનું લઘુચિત્ર',
+'filehist-nothumb'          => 'થમ્બનેઇલ નથી',
 'filehist-user'             => 'સભ્ય',
 'filehist-dimensions'       => 'પરિમાણ',
 'filehist-filesize'         => 'ફાઇલનું કદ',
 'filehist-comment'          => 'ટિપ્પણી',
 'imagelinks'                => 'ફાઇલની કડીઓ',
 'linkstoimage'              => 'આ ફાઇલ સાથે {{PLURAL:$1|નીચેનું પાનું જોડાયેલું|$1 નીચેનાં પાનાઓ જોડાયેલાં}} છે',
+'linkstoimage-more'         => '$1 કરતાં વધુ {{PLURAL:$1|પાનું|પાનાંઓ}} આ ફાઇલ સાથે જોડાય છે.
+નીચે જણાવેલ યાદી ફક્ત આ ફાઇલ સાથે જોડાયેલ {{PLURAL:$1|પ્રથમ પાનાંની કડી|પ્રથમ $1 પાનાંની કડીઓ}} બતાવે છે.  
+અહીં [[Special:WhatLinksHere/$2|પુરી યાદી]]  મળશે.',
 'nolinkstoimage'            => 'આ ફાઇલ સાથે કોઇ પાનાં જોડાયેલાં નથી.',
 'morelinkstoimage'          => 'આ ફાઇલ સાથે જોડાયેલ [[Special:WhatLinksHere/$1|વધુ કડીઓ]] જુઓ.',
 'redirectstofile'           => 'નીચે જણાવેલ {{PLURAL:$1|ફાઇલ|$1 ફાઇલો}} આ ફાઇલ પર વાળેલી છે:',
+'duplicatesoffile'          => 'નીચે જણાવેલ {{PLURAL:$1|ફાઇલ|$1 ફાઇલો}} આ ફાઇલની નકલ છે. ([[Special:FileDuplicateSearch/$2|વધુ વિગતો]])',
 'sharedupload'              => 'આ ફાઇલ સહિયારી રીતે ચઢાવવામાં આવી છે અને તેનો ઉપયોગ અન્ય પરિયોજનાઓમાં પણ થઇ શકે છે.',
 'noimage'                   => 'આ નામ વાળી કોઇ ફાઇલ અસ્તિત્વમાં નથી, તમે તેને $1 શકો છો.',
 'noimage-linktext'          => 'ચઢાવી',
@@ -840,7 +929,6 @@ Please log in again after you receive it.
 'speciallogtitlelabel' => 'શિર્ષક:',
 'log'                  => 'લૉગ',
 'all-logs-page'        => 'બધાં માહિતિ પત્રકો',
-'log-search-submit'    => 'શોધો',
 
 # Special:AllPages
 'allpages'       => 'બધા પાના',
@@ -848,6 +936,7 @@ Please log in again after you receive it.
 'nextpage'       => 'આગળનું પાનું ($1)',
 'prevpage'       => 'પાછળનું પાનું ($1)',
 'allpagesfrom'   => 'આનાથી શરૂ થતા પાના દર્શાવો:',
+'allpagesto'     => 'આનાથી અંત થતા પાના દર્શાવો:',
 'allarticles'    => 'બધા લેખ',
 'allpagesprev'   => 'પહેલાનું',
 'allpagesnext'   => 'પછીનું',
@@ -859,8 +948,16 @@ Please log in again after you receive it.
 [[Special:UnusedCategories|વણ વપરાયેલી શ્રેણીઓ]] અત્રે દર્શાવવામાં આવી નથી.
 [[Special:WantedCategories|ઈચ્છિત શ્રેણીઓ]] પણ જોઈ જુઓ.',
 
+# Special:LinkSearch
+'linksearch'    => 'બાહ્ય કડીઓ',
+'linksearch-ok' => 'શોધ',
+
 # Special:ListUsers
 'listusers-submit' => 'બતાવો',
+
+# Special:Log/newusers
+'newuserlogpage'          => 'નવા બનેલા સભ્યોનો લૉગ',
+'newuserlog-create-entry' => 'નવું ખાતું',
 
 # Special:ListGroupRights
 'listgrouprights-members' => '(સભ્યોની યાદી)',
@@ -874,23 +971,21 @@ Please log in again after you receive it.
 'emailsend'    => 'મોકલો',
 
 # Watchlist
-'watchlist'            => 'મારી ધ્યાનસૂચી',
-'mywatchlist'          => 'મારી ધ્યાનસૂચિ',
-'watchlistfor'         => "('''$1'''ને માટે)",
-'addedwatch'           => 'ધ્યાનસૂચિમાં ઉમેરવામાં આવ્યું છે',
-'addedwatchtext'       => 'પાનું "[[:$1]]" તમારી [[Special:Watchlist|ધ્યાનસૂચિ]]માં ઉમેરાઈ ગયું છે.
+'watchlist'         => 'મારી ધ્યાનસૂચી',
+'mywatchlist'       => 'મારી ધ્યાનસૂચિ',
+'watchlistfor'      => "('''$1'''ને માટે)",
+'addedwatch'        => 'ધ્યાનસૂચિમાં ઉમેરવામાં આવ્યું છે',
+'addedwatchtext'    => 'પાનું "[[:$1]]" તમારી [[Special:Watchlist|ધ્યાનસૂચિ]]માં ઉમેરાઈ ગયું છે.
 ભવિષ્યમાં આ પાનાં અને તેનાં સંલગ્ન ચર્ચાનાં પાનાંમાં થનારા ફેરફારોની યાદી ત્યાં આપવામાં આવશે અને આ પાનું [[Special:RecentChanges|તાજેતરમાં થયેલા ફેરફારોની યાદી]]માં ઘાટા અક્ષરે જોવા મળશે, જેથી આપ સહેલાઇથી તેને અલગ તારવી શકો.',
-'removedwatch'         => 'ધ્યાનસૂચિમાંથી કાઢી નાંખ્યું છે',
-'removedwatchtext'     => '"[[:$1]]" શિર્ષક હેઠળનું પાનું [[Special:Watchlist|તમારી ધ્યાનસૂચિમાંથી]] કાઢી નાંખવામાં આવ્યું છે.',
-'watch'                => 'ધ્યાન માં રાખો',
-'watchthispage'        => 'આ પાનું ધ્યાનમાં રાખો',
-'unwatch'              => 'ધ્યાનસૂચિમાંથી હટાવો',
-'watchlist-details'    => 'ચર્ચા વાળા પાના ન ગણતા {{PLURAL:$1|$1 પાનું|$1 પાનાં}} ધ્યાનસૂચીમાં છે.',
-'watchlistcontains'    => 'તમારી ધ્યાનસૂચીમાં $1 {{PLURAL:$1|પાનું|પાનાં}} છે.',
-'wlshowlast'           => 'છેલ્લા $1 કલાક $2 દિવસ $3 બતાવો',
-'watchlist-hide-bots'  => 'બૉટના ફેરફાર સંતાડો',
-'watchlist-hide-own'   => 'મારા ફેરફાર સંતાડો',
-'watchlist-hide-minor' => 'નાના ફેરફાર સંતાડો',
+'removedwatch'      => 'ધ્યાનસૂચિમાંથી કાઢી નાંખ્યું છે',
+'removedwatchtext'  => '"[[:$1]]" શિર્ષક હેઠળનું પાનું [[Special:Watchlist|તમારી ધ્યાનસૂચિમાંથી]] કાઢી નાંખવામાં આવ્યું છે.',
+'watch'             => 'ધ્યાન માં રાખો',
+'watchthispage'     => 'આ પાનું ધ્યાનમાં રાખો',
+'unwatch'           => 'ધ્યાનસૂચિમાંથી હટાવો',
+'watchlist-details' => 'ચર્ચા વાળા પાના ન ગણતા {{PLURAL:$1|$1 પાનું|$1 પાનાં}} ધ્યાનસૂચીમાં છે.',
+'watchlistcontains' => 'તમારી ધ્યાનસૂચીમાં $1 {{PLURAL:$1|પાનું|પાનાં}} છે.',
+'wlshowlast'        => 'છેલ્લા $1 કલાક $2 દિવસ $3 બતાવો',
+'watchlist-options' => 'ધ્યાનસૂચિના વિકલ્પો',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'નજર રાખી રહ્યાં છો...',
@@ -899,26 +994,31 @@ Please log in again after you receive it.
 'enotif_newpagetext' => 'આ નવું પાનું છે.',
 'changed'            => 'બદલાયેલું',
 
-# Delete/protect/revert
-'deletepage'                  => 'પાનું હટાવો',
-'confirm'                     => 'ખાતરી કરો',
-'exblank'                     => 'પાનું ખાલી હતું',
-'historywarning'              => 'ચેતવણી: જે પાનું તમે હટાવવા જઇ રહ્યાં છો તેનો ઇતિહાસ છે:',
-'confirmdeletetext'           => 'આપ આ પાનું તેના ઇતિહાસ (બધાજ પૂર્વ  ફેરફારો) સાથે હટાવી રહ્યાં છો.
+# Delete
+'deletepage'            => 'પાનું હટાવો',
+'confirm'               => 'ખાતરી કરો',
+'exblank'               => 'પાનું ખાલી હતું',
+'historywarning'        => 'ચેતવણી: જે પાનું તમે હટાવવા જઇ રહ્યાં છો તેનો ઇતિહાસ છે:',
+'confirmdeletetext'     => 'આપ આ પાનું તેના ઇતિહાસ (બધાજ પૂર્વ  ફેરફારો) સાથે હટાવી રહ્યાં છો.
 કૃપા કરી મંજૂરી આપો કે, આપ આમ કરવા ચાહો છો, આપ આના સરા-નરસા પરિણામોથી વાકેફ છો, અને આપ આ કૃત્ય [[{{MediaWiki:Policy-url}}|નીતિ]]ને અનુરૂપ જ કરી રહ્યાં છો.',
-'actioncomplete'              => 'કામ પૂરું થઈ ગયું',
-'deletedtext'                 => '"<nowiki>$1</nowiki>" દૂર કરવામાં આવ્યું છે.
+'actioncomplete'        => 'કામ પૂરું થઈ ગયું',
+'deletedtext'           => '"<nowiki>$1</nowiki>" દૂર કરવામાં આવ્યું છે.
 તાજેતરમાં દૂર કરેલા લેખોની વિગત માટે $2 જુઓ.',
-'deletedarticle'              => 'હટાવવામાં આવેલા "[[$1]]"',
-'dellogpage'                  => 'હટાવેલાઓનું માહિતિ પત્રક (ડિલિશન લૉગ)',
-'deletecomment'               => 'હટાવવા માટેનું કારણ:',
-'deleteotherreason'           => 'અન્ય/વધારાનું કારણ:',
-'deletereasonotherlist'       => 'અન્ય કારણ',
-'rollbacklink'                => 'પાછું વાળો',
+'deletedarticle'        => 'હટાવવામાં આવેલા "[[$1]]"',
+'dellogpage'            => 'હટાવેલાઓનું માહિતિ પત્રક (ડિલિશન લૉગ)',
+'deletecomment'         => 'હટાવવા માટેનું કારણ:',
+'deleteotherreason'     => 'અન્ય/વધારાનું કારણ:',
+'deletereasonotherlist' => 'અન્ય કારણ',
+
+# Rollback
+'rollbacklink' => 'પાછું વાળો',
+
+# Protect
 'protectlogpage'              => 'સુરક્ષા માહિતિ પત્રક',
 'protectedarticle'            => 'સુરક્ષિત "[[$1]]"',
 'modifiedarticleprotection'   => '"[[$1]]"નું સુરક્ષાસ્તર બદલ્યું',
-'protectcomment'              => 'ટિપ્પણી:',
+'prot_1movedto2'              => '[[$1]] નું નામ બદલી ને [[$2]] કરવામાં આવ્યું છે.',
+'protectcomment'              => 'કારણ:',
 'protectexpiry'               => 'સમાપ્તિ:',
 'protect_expiry_invalid'      => 'સમાપ્તિનો સમય માન્ય નથી.',
 'protect_expiry_old'          => 'સમાપ્તિનો સમય ભૂતકાળમાં છે.',
@@ -926,13 +1026,18 @@ Please log in again after you receive it.
 'protect-text'                => "અહિં તમે પાનાં '''<nowiki>$1</nowiki>'''નું સુરક્ષા સ્તર જોઈ શકો છો અને તેમાં ફેરફાર પણ કરી શકશો.",
 'protect-locked-access'       => "તમને પાનાંની સુરક્ષાનાં સ્તરમાં ફેરફાર કરવાની પરવાનગી નથી.
 પાનાં '''$1'''નું હાલનું સેટીંગ અહિં જોઈ શકો છો:",
+'protect-cascadeon'           => 'આ પાનું હાલમાં સંરક્ષિત છે કારણકે તે {{PLURAL:$1|પાનું,|પાનાઓ,}} જેમાં ધોધાકાર સંરક્ષણ ચાલુ છે, તેમાં છે.
+
+તમે આ પાનાઓનું સંરક્ષણ સ્તર બદલી શકો છો, પરંતુ તેની અસર ધોધાકાર સંરક્ષણ પર પડવી જોઇએ નહીં.',
 'protect-default'             => 'બધા સભ્યોને પરવાનગી',
 'protect-fallback'            => '"$1" પરવાનગી જરૂરી',
 'protect-level-autoconfirmed' => 'નવા અને નહી નોંધાયેલા સભ્યો પર પ્રતિબંધ',
 'protect-level-sysop'         => 'માત્ર પ્રબંધકો',
+'protect-summary-cascade'     => 'ધોધાકાર',
 'protect-expiring'            => '$1 (UTC) એ સમાપ્ત થાય છે',
 'protect-cascade'             => 'આ પાનાંમાં સમાવિષ્ટ પેટા પાનાં પણ સુરક્ષિત કરો (કૅસ્કેડીંગ સુરક્ષા)',
 'protect-cantedit'            => 'આપ આ પાનાનાં સુરક્ષા સ્તરમાં ફેરફાર ના કરી શકો, કેમકે આપને અહિં ફેરફાર કરવાની પરવાનગી નથી.',
+'protect-expiry-options'      => '૨ કલાક:2 hours,૧ દિવસ:1 day,૩ દિવસ:3 days,૧ સપ્તાહ:1 week,૨ સપ્તાહ:2 weeks,૧ માસ:1 month,૩ માસ:3 months,૬ માસ:6 months,૧ વર્ષ:1 year,અમર્યાદ:infinite', # display1:time1,display2:time2,...
 'restriction-type'            => 'પરવાનગી:',
 'restriction-level'           => 'નિયંત્રણ સ્તર:',
 
@@ -951,12 +1056,13 @@ Please log in again after you receive it.
 'blanknamespace' => '(મુખ્ય)',
 
 # Contributions
-'contributions' => 'સભ્યનું યોગદાન',
-'mycontris'     => 'મારૂં યોગદાન',
-'contribsub2'   => '$1 માટે ($2)',
-'uctop'         => '(છેક ઉપર)',
-'month'         => ':મહિનાથી (અને પહેલાનાં)',
-'year'          => ':વર્ષથી (અને પહેલાનાં)',
+'contributions'       => 'સભ્યનું યોગદાન',
+'contributions-title' => 'સભ્ય $1નું યોગદાન',
+'mycontris'           => 'મારૂં યોગદાન',
+'contribsub2'         => '$1 માટે ($2)',
+'uctop'               => '(છેક ઉપર)',
+'month'               => ':મહિનાથી (અને પહેલાનાં)',
+'year'                => ':વર્ષથી (અને પહેલાનાં)',
 
 'sp-contributions-newbies'     => 'માત્ર નવા ખુલેલાં ખાતાઓનું યોગદાન બતાવો',
 'sp-contributions-newbies-sub' => 'નવા ખાતાઓ માટે',
@@ -969,7 +1075,6 @@ Please log in again after you receive it.
 'whatlinkshere'            => 'અહિયાં શું જોડાય છે',
 'whatlinkshere-title'      => '"$1" સાથે જોડાયેલાં પાનાં',
 'whatlinkshere-page'       => 'પાનું:',
-'linklistsub'              => '(કડીઓની સૂચી)',
 'linkshere'                => "નીચેના પાનાઓ '''[[:$1]]''' સાથે જોડાય છે:",
 'nolinkshere'              => "'''[[:$1]]'''ની સાથે કોઇ પાના જોડાતા નથી.",
 'isredirect'               => 'પાનું અહીં વાળો',
@@ -979,6 +1084,7 @@ Please log in again after you receive it.
 'whatlinkshere-next'       => '{{PLURAL:$1|પછીનું|પછીનાં $1}}',
 'whatlinkshere-links'      => '←  કડીઓ',
 'whatlinkshere-hideredirs' => 'અન્યત્ર વાળેલાં પાનાં $1',
+'whatlinkshere-hidetrans'  => '$1 આરપાર સમાવેશનો',
 'whatlinkshere-hidelinks'  => 'કડીઓ $1',
 'whatlinkshere-filters'    => 'ચાળણી',
 
@@ -994,6 +1100,7 @@ Please log in again after you receive it.
 'anononlyblock'            => 'માત્ર અનામી',
 'blocklink'                => 'પ્રતિબંધ',
 'unblocklink'              => 'પ્રતિબંધ હટાવો',
+'change-blocklink'         => 'પ્રતિબંધમાં ફેરફાર કરો',
 'contribslink'             => 'યોગદાન',
 'blocklogpage'             => 'પ્રતિબંધ સૂચિ',
 'blocklogentry'            => '[[$1]] પર પ્રતિબંધ $2 $3 સુધી મુકવામાં આવ્યો છે.',
@@ -1106,6 +1213,9 @@ Please log in again after you receive it.
 'tooltip-diff'                    => 'તમે માહિતિમાં કયા ફેરફારો કર્યા છે તે જોવા મળશે',
 'tooltip-compareselectedversions' => 'અ પાનાનાં પસંદ કરેલા બે વૃત્તાંત વચ્ચેનાં ભેદ જુઓ.',
 'tooltip-watch'                   => 'આ પાનાને તમારી ધ્યાનસૂચિમાં ઉમેરો',
+'tooltip-rollback'                => '"પાછું વાળો" એક જ ક્લિકમાં છેલ્લા સભ્ય એ આ પાનાંમાં કરેલા બધા ફેરફારો પાછા વાળશે',
+'tooltip-undo'                    => '"રદ કરો" આ ફેરફારને પાછો વાળશે અને ફેરફાર પછીનું પૂર્વાવલોકન ફોર્મ નવા પાના તરીકે ખુલશે. 
+તે તમને \'સારાંશ\'માં કારણ જણાવવા દેશે.',
 
 # Info page
 'infosubtitle' => 'પાના વિષે માહિતી',
@@ -1123,7 +1233,7 @@ Please log in again after you receive it.
 'show-big-image'       => 'મહત્તમ આવર્તન',
 'show-big-image-thumb' => '<small>આ પુર્વાવલોકનનું પરિમાણ: $1 × $2 પીક્સલ</small>',
 
-# Special:NewImages
+# Special:NewFiles
 'newimages' => 'નવી ફાઇલોની ઝાંખી',
 'noimages'  => 'જોવા માટે કશું નથી.',
 'ilsubmit'  => 'શોધો',

@@ -76,11 +76,15 @@ class ApiQueryUserInfo extends ApiQueryBase {
 			$result->setIndexedTagName($vals['groups'], 'g');	// even if empty
 		}
 		if (isset($this->prop['rights'])) {
-			$vals['rights'] = $wgUser->getRights();
+			// User::getRights() may return duplicate values, strip them
+			$vals['rights'] = array_values(array_unique($wgUser->getRights()));
 			$result->setIndexedTagName($vals['rights'], 'r');	// even if empty
 		}
 		if (isset($this->prop['options'])) {
 			$vals['options'] = (is_null($wgUser->mOptions) ? User::getDefaultOptions() : $wgUser->mOptions);
+		}
+		if (isset($this->prop['preferencestoken']) && is_null($this->getMain()->getRequest()->getVal('callback'))) {
+			$vals['preferencestoken'] = $wgUser->editToken();
 		}
 		if (isset($this->prop['editcount'])) {
 			$vals['editcount'] = $wgUser->getEditCount();
@@ -110,6 +114,7 @@ class ApiQueryUserInfo extends ApiQueryBase {
 			if(!$wgUser->isAnon())
 				$categories[] = 'newbie';
 		}
+		$categories = array_merge($categories, $wgUser->getGroups());
 
 		// Now get the actual limits
 		$retval = array();
@@ -134,6 +139,7 @@ class ApiQueryUserInfo extends ApiQueryBase {
 					'groups',
 					'rights',
 					'options',
+					'preferencestoken',
 					'editcount',
 					'ratelimits'
 				)

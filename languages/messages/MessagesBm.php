@@ -37,7 +37,7 @@ $messages = array(
 'qbspecialpages' => 'Nyɛw kɛrɛnkɛrɛnnen',
 'mypage'         => "N'ka nyɛ",
 'mytalk'         => "N'ka baronyɛ",
-'and'            => 'ani',
+'and'            => '&#32;ani',
 
 'help'           => 'Dɛmɛ',
 'search'         => 'Nyini',
@@ -124,7 +124,7 @@ $messages = array(
 # Attribution
 'others' => 'wɛrɛ',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Nyini',
 
 # Special:SpecialPages

@@ -164,8 +164,8 @@ $messages = array(
 'hr_tip'          => 'Линеа оризонтала (еснидивале)',
 
 # Edit pages
-'summary'                => 'Сумар',
-'subject'                => 'Субјект / титлур',
+'summary'                => 'Сумар:',
+'subject'                => 'Субјект / титлур:',
 'minoredit'              => 'Ацеаста есте о едитаре минорај',
 'watchthis'              => 'Клајаере це пажу',
 'showpreview'            => 'Ратај превизуализаре',
@@ -192,9 +192,10 @@ $messages = array(
 'editundo'                => 'анулизаје',
 
 # Search results
-'noexactmatch' => "'''Нпажу вец лном \"\$1\" н-ќсистст.''' Путе [[:\$1|креаре це пажу]].",
-'viewprevnext' => 'Ву ($1) ($2) ($3)',
-'powersearch'  => 'каутај авансата',
+'noexactmatch'   => "'''Нпажу вец лном \"\$1\" н-ќсистст.''' Путе [[:\$1|креаре це пажу]].",
+'viewprevnext'   => 'Ву ($1 {{int:pipe-separator}} $2) ($3)',
+'searchhelp-url' => 'Help:Ајутор',
+'powersearch'    => 'каутај авансата',
 
 # Preferences page
 'mypreferences' => 'Мај префиренћу',
@@ -223,7 +224,7 @@ $3',
 # Upload
 'upload' => 'тримиће фиширул',
 
-# Image description page
+# File description page
 'filehist'            => 'Хисториа фиширулу',
 'filehist-current'    => 'куренту',
 'filehist-datetime'   => 'Дата/Темп',
@@ -261,9 +262,11 @@ $3',
 'watching'   => 'О клајаере...',
 'unwatching' => 'О деклајаере...',
 
-# Delete/protect/revert
+# Delete
 'deletedarticle' => 'делајрај "[[$1]]"',
-'rollbacklink'   => 'ревенире',
+
+# Rollback
+'rollbacklink' => 'ревенире',
 
 # Namespace form on various pages
 'namespace'      => 'лСпаћи:',
@@ -279,7 +282,6 @@ $3',
 # What links here
 'whatlinkshere'       => 'Легајтул а це пажу',
 'whatlinkshere-title' => 'Пажус легајтулент а $1',
-'linklistsub'         => '(Листа де легајтул)',
 'nolinkshere'         => "Пажи не легајтент а '''[[:$1]]'''.",
 'istemplate'          => 'викулабе',
 'whatlinkshere-links' => '← легајтулс',

@@ -60,8 +60,6 @@ $messages = array(
 'underline-never'   => 'Jamais',
 'underline-default' => "D'après le réglage du navigateur",
 
-'skinpreview' => "(Vue d'avance)",
-
 # Dates
 'sunday'        => 'dimanche',
 'monday'        => 'lundi',
@@ -202,8 +200,6 @@ $messages = array(
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => "Qui c'est {{SITENAME}}?",
 'aboutpage'            => 'Project:Info',
-'bugreports'           => "Rapport d'erreurs",
-'bugreportspage'       => "Project:Rapport d'erreurs",
 'copyright'            => 'Les matières sont avalable en accord avec $1',
 'copyrightpagename'    => '{{SITENAME}} Protection de Droits',
 'copyrightpage'        => '{{ns:project}}:Protection de Droits',
@@ -226,8 +222,6 @@ $messages = array(
 
 'badaccess'        => 'Erreur de permission',
 'badaccess-group0' => 'Vous avez pas assez de permission de faire ça que vous demandez.',
-'badaccess-group1' => "L'action que vous avez demandé est juste pour les useurs dans groupe $1.",
-'badaccess-group2' => "L'action que vous avez demandé est juste pour les useurs dans une des groupes $1.",
 'badaccess-groups' => "L'action que vous avez demandé est juste pour les useurs dans une des groupes $1.",
 
 'versionrequired'     => 'Vous avez besoin de la version $1 de MediaWiki.',
@@ -308,7 +302,6 @@ L'administrateur qui l'a barrée a donné cette explication: $1",
 'cannotdelete'         => "Impossible d'ôter la page ou le dossier choisi.  (Il est possible que quèqu'une d'autre l'a déjà ôté.)",
 'badtitle'             => 'Mauvais titre',
 'badtitletext'         => 'Le titre que vous avez demandé était pas bon, vide, ou y avait un mauvais titre entre-langue ou entre-wiki.  Ça pourrait avoir des caractères qui pouvont pas être usés dans les titres.',
-'perfdisabled'         => "Oups!  Cette fonction est barrée pour le moment parce que ça fait la base d'information aller doucement jusqu'à personne peut p'us user le wiki.",
 'perfcached'           => 'Cette information est en cache et pourrait pas être courante.',
 'perfcachedts'         => 'Cette information est en cache et le dernier changement a été fait $1.',
 'querypage-no-updates' => "À présent, les renouvelages pour cette page sont barrés.  L'information ici va pas être renouvelée t'à l'heure.",
@@ -329,7 +322,10 @@ Demande: $2',
 
 # Login and logout pages
 'logouttitle'                => 'Déconnecter',
-'logouttext'                 => "'''Vous êtes déconnecté asteur.'''<br /> Vous pouvez continuer à user {{SITENAME}} sans nom ou vous pouvez connecter encore une fois avec le même nom ou un autre nom.<br />Notez: certaines pages pourriont être vues comme si vous êtes connecté, jusqu'à vous videz l'information de votre navigateur.",
+'logouttext'                 => "'''Vous êtes déconnecté asteur.'''
+
+Vous pouvez continuer à user {{SITENAME}} sans nom ou vous pouvez connecter encore une fois avec le même nom ou un autre nom.
+Notez: certaines pages pourriont être vues comme si vous êtes connecté, jusqu'à vous videz l'information de votre navigateur.",
 'welcomecreation'            => '== Bonjour, $1! ==
 
 Votre compte a été créé.  Oubliez pas de changer votre réglage sus {{SITENAME}}.',
@@ -340,7 +336,6 @@ Votre compte a été créé.  Oubliez pas de changer votre réglage sus {{SITENA
 'remembermypassword'         => 'Se rappeler de mon mot de passe:',
 'yourdomainname'             => 'Votre domaine:',
 'externaldberror'            => "Soit y avait une erreur avec la base d'information de certification extérieur, soit vous avez pas la permission de renouveler votre compte extérieur.",
-'loginproblem'               => "<b>Problème d'identification.</b><br />Assayez encore!",
 'login'                      => 'Connecter',
 'nav-login-createaccount'    => 'Connecter / créer un compte',
 'loginprompt'                => 'Il faut partir les cookies pour connecter à {{SITENAME}}.',
@@ -348,10 +343,10 @@ Votre compte a été créé.  Oubliez pas de changer votre réglage sus {{SITENA
 'logout'                     => 'Déconnecter',
 'userlogout'                 => 'Déconnecter',
 'notloggedin'                => 'Pas connecté',
-'nologin'                    => 'Vous avez pas de compte? $1.',
+'nologin'                    => "Vous avez pas de compte? '''$1'''.",
 'nologinlink'                => 'Créez un compte',
 'createaccount'              => 'Créer un compte',
-'gotaccount'                 => 'Vous avez un compte déjà? $1.',
+'gotaccount'                 => "Vous avez un compte déjà? '''$1'''.",
 'gotaccountlink'             => 'Connectez',
 'createaccountmail'          => 'par e-mail',
 'badretype'                  => 'Les mots de passe que vous avez mis sont pas pareils.',
@@ -408,7 +403,6 @@ Si quèqu\'une d\'autre a demandé ce mot de passe ou si vous vous rappelez de v
 'resetpass_success'       => 'Vous avez bien changé votre mot de passe!  On est après vous connecter...',
 'resetpass_bad_temporary' => 'Mauvais mot de passe de peu de durée.  Il est possible que vous avez déjà changé votre mot de passe ou demandé un nouveau mot de passe de peu de durée.',
 'resetpass_forbidden'     => 'Vous pouvez pas changer votre mot de passe sus ce wiki ici.',
-'resetpass_missing'       => 'Vide.',
 
 # Edit page toolbar
 'bold_sample'     => 'Gras',
@@ -433,8 +427,8 @@ Si quèqu\'une d\'autre a demandé ce mot de passe ou si vous vous rappelez de v
 'hr_tip'          => 'Ligne horizontale (Abusez-lé pas.)',
 
 # Edit pages
-'summary'                   => 'Description',
-'subject'                   => 'Sujet',
+'summary'                   => 'Description:',
+'subject'                   => 'Sujet:',
 'minoredit'                 => "Ça ici, c'est un petit changement.",
 'watchthis'                 => 'Guetter cette page',
 'savearticle'               => 'Sauver la page',
@@ -446,8 +440,8 @@ Si quèqu\'une d\'autre a demandé ce mot de passe ou si vous vous rappelez de v
 'missingsummary'            => "'''Attention:'''  Vous avez pas mis de description.  Si vous cliquez le bouton \"Sauver\" encore, votre changement va être sauvé sans description.",
 'missingcommenttext'        => 'Mettez donc un commentaire en bas.',
 'missingcommentheader'      => "'''Attention :''' Vous avez pas mis de sujet pour ce commentaire. Si vous cliquez le bouton \"Sauver\" encore, votre changement va être sauvé sans sujet.",
-'summary-preview'           => "Vue d'avance de la description",
-'subject-preview'           => "Vue d'avance du sujet",
+'summary-preview'           => "Vue d'avance de la description:",
+'subject-preview'           => "Vue d'avance du sujet:",
 'blockedtitle'              => "L'useur est bloqué",
 'blockedtext'               => "<big>'''Votre compte d'useur (ou votre adresse IP) est bloqué.'''</big>
 
@@ -477,7 +471,7 @@ Votre numéro de blocage est #$5.  Mettez donc cette information dans toutes vos
 'confirmedittitle'          => 'Il faut confirmer votre adresse e-mail pour faire des changements.',
 'confirmedittext'           => "Il faut confirmer votre adresse e-mail pour faire des changements.  Mettez et confirmez un adresse e-mail dans votre [[Special:Preferences|réglage de compte]], s'il vous plaît.",
 'nosuchsectiontitle'        => 'Aucune section pareille',
-'nosuchsectiontext'         => "Vous avez assayé de faire des changements dans une section qu'existe pas.  Le système peut pas sauver des changements dans une section qu'existe pas.",
+'nosuchsectiontext'         => "Vous avez assayé de faire des changements dans une section qu'existe pas.",
 'loginreqtitle'             => 'Il faut connecter.',
 'loginreqlink'              => 'connecter',
 'loginreqpagetext'          => 'Il faut $1 pour voir des autres pages.',
@@ -489,7 +483,7 @@ Pour créer la page, mettez des mots dans la boëte en bas (voyez la [[{{MediaWi
 Si vous êtes ici par erreur, cliquez le bouton \"back\" sus votre navigateur.",
 'anontalkpagetext'          => "----''Ça ici, c'est la page de discussion pour un useur sans nom qu'a pas encore créé un compte ou qui l'use pas.  Ça fait, il faut user l'adresse IP numérique pour l'identifier.  Une adresse comme ça pourrait être usée par plusieurs useurs.  Si vous êtes un useur sans nom et vous croyez que des messages sans rapport ont été envoyés à vous, [[Special:UserLogin|créer un compte ou connecter]] pour empêcher la confusion avec des autres useurs sans nom dans l'avenir.''",
 'noarticletext'             => 'À présent, y a pas de texte sus cette page.
-Vous pouvez [[Special:Search/{{PAGENAME}}|charcher pour le titre de cette page]] dans des autres pages, <span class="plainlinks">[{{fullurl:Special:Log|page={{urlencode:{{FULLPAGENAME}}}}}} charcher dans les notes parents], ou [{{fullurl:{{FULLPAGENAME}}|action=edit}} changer cette page]</span>.',
+Vous pouvez [[Special:Search/{{PAGENAME}}|charcher pour le titre de cette page]] dans des autres pages, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} charcher dans les notes parents], ou [{{fullurl:{{FULLPAGENAME}}|action=edit}} changer cette page]</span>.',
 'clearyourcache'            => "'''Notez:''' Après que vous avez sauvé votres changements, il foudra peut-être dépasser le cache de votre navigateur pour voir les changements.  '''Mozilla / Firefox / Safari:''' Tenez le bouton ''Shift'' en pèsant ''Reload'', ou pèsez ''Ctrl-Shift-R'' (''Cmd-Shift-R'' sus Apple Mac); '''IE:''' Tenez ''Ctrl'' en pèsant ''Refresh'', ou pèsez ''Ctrl-F5''; '''Konqueror:''' Simplement pèsez le bouton ''Reload'', ou pèsez ''F5''; Pour les useurs de '''Opera''', il foudra peut-être vider complètement le cache dans ''Tools→Preferences''.",
 'usercssjsyoucanpreview'    => "'''Conseil:''' Usez le bouton \"Vue d'avance\" pour tester votre nouvelle feuille CSS/JS avant de la sauver.",
 'usercsspreview'            => "'''Rappelez-vous que vous êtes après regarder votre feuille CSS qu'a pas encore été sauvée!'''",
@@ -525,7 +519,7 @@ Il foudra que vous mettez vos changements dans le texte qu'est là asteur.
 'copyrightwarning2'         => "Notez donc que toutes les contributions à {{SITENAME}} pourriont être changées ou ôtées par des autres useurs.  Si vous voulez pas que votre écriture soye changée sans pitié, mettez donc pas votre écriture ici.<br />  Vous êtes après nous promettre aussi que vous l'avez écrit vous-même ou que vous l'avez copié du domain public ou un autre ressource libre (voyez $1 pour les détails). ''' METTEZ PAS DE L'OUVRAGE SOUS COPYRIGHT ICI SANS PERMISSION!'''",
 'longpagewarning'           => "'''ATTENTION: Cette page a une taille de $1 kilobytes; ça pourrait créer des problèmes quand un useur assaye de changer une page qu'a une taille qu'est plus grande que 32 kb.  Considérez donc de couper la page en morceaux plus courts.'''",
 'longpageerror'             => "'''ERREUR: Le texte que vous avec mis a une taille de $1 kilobytes qu'est plus grande que le maximum de $2 kilobytes.  Ça peut pas être sauvé.'''",
-'readonlywarning'           => "<strong>ATTENTION: La base d'information a été barrée, ça fait, vous serez pas capable de sauver votres changements asteur.  Vous ferait mieux de copier et coller le texte dans un dossier texte et le sauver pour plus tard.</strong>",
+'readonlywarning'           => "'''ATTENTION: La base d'information a été barrée, ça fait, vous serez pas capable de sauver votres changements asteur.  Vous ferait mieux de copier et coller le texte dans un dossier texte et le sauver pour plus tard.'''",
 'protectedpagewarning'      => "'''ATTENTION: Cette page a été barrée pour que ça peuve être changée juste par les administrateurs.'''",
 'semiprotectedpagewarning'  => "'''Notez:'''  Cette page a été barrée pour que ça peuve être changé juste par les useurs connectés.",
 'cascadeprotectedwarning'   => "'''Attention:'''  Cette page est barrée pour que ça peuve être changé juste par les administrateurs parce que cette page est comprise dans {{PLURAL:$1|une page protégée|des pages protégées}} avec la protection en cascade.",
@@ -556,11 +550,9 @@ Les notes d'ôtage pour cette page sont données ici pour vous aider:",
 # History pages
 'viewpagelogs'        => 'Voir les notes pour cette page',
 'nohistory'           => 'Y a pas de changements pour cette page.',
-'revnotfound'         => 'Changement pas trouvé',
-'revnotfoundtext'     => "Le vieux changement de la page que vous avez demandé pouvait pas être trouvé.  Regardez donc l'adresse URL que vous avez usée.",
 'currentrev'          => 'Version courante',
 'revisionasof'        => 'Version depuis le $1',
-'revision-info'       => 'Version depuis le $1 par $2',
+'revision-info'       => 'Version depuis le $1 par $2', # Additionally available: $3: revision id
 'previousrevision'    => '←Version avant',
 'nextrevision'        => 'Version après→',
 'currentrevisionlink' => 'Version courante',
@@ -625,10 +617,12 @@ Des autres administrateurs sus ce wiki ont la permission de voir et de rétablir
 # Search results
 'searchresults'    => 'Résultats de la charche',
 'searchresulttext' => "Pour plus d'information pour vous aider à charcher dans {{SITENAME}}, voyez [[{{MediaWiki:Helppage}}|{{int:help}}]].",
+'searchhelp-url'   => 'Help:Aide',
 
 # Preferences page
 'preferences'   => 'Réglage',
 'mypreferences' => 'Mon réglage',
+'skin-preview'  => "Vue d'avance",
 
 # User rights
 'editinguser' => "Changement de '''[[User:$1|$1]]''' ([[User talk:$1|{{int:talkpagelinktext}}]] | [[Special:Contributions/$1|{{int:contribslink}}]])",

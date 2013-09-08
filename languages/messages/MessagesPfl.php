@@ -132,6 +132,8 @@ $messages = array(
 'newmessagesdifflink' => 'letschte Ännerung',
 'editsection'         => 'bearwaide',
 'editold'             => 'bearwaide',
+'editlink'            => 'bearwaide',
+'viewsourcelink'      => 'Quell aagucke',
 'editsectionhint'     => 'Abschnitt ännere: $1',
 'toc'                 => 'Inhald',
 'showtoc'             => 'zaiche',
@@ -172,7 +174,7 @@ S kann sai, dass es ää orrer meh Zaiche drin hot, wu in Sairetitel nid därfe 
 'remembermypassword'      => 'Mai Passwort uff dem Computer merke',
 'login'                   => 'Omelde',
 'nav-login-createaccount' => 'Aamelde / Benutzerkonto aaleche',
-'userlogin'               => 'Omelde',
+'userlogin'               => 'Omelde / Benutzerkonto anleche',
 'logout'                  => 'Abmelde',
 'userlogout'              => 'Abmelde',
 'nologinlink'             => 'E Benutzerkonto aaleche',
@@ -199,6 +201,8 @@ S kann sai, dass es ää orrer meh Zaiche drin hot, wu in Sairetitel nid därfe 
 'hr_tip'          => 'Horizontale Linie (sparsam verwenne)',
 
 # Edit pages
+'summary'                          => 'Zammefassung:',
+'subject'                          => 'Betreff:',
 'minoredit'                        => 'Des ischt e klänni Bearwaidung',
 'watchthis'                        => 'Die Said beowachde',
 'savearticle'                      => 'Seid schbeichere',
@@ -207,11 +211,12 @@ S kann sai, dass es ää orrer meh Zaiche drin hot, wu in Sairetitel nid därfe 
 'showlivepreview'                  => 'Live-Vorschau',
 'showdiff'                         => 'Ännerunge zeiche',
 'anoneditwarning'                  => "'''Warnung:''' Du bischt nit aagemeldt. Dai IP-Adress werd in de Gschicht vun dem Artikel gspaichert.",
+'summary-preview'                  => 'Zammefassung:',
 'newarticle'                       => '(Nai)',
 'newarticletext'                   => "Du bisch eme Link nogange zu re Said, wu s no gar nit gebbt.  
 Zum die Said aaleche, kannscht do in dem Käschtel unne aafange mid schraiwe (guck[[{{MediaWiki:Helppage}}|Hilfe]] fer meh Informatione).
 Wenn do nid hin hoscht welle, no druck in Daim Browser uff '''Zrick'''.",
-'noarticletext'                    => 'Uff derre Said gebbt s noch ken Text. Du kannscht uff annere Saire [[Special:Search/{{PAGENAME}}|den Aitrach suche]], <span class="plainlinks">[{{fullurl:Special:Log|page={{urlencode:{{FULLPAGENAME}}}}}} de Logbuchaidrach suche, wu dezu ghert],
+'noarticletext'                    => 'Uff derre Said gebbt s noch ken Text. Du kannscht uff annere Saire [[Special:Search/{{PAGENAME}}|den Aitrach suche]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de Logbuchaidrach suche, wu dezu ghert],
 orrer [{{fullurl:{{FULLPAGENAME}}|action=edit}} die Said bearwaide]</span>.',
 'previewnote'                      => "'''Denk dran, dass des numme e Vorschau isch.'''
 Dai Ännerunge sinn no nid gspaichert worre!",
@@ -229,18 +234,20 @@ du gebbscht do au zu, dass Du des selwerscht gschriwwe hoscht orrer vun ere effe
 'permissionserrorstext-withaction' => 'Du därfscht nid $2, aus {{PLURAL:$1|dem Grund|denne Grind}}:',
 
 # History pages
-'viewpagelogs'        => 'D Lochbiecher fer die Said aagucke',
-'revisionasof'        => 'Version vun $1',
-'previousrevision'    => '← Ältere Versione',
-'nextrevision'        => 'Naier Version →',
-'currentrevisionlink' => 'Aktuell Version',
-'cur'                 => 'jetzert',
-'last'                => 'vorich',
-'histlegend'          => "Du kannscht zwää Versione auswähle un verglaiche.<br />
+'viewpagelogs'           => 'D Lochbiecher fer die Said aagucke',
+'currentrev-asof'        => 'Aktuelle Version vun $1',
+'revisionasof'           => 'Version vun $1',
+'previousrevision'       => '← Ältere Versione',
+'nextrevision'           => 'Naier Version →',
+'currentrevisionlink'    => 'Aktuell Version',
+'cur'                    => 'jetzert',
+'last'                   => 'vorich',
+'histlegend'             => "Du kannscht zwää Versione auswähle un verglaiche.<br />
 Erklärung: '''({{int:cur}})''' = Unnerschied zu jetzert,
 '''({{int:last}})''' = Unnerschied zu de voriche Version, '''{{int:minoreditletter}}''' = klenni Ännerung.",
-'histfirst'           => 'Ältschte',
-'histlast'            => 'Naischte',
+'history-fieldset-title' => 'In de Versionsgschicht suche',
+'histfirst'              => 'Ältschte',
+'histlast'               => 'Naischte',
 
 # Revision deletion
 'rev-delundel'     => 'zaich/versteckel',
@@ -259,7 +266,9 @@ Erklärung: '''({{int:cur}})''' = Unnerschied zu jetzert,
 
 # Search results
 'searchresults'             => 'Ergebnis suche',
+'searchresults-title'       => 'Ergebnis suche fer "$1"',
 'searchresulttext'          => 'Fer mehr Informatione iwwer d Such in {{SITENAME}}, guck emol uff [[{{MediaWiki:Helppage}}|{{int:help}}]].',
+'searchsubtitle'            => 'Du hoscht no \'\'\'[[:$1]]\'\'\' gesucht ([[Special:Prefixindex/$1|alle Saire wo mit "$1" aafange]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|alle Saire wo uf "$1" verlinkt sin]])',
 'searchsubtitleinvalid'     => "Du hoscht '''$1''' gsucht",
 'noexactmatch'              => "'''S gebbd ke Said, wu \"\$1\" hääßt.'''
 Du kannscht awwer [[:\$1|die Said aaleche]].",
@@ -268,7 +277,7 @@ Du kannscht awwer [[:\$1|die Said aaleche]].",
 'notextmatches'             => 'Ken Iwwerainstimmunge mit Inhalte',
 'prevn'                     => 'voriche $1',
 'nextn'                     => 'negschte $1',
-'viewprevnext'              => 'Gugg ($1) ($2) ($3)',
+'viewprevnext'              => 'Gugg ($1 {{int:pipe-separator}} $2) ($3)',
 'search-result-size'        => '$1 ({{PLURAL:$2|1 Word|$2 Wärder}})',
 'search-redirect'           => '(Wairerlaitung $1)',
 'search-section'            => '(Abschnitt $1)',
@@ -278,6 +287,7 @@ Du kannscht awwer [[:\$1|die Said aaleche]].",
 'search-interwiki-more'     => '(meh)',
 'search-mwsuggest-enabled'  => 'mid Vorschläch',
 'search-mwsuggest-disabled' => 'ke Vorschläch',
+'showingresultstotal'       => "Do {{PLURAL:$4|folcht s Suchergebnis '''$1''' vun '''$3:'''|folche d Suchergebniss '''$1–$2''' vun '''$3:'''}}",
 'nonefound'                 => "'''Hiiwais:''' S werre standardmäßich numme e Dail Namensraim durchsucht. Setz ''all:'' vor Dai Suchbegriff zum alle Saire (mit Dischbediersaire, Vorlache usw.) durchsuche orrer direkt de Name vum Namensraum, wu durchsucht werre sell.",
 'powersearch'               => 'Erwaiterte Such',
 'powersearch-legend'        => 'Erwaiterte Such',
@@ -308,9 +318,13 @@ Du kannscht awwer [[:\$1|die Said aaleche]].",
 # User rights log
 'rightslog' => 'Benutzerrecht-Logbuch',
 
+# Associated actions - in the sentence "You do not have permission to X"
+'action-edit' => 'die Said bearwaide',
+
 # Recent changes
 'nchanges'                       => '$1 {{PLURAL:$1|Ännerung|Ännerunge}}',
 'recentchanges'                  => 'Was zuletschd gemacht worre isch',
+'recentchanges-legend'           => 'Optione vun de Aazaich',
 'recentchanges-feed-description' => 'Di letschte Ännerunge vun {{SITENAME}} in des Feed aigewwe.',
 'rcnote'                         => "Aagezaicht {{PLURAL:$1|werd '''1''' Ännerung|werre die letschte '''$1''' Ännerunge}} {{PLURAL:$2|vum letschte Dach|in de letschte '''$2''' Dache}} (Stand: $4, $5)",
 'rclistfrom'                     => 'Zeich die letschte Ännerunge ab $1',
@@ -327,6 +341,8 @@ Du kannscht awwer [[:\$1|die Said aaleche]].",
 'minoreditletter'                => 'k',
 'newpageletter'                  => 'N',
 'boteditletter'                  => 'b',
+'rc-enhanced-expand'             => 'Details zaiche (dodezu braucht s JavaScript)',
+'rc-enhanced-hide'               => 'Details versteckeln',
 
 # Recent changes linked
 'recentchangeslinked'         => 'Was on verlinkde Seide gemacht worre isch',
@@ -344,11 +360,13 @@ Saire uff [[Special:Watchlist|Dainer Beowachdungslischt]] sin '''fett'''.",
 'savefile'      => 'Datei schbeichere',
 'uploadedimage' => 'hot "[[$1]]" hochglare',
 
-# Image description page
+# File description page
 'filehist'                  => 'Dateigschicht',
 'filehist-help'             => 'Drick uff e Zaidpunkt zum aazääche, wie s dort ausgsähne hot.',
 'filehist-current'          => 'aktuell',
 'filehist-datetime'         => 'Zaidpunkt',
+'filehist-thumb'            => 'Vorschaubild',
+'filehist-thumbtext'        => 'Vorschaubild fer Version vum $1',
 'filehist-user'             => 'Benutzer',
 'filehist-dimensions'       => 'Moß',
 'filehist-comment'          => 'Kommentar',
@@ -387,8 +405,16 @@ Saire uff [[Special:Watchlist|Dainer Beowachdungslischt]] sin '''fett'''.",
 'alphaindexline' => 'vun $1 bis $2',
 'prevpage'       => 'Voriche Said ($1)',
 'allpagesfrom'   => 'Saire aazaiche wu aafange mid:',
+'allpagesto'     => 'Saire aazaiche wu ufhere mid:',
 'allarticles'    => 'Alle Saire',
 'allpagessubmit' => 'Zeiche',
+
+# Special:LinkSearch
+'linksearch' => 'Externe Links',
+
+# Special:Log/newusers
+'newuserlogpage'          => 'Naiaameldungs-Logbuch',
+'newuserlog-create-entry' => 'Nais Benutzerkonto',
 
 # Special:ListGroupRights
 'listgrouprights-members' => '(Mitgliederlischt)',
@@ -411,6 +437,7 @@ Zukimftiche Ännerunge an derre Said un de Dischbediersaid, wu dezu ghert, werre
 'unwatch'           => 'Nimmi beowachde',
 'watchlist-details' => 'S hot {{PLURAL:$1|$1 Said|$1 Saire}} uff Dainer Beowachdungslischt, Dischbediersaire zelle nid.',
 'wlshowlast'        => 'Die letschte $1 Stunne $2 Dache $3 zaiche',
+'watchlist-options' => 'Optione vun de Beowachdungslischt',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'Beowachde ...',
@@ -418,24 +445,28 @@ Zukimftiche Ännerunge an derre Said un de Dischbediersaid, wu dezu ghert, werre
 
 'enotif_reset' => 'Alle Seide als bsuchd margiere',
 
-# Delete/protect/revert
-'deletepage'                  => 'Seid lesche',
-'confirm'                     => 'Bestädiche',
-'confirmdeletetext'           => 'Du bisch debai e Said z lesche mid alle Versione.
+# Delete
+'deletepage'            => 'Seid lesche',
+'confirm'               => 'Bestädiche',
+'confirmdeletetext'     => 'Du bisch debai e Said z lesche mid alle Versione.
 Bitte du bstätiche, dass Du des wllscht du, dass Du verstehsch, was des hääßt, un dass Du des machscht in Iwweraistimmung mit de [[{{MediaWiki:Policy-url}}|Richtline]].',
-'actioncomplete'              => 'Aktion fertich',
-'deletedtext'                 => '"<nowiki>$1</nowiki>" isch gelescht worre.
+'actioncomplete'        => 'Aktion fertich',
+'deletedtext'           => '"<nowiki>$1</nowiki>" isch gelescht worre.
 Guck $2 fer e Lischt vun de letschte Leschunge.',
-'deletedarticle'              => 'hot "[[$1]]" glescht',
-'dellogpage'                  => 'Leschlogbuch',
-'deletecomment'               => 'Grund fer d Leschung:',
-'deleteotherreason'           => 'Annere/zusätzliche Grund:',
-'deletereasonotherlist'       => 'Annere Grund',
-'rollbacklink'                => 'Zericksetze',
+'deletedarticle'        => 'hot "[[$1]]" glescht',
+'dellogpage'            => 'Leschlogbuch',
+'deletecomment'         => 'Grund fer d Leschung:',
+'deleteotherreason'     => 'Annere/zusätzliche Grund:',
+'deletereasonotherlist' => 'Annere Grund',
+
+# Rollback
+'rollbacklink' => 'Zericksetze',
+
+# Protect
 'protectlogpage'              => 'Saireschutz-Logbuch',
 'protectedarticle'            => 'hot "[[$1]]" gschitzt',
 'modifiedarticleprotection'   => 'hot de Schutzstatus vun "[[$1]]" gännert',
-'protectcomment'              => 'Kommentar:',
+'protectcomment'              => 'Grund:',
 'protectexpiry'               => 'Bis:',
 'protect_expiry_invalid'      => 'Zaidraum isch nid gildich.',
 'protect_expiry_old'          => 'Zaidraum licht in de Vergangehääd.',
@@ -469,12 +500,13 @@ Der Schutzstatus vun derre Said kannscht ännere, awwer des hot ken Aifluss uff 
 'blanknamespace' => '(Haaptsaid)',
 
 # Contributions
-'contributions' => 'Was der gemacht hot',
-'mycontris'     => 'Was du gemacht hoscht.',
-'contribsub2'   => 'Fer $1 ($2)',
-'uctop'         => '(aktuell)',
-'month'         => 'un Monet (un frieher):',
-'year'          => 'Ab em Johr (un frieher):',
+'contributions'       => 'Was der gemacht hot',
+'contributions-title' => 'Benutzerbaidräch vun $1',
+'mycontris'           => 'Was du gemacht hoscht.',
+'contribsub2'         => 'Fer $1 ($2)',
+'uctop'               => '(aktuell)',
+'month'               => 'un Monet (un frieher):',
+'year'                => 'Ab em Johr (un frieher):',
 
 'sp-contributions-newbies'  => 'Zaich numme Baidräch vun naie Benutzerkonte',
 'sp-contributions-blocklog' => 'Sperrlogbuch',
@@ -506,6 +538,7 @@ Der Schutzstatus vun derre Said kannscht ännere, awwer des hot ken Aifluss uff 
 'ipblocklist'              => 'Gsperrte IP-Adresse un Benutzername',
 'blocklink'                => 'sperre',
 'unblocklink'              => 'Sperr uffhewwe',
+'change-blocklink'         => 'Sperr ännere',
 'contribslink'             => 'Baidräch',
 'blocklogpage'             => 'Sperrlogbuch',
 'blocklogentry'            => 'hot [[$1]] gsperrt fer e Zaidraum vun $2 $3',
@@ -616,6 +649,9 @@ Du kannscht awwer de Quelltext aagucke',
 'tooltip-diff'                    => 'Guck, welle Ännerunge Du im Text gmacht hoscht',
 'tooltip-compareselectedversions' => 'D Unnerschied zwische denne zwai ausgwehlte Versione aagucke',
 'tooltip-watch'                   => 'Die Said zu Dainer Beowachdunglischd zufieche',
+'tooltip-rollback'                => '„Zericksetze“ maxcht alle Bearwaidunge vum letschte Bearwaider rickgängich',
+'tooltip-undo'                    => '„Zerick“ macht numme die Ännerung rickgängich un zaicht d Vorschau aa.
+Du kannscht e Grund in dr Zammfassung aagewwe',
 
 # Browsing diffs
 'previousdiff' => '← Ältere Bearwaidung',
@@ -628,7 +664,7 @@ Du kannscht awwer de Quelltext aagucke',
 'show-big-image'       => 'Gsamte Ergebnis',
 'show-big-image-thumb' => '<small>Greß vun derre Vorschau: $1 × $2 Pixels</small>',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Such',
 
 # Bad image list

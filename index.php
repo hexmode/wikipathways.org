@@ -69,11 +69,34 @@ wfProfileOut( 'main-misc-setup' );
 #
 if ( $wgUseAjax && $action == 'ajax' ) {
 	require_once( $IP . '/includes/AjaxDispatcher.php' );
-
 	$dispatcher = new AjaxDispatcher();
 	$dispatcher->performAction();
 	$mediaWiki->restInPeace();
 	exit;
+}
+
+if( $wgUseFileCache && isset($wgTitle) ) {
+	wfProfileIn( 'main-try-filecache' );
+	// Raw pages should handle cache control on their own,
+	// even when using file cache. This reduces hits from clients.
+	if( $action != 'raw' && HTMLFileCache::useFileCache() ) {
+		/* Try low-level file cache hit */
+		$cache = new HTMLFileCache( $wgTitle, $action );
+		if( $cache->isFileCacheGood( /* Assume up to date */ ) ) {
+			/* Check incoming headers to see if client has this cached */
+			if( !$wgOut->checkLastModified( $cache->fileCacheTime() ) ) {
+				$cache->loadFromFileCache();
+			}
+			# Do any stats increment/watchlist stuff
+			$wgArticle = MediaWiki::articleFromTitle( $wgTitle );
+			$wgArticle->viewUpdates();
+			# Tell $wgOut that output is taken care of
+			wfProfileOut( 'main-try-filecache' );
+			$mediaWiki->restInPeace();
+			exit;
+		}
+	}
+	wfProfileOut( 'main-try-filecache' );
 }
 
 # Setting global variables in mediaWiki

@@ -46,7 +46,7 @@ class ApiOpenSearch extends ApiBase {
 		$search = $params['search'];
 		$limit = $params['limit'];
 		$namespaces = $params['namespace'];
-
+		
 		// Open search results may be stored for a very long time
 		$this->getMain()->setCacheMaxAge(1200);
 

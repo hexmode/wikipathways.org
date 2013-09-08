@@ -7,6 +7,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Wong128hk
  */
 
 # Stub message file for converter code "zh"
@@ -30,10 +31,17 @@ $namespaceAliases = array(
 	# This has never worked so it's unlikely to annoy anyone if I disable it -- TS
 	#'{{SITENAME}}_对话' => NS_PROJECT_TALK
 	#"{{SITENAME}}_對話" => NS_PROJECT_TALK
-	'图像' => NS_IMAGE,
-	'圖像' => NS_IMAGE,
-	'图像对话' => NS_IMAGE_TALK,
-	'圖像對話' => NS_IMAGE_TALK,
+	'图像' => NS_FILE,
+	'圖像' => NS_FILE,
+	'档案' => NS_FILE,
+	'檔案' => NS_FILE,
+	'文件' => NS_FILE,
+	'图像对话' => NS_FILE_TALK,
+	'圖像對話' => NS_FILE_TALK,
+	'档案对话' => NS_FILE_TALK,
+	'檔案對話' => NS_FILE_TALK,
+	'文件对話' => NS_FILE_TALK,
+	'文件對話' => NS_FILE_TALK,
 	'模板'	=> NS_TEMPLATE,
 	'模板讨论'=> NS_TEMPLATE_TALK,
 	"樣板" => NS_TEMPLATE,
@@ -49,6 +57,12 @@ $namespaceAliases = array(
 );
 
 $messages = array(
+# User preference toggles
+'tog-norollbackdiff' => '進行回退後略過差異比較',
+
+# Move page
+'move-redirect-suppressed' => '已禁止重新定向',
+
 /*
 Short names for language variants used for language conversion links.
 To disable showing a particular link, set it to 'disable', e.g.

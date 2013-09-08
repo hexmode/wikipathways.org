@@ -66,4 +66,47 @@ class ExternalStore {
 			return $store->store( $params, $data );
 		}
 	}
+	
+	/**
+	 * Like insert() above, but does more of the work for us.
+	 * This function does not need a url param, it builds it by
+	 * itself. It also fails-over to the next possible clusters.
+	 *
+	 * @param string $data
+	 * Returns the URL of the stored data item, or false on error
+	 */
+	public static function insertToDefault( $data ) {
+		global $wgDefaultExternalStore;
+		$tryStores = (array)$wgDefaultExternalStore;
+		$error = false;
+		while ( count( $tryStores ) > 0 ) {
+			$index = mt_rand(0, count( $tryStores ) - 1);
+			$storeUrl = $tryStores[$index];
+			wfDebug( __METHOD__.": trying $storeUrl\n" );
+			list( $proto, $params ) = explode( '://', $storeUrl, 2 );
+			$store = self::getStoreObject( $proto );
+			if ( $store === false ) {
+				throw new MWException( "Invalid external storage protocol - $storeUrl" );
+			}
+			try {
+				$url = $store->store( $params, $data ); // Try to save the object
+			} catch ( DBConnectionError $error ) {
+				$url = false;
+			}
+			if ( $url ) {
+				return $url; // Done!
+			} else {
+				unset( $tryStores[$index] ); // Don't try this one again!
+				$tryStores = array_values( $tryStores ); // Must have consecutive keys
+				wfDebugLog( 'ExternalStorage', "Unable to store text to external storage $storeUrl" );
+			}
+		}
+		// All stores failed
+		if ( $error ) {
+			// Rethrow the last connection error
+			throw $error;
+		} else {
+			throw new MWException( "Unable to store text to external storage" );
+		}
+	}
 }

@@ -107,11 +107,12 @@ $messages = array(
 'toolbox'          => 'Loengx hong',
 'jumpto'           => 'Diuq bae',
 'jumptonavigation' => 'Dazzaeuh',
-'jumptosearch'     => 'Cwmh',
+'jumptosearch'     => 'Ra',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'Gvanhyih {{SITENAME}}',
 'aboutpage'            => 'Project:gvanhyih',
+'currentevents'        => 'Saehgienh seizneix',
 'disclaimers'          => 'gangjmingz mienxcwz',
 'disclaimerpage'       => 'Project:Itbuen mienxcwz',
 'edithelp'             => 'Caeuq mungz san-zonz',
@@ -120,15 +121,16 @@ $messages = array(
 'faqpage'              => 'Project:Cam caeuq dap',
 'helppage'             => 'Help:moegloeg',
 'mainpage'             => 'Yiebdaeuz',
-'mainpage-description' => 'Mbaw meh',
+'mainpage-description' => 'Yiebdeauz',
 'policy-url'           => 'Project:fuengcim',
-'portal'               => 'Seqgih',
+'portal'               => 'Segih',
 'portal-url'           => 'Project:seqgih',
 'privacy'              => 'Seiyaem cwngcwz',
 'privacypage'          => 'Project:Seiyaem cwngcwz',
 
 'badaccess'        => 'Loengloek gienzhanh',
 'badaccess-group0' => 'Cingjgouz mwngz mbouj haengj ciuqguh.',
+'badaccess-groups' => 'Cingjgouz mwngz hanh youq {{PLURAL:$2|neix|gijneix}} bouxyungh: $1',
 
 'versionrequired'     => 'Sihyau MediaWiki $1',
 'versionrequiredtext' => 'Sihyau MediaWik $1 caengj daeng sawjyungh.',
@@ -136,13 +138,14 @@ $messages = array(
 'youhavenewmessages' => 'Mungz meiz $1（$2）。',
 'editsection'        => 'gaij',
 'editold'            => 'gaij',
+'editlink'           => 'gaij',
 'editsectionhint'    => 'Gaij duenh:$1',
 'showtoc'            => "yienh'ok",
 'hidetoc'            => 'cangz',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
-'nstab-main'      => 'Faenzueng',
-'nstab-user'      => 'Mae bouxdeiz',
+'nstab-main'      => 'Feanzcieng',
+'nstab-user'      => 'Yieb bouxsawjyungq',
 'nstab-project'   => 'Yieb giva',
 'nstab-image'     => 'Vwnzgen',
 'nstab-mediawiki' => 'Siuhsik',
@@ -166,7 +169,7 @@ $messages = array(
 'username'                => 'Ciu bouxdeiz:',
 
 # Edit pages
-'summary'            => 'Saegmangj',
+'summary'            => 'Saegmangj:',
 'minoredit'          => 'Di-nej gaij noix',
 'watchthis'          => 'Gamyawj yieb neix',
 'savearticle'        => 'Zonzdiuz mae-nej',
@@ -180,6 +183,7 @@ $messages = array(
 
 # Search results
 'searchresults'             => 'gietgoj ra',
+'searchresults-title'       => 'doiq "$1" gij gietgoj ra',
 'search-interwiki-more'     => '（more）',
 'search-mwsuggest-enabled'  => 'miz genyi',
 'search-mwsuggest-disabled' => 'mbouj miz genyi',
@@ -192,8 +196,13 @@ $messages = array(
 'prefsnologin'      => 'Maengx laezhaej',
 'searchresultshead' => 'Cwmh',
 
+'group-user-member' => 'Bouxsawjyungq',
+
+# Associated actions - in the sentence "You do not have permission to X"
+'action-edit' => 'gaij yieb neix',
+
 # Recent changes
-'recentchanges'   => 'Gaeqgaij suijnej',
+'recentchanges'   => 'Gaeqgaij seizneix',
 'diff'            => 'Faenbied',
 'hide'            => 'Cangz',
 'show'            => "Yienh'ok",
@@ -212,7 +221,10 @@ $messages = array(
 'uploadedimage'     => 'senq cienz "[[$1]]"',
 'watchthisupload'   => 'Demq mae-nej',
 
-# Image description page
+# Special:ListFiles
+'listfiles_user' => 'Bouxyungh',
+
+# File description page
 'filehist-current'  => 'seizneix',
 'filehist-datetime' => 'Ngoenz/Seizgan',
 'filehist-user'     => 'Bouxsawjyungh',
@@ -220,6 +232,9 @@ $messages = array(
 
 # Random page
 'randompage' => 'Mae zaihzex',
+
+# Statistics
+'statistics-pages' => 'Yieb',
 
 # Miscellaneous special pages
 'nbytes'            => '$1 {{PLURAL:$1|cihciet|cihciet}}',
@@ -232,8 +247,7 @@ $messages = array(
 'booksources-go' => 'Bae',
 
 # Special:Log
-'log'               => 'Ngoenzceiq',
-'log-search-submit' => 'Bei',
+'log' => 'Ngoenzceiq',
 
 # Special:AllPages
 'allpages'       => 'Sojmiz yieb',
@@ -241,7 +255,7 @@ $messages = array(
 'allpagessubmit' => 'Bae',
 
 # Watchlist
-'watchlist'     => 'Gaeq gou demq',
+'watchlist'     => 'Yieb gou yawj',
 'mywatchlist'   => 'Gaeq gou demq',
 'watchnologin'  => 'Maengx laezhaej',
 'watch'         => 'Demq',
@@ -250,6 +264,9 @@ $messages = array(
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'Bawxndu……',
 'unwatching' => 'Souma bawxndu……',
+
+# Protect
+'prot_1movedto2' => '[[$1]] caen bei [[$2]]',
 
 # Restrictions (nouns)
 'restriction-move' => 'Caen',
@@ -263,7 +280,7 @@ $messages = array(
 'mycontris'     => 'Gaeq gou haej',
 'uctop'         => '（dingz）',
 
-'sp-contributions-submit' => 'Cwmh',
+'sp-contributions-submit' => 'Ra',
 
 # What links here
 'whatlinkshere'      => 'Maelaez lamh haenznej',
@@ -276,6 +293,7 @@ $messages = array(
 # Move page
 'move-page-legend' => 'Caen doengh mae',
 'movearticle'      => 'Caen doengh mae:',
+'movenologin'      => 'Maengx laezhaej',
 'move-watch'       => 'Demq mae-nej',
 'movepagebtn'      => 'Caen doengh mae',
 'movedto'          => 'Caen bei',
@@ -284,9 +302,12 @@ $messages = array(
 'revertmove'       => 'siu',
 
 # Tooltip help for the actions
+'tooltip-pt-mytalk'      => 'Yieb daujlun mwngz',
 'tooltip-pt-preferences' => 'Doenghgaeq gou hae',
+'tooltip-pt-logout'      => 'Doiq ok',
 'tooltip-ca-talk'        => 'Gvanhyih cingqfaenz yieb gij daojun',
 'tooltip-ca-history'     => 'yieb neix gij banj lizsij',
+'tooltip-ca-move'        => 'Dean yieb neix',
 'tooltip-search'         => 'Ra {{SITENAME}}',
 'tooltip-p-logo'         => 'Mae meh',
 'tooltip-n-mainpage'     => 'Raen Yiebdaeuz',
@@ -295,7 +316,7 @@ $messages = array(
 'tooltip-t-upload'       => 'Cienz vwnzgen',
 'tooltip-ca-nstab-main'  => 'Cazyawj ndawyungz yieb',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Cwmh',
 
 # 'all' in various places, this might be different for inflected languages

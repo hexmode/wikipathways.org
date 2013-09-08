@@ -1,5 +1,5 @@
 <?php
-## WPI Mod 2013-Aug-22 Removed by mah
+
 /**
  * Maintenance script to create an account and grant it administrator rights
  *

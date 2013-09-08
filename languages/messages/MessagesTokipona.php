@@ -92,7 +92,7 @@ $messages = array(
 'userlogout' => 'mi o tawa',
 
 # Edit pages
-'summary'          => 'ante li seme',
+'summary'          => 'ante li seme:',
 'minoredit'        => 'ante ni li lili taso',
 'watchthis'        => 'mi wile sona e ante ale pi lipu ni lon tenpo kama',
 'savearticle'      => 'o awen',
@@ -112,7 +112,7 @@ kin la sina toki e ni: toki sina ni li tan sina taso anu lipu pi ken ali.
 # Search results
 'prevn'        => 'nanpa $1 pini',
 'nextn'        => 'nanpa $1 kama',
-'viewprevnext' => 'o lukin e ($1) ($2) ($3).',
+'viewprevnext' => 'o lukin e ($1 {{int:pipe-separator}} $2) ($3).',
 
 # Preferences page
 'preferences' => 'seme li pona tawa mi',

@@ -12,14 +12,15 @@ class ChangesFeed {
 	public function getFeedObject( $title, $description ) {
 		global $wgSitename, $wgContLanguageCode, $wgFeedClasses, $wgTitle;
 		$feedTitle = "$wgSitename  - {$title} [$wgContLanguageCode]";
-
+		if( !isset($wgFeedClasses[$this->format] ) )
+			return false;
 		return new $wgFeedClasses[$this->format](
 			$feedTitle, htmlspecialchars( $description ), $wgTitle->getFullUrl() );
 	}
 
 	public function execute( $feed, $rows, $limit = 0 , $hideminor = false, $lastmod = false ) {
 		global $messageMemc, $wgFeedCacheTimeout;
-		global $wgFeedClasses, $wgTitle, $wgSitename, $wgContLanguageCode;
+		global $wgFeedClasses, $wgSitename, $wgContLanguageCode;
 
 		if ( !FeedUtils::checkFeedOutput( $this->format ) ) {
 			return;
@@ -85,7 +86,7 @@ class ChangesFeed {
 	}
 
 	/**
-	* @todo document
+	* Generate the feed items given a row from the database.
 	* @param $rows Database resource with recentchanges rows
 	* @param $feed Feed object
 	*/
@@ -114,14 +115,7 @@ class ChangesFeed {
 			$talkpage = $title->getTalkPage();
 			$item = new FeedItem(
 				$title->getPrefixedText(),
-
-## WPI Mod 2013-Aug-22
-//TK: Do not format diff, this will take very long with gpml changes...
-//				FeedUtils::formatDiff( $obj ),
-				$obj->rc_comment,
-				/*
 				FeedUtils::formatDiff( $obj ),
-				*/
 				$title->getFullURL( 'diff=' . $obj->rc_this_oldid . '&oldid=prev' ),
 				$obj->rc_timestamp,
 				($obj->rc_deleted & Revision::DELETED_USER) ? wfMsgHtml('rev-deleted-user') : $obj->rc_user_text,

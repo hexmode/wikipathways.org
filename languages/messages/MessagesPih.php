@@ -47,6 +47,9 @@ $messages = array(
 'nstab-main' => 'Artikal',
 'nstab-help' => 'Hiiwp Paij',
 
+# Search results
+'searchhelp-url' => 'Help:Dem Kontent',
+
 # Preferences page
 'prefs-rc' => 'Dem Riisent Chayng',
 

@@ -11,19 +11,11 @@
  * @author Arastein
  * @author Asoxor
  * @author Cyrus abdi
+ * @author Marmzok
  */
 
 $fallback = 'ku-latn';
 
-$skinNames = array(
-'standard'    => 'كلاسیك',
-'nostalgia'   => 'قاوه‌یی',
-'cologneblue' => 'شین',
-'monobook'    => 'مۆنۆ',
-'myskin'      => 'پێستی خۆم',
-'chick'       => 'جوجه‌',
-'simple'      => 'ساده‌'
-);
 
 $digitTransformTable = array(
 	'0' => '٠', # &#x0660;
@@ -74,6 +66,8 @@ $messages = array(
 'tog-watchlisthideown'        => 'دەستکارییەکانم بشارەوە لە لیستی چاودێری',
 'tog-watchlisthidebots'       => 'دەستکارییەکانی بۆت بشارەوە لە لیستی چاودێری',
 'tog-watchlisthideminor'      => 'ورده‌ ده‌ستكارییه‌كان له‌ لیسته‌ی ته‌ماشاكردندا بشاره‌وه‌',
+'tog-watchlisthideliu'        => 'دەستکارییەکانی ئەو بەکارهێنەرانەی لە ژوورەوەن بشارەوە لە لیستی چاودێری',
+'tog-watchlisthideanons'      => 'دەستکارییەکانی بەکارهێنەرانی نەناسراو بشارەوە لە لیستی چاودێری',
 'tog-nolangconversion'        => 'وتووێژی هه‌مه‌چه‌شن ناچالاك بكه‌',
 'tog-ccmeonemails'            => 'له‌به‌رگیراوه‌م بۆ بنێره‌ له‌و پۆستی ئه‌لیكترۆنییانه‌ی كه‌ بۆ به‌كارهێنه‌رانی دیكه‌ ناردوومه‌',
 'tog-diffonly'                => 'په‌ڕه‌یه‌ك ئه‌م جیاوازییانه‌ی خواره‌وه‌ی له‌خۆ گرتبێت نیشانی مه‌ده‌‌',
@@ -82,8 +76,6 @@ $messages = array(
 'underline-always'  => 'هه‌میشه‌',
 'underline-never'   => 'هیچ كات',
 'underline-default' => 'نمایشكه‌ری پێوانه‌یی',
-
-'skinpreview' => '(پێش بینین)',
 
 # Dates
 'sunday'        => 'یه‌كشه‌ممه‌',
@@ -170,6 +162,7 @@ $messages = array(
 'mytalk'         => 'په‌ڕه‌ی گفتوگۆی من',
 'anontalk'       => 'گفتوگۆ بۆ ئه‌م ئای‌پی‌ یه‌',
 'navigation'     => 'ڕێدۆزی',
+'and'            => '&#32;و',
 
 # Metadata in edit box
 'metadata_help' => 'دراوه‌ی مێتا:',
@@ -203,7 +196,7 @@ $messages = array(
 'unprotectthispage' => 'ئه‌م په‌ڕه‌یه‌ مه‌پارێزه‌',
 'newpage'           => 'په‌ڕه‌یه‌كی نوێ',
 'talkpage'          => 'گفتوگۆ له‌سه‌ر ئه‌م په‌ڕه‌یه بكه‌',
-'talkpagelinktext'  => 'قسە',
+'talkpagelinktext'  => 'لێدوان',
 'specialpage'       => 'په‌ڕه‌ی تایبه‌ت',
 'personaltools'     => 'ئامڕازە تاکەکەسییەکان',
 'postcomment'       => 'بەشی نوێ',
@@ -264,6 +257,8 @@ $messages = array(
 'editsection'             => 'ده‌ستكاری',
 'editold'                 => 'دەستکاری',
 'viewsourceold'           => 'بینینی سەرچاوە',
+'editlink'                => 'دەستکاری',
+'viewsourcelink'          => 'بینینی سەرچاوە',
 'editsectionhint'         => 'دەستكاری به‌شی: $1',
 'toc'                     => 'ناوەڕۆک',
 'showtoc'                 => 'نیشاندان',
@@ -367,7 +362,7 @@ This is usually caused by following an outdated diff or history link to a page t
 'passwordremindertitle'   => 'تێپەڕوشەیەکی نوێی کاتی بۆ  {{SITENAME}}',
 'noemail'                 => 'ھیچ ئەدرەسێکی e-mail تۆمار نەکراوە بۆ بەکارھێنەر  "$1" .',
 'mailerror'               => 'هەڵە ڕوویدا لە ناردنی ئیمەیل: $1',
-'emailauthenticated'      => 'پۆستی ئه‌لیكترۆنی ناسراو: $1.',
+'emailauthenticated'      => 'ئیمەیلەکەت بە ڕاست ناسرا لە $3ی $2 دا',
 'emailnotauthenticated'   => 'ئیمەیلەکەت ھێشتا نەناسراوە.
 ھیچ ئیمەیلێک بۆ ئەم بابەتانەی خوارەوە نانێردرێت.',
 'emailconfirmlink'        => 'پۆستی ئه‌لیكترۆنی خۆت بنووسه‌',
@@ -375,13 +370,22 @@ This is usually caused by following an outdated diff or history link to a page t
 'loginlanguagelabel'      => 'زمان: $1',
 
 # Password reset dialog
-'resetpass_text'          => '<!-- تێپه‌ڕه‌وشه‌ی هه‌ژماره‌كه‌ سفر بكه‌ره‌وه‌ -->',
-'resetpass_header'        => 'تێپەڕوشەی ھەژمار بەتاڵ بکە',
-'resetpass_submit'        => 'تێپەڕوشە رێکخە و بچۆ ژوورەوە',
-'resetpass_success'       => 'تێپەروشەکەت بە سەرکەوتوویی گۆڕدرا. ئێستا چوونە ژوورەوەت...',
-'resetpass_bad_temporary' => 'تێپەڕوشەی کاتی ھەڵەیە.
+'resetpass'                 => 'گۆڕینی تێپەڕوشە',
+'resetpass_text'            => '<!-- تێپه‌ڕه‌وشه‌ی هه‌ژماره‌كه‌ سفر بكه‌ره‌وه‌ -->',
+'resetpass_header'          => 'تێپەڕوشەی ھەژمار بەتاڵ بکە',
+'oldpassword'               => 'تێپەڕوشەی پێشو:',
+'newpassword'               => 'تێپەڕوشەی نوێ:',
+'retypenew'                 => 'تێپەڕوشەی نوێ دوبارە بنووسەوە:',
+'resetpass_submit'          => 'تێپەڕوشە رێکخە و بچۆ ژوورەوە',
+'resetpass_success'         => 'تێپەروشەکەت بە سەرکەوتوویی گۆڕدرا. ئێستا چوونە ژوورەوەت...',
+'resetpass_bad_temporary'   => 'تێپەڕوشەی کاتی ھەڵەیە.
 وا دیارە تێپەڕوشەکەت بە سەرکەوتوویی گۆڕدراوە یان داوای تێپەڕوشەیەکی نوێت کردووە.',
-'resetpass_forbidden'     => 'تێپەڕوشەکە ناگۆڕدرێت',
+'resetpass_forbidden'       => 'تێپەڕوشەکە ناگۆڕدرێت',
+'resetpass-no-info'         => 'بۆ گەیشتنی راستەوخۆ بەم پەڕە ئەشێ بچیتە ژوورەوە.',
+'resetpass-submit-loggedin' => 'گۆڕینی تێپەڕوشە',
+'resetpass-wrong-oldpass'   => 'تێپەڕوشەی ھەنووکەیی یان تێپەڕوشەی کاتی ھەڵەیە.
+وا دیارە تێپەڕوشەکەت بە سەرکەوتوویی گۆڕدراوە یان داوای تێپەڕوشەیەکی نوێت کردووە.',
+'resetpass-temp-password'   => 'تێپەڕوشەی کاتی:',
 
 # Edit page toolbar
 'bold_sample'     => 'ده‌قی ئه‌ستوور',
@@ -406,8 +410,8 @@ This is usually caused by following an outdated diff or history link to a page t
 'hr_tip'          => 'هێڵی ئاسۆیی (ده‌گمه‌ن به‌كاری بهێنه‌)',
 
 # Edit pages
-'summary'                => 'پوختە',
-'subject'                => 'بابه‌ت / سه‌روتار',
+'summary'                => 'پوختە:',
+'subject'                => 'بابه‌ت / سه‌روتار:',
 'minoredit'              => 'ئەم گۆڕانکاری‌یە بچووکە',
 'watchthis'              => 'چاودێڕی ئه‌م په‌ڕه‌یه‌ بكه‌',
 'savearticle'            => 'پاشەکەوتکردنی پەرە',
@@ -420,6 +424,7 @@ This is usually caused by following an outdated diff or history link to a page t
 'missingsummary'         => "'''وە بیر خستنەوە:''' پوختەیەکت نەنووسیوە بۆ چۆنیەتی گۆڕانکارییەکەت.
 ئەگەر جارێکی تر پاشکەوت کردن لێبدەی، بێ پوختە تۆمار دەکرێ.",
 'missingcommenttext'     => 'تکایە لە خوارەوە شرۆڤەیەک بنووسە.',
+'summary-preview'        => 'پێشبینینی کورتە:',
 'newarticle'             => '(نوێ)',
 'newarticletext'         => "بە دوای بەستەری پەڕەیەک کەوتووی کە ھێشتا دروست نەکراوە. <br /> بۆ دروست کردنی پەڕەکە، لە چوارچێوەکەی خوارەوە دەست کە بە تایپ کردن. (بۆ زانیاری زورتر[[یارمەتی|{{MediaWiki:Helppage}}]] ببینە). <br />  ئەگەر بە ھەڵەوە ھاتویتە ئەگرە، لە سەر دوگمەی '''back'''ی وێبگەڕەکەت کلیک کە.",
 'previewnote'            => "'''لە بیرت بێت کە ئەمە تەنها پێشبینینە.
@@ -434,25 +439,28 @@ This is usually caused by following an outdated diff or history link to a page t
 'templatesusedsection'   => 'ئەو قاڵبانە کە لەم بەشەدا بە کارھێنراون:',
 'template-protected'     => '(پارێزراو)',
 'template-semiprotected' => '(نیوەپارێزراو)',
+'deleted-notice'         => 'ئەم پەڕەیە سڕدراوەتەوە.
+لۆگی سڕینەوە بۆ پەڕەکە لە خوارەوە دابینکراوە.',
 
 # History pages
-'viewpagelogs'        => 'لۆگەکانی ئەم پەڕەیە ببینە',
-'revisionasof'        => 'وەک بینینەوەی $1',
-'previousrevision'    => '←پیاچوونەوەی کۆنتر',
-'nextrevision'        => 'پیاچوونەوەی نوێتر→',
-'currentrevisionlink' => 'پیاچوونەوەی ئێستا',
-'cur'                 => 'ئێستا',
-'last'                => 'پێشوو',
-'histlegend'          => 'وەشانەکان بۆ ھەڵسەنگاندن دیاری بکە و ئەم دوگمەی خوارەوە لێبدە. <br />
+'viewpagelogs'           => 'لۆگەکانی ئەم پەڕەیە ببینە',
+'revisionasof'           => 'وەک بینینەوەی $1',
+'previousrevision'       => '←پیاچوونەوەی کۆنتر',
+'nextrevision'           => 'پیاچوونەوەی نوێتر→',
+'currentrevisionlink'    => 'پیاچوونەوەی ئێستا',
+'cur'                    => 'ئێستا',
+'last'                   => 'پێشوو',
+'histlegend'             => 'وەشانەکان بۆ ھەڵسەنگاندن دیاری بکە و ئەم دوگمەی خوارەوە لێبدە. <br />
 ڕێنمایی:
 (ئێستا) = جیاوازی لەگەڵ وەشانی ئێستا،
 (پێشوو) =جیاوازی لەگەڵ وەشانی پێشوو،
 ب = گۆڕانکاریی بچووک',
-'deletedrev'          => '[سڕاو]',
-'histfirst'           => 'کۆنترین',
-'histlast'            => 'نوێترین',
-'historysize'         => '({{PLURAL:$1|1 بایت|$1 بایت}})',
-'historyempty'        => '(پووچ)',
+'history-fieldset-title' => 'گەشتی مێژوو',
+'deletedrev'             => '[سڕاو]',
+'histfirst'              => 'کۆنترین',
+'histlast'               => 'نوێترین',
+'historysize'            => '({{PLURAL:$1|1 بایت|$1 بایت}})',
+'historyempty'           => '(پووچ)',
 
 # Revision feed
 'history-feed-title'          => 'مێژووی پیاچوونەوە',
@@ -474,7 +482,9 @@ This is usually caused by following an outdated diff or history link to a page t
 
 # Search results
 'searchresults'             => 'ئەنجامەکانی گەڕان',
+'searchresults-title'       => 'ئەنجامەکانی گەڕان بۆ "$1"',
 'searchresulttext'          => 'بۆ زانیاری زیاتر دەربارەی گەڕان {{SITENAME}} ، بڕوانە لە  [[{{MediaWiki:Helppage}}|{{int:help}}]].',
+'searchsubtitle'            => 'گەڕایت بۆ \'\'\'[[:$1]]\'\'\' ([[Special:Prefixindex/$1|هەموو ئەو پەڕانەی دەستپێدەکەن بە "$1"]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|هەموو ئەو پەڕانەی بەستەرکراون بۆ "$1"]])',
 'searchsubtitleinvalid'     => "گەڕایت بۆ '''$1'''",
 'noexactmatch'              => "'''پەڕەیەک بە ناوی  \"\$1\"ەوە نیە.'''
 دەتوانی ئەم پەڕە [[:\$1|دروست بکەیت]].",
@@ -495,6 +505,7 @@ This is usually caused by following an outdated diff or history link to a page t
 'search-mwsuggest-disabled' => 'بێ پێشنیار',
 'showingresults'            => "لە خوارەوە {{PLURAL:$1|'''1''' ئەنجام|'''$1''' ئەنجام}} ئەبینن کە بە #'''$2'''ەوە دەست پێ‌ئەکات .",
 'showingresultsnum'         => "لە خوارەوە {{PLURAL:$1|'''1''' ئەنجام|'''$1''' ئەنجام}} ئەبینن کە بە #'''$2'''ەوە دەست پێ‌ئەکات .",
+'showingresultstotal'       => "نیشاندان لە خوارەوە{{PLURAL:$4|result '''$1''' of '''$3'''|ئاکامەکان '''$1 - $2''' of '''$3'''}}",
 'powersearch'               => 'بە ھێز بگەڕە',
 'powersearch-legend'        => 'گەڕانی پێشکەوتوو',
 'powersearch-ns'            => 'لە namespace بگەڕە:',
@@ -502,38 +513,42 @@ This is usually caused by following an outdated diff or history link to a page t
 'powersearch-field'         => 'گەڕان بۆ',
 
 # Preferences page
-'preferences'          => 'ھەڵبژاردەکان',
-'mypreferences'        => 'ھەڵبژاردەکانی من',
-'prefs-edits'          => 'ژمارەی گۆڕانکارییەکان:',
-'changepassword'       => 'تێپەڕوشە بگۆڕە',
-'skin'                 => 'پێستە',
-'math'                 => 'بیرکاری',
-'dateformat'           => 'ڕازاندەوەی ڕێکەوت',
-'datedefault'          => 'ھەڵنەبژێردراو',
-'datetime'             => 'کات و ڕێکەوت',
-'prefs-personal'       => 'پرۆفایلی بەکارھێنەر',
-'prefs-rc'             => 'دوایین گۆڕانکارییەکان',
-'prefs-watchlist'      => 'لیستی چاودێڕییەکان',
-'prefs-watchlist-days' => 'ژمارە ڕۆژە نیشاندراوەکان لە لیستی چاودێڕییەکان:',
-'prefs-misc'           => 'جۆراوجۆر',
-'saveprefs'            => 'پاشکەوت',
-'resetprefs'           => 'گۆڕانکارییە پاشکەوت نەکراوەکان پاک بکەرەوە',
-'oldpassword'          => 'تێپەڕوشەی پێشو:',
-'newpassword'          => 'تێپەڕوشەی نوێ:',
-'retypenew'            => 'تێپەڕوشەی نوێ دوبارە بنووسەوە:',
-'textboxsize'          => 'دەستکاری کردن',
-'rows'                 => 'ڕێز:',
-'columns'              => 'ستوون:',
-'searchresultshead'    => 'گەڕان',
-'timezonelegend'       => 'کاتی ھەرێمی',
-'timezonetext'         => '¹ ژمارە ئەو کاتژمێرانە کە کاتی ھەرێمیت لەگەڵ کاتی server (UTC)، ئیختیلافی ھەیە.',
-'guesstimezone'        => 'لە وێبگەڕەکە browser بیگرە',
-'allowemail'           => 'لە بەکارھێنەرانی دیکەوە e-mail قەبووڵ دەکەم',
-'prefs-searchoptions'  => 'ھەڵبژاردەکانی گەڕان',
-'prefs-namespaces'     => 'بۆشایییەکانی ناو',
-'defaultns'            => 'لە حاڵەتی بنەڕەت لەم بۆشایی ناوانەدا بگەڕە:',
-'default'              => 'بنچینەیی',
-'files'                => 'پەڕگەکان',
+'preferences'              => 'ھەڵبژاردەکان',
+'mypreferences'            => 'ھەڵبژاردەکانی من',
+'prefs-edits'              => 'ژمارەی گۆڕانکارییەکان:',
+'changepassword'           => 'تێپەڕوشە بگۆڕە',
+'skin'                     => 'پێستە',
+'skin-preview'             => 'پێش بینین',
+'math'                     => 'بیرکاری',
+'dateformat'               => 'ڕازاندەوەی ڕێکەوت',
+'datedefault'              => 'ھەڵنەبژێردراو',
+'datetime'                 => 'کات و ڕێکەوت',
+'prefs-personal'           => 'پرۆفایلی بەکارھێنەر',
+'prefs-rc'                 => 'دوایین گۆڕانکارییەکان',
+'prefs-watchlist'          => 'لیستی چاودێڕییەکان',
+'prefs-watchlist-days'     => 'ژمارە ڕۆژە نیشاندراوەکان لە لیستی چاودێڕییەکان:',
+'prefs-watchlist-days-max' => '(ئه‌وپه‌ڕی 7 ڕۆژە)',
+'prefs-misc'               => 'جۆراوجۆر',
+'prefs-resetpass'          => 'تێپەڕوشە بگۆڕە',
+'saveprefs'                => 'پاشکەوت',
+'resetprefs'               => 'گۆڕانکارییە پاشکەوت نەکراوەکان پاک بکەرەوە',
+'textboxsize'              => 'دەستکاری کردن',
+'prefs-edit-boxsize'       => 'قەبارەی پەنجەرەی گۆڕانکاری.',
+'rows'                     => 'ڕێز:',
+'columns'                  => 'ستوون:',
+'searchresultshead'        => 'گەڕان',
+'timezonelegend'           => 'کاتی ھەرێمی',
+'timezonetext'             => '¹ ژمارە ئەو کاتژمێرانە کە کاتی ھەرێمیت لەگەڵ کاتی server (UTC)، ئیختیلافی ھەیە.',
+'localtime'                => 'کاتی ناوچەیی:',
+'timezoneoffset'           => 'جیاوازی¹:',
+'servertime'               => 'کاتی server:',
+'guesstimezone'            => 'لە وێبگەڕەکە browser بیگرە',
+'allowemail'               => 'لە بەکارھێنەرانی دیکەوە e-mail قەبووڵ دەکەم',
+'prefs-searchoptions'      => 'ھەڵبژاردەکانی گەڕان',
+'prefs-namespaces'         => 'بۆشایییەکانی ناو',
+'defaultns'                => 'لە حاڵەتی بنەڕەت لەم بۆشایی ناوانەدا بگەڕە:',
+'default'                  => 'بنچینەیی',
+'files'                    => 'پەڕگەکان',
 
 # Groups
 'group-sysop'      => 'بەڕێوبەران',
@@ -547,24 +562,30 @@ This is usually caused by following an outdated diff or history link to a page t
 # User rights log
 'rightslog' => 'لۆگی مافەکانی بەکارهێنەر',
 
+# Associated actions - in the sentence "You do not have permission to X"
+'action-edit' => 'دەستکاری ئەم پەڕەیە بکە',
+
 # Recent changes
-'recentchanges'   => 'دوایین گۆڕانکارییەکان',
-'rcnote'          => "لە خوارەوەدا {{PLURAL:$1|'''۱''' گۆڕانکاری |دوایین '''$1''' گۆڕانکارییەکان}} لە دوایین {{PLURAL:$2|ڕۆژ|'''$2''' ڕۆژەوە}} ، تا $5، $4 دەبینن.",
-'rclistfrom'      => 'گۆڕانکارییە نوێکان کە لە $1ەوە دەست پێدەکەن نیشان بدە.',
-'rcshowhideminor' => '$1 دەستکارییە بچووکەکان',
-'rcshowhidebots'  => 'ڕۆبۆتەکان $1',
-'rcshowhideliu'   => 'بەکارھێنەرە لە ژوورەکان $1',
-'rcshowhideanons' => 'بەکارھێنەرە نەناسراوەکان $1',
-'rcshowhidepatr'  => 'گۆرانکارییە کۆنترۆڵکراوەکان $1',
-'rcshowhidemine'  => '$1 دەستکارییەکانم',
-'rclinks'         => 'دوایین $1 گۆڕانکارییەکانی دوایین $2 ڕۆژی <br />$3',
-'diff'            => 'جیاوازی',
-'hist'            => 'مێژوو',
-'hide'            => 'بشارەوە',
-'show'            => 'نیشان بدە',
-'minoreditletter' => 'ب',
-'newpageletter'   => 'ن',
-'boteditletter'   => 'ڕ',
+'recentchanges'        => 'دوایین گۆڕانکارییەکان',
+'recentchanges-legend' => 'هەڵبژاردنەکانی دوا گۆڕانکارییەکان',
+'rcnote'               => "لە خوارەوەدا {{PLURAL:$1|'''۱''' گۆڕانکاری |دوایین '''$1''' گۆڕانکارییەکان}} لە دوایین {{PLURAL:$2|ڕۆژ|'''$2''' ڕۆژەوە}} ، تا $5، $4 دەبینن.",
+'rclistfrom'           => 'گۆڕانکارییە نوێکان کە لە $1ەوە دەست پێدەکەن نیشان بدە.',
+'rcshowhideminor'      => '$1 دەستکارییە بچووکەکان',
+'rcshowhidebots'       => 'ڕۆبۆتەکان $1',
+'rcshowhideliu'        => 'بەکارھێنەرە لە ژوورەکان $1',
+'rcshowhideanons'      => 'بەکارھێنەرە نەناسراوەکان $1',
+'rcshowhidepatr'       => 'گۆرانکارییە کۆنترۆڵکراوەکان $1',
+'rcshowhidemine'       => '$1 دەستکارییەکانم',
+'rclinks'              => 'دوایین $1 گۆڕانکارییەکانی دوایین $2 ڕۆژی <br />$3',
+'diff'                 => 'جیاوازی',
+'hist'                 => 'مێژوو',
+'hide'                 => 'بشارەوە',
+'show'                 => 'نیشان بدە',
+'minoreditletter'      => 'ب',
+'newpageletter'        => 'ن',
+'boteditletter'        => 'ڕ',
+'rc-enhanced-expand'   => 'وردەکارییەکان پیشان بدە (پێویستی بە جاڤاسکریپتە)',
+'rc-enhanced-hide'     => 'وردەکارییەکان بشارەوە',
 
 # Recent changes linked
 'recentchangeslinked'         => 'گۆڕانکارییە پەیوەندی‌دارەکان',
@@ -577,6 +598,17 @@ This is usually caused by following an outdated diff or history link to a page t
 'upload'             => 'پەڕگەیەک بار بکە',
 'uploadbtn'          => 'پەڕگە بار بکە',
 'reupload'           => 'دیسان بار بکە',
+'uploadtext'         => "فۆرمی خوارەوە بەکاربێنن بۆ بارکردنی پەڕگە.
+بۆ بینینی ئەو پەڕگانە کە پێشتر بار کراون بڕۆ بۆ [[Special:FileList|لیستی پەڕگە بارکراوەکان]]، ھەروەھا
+[[Special:Log/upload|ڕەشنووسی بارکردنەکان]] و [[Special:Log/delete|رەشنووسی سڕینەوەکان]].
+
+بۆ بەکارھێنانی پەڕگەیەک لە پەڕەیەک دا، بەستەرێک بە یەکێک لەم شۆوازانەی خوارەوە بە کار بێنن:
+* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>''' 
+to use the full version of the file
+* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></tt>'''
+to use a 200 pixel wide rendition in a box in the left margin with 'alt text' as description
+* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>'''
+for directly linking to the file without displaying the file",
 'upload-permitted'   => 'نەوعە پەڕگە قەبووڵ کراوەکان: $1.',
 'uploadlogpage'      => 'لۆگ باربکە',
 'filename'           => 'ناوی پەڕگە',
@@ -595,10 +627,14 @@ This is usually caused by following an outdated diff or history link to a page t
 'upload-maxfilesize' => 'ئەو پەری قەبارەی فایل: $1',
 'watchthisupload'    => 'چاودێڕی ئەم پەڕە بکە',
 
-# Special:ImageList
-'imgfile' => 'پەڕگە',
+# Special:ListFiles
+'imgfile'        => 'پەڕگە',
+'listfiles'      => 'لیستی پەرگەکان',
+'listfiles_date' => 'ڕێکەوت',
+'listfiles_name' => 'ناو',
+'listfiles_user' => 'بەکارھێنەر',
 
-# Image description page
+# File description page
 'filehist'                  => 'مێژووی پەڕگە',
 'filehist-current'          => 'هەنووکە',
 'filehist-datetime'         => 'ڕێکەوت/کات',
@@ -616,7 +652,13 @@ This is usually caused by following an outdated diff or history link to a page t
 'randompage' => 'پەڕەیەک بە ھەرەمەکی',
 
 # Statistics
-'statistics' => 'ئامارەکان',
+'statistics'              => 'ئامارەکان',
+'statistics-header-pages' => 'ئامارەکانی پەڕەکان',
+'statistics-header-edits' => 'ئامارەکانی گۆڕانکارییەکان',
+'statistics-header-views' => 'ئامارەکانی سەردانەکان',
+'statistics-header-users' => 'ئامارەکانی بەکارھێنەران',
+'statistics-articles'     => 'پەڕە بە ناوەڕۆکەکان',
+'statistics-pages'        => 'پەڕەکان',
 
 'disambiguations' => 'پەڕەکانی جوداکردنەوە (لێڵی لابەر)',
 
@@ -638,6 +680,8 @@ This is usually caused by following an outdated diff or history link to a page t
 'popularpages'            => 'پەڕە مەحبووبەکان',
 'wantedcategories'        => 'ھاوپۆلە داواکراوەکان',
 'wantedpages'             => 'پەڕە داواکراوەکان',
+'wantedfiles'             => 'پەڕگە داواکراوەکان',
+'wantedtemplates'         => 'قاڵبە داواکراوەکان',
 'mostcategories'          => 'پەڕەکان بە زۆرترین ھاوپۆلەوە',
 'prefixindex'             => 'هەموو پەڕەکان بە prefix ـەوە',
 'shortpages'              => 'پەڕە کورتەکان',
@@ -670,6 +714,15 @@ This is usually caused by following an outdated diff or history link to a page t
 
 # Special:Categories
 'categories' => 'هاوپۆله‌كان',
+
+# Special:DeletedContributions
+'deletedcontributions' => 'بەشدارییە بەکارھێنەریە سڕاوەکان',
+
+# Special:LinkSearch
+'linksearch' => 'بەستەرە دەرەکییەکان',
+
+# Special:Log/newusers
+'newuserlog-create-entry' => 'بەکارھێنەری نوێ',
 
 # Special:ListGroupRights
 'listgrouprights'         => 'مافەکانی گرووپە بەکارھێنەرییەکان',
@@ -710,6 +763,7 @@ This is usually caused by following an outdated diff or history link to a page t
 'iteminvalidname'      => "ھەڵە لەگەڵ بابەتی '$1'، ناوی نادروست...",
 'wlnote'               => "خوارەوە {{PLURAL:$1|دوایین گۆڕانکاریە|دوایین '''$1''' گۆڕانکارییەکانن}} لە دواین  {{PLURAL:$2|کاتژمێر|'''$2''' کاتژمێر}} دا.",
 'wlshowlast'           => 'نیشان دانی دوایین $1 کاتژمێری، $2 ڕۆژ لە $3',
+'watchlist-options'    => 'ھەڵبژاردەکانی لیستی چاودێڕییەکان',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'چاودێڕی...',
@@ -717,27 +771,33 @@ This is usually caused by following an outdated diff or history link to a page t
 
 'enotif_reset' => 'ھەمووی پەڕەکان وەک بینراو دیاری بکە',
 
-# Delete/protect/revert
-'deletepage'                  => 'پەڕە بسڕەوەو',
-'confirm'                     => 'پشتدار بکەرەوە',
-'excontent'                   => "ناوەڕۆک ئەمە بو: '$1'",
-'excontentauthor'             => "ناوەڕۆک ئەمە بو: '$1'(و تەنھا بەشداریکەر  '[[Special:Contributions/$2|$2]]' بوو)",
-'exbeforeblank'               => "ناوەڕۆک بەر لە بەتاڵ کردنەوە ئەمە بوو: '$1'",
-'exblank'                     => 'پەڕە خاڵی بوو',
-'delete-confirm'              => 'سڕینەوەی "$1"',
-'delete-legend'               => 'سڕینەوە',
-'historywarning'              => 'ئاگاداری: ئەم پەڕە کە ئەتەوێ بیسڕیتەوە مێژووی ھەیە',
-'deletedarticle'              => '"[[$1]]" سڕدرایەوە',
-'dellogpage'                  => 'لۆگی سڕینەوە',
-'deletecomment'               => 'ھۆکاری سڕینەوە:',
-'deleteotherreason'           => 'ھۆکاری دیکە:',
-'deletereasonotherlist'       => 'ھۆکاری دیکە',
-'rollbacklink'                => 'گەڕاندنەوە',
+# Delete
+'deletepage'            => 'پەڕە بسڕەوەو',
+'confirm'               => 'پشتدار بکەرەوە',
+'excontent'             => "ناوەڕۆک ئەمە بو: '$1'",
+'excontentauthor'       => "ناوەڕۆک ئەمە بو: '$1'(و تەنھا بەشداریکەر  '[[Special:Contributions/$2|$2]]' بوو)",
+'exbeforeblank'         => "ناوەڕۆک بەر لە بەتاڵ کردنەوە ئەمە بوو: '$1'",
+'exblank'               => 'پەڕە خاڵی بوو',
+'delete-confirm'        => 'سڕینەوەی "$1"',
+'delete-legend'         => 'سڕینەوە',
+'historywarning'        => 'ئاگاداری: ئەم پەڕە کە ئەتەوێ بیسڕیتەوە مێژووی ھەیە',
+'deletedarticle'        => '"[[$1]]" سڕدرایەوە',
+'dellogpage'            => 'لۆگی سڕینەوە',
+'deletecomment'         => 'ھۆکاری سڕینەوە:',
+'deleteotherreason'     => 'ھۆکاری دیکە:',
+'deletereasonotherlist' => 'ھۆکاری دیکە',
+
+# Rollback
+'rollbacklink' => 'گەڕاندنەوە',
+
+# Protect
 'protectlogpage'              => 'لۆگی پاراستن',
 'protectedarticle'            => 'پارێزراو[[$1]]',
 'modifiedarticleprotection'   => 'ئاستی پاراستنی "[[$1]]"ی گۆڕا',
 'unprotectedarticle'          => '"[[$1]]" لە حاڵی ئێستا دا نەپازراوە',
+'movedarticleprotection'      => 'ڕێککارییەکانی پاراستن لە  "[[$2]]" گوازرایەوە بۆ "[[$1]]"',
 'protect-title'               => 'ئاستی پاراستنی "$1" بگۆڕە',
+'prot_1movedto2'              => '[[$1]] گوازراوەتەوە بۆ [[$2]]',
 'protect-backlink'            => '← $1',
 'protect-legend'              => 'پاراستن تەیید بکە',
 'protectcomment'              => 'ھۆکاری پاراستن:',
@@ -772,12 +832,13 @@ This is usually caused by following an outdated diff or history link to a page t
 'blanknamespace' => '(سەرەکی)',
 
 # Contributions
-'contributions' => 'بەشدارییەکانی بەکارھێنەر',
-'mycontris'     => 'بەشدارییەکانی من',
-'contribsub2'   => 'بۆ$1 ($2)',
-'uctop'         => '(لوتکە)',
-'month'         => 'لە مانگی (و پێشترەوە):',
-'year'          => 'لە ساڵی (و پێشترەوە):',
+'contributions'       => 'بەشدارییەکانی بەکارھێنەر',
+'contributions-title' => 'بەشدارییەکانی بەکارھێنەر $1',
+'mycontris'           => 'بەشدارییەکانی من',
+'contribsub2'         => 'بۆ$1 ($2)',
+'uctop'               => '(لوتکە)',
+'month'               => 'لە مانگی (و پێشترەوە):',
+'year'                => 'لە ساڵی (و پێشترەوە):',
 
 'sp-contributions-newbies'     => 'تەنھا بەشدارییەکانی بەکارھێنەرە تازەکان نیشان بدە',
 'sp-contributions-newbies-sub' => 'لە بەکارھێنەرە تازەکانەوە',
@@ -801,6 +862,7 @@ This is usually caused by following an outdated diff or history link to a page t
 'ipbotheroption'           => 'دیکە',
 'blocklink'                => 'بەربەستن',
 'unblocklink'              => 'لابردنی ئاستەنگ',
+'change-blocklink'         => 'گۆڕاندنی ئاستەنگ',
 'contribslink'             => 'بەشداری',
 'blocklogpage'             => 'لۆگی بلۆککردن',
 'block-log-flags-nocreate' => 'دروستکردنی هەژمار ناچالاککراوە',
@@ -894,6 +956,16 @@ This is usually caused by following an outdated diff or history link to a page t
 'tooltip-preview'                 => 'پێش بینینی گۆڕانکارییەکان، تکایە پێش پاشکەوت کردن ئەمە بەکار بھێنە',
 'tooltip-compareselectedversions' => 'جیاوازییەکانی دوو وەشانە دیاریکراوەی ئەم پەڕە ببینە.',
 
+# Skin names
+'skinname-standard'    => 'کلاسیک',
+'skinname-nostalgia'   => 'خەریبی',
+'skinname-cologneblue' => 'شینی کۆلۆن',
+'skinname-monobook'    => 'مۆنۆ',
+'skinname-myskin'      => 'پێستی خۆم',
+'skinname-chick'       => 'جوجه‌',
+'skinname-simple'      => 'ساده‌',
+'skinname-modern'      => 'مۆدێڕن',
+
 # Math options
 'mw_math_png'    => 'ھەموو جارێک وەک PNG نیشان بدە',
 'mw_math_simple' => 'HTML ئەگەر ساکار بێت, ئەگەرنا PNG',
@@ -909,7 +981,7 @@ This is usually caused by following an outdated diff or history link to a page t
 'show-big-image'       => 'گەورە کردنەوە',
 'show-big-image-thumb' => '<small>قەبارەی ئەم پێشبینینە: $1 × $2 خاڵە</small>',
 
-# Special:NewImages
+# Special:NewFiles
 'newimages' => 'پێشانگای پەڕگە نوێکان',
 
 # Bad image list
@@ -946,7 +1018,7 @@ This is usually caused by following an outdated diff or history link to a page t
 'monthsall'        => 'هەموو',
 
 # Separators for various lists, etc.
-'semicolon-separator' => '؛',
+'semicolon-separator' => '؛&#32;',
 'comma-separator'     => '،&#32;',
 
 # Live preview

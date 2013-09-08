@@ -92,15 +92,12 @@ class SpecialMostlinkedtemplates extends QueryPage {
 	 */
 	public function formatResult( $skin, $result ) {
 		$title = Title::makeTitleSafe( $result->namespace, $result->title );
-		if( $title instanceof Title ) {
+
+		$skin->link( $title );
 			return wfSpecialList(
 				$skin->makeLinkObj( $title ),
 				$this->makeWlhLink( $title, $skin, $result )
 			);
-		} else {
-			$tsafe = htmlspecialchars( $result->title );
-			return "Invalid title in result set; {$tsafe}";
-		}
 	}
 
 	/**
@@ -116,7 +113,7 @@ class SpecialMostlinkedtemplates extends QueryPage {
 		$wlh = SpecialPage::getTitleFor( 'Whatlinkshere' );
 		$label = wfMsgExt( 'nlinks', array( 'parsemag', 'escape' ),
 			$wgLang->formatNum( $result->value ) );
-		return $skin->makeKnownLinkObj( $wlh, $label, 'target=' . $title->getPrefixedUrl() );
+		return $skin->link( $wlh, $label, array(), array( 'target' => $title->getPrefixedText() ) );
 	}
 }
 

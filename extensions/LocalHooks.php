@@ -151,12 +151,121 @@ content requires special attention. <b>Please keep your
 		return true;
 	}
 
+	// This one, based on preg_replace, is a bit more iffy.  Needs some good testing.
+	public static function contributionLineEnding( $specialPage, &$ret, $row ) {
+		$page = Title::makeTitle( $row->page_namespace, $row->page_title );
+		if (!$page->isRedirect() && $row->page_namespace == NS_PATHWAY){
+			$linkOld = $sk->makeKnownLinkObj( $page );
+			$pathway = Pathway::newFromTitle($row->page_title );
+			$name = $pathway->getSpecies() .":". $pathway->getName();
+			$linkNew = $sk->makeKnownLinkObj( $page, $name );
+			preg_replace( "/$linkOld/", $linkNew, $ret );
+			return true;
+		}
+		return true;
+	}
 
+	public static function dontWatchRedirect(&$conds,&$tables,&$join_conds,&$fields) {
+		$conds[] = 'page_is_redirect = 0';
+		return true;
+	}
+
+	public static function subtitleOverride(&$article, &$oldid) {
+		global $wgLang, $wgOut, $wgUser;
+
+
+		$revision = Revision::newFromId( $oldid );
+
+		$current = ( $oldid == $article->mLatest );
+		$td = $wgLang->timeanddate( $article->mTimestamp, true );
+		$sk = $wgUser->getSkin();
+		$lnk = $current
+			? wfMsgHtml( 'currentrevisionlink' )
+			: $sk->makeKnownLinkObj( $article->mTitle, wfMsgHtml( 'currentrevisionlink' ) );
+		$curdiff = $current
+			? wfMsgHtml( 'diff' )
+			: $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMsgHtml( 'diff' ),
+				"old={$oldid}&new={$article->mLatest}&pwTitle={$article->mTitle}" );
+		$prev = $article->mTitle->getPreviousRevisionID( $oldid ) ;
+		$prevlink = $prev
+			? $sk->makeKnownLinkObj( $article->mTitle, wfMsgHtml( 'previousrevision' ), 'direction=prev&oldid='.$oldid )
+			: wfMsgHtml( 'previousrevision' );
+		$prevdiff = $prev
+			? $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMsgHtml( 'diff' ),
+				"old={$oldid}&new={$prev}&pwTitle={$article->mTitle}" )
+			: wfMsgHtml( 'diff' );
+		$nextlink = $current
+			? wfMsgHtml( 'nextrevision' )
+			: $sk->makeKnownLinkObj( $article->mTitle, wfMsgHtml( 'nextrevision' ), 'direction=next&oldid='.$oldid );
+		$nextdiff = $current
+			? wfMsgHtml( 'diff' )
+			: $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMsgHtml( 'diff' ),
+				"old={$oldid}&new={$next}&pwTitle={$article->mTitle}" );
+
+		$cdel='';
+		if( $wgUser->isAllowed( 'deleterevision' ) ) {
+			$revdel = SpecialPage::getTitleFor( 'Revisiondelete' );
+			if( $revision->isCurrent() ) {
+			// We don't handle top deleted edits too well
+				$cdel = wfMsgHtml('rev-delundel');
+			} else if( !$revision->userCan( Revision::DELETED_RESTRICTED ) ) {
+			// If revision was hidden from sysops
+				$cdel = wfMsgHtml('rev-delundel');
+			} else {
+				$cdel = $sk->makeKnownLinkObj( $revdel,
+					wfMsgHtml('rev-delundel'),
+					'target=' . urlencode( $article->mTitle->getPrefixedDbkey() ) .
+					'&oldid=' . urlencode( $oldid ) );
+				// Bolden oversighted content
+				if( $revision->isDeleted( Revision::DELETED_RESTRICTED ) )
+					$cdel = "<strong>$cdel</strong>";
+			}
+			$cdel = "(<small>$cdel</small>) ";
+		}
+		# Show user links if allowed to see them. Normally they
+		# are hidden regardless, but since we can already see the text here...
+		$userlinks = $sk->revUserTools( $revision, false );
+
+		$m = wfMsg( 'revision-info-current' );
+		$infomsg = $current && !wfEmptyMsg( 'revision-info-current', $m ) && $m != '-'
+			? 'revision-info-current'
+			: 'revision-info';
+
+		$r = "\n\t\t\t\t<div id=\"mw-{$infomsg}\">" . wfMsgExt( $infomsg, array( 'parseinline', 'replaceafter' ), $td, $userlinks, $revision->getID() ) . "</div>\n" .
+
+			 "\n\t\t\t\t<div id=\"mw-revision-nav\">" . $cdel . wfMsgExt( 'revision-nav', array( 'escapenoentities', 'parsemag', 'replaceafter' ),
+				$prevdiff, $prevlink, $lnk, $curdiff, $nextlink, $nextdiff ) . "</div>\n\t\t\t";
+		$wgOut->setSubtitle( $r );
+
+		return false;
+	}
+
+	static public function linkText( $linker, $target, &$text ) {
+		$text = "";
+		if( $target instanceOf Title ) {
+			if ($target->getNamespace() == NS_PATHWAY){
+				$pathway = Pathway::newFromTitle($target);
+				// Keep private pathway names obscured
+				if(!$pathway->isReadable()) {
+					$text = $target->getName();
+				} else {
+					$text = Title::makeTitle( $target->getNsText(),
+						$pathway->getSpecies().":".$pathway->getName() );
+				}
+				return false;
+			}
+		}
+		return true;
+	}
 }
 
 $wgHooks['SpecialListusersFormatRow'][] = 'LocalHooks::addSnoopLink';
-$wgHooks['UserLoginComplete'][] = 'LocalHooks::loginMessage';
-$wgHooks['SpecialPage_initList'][] = 'LocalHooks::blockPage';
-$wgHooks['LinkerMakeExternalLink'][] = 'LocalHooks::externalLink';
-$wgHooks['BeforePageDisplay'][] = 'LocalHooks::stopDisplay';
-$wgHooks['ArticleSaveComplete'][] = 'LocalHooks::updateTags';
+$wgHooks['ContributionsLineEnding'][]   = 'LocalHooks::contributionLineEnding';
+$wgHooks['LinkerMakeExternalLink'][]    = 'LocalHooks::externalLink';
+$wgHooks['SpecialWatchlistQuery'][]     = 'LocalHooks::dontWatchRedirect';
+$wgHooks['SpecialPage_initList'][]      = 'LocalHooks::blockPage';
+$wgHooks['ArticleSaveComplete'][]       = 'LocalHooks::updateTags';
+$wgHooks['DisplayOldSubtitle'][]        = 'LocalHooks::subtitleOverride';
+$wgHooks['UserLoginComplete'][]         = 'LocalHooks::loginMessage';
+$wgHooks['BeforePageDisplay'][]         = 'LocalHooks::stopDisplay';
+$wgHooks['LinkText'][]                  = 'LocalHooks::linkText';

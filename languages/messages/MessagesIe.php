@@ -89,7 +89,7 @@ $messages = array(
 'moredotdotdot'  => 'Plu mult...',
 'mytalk'         => 'Mi discussion',
 'anontalk'       => 'Discussion por ti ci IP',
-'and'            => 'e',
+'and'            => '&#32;e',
 
 'errorpagetitle'   => 'Errore',
 'returnto'         => 'Retornar a $1.',
@@ -129,8 +129,6 @@ $messages = array(
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'Apropó de {{SITENAME}}',
 'aboutpage'            => 'Project:Apropó',
-'bugreports'           => 'Raportes de malfunctiones',
-'bugreportspage'       => 'Project:Raportes de malfunctiones',
 'copyright'            => 'Contenete disponibil sub $1.',
 'disclaimers'          => 'Advertimentes',
 'edithelp'             => 'Auxilie',
@@ -166,14 +164,14 @@ $messages = array(
 
 # Login and logout pages
 'logouttitle'                => 'Fine de session',
-'logouttext'                 => 'Vu ha terminat vor session.
-Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session denov quam li sam usator o quam un diferent usator.',
+'logouttext'                 => "'''Vu ha terminat vor session.'''
+
+Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session denov quam li sam usator o quam un diferent usator.",
 'loginpagetitle'             => 'Registrar se/Intrar',
 'yourname'                   => 'Vor nómine usatori:',
 'yourpassword'               => 'Vor passa-parol:',
 'yourpasswordagain'          => 'Tippa denov vor passa-parol',
 'remembermypassword'         => 'Memorar mi passa-parol (per cookie)',
-'loginproblem'               => '<b>Hay un problema pri vor intrada.</b><br />Pena far it denov!',
 'login'                      => 'Aperter session',
 'nav-login-createaccount'    => 'Crear un conto o intrar',
 'loginprompt'                => 'Cookies deve esser permisset por intrar in {{SITENAME}}.',
@@ -194,8 +192,13 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'acct_creation_throttle_hit' => 'Vu ja ha creat $1 contos. Vu ne posse crear pli mult quam to.',
 'loginlanguagelabel'         => 'Lingue: $1',
 
+# Password reset dialog
+'oldpassword' => 'Anteyan passa-parol:',
+'newpassword' => 'Nov passa-parol:',
+'retypenew'   => 'Confirmar nov passa-parol',
+
 # Edit pages
-'summary'          => 'Resumate',
+'summary'          => 'Resumate:',
 'minoredit'        => 'Modification minori',
 'watchthis'        => 'Sequer ti articul',
 'savearticle'      => 'Conservar págine',
@@ -214,7 +217,8 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'lineno' => 'Linea $1:',
 
 # Search results
-'viewprevnext' => 'Vider ($1) ($2) ($3)',
+'viewprevnext'   => 'Vider ($1 {{int:pipe-separator}} $2) ($3)',
+'searchhelp-url' => 'Help:Auxilie',
 
 # Preferences page
 'preferences'    => 'Preferenties',
@@ -223,9 +227,6 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'qbsettings'     => 'Personalisation del barre de utensiles',
 'changepassword' => 'Modificar passa-parol',
 'saveprefs'      => 'Conservar preferenties',
-'oldpassword'    => 'Anteyan passa-parol:',
-'newpassword'    => 'Nov passa-parol:',
-'retypenew'      => 'Confirmar nov passa-parol',
 
 # Groups
 'group-user' => 'Usatores',
@@ -257,10 +258,10 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'filedesc'  => 'Descrition',
 'savefile'  => 'Conservar file',
 
-# Special:ImageList
-'imagelist' => 'Liste de images',
+# Special:ListFiles
+'listfiles' => 'Liste de images',
 
-# Image description page
+# File description page
 'filehist-comment' => 'Comenta',
 
 # Random page
@@ -301,23 +302,23 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'categories' => 'Categories',
 
 # Watchlist
-'watchlist'            => 'Liste de sequet págines',
-'addedwatch'           => 'Adjuntet al liste',
-'addedwatchtext'       => "Li págine ''[[$1]]'' ha esset adjuntet a vor [[Special:Watchlist|liste de sequet págines]]. Li proxim modificationes de ti ci págine e del associat págine de discussion va esser listat ci, e li págine va aperir '''aspessat''' in li [[Special:RecentChanges|liste de recent modificationes]] por esser trovat plu facilmen. Por supresser ti ci págine ex vor liste, ples claccar sur « Ne plu sequer » in li cadre de navigation.",
-'watch'                => 'Sequer',
-'watchthispage'        => 'Sequer ti págine',
-'watchlist-hide-bots'  => 'Celar modificationes de bot',
-'watchlist-hide-own'   => 'Celar mi modificationes',
-'watchlist-hide-minor' => 'Celar modificationes minori',
+'watchlist'      => 'Liste de sequet págines',
+'addedwatch'     => 'Adjuntet al liste',
+'addedwatchtext' => "Li págine ''[[$1]]'' ha esset adjuntet a vor [[Special:Watchlist|liste de sequet págines]]. Li proxim modificationes de ti ci págine e del associat págine de discussion va esser listat ci, e li págine va aperir '''aspessat''' in li [[Special:RecentChanges|liste de recent modificationes]] por esser trovat plu facilmen. Por supresser ti ci págine ex vor liste, ples claccar sur « Ne plu sequer » in li cadre de navigation.",
+'watch'          => 'Sequer',
+'watchthispage'  => 'Sequer ti págine',
 
-# Delete/protect/revert
+# Delete
 'deletepage'            => 'Deleter págine',
 'actioncomplete'        => 'Supression efectuat',
 'deletecomment'         => 'Motive de deletion:',
 'deleteotherreason'     => 'Altri/suplementari motive:',
 'deletereasonotherlist' => 'Altri motive',
-'protectcomment'        => 'Comenta:',
-'restriction-type'      => 'Permission:',
+
+# Protect
+'prot_1movedto2'   => '[[$1]] moet a [[$2]]',
+'protectcomment'   => 'Comenta:',
+'restriction-type' => 'Permission:',
 
 # Namespace form on various pages
 'blanknamespace' => '(Principal)',
@@ -335,6 +336,7 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 
 # Move page
 'movearticle' => 'Moer págine:',
+'movenologin' => 'Vu ne ha intrat',
 'movepagebtn' => 'Moer págine',
 'movedto'     => 'moet a',
 '1movedto2'   => '[[$1]] moet a [[$2]]',
@@ -354,7 +356,7 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'tooltip-n-mainpage'     => 'Visita li Principal págine',
 'tooltip-t-specialpages' => 'Liste de omni special págines',
 
-# Special:NewImages
+# Special:NewFiles
 'newimages' => 'Galerie de nov images',
 
 # 'all' in various places, this might be different for inflected languages

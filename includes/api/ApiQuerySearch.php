@@ -53,7 +53,8 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 
 		$limit = $params['limit'];
 		$query = $params['search'];
-		if (is_null($query) || empty($query))
+		$what = $params['what'];
+		if (strval($query) === '')
 			$this->dieUsage("empty search string is not allowed", 'param-search');
 
 		$search = SearchEngine::create();
@@ -61,13 +62,30 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 		$search->setNamespaces( $params['namespace'] );
 		$search->showRedirects = $params['redirects'];
 
-		if ($params['what'] == 'text')
+		if ($what == 'text') {
 			$matches = $search->searchText( $query );
-		else
+		} elseif( $what == 'title' ) {
 			$matches = $search->searchTitle( $query );
+		} else {
+			// We default to title searches; this is a terrible legacy
+			// of the way we initially set up the MySQL fulltext-based
+			// search engine with separate title and text fields.
+			// In the future, the default should be for a combined index.
+			$what = 'title';
+			$matches = $search->searchTitle( $query );
+			
+			// Not all search engines support a separate title search,
+			// for instance the Lucene-based engine we use on Wikipedia.
+			// In this case, fall back to full-text search (which will
+			// include titles in it!)
+			if( is_null( $matches ) ) {
+				$what = 'text';
+				$matches = $search->searchText( $query );
+			}
+		}
 		if (is_null($matches))
-			$this->dieUsage("{$params['what']} search is disabled",
-					"search-{$params['what']}-disabled");
+			$this->dieUsage("{$what} search is disabled",
+					"search-{$what}-disabled");
 
 		$data = array ();
 		$count = 0;
@@ -78,9 +96,10 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 				break;
 			}
 
-			// Silently skip broken titles
-			if ($result->isBrokenTitle()) continue;
-
+			// Silently skip broken and missing titles
+			if ($result->isBrokenTitle() || $result->isMissingRevision())
+				continue;
+			
 			$title = $result->getTitle();
 			if (is_null($resultPageSet)) {
 				$data[] = array(
@@ -109,7 +128,7 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 				ApiBase :: PARAM_ISMULTI => true,
 			),
 			'what' => array (
-				ApiBase :: PARAM_DFLT => 'title',
+				ApiBase :: PARAM_DFLT => null,
 				ApiBase :: PARAM_TYPE => array (
 					'title',
 					'text',

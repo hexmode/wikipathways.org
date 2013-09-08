@@ -1,5 +1,5 @@
 <?php
-/** Mazanderani (مَزِروني)
+/** Mazanderani (مازِرونی)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -28,10 +28,25 @@ $fallback = 'fa';
 $messages = array(
 # User preference toggles
 'tog-underline' => 'پیوندون جیر خط دأکشی بأوو',
-'tog-justify'   => 'بندون ته‌موم چین هاکردن',
+'tog-justify'   => 'بندون ته‌موم چین هاکه‌رده‌ن',
+
+'underline-default' => 'مه چأرخ‌گأر ده‌لخاء',
 
 # Dates
+'sunday'        => 'یه‌شه‌مبه',
+'monday'        => 'ده‌شه‌مبه',
+'tuesday'       => 'سه‌شه‌مبه',
+'wednesday'     => 'چؤرشه‌مبه',
+'thursday'      => 'په‌نچ‌شه‌مبه',
 'friday'        => 'جومه',
+'saturday'      => 'شه‌مبه',
+'sun'           => 'یه‌شه‌مه',
+'mon'           => 'ده‌شه‌مه',
+'tue'           => 'سه‌شه‌مه',
+'wed'           => 'چؤرشه‌مه',
+'thu'           => 'په‌نچ‌شه‌مه',
+'fri'           => 'جـومه',
+'sat'           => 'شه‌مه',
 'january'       => 'جـانـویـه',
 'february'      => 'فـه‌وریـه',
 'march'         => 'مـارچ',
@@ -66,18 +81,25 @@ $messages = array(
 'aug'           => 'ئوگوست',
 'sep'           => 'سه‌پته‌مبر',
 'oct'           => 'ئوکتوبر',
-'nov'           => 'نووه‌مبه‌ر',
+'nov'           => 'نووه‌مبر',
 'dec'           => 'ده‌سه‌مبر',
 
 # Categories related messages
-'pagecategories' => '{{PLURAL:$1|رج|رج‌ئون}}',
-'subcategories'  => 'جیر رج‌ئون',
+'pagecategories'         => '{{PLURAL:$1|رج|رج‌ئون}}',
+'category_header'        => '"$1" ره ده‌له وألـگ‌ئون',
+'subcategories'          => 'جیر رج‌ئون',
+'category-empty'         => 'ای رج ره ده‌له ئه‌سا هیچی دأنیه',
+'category-article-count' => '{{PLURAL:$2|ای رج هأمـینـتا وألـگ ره داره‌نه.|ای  {{PLURAL:$1ولگ|ولگ|$1 ئون}}، $2 جه ایجه دأره‌نه.}}',
 
-'about'          => 'درباره',
-'newwindow'      => 'ته‌رنه‌ روجین ده‌له‌ وا بونه',
+'about'          => 'ده‌لـه‌واره',
+'newwindow'      => '(ته‌رنه‌ روجین ده‌له‌ وا بونه)',
 'cancel'         => 'وه‌ل هـه‌کـارده‌ن',
-'qbedit'         => 'دچی ین',
+'qbbrowse'       => 'چأرخه‌سه‌ن',
+'qbedit'         => 'دأچیه‌ن',
+'qbpageoptions'  => 'ای وألـگ',
+'qbmyoptions'    => 'مـه وألـگ‌ئون',
 'qbspecialpages' => 'شا ولگ ئون',
+'moredotdotdot'  => 'ویـشـتـه...',
 'mypage'         => 'مه ولگ',
 'mytalk'         => 'مه گپ',
 'navigation'     => 'چـأرخـه‌سـه‌ن',
@@ -85,18 +107,20 @@ $messages = array(
 'errorpagetitle'   => 'شه‌ت!',
 'returnto'         => 'وأرگه‌رده‌سه‌ن تا $1',
 'tagline'          => '{{SITENAME}} جه',
-'help'             => 'رانه‌مایی',
+'help'             => 'دأسـگـیـری',
 'search'           => 'چـأرخـه تـو',
 'searchbutton'     => 'چـأرخـه‌تـو',
-'go'               => 'بور',
+'go'               => 'بـور',
 'searcharticle'    => 'بور',
 'history'          => 'ولـگ ره چـه‌کـوت',
 'history_short'    => 'چه‌كوت / تاریخ',
 'printableversion' => 'په‌رینت ده‌لـماج',
 'permalink'        => 'مـونـده‌نـه‌سـی لـیـنـک',
+'print'            => 'په‌ریـنت',
 'edit'             => 'دأچـیـه‌ن',
 'create'           => 'بـأئـیـتـه‌ن',
 'editthispage'     => 'ای ولـگ ره دأچـیـه‌ن',
+'create-this-page' => 'ای وألگ ره وا هأکه‌نین',
 'delete'           => 'وربـأئـیـتـه‌ن',
 'protect_change'   => 'ده‌گـه‌ره‌سـه‌ن',
 'newpage'          => 'نـه ولـگ',
@@ -105,6 +129,7 @@ $messages = array(
 'specialpage'      => 'شا ولگ',
 'personaltools'    => 'مه‌شه ابزار',
 'talk'             => 'گپ',
+'views'            => 'هارشی‌ئون',
 'toolbox'          => 'أبـزار جـا',
 'userpage'         => 'کارور ولگ نه‌شون هدائن',
 'viewtalkpage'     => 'گپ ئون ره نشون هدائن',
@@ -117,17 +142,21 @@ $2، $1', # $1 date, $2 time
 'jumptosearch'     => 'چـأرخـه‌تـو',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
-'aboutsite'      => '{{SITENAME}} ده‌له‌واره',
-'aboutpage'      => 'په‌روجه:ده‌له‌واره',
-'copyright'      => 'ای ولـگ ره بأنـویـشـتـه‌ئون  $1  ره جـیـر شـه‌مـه دسـت دأره‌نـه.',
-'copyrightpage'  => '{{ns:project}}:کـوپـی‌راسـت‌ئون',
-'disclaimers'    => 'خواهان فه‌رو نیشته‌نه‌ن',
-'disclaimerpage' => 'په‌روجه:خواهان فه‌رو نیشته‌نه‌ن',
-'edithelp'       => 'دأچـیه‌ن ره رانـه‌ما',
-'edithelppage'   => 'رانه‌ما:دأچیه‌ن',
-'mainpage'       => 'گت ولـگ',
-'privacy'        => 'کاری رول',
-'privacypage'    => 'په‌روجه:کاری رول',
+'aboutsite'            => '{{SITENAME}} ده‌له‌واره',
+'aboutpage'            => 'Project:About',
+'copyright'            => 'ای ولـگ ره بأنـویـشـتـه‌ئون  $1  ره جـیـر شـه‌مـه دسـت دأره‌نـه.',
+'copyrightpage'        => '{{ns:project}}:کـوپـی‌راسـت‌ئون',
+'currentevents'        => 'ئه‌سایی دأکه‌ته‌ئون',
+'disclaimers'          => 'خواهان فه‌رو نیشته‌نه‌ن',
+'disclaimerpage'       => 'Project:General_disclaimer',
+'edithelp'             => 'دأچـیه‌ن ره رانـه‌ما',
+'edithelppage'         => 'رانه‌ما:دأچیه‌ن',
+'faqpage'              => 'Project:FAQ',
+'mainpage'             => 'گت ولگ',
+'mainpage-description' => 'گت ولگ',
+'portal'               => 'مازرون دأروازه',
+'privacy'              => 'کاری رول',
+'privacypage'          => 'Project:Privacy_policy',
 
 'ok'                      => 'خا',
 'retrievedfrom'           => '"$1" جـه بأئـیـتـه بـأیـه',
@@ -137,6 +166,9 @@ $2، $1', # $1 date, $2 time
 'youhavenewmessagesmulti' => 'شه مه وسه ترنه پیغوم بی یه موئه ای جه $1',
 'editsection'             => 'دأچیـه‌ن',
 'editold'                 => 'دأچیه‌ن',
+'viewsourceold'           => 'چـه‌شـمـه ئـه‌شـه‌نـه‌ن',
+'editlink'                => 'دأچیه‌ن',
+'viewsourcelink'          => 'چه‌شـمـه بأویـنه‌ن',
 'editsectionhint'         => 'تـیـکـه: $1 ره دأچـیـه‌ن',
 'toc'                     => 'بـه‌تـیـم',
 'showtoc'                 => 'نه‌شون  هـاده',
@@ -161,20 +193,24 @@ $2، $1', # $1 date, $2 time
 'viewsourcefor' => '$1 ره وسه',
 
 # Login and logout pages
-'welcomecreation'           => '<h2>$1، خش بیه موئی!</h2><p>شه مه حساب وا بایه! یاد نکاندنین که شه خواستنی ئون ره {{SITENAME}} ده رست هاکنین.',
+'welcomecreation'           => '<h2>$1، خـه‌ش بـه‌مـونـی!</h2><p>شه‌مه حساب/ئـه‌کانت وا بأیه! یاد نه‌کانه‌نین که شه خواسته‌نی ئون ره {{SITENAME}} ده‌له ده‌رست هاکنین.',
 'yourname'                  => 'کاروری‌نوم:',
 'yourpassword'              => 'پـأس‌واجـه',
 'remembermypassword'        => 'مـه کاروری نوم ئو پـأس‌واجه ره، ای کـامـپـیـوتـه‌ر ده‌لـه وه‌سـه، شـه یـاد بیـه‌ل',
 'login'                     => 'ده‌لـه بـوری',
 'nav-login-createaccount'   => 'ده‌لـه‌بـوری / ئـه‌کـانـت بـأئـیـتـه‌ن',
-'loginprompt'               => '{{SITENAME}} ره دله ئه نه ن ونه cookie ئون فعال بوئه.',
+'loginprompt'               => '{{SITENAME}} ره ده‌لـه بیـه‌موئـه‌ن وه‌سه، وه‌نـه cookieئون  کـارسأر بـوئـه‌ن.',
 'userlogin'                 => 'ده‌لـه‌بـوری / اکـانـت بـأئـیـتـه‌ن',
+'logout'                    => 'دأیابـوری',
 'userlogout'                => 'دأیابـوری',
 'notloggedin'               => 'سیستم ره دله نی یه موئین',
+'nologin'                   => 'ئـه‌کـانـت نـه‌دارنـه‌نی؟ $1.',
 'nologinlink'               => 'أتـا  ئـه‌کـانـت  وا هـه‌کـارده‌ن',
 'createaccount'             => 'ترنه حساب وا هکاردن',
-'createaccountmail'         => 'Email ره همرا',
-'youremail'                 => 'شه مه Email *',
+'gotaccount'                => 'ئـه‌سـا ئـه‌کانت دارنـه‌نی؟ $1.',
+'gotaccountlink'            => 'ده‌لـه بـوری',
+'createaccountmail'         => 'Email ره هه‌مرا',
+'youremail'                 => 'شه مه Email:',
 'username'                  => 'کاروری نوم:',
 'uid'                       => 'کاروری إشماره:',
 'yourrealname'              => 'شیمه راستین ره نوم :',
@@ -187,8 +223,11 @@ $2، $1', # $1 date, $2 time
 'prefs-help-email-required' => 'ایمیل نه‌شونی لازم هسه.',
 'nocookiesnew'              => 'کاروری إکانت به‌سات بئی بیه. ولی شه‌ما ده‌له نأشینی. {{SITENAME}} کوکی‌ئون ره کارورون ده‌له بوری سر کار زننه. شه‌ما کوکی‌ئون ره پاک هأکه‌نین. شه‌ما جا خائه‌ش دارمی که کوکی‌ئون ره کار به‌لین ئو سیسته‌م ره نو کاروری نوم ئو پاس واجه جا ده‌له بورین.',
 'nocookieslogin'            => '‏{{SITENAME}} کوکی‌ئون ره کارورون دله بوردن سر کار زأننه. شه‌ما جا خائه‌ش دارمی که وه‌شون ره کار به‌لین ئو ده‌باره سأئی هکه‌نین.‎‎',
-'nouserspecified'           => 'شما ونه اتا کارور نوم هادی.',
+'loginsuccess'              => "'''شـه‌مـا، ئـه‌سـا {{SITENAME}} درون؛ \"\$1\" نـوم مـونـا بی‌یه‌موئه‌نی.'''",
+'nouserspecified'           => 'شه‌ما وه‌نه أتا کارور نوم هادی.',
 'mailmypassword'            => 'اتـا نـه پـأس‌واجـه بـه‌سـاتـه‌ن ئو بـأره‌سـه‌نـده‌ن',
+'accountcreated'            => 'کاروری نوم/ئه‌کانت وا بأیه',
+'accountcreatedtext'        => 'کاروری نوم، $1 وه‌سه وا بأیه.',
 
 # Edit page toolbar
 'bold_sample'    => 'کأفتال ته‌کست',
@@ -199,12 +238,14 @@ $2، $1', # $1 date, $2 time
 'link_tip'       => 'درونی لینک',
 'extlink_sample' => 'http://www.example.com لینک ره نوم',
 'extlink_tip'    => 'دأیـا لـیـنـک (شـه‌مـه یـاد بـوئـه <span dir="ltr">http://</span> ره بـیـه‌لـیـن)',
+'math_sample'    => 'فورمـول ره ایجـه دأکـه‌ن',
 'math_tip'       => 'ریاضی فورمول',
 'nowiki_sample'  => 'شـه فـورمـأت‌نـه‌دار تـه‌کـسـت ره ایـجـه دأکـه‌نـیـن',
-'nowiki_tip'     => 'ویـکـی فـورمـأت ره نـابـأدیـه‌ن',
+'nowiki_tip'     => 'ویـکـی فـورمـأت ره نـأدیهـه‌ن',
 'media_tip'      => 'فایل لینک',
 
 # Edit pages
+'summary'                          => 'چه‌کیده:',
 'minoredit'                        => 'ایـنـتـا أتـا پـه‌چوک دأچـیـه‌ن هـأسـه',
 'watchthis'                        => 'ای ولـگ ره ده‌مـبـال هـه‌کـارده‌ن',
 'savearticle'                      => 'جـا دأکه‌ته‌ن ولـگ',
@@ -216,10 +257,8 @@ $2، $1', # $1 date, $2 time
  شه‌مه ده‌گه‌ره‌سه‌ن‌ئون جانأکه‌فته که وه‌نه، جادأکه‌فته‌ن تگمه ره بأزه‌نین!",
 'editing'                          => 'دچیه‌ن => $1',
 'editingsection'                   => 'دچیه‌ن $1 (تیکه)',
-'copyrightwarning'                 => 'خـاهـه‌ش بـونـه شـه یـاد ده‌لـه دأکـه‌نـیـن کـه هـأمـه کـایـه‌رئونی کـه {{SITENAME}} ده‌لـه بـونـه، $2 جـیـر ره‌هـا بـونـه. (ویـشـتـه‌ر وه‌سـه $1 ره بـأویـنـیـن)<br>
+'copyrightwarning'                 => 'خـاهـه‌ش بـونـه شـه یـاد ده‌لـه دأکـه‌نـیـن کـه هـأمـه کـایـه‌رئونی کـه {{SITENAME}} ده‌لـه بـونـه، $2 جـیـر ره‌هـا بـونـه. (ویـشـتـه‌ر وه‌سـه $1 ره بـأویـنـیـن)<br />
 أگـه نـه‌خـانـه‌نـی شـه‌مـه بـأنـویـشـتـه‌ئون ایـجـه دسـت بـأخـوره ئو أتـا جـا دیـگـه پـخـش بـأوه، بـه‌تـه‌ر هـأسـه کـه وه‌شـون ره ایـجـه نـیـه‌لـیـن.',
-'templatesused'                    => 'شـابـلـون‌ئـونی که ای ولـگ ده‌له کـار بـورده‌نـه:',
-'templatesusedpreview'             => 'شـابـلـون‌ئونی کی ای پـیـش‌نـه‌مـایـه‌ش ده‌لـه کـار بـورده‌نـه:',
 'permissionserrorstext-withaction' => 'شه‌ما نه‌تونده‌نی $2 هاکه‌نی، اینتا وه‌سه که:',
 
 # History pages
@@ -229,6 +268,10 @@ $2، $1', # $1 date, $2 time
 'histfirst'        => 'کـوهـنـه تـه‌ریـن',
 'histlast'         => 'نـه تـه‌ریـن',
 
+# Revision deletion
+'rev-delundel'   => 'نه‌شون/فه‌رو',
+'revdel-restore' => 'دیاری تغییر هدائن',
+
 # Merge log
 'revertmerge' => 'سـه‌وا  هـه‌کارده‌ن',
 
@@ -237,33 +280,44 @@ $2، $1', # $1 date, $2 time
 'editundo' => 'واچیه‌ن',
 
 # Search results
-'notitlematches'           => 'هـیـچ ولـگـی شه‌مه گـب ره نـه‌مـاسـتـه',
-'viewprevnext'             => 'بـأویـنـه‌ن ($1) ($2) ($3)',
-'search-result-size'       => '$1 ({{PLURAL:$2|1 واجه|$2 واجه}})',
-'search-redirect'          => '(بـأره‌سـیـه $1 جـه)',
-'search-section'           => '(تیکه $1)',
-'search-suggest'           => 'شه‌مـا ایـنـتـا ره نـه‌خـاسـه‌نی؟ $1',
-'search-interwiki-caption' => 'خاخه‌ر په‌روجه‌ئون',
-'search-interwiki-more'    => '(ویشته‌ر)',
-'powersearch'              => 'سه‌ره‌ک به‌نه‌ک  (پیـش‌بـورده چـأرخـه‌تو)',
-'powersearch-legend'       => 'سه‌ره‌ک به‌نه‌ک  (پیـش‌بـورده چـأرخـه‌تو)',
-'powersearch-ns'           => 'سه‌ره‌ک به‌نه‌ک، نوم‌جائون ده‌له:',
-'powersearch-field'        => 'سه‌ره‌ک به‌نه‌ک',
+'searchresults'             => 'چرخه‌توی هه‌دایی‌ئون',
+'searchsubtitle'            => 'شـه‌مـا \'\'\'[[:$1]]\'\'\' ره ده‌مـبـال بـورده‌نـی ([[Special:Prefixindex/$1|هـأمـه ولـگ‌ئونـی کـه وه‌شـون نـوم  "$1" هـه‌مـرا سـأر گـیـرنـه ره بـأویـنـه‌ن]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|هـأمه ولـگ‌ئونـی که  "$1" ره لـیـنـک وه‌شـون ده‌لـه دأره]])',
+'notitlematches'            => 'هـیـچ ولـگـی شه‌مه گـب ره نـه‌مـاسـتـه',
+'viewprevnext'              => 'بـأویـنـه‌ن ($1 {{int:pipe-separator}} $2) ($3)',
+'search-result-size'        => '$1 ({{PLURAL:$2|1 واجه|$2 واجه}})',
+'search-redirect'           => '(بـأره‌سـیـه $1 جـه)',
+'search-section'            => '(تیکه $1)',
+'search-suggest'            => 'شه‌مـا ایـنـتـا ره نـه‌خـاسـه‌نی؟ $1',
+'search-interwiki-caption'  => 'خاخه‌ر په‌روجه‌ئون',
+'search-interwiki-more'     => '(ویشته‌ر)',
+'search-mwsuggest-enabled'  => 'پیشنهاد هه‌مرا',
+'search-mwsuggest-disabled' => 'هیچ پیشنهادی دنیه',
+'showingresultstotal'       => "نـه‌شـون هـه‌دائـه‌ن {{PLURAL:$4|نتیجه '''$1'''، '''$3''' جه|نتیجه‌ئون '''$1 - $2'''، '''$3''' جه}}",
+'powersearch'               => 'سه‌ره‌ک به‌نه‌ک  (پیـش‌بـورده چـأرخـه‌تو)',
+'powersearch-legend'        => 'سه‌ره‌ک به‌نه‌ک  (پیـش‌بـورده چـأرخـه‌تو)',
+'powersearch-ns'            => 'سه‌ره‌ک به‌نه‌ک، نوم‌جائون ده‌له:',
+'powersearch-redir'         => '',
+'powersearch-field'         => 'سه‌ره‌ک به‌نه‌ک',
 
 # Preferences page
 'mypreferences' => 'مـه خـاسـته‌نی‌ئون',
-'prefsnologin'  => 'سیستم ره ديله نی یه مویین',
+'prefs-edits'   => 'نومـه‌ره دأچیه‌ن‌ئون:',
+'prefsnologin'  => 'سیـستـه‌م ره ده‌لـه نـی‌یـه‌نـی',
 
 # User rights
 'userrights-user-editname' => 'کارور نوم ره بنویش هاکنین',
 
 # Groups
 'group-sysop' => 'کـاره‌ئون',
+'group-all'   => '(هـأمـه)',
 
 'grouppage-sysop' => '{{ns:project}}:کـاره‌ئون',
 
+# Associated actions - in the sentence "You do not have permission to X"
+'action-edit' => 'ای ولـگ ره دأچـیـه‌ن',
+
 # Recent changes
-'recentchanges'   => 'نـه ده‌گـه‌ره‌سـه‌ئون',
+'recentchanges'   => 'تازه ده‌گـه‌ره‌سـه‌ئون',
 'rcnote'          => "ایجه هأمه {{PLURAL:$1| '''اتا''' ده‌گـه‌ره‌سـه‌نـی|هأمه '''$1''' ده‌گـه‌ره‌سـه‌ئـونـی}} ده‌گه‌ره‌سونی کـه $4، $5 جـه، '''$2''' روز پـیـش‌تـه‌ر دأکـه‌تـه‌نـه ره ویـنـده‌نـی",
 'rclinks'         => 'نـه‌شـون هـه‌دائـه‌ن  $1 پـایـانـی دأچـیـه‌ن‌ئون، $2 ئـه‌سـا روز ره ده‌لـه؛ $3',
 'diff'            => 'ئه‌سا',
@@ -283,16 +337,25 @@ $2، $1', # $1 date, $2 time
 'uploadlogpage' => 'بـاربـیـه‌شـتـه‌ن گوزاره‌ش',
 'uploadedimage' => 'بـاربـیـه‌شـتـه بـأیـه "[[$1]]"',
 
-# Special:ImageList
-'imagelist' => 'هارشی ئون ره لیست',
+# Special:ListFiles
+'imgfile'        => 'فایل',
+'listfiles'      => 'هارشی ئون ره لیست',
+'listfiles_name' => 'نـوم',
+'listfiles_user' => 'کارور',
+'listfiles_size' => 'گـأتـی',
 
-# Image description page
+# File description page
 'filehist'          => 'فایل چه‌کوت',
 'filehist-current'  => 'ئـه‌سـا',
 'filehist-datetime' => 'تاریخ/زأمون',
+'filehist-thumb'    => 'أنـگـوس گـأتی',
 'filehist-user'     => 'کارور',
+'filehist-comment'  => 'هارشا',
 'imagelinks'        => 'لینک‌ئون',
 'linkstoimage'      => 'ای {{PLURAL:$1|ولـگ|$1 ولـگ‌ئون}} لـیـنـک هـه‌دانه ای فـایـل ره:',
+
+# Random page
+'randompage' => 'شانـسـی وألـگ',
 
 # Statistics
 'statistics' => 'آمار',
@@ -301,8 +364,10 @@ $2، $1', # $1 date, $2 time
 
 # Miscellaneous special pages
 'nbytes'            => '$1 بایت',
-'popularpages'      => 'خاسگار هدار ولگ ئون',
-'wantedpages'       => 'ولگ ئون ری که خامبی',
+'unusedcategories'  => 'کـار نـأزو رج‌ئون',
+'unusedimages'      => 'کـار نأزو فایل‌ئون',
+'popularpages'      => 'خاسگار هه‌دار ولگ ئون',
+'wantedpages'       => 'ولگ ئونی که خامبی',
 'prefixindex'       => 'هـأمـه ولـگ‌ئونی کـه وه‌شـون سـأرنـوم هـأسـه',
 'shortpages'        => 'پیس ولگ ئون',
 'longpages'         => 'بیلند ولگ ئون',
@@ -310,6 +375,7 @@ $2، $1', # $1 date, $2 time
 'newpages'          => 'نـه به‌ساجه ولـگ‌ئون',
 'newpages-username' => 'کارور نوم:',
 'ancientpages'      => 'كوهنه ولگ ئون',
+'move'              => 'دکش هاکردن',
 'pager-newer-n'     => '{{PLURAL:$1|أتـا نـه‌ته‌ر|$1 تـا نـه‌ته‌ر}}',
 'pager-older-n'     => '{{PLURAL:$1|أتـا کـوهـنـه‌ته‌ر|$1 تـا کوهـنـه‌ته‌ر}}',
 
@@ -329,31 +395,44 @@ $2، $1', # $1 date, $2 time
 # Special:Categories
 'categories' => 'دسته ئون',
 
+# Special:LinkSearch
+'linksearch' => 'دأیا لـیـنـک‌ئون',
+
 # Special:ListGroupRights
 'listgrouprights-members' => '(کارورئون ره لیست)',
 
 # E-mail user
-'emailuser' => 'ئـه‌لـه‌کـتـه‌ریـکـی‌نـومـه ای کـارور وه‌سه',
+'emailuser' => 'ئـه‌لـه‌کـتـه‌ریـکـی‌ نـومـه ای کـارور وه‌سه',
+'emailpage' => 'ئـی-مه‌یـل ای کـارور وه‌سه',
 
 # Watchlist
-'watchlist'     => 'مـه ده‌مـبـالـه‌ئون ره لـیـسـت',
-'mywatchlist'   => 'مـه ده‌مـبـال‌هـه‌کـاردن لـیـسـت',
-'watchnologin'  => 'سیستم ره دله نی ئه موئین',
-'watch'         => 'ده‌مـبال هـاکه‌ردن',
-'watchthispage' => 'ای ولـگ ره ده‌مـبـال هـه‌کـارده‌ن',
-'unwatch'       => 'ده‌مـبـال نـه‌کـارده‌ن',
+'watchlist'       => 'مـه ده‌مـبـالـه‌ئون ره لـیـسـت',
+'mywatchlist'     => 'مـه ده‌مـبـال‌هـه‌کـاردن لـیـسـت',
+'watchnologin'    => 'سیستم ره دله نی ئه موئین',
+'watch'           => 'ده‌مـبال هـاکه‌ردن',
+'watchthispage'   => 'ای ولـگ ره ده‌مـبـال هـه‌کـارده‌ن',
+'unwatch'         => 'ده‌مـبـال نـه‌کـارده‌ن',
+'unwatchthispage' => 'دیـگـه ای وألـگ ده‌مـبـال نـه‌کـارده‌ن',
+'wlnote'          => "ایجه {{PLURAL:$1|پایانی دأچیه‌ن|پایانی '''$1''' دأچیه‌ن‌ئونی}} هأسه که ای $2 ساعت ده‌له دأکه‌ته.",
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'ده‌مـبـال هـه‌کـارده‌ن...',
 'unwatching' => 'ده‌مـبـال نـه‌کـارده‌ن...',
 
-'created' => 'وا بایه',
+'enotif_newpagetext' => 'ای وألـگ نـه هـأسـه',
+'created'            => 'وا بایه',
 
-# Delete/protect/revert
+# Delete
 'deletepage'     => 'ولـگ وربـأئـیـتـه‌ن',
 'deletedarticle' => 'وربـأئـیـتـه بأیه "[[$1]]"',
 'dellogpage'     => 'وربأئیته‌نه‌ئون گوزارش',
-'rollbacklink'   => 'واچیه‌ن',
+
+# Rollback
+'rollback'         => 'واچیه‌ن دأچیه‌ن‌ئون',
+'rollback_short'   => 'واچیه‌ن',
+'rollbacklink'     => 'واچیه‌ن',
+'revertpage'       => '"چـیـزونی که [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) دأچـیـه ده‌گـه‌ره‌س بـأیـه هـأمونـتـایی که [[User:$1|$1]] ای وألگ ده‌لـه، پـایـانی بـار هـه‌کـارده"', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+'rollback-success' => 'چـیـزونی که $1 دأچـیـه ده‌گـه‌ره‌س بـأیـه هـأمونـتـایی که $2 پـایـانی دأچـیـه‌ن ده‌لـه هـه‌کـارده',
 
 # Undelete
 'undeletelink'     => 'بـأویـنـه‌ن / ده‌واره جـا بـیـه‌شـتـه‌ن',
@@ -364,16 +443,19 @@ $2، $1', # $1 date, $2 time
 'blanknamespace' => '(مـار)',
 
 # Contributions
-'contributions' => 'کارور کایه‌رئون',
-'mycontris'     => 'مـه کـایـه‌رئون',
-'contribsub2'   => '$1 ($2) وه‌سه',
-'uctop'         => '(سه‌ر)',
+'contributions'       => 'کارور کایه‌رئون',
+'contributions-title' => 'کارور کایه‌رئون $1 وه‌سه',
+'mycontris'           => 'مـه کـایـه‌رئون',
+'contribsub2'         => '$1 ($2) وه‌سه',
+'uctop'               => '(سه‌ر)',
 
+'sp-contributions-newbies'  => 'نـه وا بـأیـه ئـه‌کـانـت‌ئون دأچـیـه‌ن‌ئون ره نـه‌شـون هـاده',
 'sp-contributions-username' => 'IP نـه‌شـونـی یا کـاروری‌نوم',
 'sp-contributions-submit'   => 'چـأرخـه‌تـو',
 
 # What links here
 'whatlinkshere'       => 'کـه‌جـه‌ لـیـنـک هـه‌دائـه‌ ایـجـه ره؟',
+'whatlinkshere-title' => 'وألـگ‌ئونی که "$1" ره لـیـنک هه‌دانه',
 'whatlinkshere-page'  => 'ولـگ:',
 'linkshere'           => "ولـگ‌ئـونی کـه لـیـنـک هـه‌دائـه‌نـه '''[[:$1]]''' ره:",
 'whatlinkshere-prev'  => '{{PLURAL:$1|پـیـشـیـن|$1 تـای پـیـشـیـن}}',
@@ -381,13 +463,14 @@ $2، $1', # $1 date, $2 time
 'whatlinkshere-links' => '← لـیـنـک‌ئون',
 
 # Block/unblock
-'blockip'       => 'کارور دأبه‌سته‌ن',
-'ipbsubmit'     => 'ای کارور دابس باوه',
-'ipblocklist'   => 'IP نـه‌شـونـی‌ئون ئو کـارورنـوم‌ئونی کـه دأبـه‌سـتـوونـه',
-'blocklink'     => 'دأبـه‌سـتـه‌ن',
-'unblocklink'   => 'وا هـه‌کـارده‌ن',
-'contribslink'  => 'کایه‌رئون',
-'blocklogentry' => '[[$1]] دأبـه‌سـتـو بـأیـه ئو وه‌نـه دأبه‌ستو بوئه‌ن زأمـون، تـا  $2 $3 هـأسـه',
+'blockip'          => 'کارور دأبه‌سته‌ن',
+'ipbsubmit'        => 'ای کارور دأبه‌س بأوه',
+'ipblocklist'      => 'IP نـه‌شـونـی‌ئون ئو کـارورنـوم‌ئونی کـه دأبـه‌سـتـوونـه',
+'blocklink'        => 'دأبـه‌سـتـه‌ن',
+'unblocklink'      => 'وا هـه‌کـارده‌ن',
+'change-blocklink' => 'قطع دسترسی تغییر هدائن',
+'contribslink'     => 'کایه‌رئون',
+'blocklogentry'    => '[[$1]] دأبـه‌سـتـو بـأیـه ئو وه‌نـه دأبه‌ستو بوئه‌ن زأمـون، تـا  $2 $3 هـأسـه',
 
 # Move page
 'newtitle'                => 'ته‌رنـه نـوم:',
@@ -395,10 +478,10 @@ $2، $1', # $1 date, $2 time
 'movetalk'                => '«گپ» ولـگ هم، اگه بونه، بوره.',
 '1movedto2'               => '[[$1]] بـورده [[$2]] ره',
 'revertmove'              => 'واچـیـه‌ن',
-'delete_and_move_confirm' => 'اره، پاک هاکن وه ره',
+'delete_and_move_confirm' => 'أره، پاک هاکه‌ن وه ره',
 
 # Export
-'export' => 'دأیابیاردن ولـگ‌ئون',
+'export' => 'دأیابأبه‌رده‌ن ولـگ‌ئون',
 
 # Thumbnails
 'thumbnail-more' => 'گت بأوه',
@@ -426,11 +509,12 @@ $2، $1', # $1 date, $2 time
 'tooltip-search'                => '{{SITENAME}} ره چـأرخـه‌تـو',
 'tooltip-search-go'             => 'بـور اتـا ولـگـی کـه وه‌نـه نـوم هـأمـیـنـتـا بـوئـه',
 'tooltip-search-fulltext'       => 'ولـگ‌ئـون ره ایـنـتـا تـه‌کـسـت وه‌سـه چـأرخ بـأزوئـه‌ن',
+'tooltip-p-logo'                => 'گـأت وألـگ ره ئـه‌شـه‌نـه‌ن',
 'tooltip-n-mainpage'            => 'بأویـنـه‌ن گـت ولـگ',
 'tooltip-n-portal'              => 'په‌روجه ده‌له‌واره، چه‌شی به‌توده‌نی هاکه‌نی ئو که‌جه چیزئون ره بأره‌سی',
 'tooltip-n-currentevents'       => 'تازه چی‌ئون ده‌له‌واره دونه‌سه‌ن',
 'tooltip-n-recentchanges'       => 'ای ویکی ده‌له، ئه‌سا دچیه‌نون ره لیست',
-'tooltip-n-randompage'          => 'أتـا شـانـسـی ولـگ بـیـارده‌ن',
+'tooltip-n-randompage'          => 'أتـا شـانـسـی وألـگ بـیـارده‌ن',
 'tooltip-n-help'                => 'أتـا جـا کـه...',
 'tooltip-t-whatlinkshere'       => 'هأمو ولـگ‌ئونی که ایجه ره لینک هه‌دانه',
 'tooltip-t-recentchangeslinked' => 'ئـه‌سـائـی  ده‌گـه‌ره‌سـه‌ئون  ولـگ‌ئونی ده‌له، کـه ای ولـگ جـه لـیـنـک دارنـه‌نـه',
@@ -454,20 +538,21 @@ $2، $1', # $1 date, $2 time
 'nextdiff'     => 'ته‌رنه دأچیه‌ن ←',
 
 # Media information
+'thumbsize'      => 'أنـگـوسـی گأتی:',
 'file-info-size' => '($1 × $2 پـیـکـسه‌ل, فـایـل گـأتـی: $3, MIME مـونـد: $4)',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'سرک بنک',
 
 # EXIF tags
 'exif-gpsareainformation' => 'جی پی اس ناحیه نوم',
-'exif-gpsdatestamp'       => 'جی پی اس تاریخ',
+'exif-gpsdatestamp'       => 'جی پی اس روز',
 'exif-gpsdifferential'    => 'جی پی اس په‌چه‌ک درس هأکه‌ردن',
 
 # EXIF attributes
 'exif-compression-1' => 'فه‌شورده نئی',
 
-'exif-unknowndate' => 'نه‌شناسی چه‌کوت',
+'exif-unknowndate' => 'نه‌شناسی روز',
 
 'exif-orientation-1' => 'معمولی', # 0th row: top; 0th column: left
 'exif-orientation-3' => '180 درجه چرخ بزوئن', # 0th row: bottom; 0th column: right

@@ -66,7 +66,7 @@ $messages = array(
 'qbspecialpages' => 'Ol spesel pej',
 'mypage'         => 'Pej blong mi',
 'mytalk'         => 'Tingting blong mi',
-'and'            => 'mo',
+'and'            => '&#32;mo',
 
 'edit'             => 'Jenisim hem',
 'newpage'          => 'Mekem niu pej',
@@ -92,8 +92,8 @@ $messages = array(
 # Preferences page
 'servertime' => 'Taem blong server',
 
-# Special:ImageList
-'imagelist_name' => 'Nem',
+# Special:ListFiles
+'listfiles_name' => 'Nem',
 
 # Miscellaneous special pages
 'shortpages' => 'Ol smol pej',
@@ -126,7 +126,7 @@ $messages = array(
 'tooltip-n-mainpage' => 'Go long Nambawan Pej',
 'tooltip-minoredit'  => 'Em i stap wan smol jenis',
 
-# Special:NewImages
+# Special:NewFiles
 'showhidebots' => '($1 bot)',
 
 # EXIF tags
