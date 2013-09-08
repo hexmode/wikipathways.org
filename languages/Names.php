@@ -24,7 +24,7 @@
 	'ast' => 'Asturianu',	# Asturian
 	'av' => 'Авар',	# Avar
 	'avk' => 'Kotava', # Kotava
-	'ay' => 'Aymar',		# Aymara, should possibly be Aymará
+	'ay' => 'Aymar aru',	# Aymara
 	'az' => 'Azərbaycan',	# Azerbaijani
 	'ba' => 'Башҡорт',	# Bashkir
 	'bar' => 'Boarisch',	# Bavarian (Austro-Bavarian and South Tyrolean)
@@ -41,6 +41,7 @@
 	'bn' => 'বাংলা',	# Bengali
 	'bo' => 'བོད་ཡིག',	# Tibetan
 	'bpy' => 'ইমার ঠার/বিষ্ণুপ্রিয়া মণিপুরী',	# Bishnupriya Manipuri
+	'bqi' => 'بختياري',	# Bakthiari
 	'br' => 'Brezhoneg',	# Breton
 	'bs' => 'Bosanski',		# Bosnian
 	'bto' => 'Iriga Bicolano',		# Iriga Bicolano/Rinconada Bikol
@@ -190,6 +191,7 @@
 	'mdf' => 'Мокшень',		# Moksha
 	'mg' => 'Malagasy',		# Malagasy
 	'mh' => 'Ebon',			# Marshallese
+	'mhr' => 'Олык Марий',	# Eastern Mari
 	'mi' => 'Māori',	# Maori
 	'mk' => 'Македонски',	# Macedonian
 	'ml' => 'മലയാളം',	# Malayalam
@@ -226,7 +228,7 @@
 	'om' => 'Oromoo', 		# Oromo
 	'or' => 'ଓଡ଼ିଆ',		# Oriya
 	'os' => 'Иронау', # Ossetic
-	'pa' => 'ਪੰਜਾਬੀ', # Punjabi
+	'pa' => 'ਪੰਜਾਬੀ', # Eastern Punjabi (pan)
 	'pag' => 'Pangasinan',	# Pangasinan
 	'pam' => 'Kapampangan',   # Pampanga
 	'pap' => 'Papiamentu',	# Papiamentu
@@ -238,6 +240,7 @@
 	'pl' => 'Polski',		# Polish
 	'plm' => 'Palembang',		# Palembang
 	'pms' => 'Piemontèis', 	# Piedmontese
+	'pnb' => 'پنجابی',	# Western Punjabi
 	'pnt' => 'Ποντιακά', 	# Pontic/Pontic Greek
 	'ps' => 'پښتو',	# Pashto, Northern/Paktu/Pakhtu/Pakhtoo/Afghan/Pakhto/Pashtu/Pushto/Yusufzai Pashto
 	'pt' => 'Português',	# Portuguese
@@ -289,6 +292,7 @@
 	'sw' => 'Kiswahili',	# Swahili
 	'szl' => 'Ślůnski',	# Silesian
 	'ta' => 'தமிழ்',	# Tamil
+	'tcy' => 'ತುಳು', # Tulu
 	'te' => 'తెలుగు',	# Telugu
 	'tet' => 'Tetun',	# Tetun
 	'tg' => 'Тоҷикӣ',	# Tajiki (falls back to tg-cyrl)
@@ -297,7 +301,7 @@
 	'th' => 'ไทย',	# Thai
 	'ti' => 'ትግርኛ',		# Tigrinya
 	'tk' => 'Türkmen',	# Turkmen
-	'tl' => 'Tagalog',		# Tagalog (Filipino)
+	'tl' => 'Tagalog',		# Tagalog
 	#'tlh' => 'tlhIngan-Hol',	# Klingon - no interlanguage links allowed
 	'tn' => 'Setswana',		# Setswana
 	'to' => 'faka-Tonga',		# Tonga (Tonga Islands)

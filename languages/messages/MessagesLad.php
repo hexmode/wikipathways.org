@@ -1,10 +1,14 @@
 <?php
 /** Ladino (Ladino)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
  * @author ILVI
+ * @author Remember the dot
  * @author Runningfridgesrule
  * @author Taichi
  * @author Universal Life
@@ -15,6 +19,7 @@ $fallback = 'es';
 
 $messages = array(
 # User preference toggles
+'tog-underline'            => 'Subrayar linkes',
 'tog-justify'              => 'Atacanar paragrafos',
 'tog-hideminor'            => 'Esconder ediciones chiquiticas de los «trocamientos frescos»',
 'tog-showtoolbar'          => 'Amostrár la barra de edision',
@@ -187,10 +192,10 @@ $messages = array(
 'site-atom-feed'  => 'Fuente de Atom de $1',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
-'nstab-main'      => 'Artikolo',
+'nstab-main'      => 'Página',
 'nstab-user'      => 'Página de usuario',
 'nstab-special'   => 'Espesial',
-'nstab-image'     => 'Imagen',
+'nstab-image'     => 'Archivo',
 'nstab-mediawiki' => 'Mesaje',
 'nstab-help'      => 'Ayudo',
 'nstab-category'  => 'Kategoría',
@@ -213,7 +218,7 @@ $messages = array(
 
 # Edit page toolbar
 'italic_tip'     => 'Texhto en cursiva',
-'extlink_sample' => 'http://www.enxemplo.com Título del link',
+'extlink_sample' => 'http://www.example.com Título del link',
 'headline_tip'   => 'Titular de nivel 2',
 'image_tip'      => 'Imagen incorporada',
 'media_tip'      => 'Link al arxivo multimedia',
@@ -228,7 +233,7 @@ $messages = array(
 'showdiff'         => 'Amostrar trocamientos',
 'accmailtitle'     => 'La kontrasenya ha sido embiada.',
 'accmailtext'      => 'La kontrasenya para "$1" se ha embiado a $2.',
-'copyrightwarning' => 'Si puede ser, que observe que todas las contribuciones a {{SITENAME}} se consideran hechas públicas abaxo la $2 (ver detayes en $1). Si no quere que la gente endereche tus texhtos escritos sin piedad y los distribuya libbremente, alora no los meta aquí. También él/ella nos está asegurando ansí que escribió este texhto su mismo y es dueño de los derechos de autor, o lo copió desde el dominio público u otra fuente libbero.<strong>¡QUE N0 USE TEXHTOS ESCRITOS CON COPYRIGHT SIN PERMIŚIÓN!</strong><br />',
+'copyrightwarning' => "Si puede ser, que observe que todas las contribuciones a {{SITENAME}} se consideran hechas públicas abaxo la $2 (ver detayes en $1). Si no quere que la gente endereche tus texhtos escritos sin piedad y los distribuya libbremente, alora no los meta aquí. También él/ella nos está asegurando ansí que escribió este texhto su mismo y es dueño de los derechos de autor, o lo copió desde el dominio público u otra fuente libbero.'''¡QUE N0 USE TEXHTOS ESCRITOS CON COPYRIGHT SIN PERMIŚIÓN!'''<br />",
 
 # History pages
 'revisionasof'     => 'Rêvizión de $1',

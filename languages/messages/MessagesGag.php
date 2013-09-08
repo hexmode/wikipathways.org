@@ -1,6 +1,9 @@
 <?php
 /** Gagauz (Gagauz)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -123,7 +126,7 @@ $messages = array(
 
 * [http://www.mediawiki.org/wiki/Manual:Configuration_settings Configuration settings list]
 * [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki FAQ]
-* [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]",
+* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]",
 
 'about'          => 'Uurunda',
 'article'        => 'Yazı',
@@ -422,7 +425,7 @@ Herliim girmediniz [[Special:Preferences|seçimner]] bölümünde geçerli bir e
 'newarticletext'         => "Henez var olmayan bir sayfaya konulmuş baalantıya tuşladınız. Bu sayfayı yaratmaa deyni aşaadaki tekst kutusunu kullanınız. Bilgi için [[{{MediaWiki:Helppage}}|yardım sayfasına]] bakınız. Herliim buraya yannış geldiniz, läazım tuşlamaa programınızın '''Geeri''' tuşuna.",
 'noarticletext'          => 'Bu sayfa boş. Bu başlıı [[Special:Search/{{PAGENAME}}|var nicä aramaa]] übür sayfalarda yaki bu sayfayı siz  [{{fullurl:{{FULLPAGENAME}}|action=edit}} var nicä yazmaa].',
 'updated'                => '(Enilendi)',
-'previewnote'            => '<strong>Bu saadä bir ön siir, hem diişmäkler henez korunmadı!</strong>',
+'previewnote'            => "'''Bu saadä bir ön siir, hem diişmäkler henez korunmadı!'''",
 'editing'                => '"$1" sayfasın diiştirersiniz',
 'editingsection'         => '"$1" sayfasında bölüm diiştirersiniz',
 'editingcomment'         => '$1 sayfasına yorum ekleersiniz.',
@@ -430,12 +433,12 @@ Herliim girmediniz [[Special:Preferences|seçimner]] bölümünde geçerli bir e
 'yourtext'               => 'Sizin tekstiniz',
 'storedversion'          => 'Saklanmış tekst',
 'yourdiff'               => 'Farklar',
-'copyrightwarning'       => "<strong>Bakınız:</strong> {{SITENAME}} saytına yapılan hepsi eklemäkler hem diişmäkler läazım olsun  <i>$2</i>
+'copyrightwarning'       => "'''Bakınız:''' {{SITENAME}} saytına yapılan hepsi eklemäkler hem diişmäkler läazım olsun  <i>$2</i>
 lițenziyası şartları içindä (detallar için $1'a bakınız).
 Herliim istemeersiniz ani sizin tekstlär serbest yayılsın hem diiştirilsin übür kullanıcılar tarafınnan, onnarı erleştirmeyniz buraya.<br />
 Hem siz garantiyada bulunêrsiniz ani eklemäklerin avtorusunuz, yaki onnarı kopiya ettiniz kaynaktan angısı izin verer teksti serbest yaymaa hem diiştirmää.<br />
-<strong><center>AVTORLUK KORUNMAK HAKKILAN KORUNMAYAN MATERİALLAR EKLEMEYNİZ!</center></strong>",
-'longpagewarning'        => '<strong>BAK: Bu sayfanın ölçüsü $1 kilobayt; ölçüsü 32 kb-a yakın yaki onnan çok sayfalar bir takım brauzerlärdä var nicä yannış görünsün. Savaşênız onu bölümnerä ayırmaa.</strong>',
+'''<center>AVTORLUK KORUNMAK HAKKILAN KORUNMAYAN MATERİALLAR EKLEMEYNİZ!</center>'''",
+'longpagewarning'        => "'''BAK: Bu sayfanın ölçüsü $1 kilobayt; ölçüsü 32 kb-a yakın yaki onnan çok sayfalar bir takım brauzerlärdä var nicä yannış görünsün. Savaşênız onu bölümnerä ayırmaa.'''",
 'templatesused'          => 'Bu sayfada kullanılan şablonlar:',
 'templatesusedpreview'   => 'Şablonnar ani bu ön siirdä kullanıldı:',
 'templatesusedsection'   => 'Bu bölümde kullanılan şablonlar:',
@@ -520,7 +523,7 @@ Nışannar: (bitki) = şindiki versiyalan aradaki fark,
 'nchanges'                       => '$1 {{PLURAL:$1|diiştir|diiştir}}',
 'recentchanges'                  => 'Bitki diişikmäklär',
 'recentchanges-feed-description' => 'Bu lentalan en bitki diişmäkleri vikiyä yaz.',
-'rcnote'                         => '$3 (UTC) datasında bitki <strong>$2</strong> gündä yapılan <strong>$1</strong> diişmäk:',
+'rcnote'                         => '$3 datasında bitki <strong>$2</strong> gündä yapılan <strong>$1</strong> diişmäk:',
 'rcnotefrom'                     => "'''$2''' datasınnan büüne kadar yapılan diişmäkler aşaada (en çok '''$1''' yazı gösteriler).",
 'rclistfrom'                     => 'Göster diişmäkleri ani $1 datasından beeri yapıldı',
 'rcshowhideminor'                => 'küçük diişilmäkläri $1',
@@ -702,8 +705,8 @@ Yakın zamanda silinenleri görmää deyni: $2.',
 'protect_expiry_old'          => 'Bitmää datası geçti.',
 'protect-unchain'             => 'Taşıma kilidini kaldır',
 'protect-text'                => 'Var nicä görmää hem diiştirmää buradan [[$1]] sayfasın korunmaa düzeyini.',
-'protect-locked-access'       => 'Sizin esapın yok izni yazının korunmak düzeyini diiştirmää.
-Burada bitki seçimner <strong>$1</strong> yazı diiştirmää deyni:',
+'protect-locked-access'       => "Sizin esapın yok izni yazının korunmak düzeyini diiştirmää.
+Burada bitki seçimner '''$1''' yazı diiştirmää deyni:",
 'protect-cascadeon'           => 'Bu sayfa şindi korunêr onuştan ani girer {{PLURAL:$1|aşaadaki sayfaa, angısına|||aşaadaki sayfalara, angılarına}} konuldu kaskad korunmak. Sizä yakışêr diiştirin bu sayfanın korunmak düzeyin, ama bu etkilemez kaskad korunmaa.',
 'protect-default'             => '(standart)',
 'protect-fallback'            => ' "$1" izin iste',
@@ -879,6 +882,7 @@ Sadä listadaki êlementlarä (* nışannan çekedän liniyalar) bakılacêk. Li
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # External editor support

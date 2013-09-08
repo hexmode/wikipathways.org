@@ -1,5 +1,8 @@
 <?php
-/** Burmese (Myanmasa)
+/** Burmese (မြန်မာဘာသာ)
+ *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
  *
  * @ingroup Language
  * @file
@@ -142,7 +145,7 @@ $messages = array(
 'viewsource' => 'ဆို့​ကို​ပြ​ပါ​',
 
 # Login and logout pages
-'welcomecreation'         => 'မင်္ဂ​လာ​ပါ​ $1။ သင့်​အား​မှတ်​ပုံ​တင်​ပြီး​ပါ​ပြီ။​ ဝီ​ကီ​အ​တွက်​သင့်​စိတ်​ကြိုက်​များ​ကို​ရွေး​ချယ်​နိုင်​ပါ​သည်။​',
+'welcomecreation'         => 'မင်္ဂ​လာ​ပါ​ $1။ သင့်​အား​မှတ်​ပုံ​တင်​ပြီး​ပါ​ပြီ။​ ဝီ​ကီ​အ​တွက်​သင့်​စိတ်​ကြိုက်​များ​ကို​ရွေး​ချယ်​နိုင်​ပါ​သည်။​',
 'yourname'                => 'မှတ်​ပုံ​တင်​အ​မည်:',
 'yourpassword'            => 'လှို့​ဝှက်​စ​ကား​လုံး:',
 'yourpasswordagain'       => 'ပြန်​ရိုက်​ပါ:',
@@ -233,7 +236,7 @@ $messages = array(
 'filename'          => 'ဖိုင်အမည်',
 'filedesc'          => 'အ​ကျဉ်း​ချုပ်​',
 'fileuploadsummary' => 'အ​ကျဉ်း​ချုပ်:',
-'watchthisupload'   => 'ဤ​စာ​မျက်​နှာ​အား​စောင့်​ကြည့်​ပါ​',
+'watchthisupload'   => 'ဤ​စာ​မျက်​နှာ​အား​စောင့်​ကြည့်​ပါ​',
 
 # Special:ImageList
 'imgfile'        => 'ဖိုင်',

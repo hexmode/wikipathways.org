@@ -1,6 +1,9 @@
 <?php
 /** Southern Sotho (Sesotho)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -94,7 +97,7 @@ $messages = array(
 'showdiff'     => 'Mpontshe hore ho tlo fetoha eng',
 'accmailtitle' => 'Lepetjo le rometswe.',
 'accmailtext'  => 'Lepetjo la "$1" le se le rometswe ho $2.',
-'note'         => '<strong>Ela hloko:</strong>',
+'note'         => "'''Ela hloko:'''",
 
 # Search results
 'powersearch' => 'Fuputsa',

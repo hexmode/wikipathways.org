@@ -1,28 +1,32 @@
 <?php
 /** Fiji Hindi (Latin) (Fiji Hindi (Latin))
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
  * @author Girmitya
+ * @author Thakurji
  */
 
 $messages = array(
 # User preference toggles
 'tog-underline'               => 'Jorr ke underline karo:',
-'tog-highlightbroken'         => 'Tuuta waala link ke format karo<a href="" class="new">ii rakam se</a> (nai to: ii rakam se<a href="" class="internal">?</a>).',
+'tog-highlightbroken'         => 'Tuuta waala jorr ke format karo <a href="" class="new">ii rakam se</a> (nai to: ii rakam se<a href="" class="internal">?</a>).',
 'tog-justify'                 => 'Paragraphs ke justify karo',
 'tog-hideminor'               => 'Chhota aur nawaa badlao ke lukao',
-'tog-extendwatchlist'         => 'Dhyaan suchi ke khol ke sab uchit badlao ke dekhao',
-'tog-usenewrc'                => 'Aur jaada nawaa badlao (Javascript)',
+'tog-extendwatchlist'         => 'Dhyaan suchi ke khol ke sab badlao ke dekhao, khaali nawaa waala nai',
+'tog-usenewrc'                => 'Sadasya se enhance karaa gais nawaa badlao (reguires Javascript)',
 'tog-numberheadings'          => 'Sab heading ke apne se number karo',
-'tog-showtoolbar'             => 'Badle waala aujaar ke bar dekhao (JavaScript)',
-'tog-editondblclick'          => 'Dugnaa click pe panna ke badlo (JavaScript)',
-'tog-editsection'             => 'Jorr se [badlo] koi bhaag ke badlao ke laabu karo',
+'tog-showtoolbar'             => 'Badle waala aujaar ke toolbar ke dekhao (JavaScript ke jarurat hai)',
+'tog-editondblclick'          => 'Dugnaa click pe panna ke badlo (JavaScript ke jarurat hai)',
+'tog-editsection'             => '[Badlao] ke jorr se section ke badlao se enable karo',
 'tog-editsectiononrightclick' => 'Bhaag ke title pe right click kare pe bhaag ke badle ke laabu karo  (JavaScript)',
 'tog-showtoc'                 => 'Dhyan suchi dekhao (uu panna khatir jon me tiin se jaada heading hai)',
 'tog-rememberpassword'        => 'Ii computer me hamaar login yaad rakho',
-'tog-editwidth'               => 'Badlao ke dabba ke puura chaurai hai',
+'tog-editwidth'               => 'Badlao ke dabba ke barrhae ke screen ke fill karo',
 'tog-watchcreations'          => 'Hamaar banawa waala panna ke hamaar dhyaan suchi me jorro',
 'tog-watchdefault'            => 'Ham se badla gae panna ke hamaar dhyaan suchi me jorro',
 'tog-watchmoves'              => 'Uu panna jiske naam ham badla hai ke hamaar dhyaan suchi me jorro',
@@ -36,7 +40,7 @@ $messages = array(
 'tog-enotifminoredits'        => 'Panna me mamuli badlao khatir bhi hame E-mail karo',
 'tog-enotifrevealaddr'        => 'Notification E-mail me hamaar E-mail address ke dekhao.',
 'tog-shownumberswatching'     => 'Ketna sadasya dekhe hai ke number dekhao',
-'tog-fancysig'                => 'Kachchaa signature (binaa apne se jorr)',
+'tog-fancysig'                => 'Signature ke wikitext ke rakam dekho (binaa automatic jorr se)',
 'tog-externaleditor'          => 'Apne se bahaari editor ke use karo (khali chalaak logan khatir, computer me special settings ke jaruri hai)',
 'tog-externaldiff'            => 'Apne se bahaari diff ke use karo (khali chalaak logan khatir, computer me special settings ke jaruri hai)',
 'tog-showjumplinks'           => '"jump to" accessibility jorr ke laabu karo',
@@ -125,12 +129,12 @@ $messages = array(
 'listingcontinuesabbrev'         => 'aur',
 
 'mainpagetext'      => "<big>'''MediaWiki ke safalta se install kar dewa gais hai.'''</big>",
-'mainpagedocfooter' => "Wiki software ke use kare khatir [http://meta.wikimedia.org/wiki/Help:Contents User's Guide] ke dekho.
+'mainpagedocfooter' => "Wiki software ke use kare ke aur jaankari ke khatir [http://meta.wikimedia.org/wiki/Help:Contents User's Guide] ke dekho.
 
 == Getting started ==
 * [http://www.mediawiki.org/wiki/Manual:Configuration_settings Configuration settings list]
 * [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki FAQ]
-* [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]",
+* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]",
 
 'about'          => 'Baare me',
 'article'        => 'Content waala panna',
@@ -151,7 +155,7 @@ $messages = array(
 'and'            => 'aur',
 
 # Metadata in edit box
-'metadata_help' => 'Metadata:',
+'metadata_help' => 'Jaankari ke baare me jaankaari:',
 
 'errorpagetitle'    => 'Galti',
 'returnto'          => '$1 pe lauto.',
@@ -176,7 +180,7 @@ $messages = array(
 'deletethispage'    => 'Ii panna ke mitao',
 'undelete_short'    => '{{PLURAL:$1|ek badlao|$1 badlao}} ke pahile jaise karo',
 'protect'           => 'Bachao',
-'protect_change'    => 'bachae ke dhang ke badlo',
+'protect_change'    => 'badlo',
 'protectthispage'   => 'Ii panna ke bacaho',
 'unprotect'         => 'Nai bachao',
 'unprotectthispage' => 'Ii panna ke nai bachao',
@@ -185,14 +189,14 @@ $messages = array(
 'talkpagelinktext'  => 'Baat',
 'specialpage'       => 'Khaas Panna',
 'personaltools'     => 'Aapan aujaar',
-'postcomment'       => 'Aapan bichar deo',
+'postcomment'       => 'Nawaa section',
 'articlepage'       => 'Content waala panna ke dekho',
 'talk'              => 'Salah',
 'views'             => 'Bichaar',
 'toolbox'           => 'Aujaar ke dabba',
 'userpage'          => 'Sadasya ke panna dekho',
 'projectpage'       => 'Project waala panna dekho',
-'imagepage'         => 'Media waala panna dekho',
+'imagepage'         => 'File panna ke dekho',
 'mediawikipage'     => 'Sandes waala panna dekho',
 'templatepage'      => 'Template waala panna dekho',
 'viewhelppage'      => 'Madat waala panna dekho',
@@ -218,7 +222,7 @@ $messages = array(
 'copyrightpage'        => '{{ns:project}}:Chhaape ke adhikaar',
 'currentevents'        => 'Abhi ke ghatna',
 'currentevents-url'    => 'Project:Abhi ke ghatna',
-'disclaimers'          => 'Adhikaar tyaagna',
+'disclaimers'          => 'Adhikaar ke ghosna',
 'disclaimerpage'       => 'Project:Saadharan adhikaar tyaagna',
 'edithelp'             => 'Badlao pe madat',
 'edithelppage'         => 'Help:Badle me',
@@ -260,18 +264,18 @@ $messages = array(
 'restorelink'             => '{{PLURAL:$1|ek mitawal badlao|$1 mitawal badlao}}',
 'feedlinks'               => 'Feed:',
 'feed-invalid'            => 'Khraab rakam ke subscription feed.',
-'feed-unavailable'        => 'Syndication feeds {{SITENAME}} pe nai hai',
+'feed-unavailable'        => 'Syndication feeds abhi aap nai use kare sakta hai.',
 'site-rss-feed'           => '$1 RSS Feed',
 'site-atom-feed'          => '$1 Atom Feed',
 'page-rss-feed'           => '"$1" RSS Feed',
 'page-atom-feed'          => '"$1" Atom Feed',
-'red-link-title'          => '$1 (abhi likha nai gais hai)',
+'red-link-title'          => '$1 (panna abhi likha nai gais hai)',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Panna',
 'nstab-user'      => 'Sadasya ke panna',
 'nstab-media'     => 'Media waala panna',
-'nstab-special'   => 'Special',
+'nstab-special'   => 'Khaas panna',
 'nstab-project'   => 'Project panna',
 'nstab-image'     => 'File',
 'nstab-mediawiki' => 'Sandes',
@@ -281,7 +285,9 @@ $messages = array(
 
 # Main script and global functions
 'nosuchaction'      => 'Koi aisan kaam nai hai',
-'nosuchactiontext'  => 'Jon kaam ke URL kare ke batais hai uske ii wiki nai pahachane hai',
+'nosuchactiontext'  => 'Jon kaam ke URL kare ke batais hai uske ii wiki nai pahachane hai
+Saait aap URL ke thiik se type nai karaa hai, nai to galat jorr ke follow karaa hai.
+Ii saait ii kaaran se bhi hoe ki  jon software {{SITENAME}} use kare hai, me bug hai',
 'nosuchspecialpage' => 'Aisan koi khaas panna nai hai',
 'nospecialpagetext' => "<big>'''Aap ek galat ghaas panna ke maanga hai.'''</big>
 
@@ -290,17 +296,17 @@ Sahi khaas panna ke suchi [[Special:SpecialPages|{{int:specialpages}}]]pe mili."
 # General errors
 'error'                => 'Galti',
 'databaseerror'        => 'Database me galti hai',
-'dberrortext'          => 'Database ke khoj me syntax error hoe gais hai.
+'dberrortext'          => 'Database ke khoj me syntax error hoe gais hae.
 Saait software me bug hoi.
 Pahile waala database ke khoj ke kosis rahaa:
 <blockquote><tt>$1</tt></blockquote>
-"<tt>$2</tt>" functionke bhitar se.
-MySQL ke galti sandes rahaa "<tt>$3: $4</tt>".',
-'dberrortextcl'        => 'Database ke khoj me syntax error hoe gais hai.
+"<tt>$2</tt>" function ke bhitar se.
+Database ke galti sandes rahaa "<tt>$3: $4</tt>".',
+'dberrortextcl'        => 'Database ke khoj me syntax error hoe gais hae.
 Pahile waala database ke khoj ke kosis rahaa:
 "$1"
 "$2" function ke bhitar se.
-MySQL ke galti sandes rahaa "$3: $4"',
+Database ke galti sandes rahaa "$3: $4"',
 'noconnect'            => 'Maaf karna! Wiki me abhi technical samasya hai, aur abhi database server ke contact nai kare sake hai.<br />
 $1',
 'nodb'                 => 'Database $1 ke nai chhate saka hai',
@@ -328,7 +334,7 @@ Iske, URL ke likh ke, koi administrator ke report karo.',
 'directorycreateerror' => 'Directory "$1" ke nai banae sakaa.',
 'filenotfound'         => 'File "$1" ke nai pae sakaa.',
 'fileexistserror'      => 'File "$1" me nai likhe sakaa: file hai',
-'unexpected'           => 'Unexpected value: "$1"="$2".',
+'unexpected'           => 'Aasa karaa gais jaankari nai hai: "$1"="$2".',
 'formerror'            => 'Galti: form ke submit nai kare sakaa',
 'badarticleerror'      => 'Ii chij ke ii panna me nai karaa jae sake hai.',
 'cannotdelete'         => 'Jon panna nai to file ke aap mitae kare mangtaa rahaa uske nai mitae sakaa.
@@ -347,14 +353,15 @@ Query: $2',
 'viewsourcefor'        => '$1 khatir',
 'actionthrottled'      => 'Kaam ke band kar dewa gais hai',
 'actionthrottledtext'  => 'Spam ke virod me, aap ke ii kaam thora deri me bahut time kare ke rukawat hai, aur aap time limit ke exceed kar diya hai.
-
 Kuch deri be baad fir se kosis karna.',
 'protectedpagetext'    => 'Ii panna ke badlao ke roke ke khatir band kar dewa gais hai.',
 'viewsourcetext'       => 'Aap ii panna ke source ke dekhe aur nakal utare kare sakta hai:',
 'protectedinterface'   => 'Ii panna software ke interface text dewe hai, aur iske barbaadi se roke ke khatir band kar dewa gais hai.',
-'editinginterface'     => "'''Chetawani:''' Aap ek panna ke badaltaa hai jon ki software ke interface text dewe hai. Ii panna me badlao ke asar duusra sadasya ke interface ke bhi hoi. Translation khatir [http://translatewiki.net/wiki/Main_Page?setlang=en Betawiki], the MediaWiki localisation project, ke kaam me lao.",
+'editinginterface'     => "'''Chetawani:''' Aap ek panna ke badaltaa hai jon ki software ke interface text dewe hae.
+Ii panna me badlao ke asar duusra sadasya ke interface ke bhi hoi.
+Translation khatir [http://translatewiki.net/wiki/Main_Page?setlang=en translatewiki.net], the MediaWiki localisation project, ke kaam me lao.",
 'sqlhidden'            => '(SQL query lukawal hai)',
-'cascadeprotected'     => 'Ii panna ke badlao se bachaya gais hai, kahe ki iske {{PLURAL:$1|panna, jon ki|panna, jon ki}} surakchhit with the "cascading" option turned on:
+'cascadeprotected'     => 'Ii panna ke badlao se bachawa gais hai, kahe ki iske {{PLURAL:$1|panna, jon ki|panna, jon ki}} surakchhit hae "cascading" option turned on ke saathe me rakkhaa gais hai:
 $2',
 'namespaceprotected'   => "Aap ke paas '''$1''' namespace me panna ke badle ke adhikar nai hai.",
 'customcssjsprotected' => 'Aap ke paas ii panna ke badle ke adkikar nai hai, kahe ki isme duusra sadasya ke personal settings hai.',
@@ -363,17 +370,17 @@ $2',
 Iske kaaran hai ''$2''.",
 
 # Virus scanner
-'virus-badscanner'     => 'Kharaab configuration: unknown virus scanner: <i>$1</i>',
+'virus-badscanner'     => "Kharaab ruup dewa gais hae: virus khoje waala software nawaa hae: ''$1''",
 'virus-scanfailed'     => 'scan fail hoe gais (code $1)',
 'virus-unknownscanner' => 'jaana waala antivirus nai hai:',
 
 # Login and logout pages
 'logouttitle'                => 'Sadasya logout',
-'logouttext'                 => '<strong>Aap abhi logged out hai.</strong>
+'logouttext'                 => "'''Aap abhi logged out hai.'''
 
 Aap bina naam ke {{SITENAME}} ke kaam me lae sakta hai, nai to aap wahi sadasya ke naam se nai to duusra sadasya ke naam se [[Special:UserLogin|log in kare sakta hai]].
 
-Yaad rakhna ki kuch panna wahi rakam se dekhai jaise ki aap log in bhaya hai, jab tak ki browser ke cache safaa nai hoe jaae.',
+Yaad rakhna ki kuch panna wahi rakam se dekhai jaise ki aap log in bhaya hai, jab tak ki browser ke cache safaa nai hoe jaae.",
 'welcomecreation'            => '== Swagat, $1! ==
 Aap ke account banae dewa gais hai.
 Aapan [[Special:Preferences|{{SITENAME}} pasand]]  ke badle nai bhulna.',
@@ -390,16 +397,16 @@ Aapan [[Special:Preferences|{{SITENAME}} pasand]]  ke badle nai bhulna.',
 'loginprompt'                => 'Login kare ke khatir  {{SITENAME}} cookies ke laabu kare ke chaahi.',
 'userlogin'                  => 'Log in karo/ nawaa account banao',
 'logout'                     => 'Log out',
-'userlogout'                 => 'Log out',
+'userlogout'                 => 'Sadasya logout',
 'notloggedin'                => 'Aap logged in nai hai',
-'nologin'                    => 'Login khatir account nai hai? $1.',
+'nologin'                    => 'Account nai hai? $1.',
 'nologinlink'                => 'Nawaa account banao',
 'createaccount'              => 'Nawaa account banao',
 'gotaccount'                 => 'Aap ke pas pahile se account hai ki nai? $1.',
 'gotaccountlink'             => 'Log in',
 'createaccountmail'          => 'e-mail se',
 'badretype'                  => 'Jon duuno password aap likha hai uu ek rakam nai hai.',
-'userexists'                 => 'Jon username aap chuna hai uske aur koi use kare hai.
+'userexists'                 => 'Ii username aur koi ke hai.
 Duusra username choose karo.',
 'youremail'                  => 'E-mail:',
 'username'                   => 'Username:',
@@ -411,11 +418,12 @@ Duusra username choose karo.',
 'yournick'                   => 'Signature:',
 'badsig'                     => 'Invalid raw signature; HTML tags ke check karo.',
 'badsiglength'               => 'Signature bahut lambaa hai.
-It $1 {{PLURAL:$1|character|characters}} se kamti rahe ke chaahi.',
+Iske $1 {{PLURAL:$1|character|characters}} se kamti rahe ke chaahi.',
 'email'                      => 'E-mail',
 'prefs-help-realname'        => 'Asli naam ke jaruri nai hai lekin agar jo aap aapan naam diya hai to iske aap ke kaam ke pahachane khatir kaam me lawa jai.',
 'loginerror'                 => 'Login me galti hai',
-'prefs-help-email'           => 'E-mail address ke jaruri nai hai, lekin isse duusra log ke aap ke contact kare sake hai aap ke user nai to user_talk panna se, aap ke asli naam batae ke bina.',
+'prefs-help-email'           => 'E-mail address ke jaruri nai hai, lekin isse nawaa password aap ke lage bheja jaae skae hai agar aap aapan password bhul gaya tab.
+Aap duusra log ke aap se aapan user_talk panna se aap ke contact kar le de sakta hai agar aap aapan aslii naam nai batae mangtaa hai tab.',
 'prefs-help-email-required'  => 'E-mail address ke jaruri hai.',
 'nocookiesnew'               => 'Aap ke account banae dewa gais hai lekin aap loggen in nai hai.
 {{SITENAME}} me sadasya ke login khatir cookies hai.
@@ -427,19 +435,21 @@ Cookies ke enable kar ke fir se kosis karo.',
 'noname'                     => 'Aap achchha user name ke nai specify karaa hai.',
 'loginsuccesstitle'          => 'Login safal bhais',
 'loginsuccess'               => "'''Aap \"\$1\" ke naam pe {{SITENAME}} me logged in hai.'''",
-'nosuchuser'                 => '"$1" naam ke koi sadasya nai hai. Aapan spelling check karo nai to nawaa account banao.',
+'nosuchuser'                 => '"$1" naam ke koi sadasya nai hai. 
+Sadasya ke naam case sensitive hai.
+Aapan spelling check karo nai to [[Special:UserLogin/signup|nawaa account banao]].',
 'nosuchusershort'            => '"<nowiki>$1</nowiki>" naam ke koi sadasya nai hai. 
 Aapan spelling check karo.',
 'nouserspecified'            => 'Aap ke aapan username de ke parri.',
 'wrongpassword'              => 'Galat password likha gais hai. Fir se kosis karo.',
 'wrongpasswordempty'         => 'Koi password nai likha gais hai. Fir se kosis karo.',
 'passwordtooshort'           => 'Aap ke password kharaab nai to bahut chhota hai. Password me kamti se kamti {{PLURAL:$1|1 character|$1 characters}} hoe ke chahi aur username se different rahe ke chahi.',
-'mailmypassword'             => 'Password ke E-mail karo',
+'mailmypassword'             => 'Nawaa password ke E-mail karo',
 'passwordremindertitle'      => '{{SITENAME}} ke khatir nawaa temporary password',
 'passwordremindertext'       => 'Koi ( hoe sake aap, IP address $1 se)
-{{SITENAME}} ($4) khatir nawaa password mangis hai.
-Sadasya "$2" ke password ab "$3" hai.
-Aap ke abhi login kar ke password badle ke chaahi.
+{{SITENAME}} ($4) ke khatir nawaa password mangis hai.
+"$2" ke banae ke "$3" se set kar dewa gais hai. Agar aap ii chij mangta rahaa,
+tab aap ke abhi login kar ke password badle ke chaahi.
 
 Agar jo aur koi ii request karis hai nai to aap aapan password yaad kar liya hai aur nai badle mangta hai, tab ii sandes ke ignore kar do aur aapan purana password use karte raho.',
 'noemail'                    => 'Sadasya "$1" ke koi e-mail address recorded nai hai.',
@@ -456,8 +466,8 @@ Aap aur account nai bane sakta hai.',
 Ii sab feature khatir koi e-mail nai bheja jaai.',
 'noemailprefs'               => 'Ii sab feature ke kaam kare khatir e-mail specify karo.',
 'emailconfirmlink'           => 'aapan e-mail address ke confirm karo',
-'invalidemailaddress'        => 'E-mail address ke nai accept karaa jae sake hai kahe ki iske format invalid hai.
-Meharbaani kar ke well-formatted address ke enter karo nai to uu field ke khali kar do.',
+'invalidemailaddress'        => 'E-mail address ke nai lewa jae sake hai kahe ki iske format kharaab hai.
+Meharbaani kar ke achchha address ke enter karo nai to uu field ke khali kar do.',
 'accountcreated'             => 'Account banae dewa gais hai',
 'accountcreatedtext'         => '$1 khatir user account banae dewa gais hai.',
 'createaccount-title'        => '{{SITENAME}} khatir account creation',
@@ -471,30 +481,30 @@ Agar ii account galti se banaa hai tab ii sandes ke ignore kar do.',
 'resetpass_announce'      => 'Aap ek temporary e-mailed code se login bhaya hai
 Login khatam kare khatir, aap ke nawaa password set kare ke parri hian:',
 'resetpass_text'          => '<!-- Hian pe likho -->',
-'resetpass_header'        => 'Password ke reset karo',
+'resetpass_header'        => 'Account assword ke badlo',
 'resetpass_submit'        => 'Password ke set kar ke login karo',
 'resetpass_success'       => 'Aap ke password ke safalta se badal dewa gais hai! Aap ke ab login karaa jaae hai...',
 'resetpass_bad_temporary' => 'Temporary password achchha nai hai.
 Aap sait pahile password ke badal diya hoi nai to nawaa temporary password ke maang karaa hoga.',
-'resetpass_forbidden'     => '{{SITENAME}} pe password nai badlaa jae sake hai',
+'resetpass_forbidden'     => 'Password nai badlaa jaae sake hai',
 'resetpass_missing'       => 'Form data nai hai.',
 
 # Edit page toolbar
-'bold_sample'     => 'Bold text',
-'bold_tip'        => 'Bold text',
-'italic_sample'   => 'Italic text',
-'italic_tip'      => 'Italic text',
+'bold_sample'     => 'Motaa text',
+'bold_tip'        => 'Motaa text',
+'italic_sample'   => 'Tirchha akchhar',
+'italic_tip'      => 'Tirchha akchhar',
 'link_sample'     => 'Jorr ke title',
 'link_tip'        => 'Bhitari jorr',
-'extlink_sample'  => 'http://www.example.com link title',
+'extlink_sample'  => 'http://www.example.com jorr ke padwi',
 'extlink_tip'     => 'Bahari jorr (yaad rakhna http:// prefix)',
-'headline_sample' => 'Headline text',
+'headline_sample' => 'Khaas samaachar ke akchhar',
 'headline_tip'    => 'Duusra level ke headline',
 'math_sample'     => 'Hian pe formula insert karo',
-'math_tip'        => 'Mathematical formula (LaTeX)',
+'math_tip'        => 'Mathematiical niyam (LaTeX)',
 'nowiki_sample'   => 'Non-formatted text ke hian par insert karo',
 'nowiki_tip'      => 'Wiki bhasa ke anusaar badlao nahi karo',
-'image_tip'       => 'Embedded file',
+'image_tip'       => 'Jamawa gais suchi',
 'media_tip'       => 'File ke jorre waala',
 'sig_tip'         => 'Aapke signature time ke saathe',
 'hr_tip'          => 'Samthar line (bahut jaada nai kaam me laana)',
@@ -573,34 +583,37 @@ Ii kaaran se ham log ke IP address kaam me lae ke ii sadasya ke jaana jae hai.
 Ii rakam ke IP address ke dher sadasya kaam me lae sake hai.
 Agar aap ek anonymous user hai aur ii sochta hai ki bekar baat aap ke baare me karaa gais hai, tab
 [[Special:UserLogin/signup|create an account]] or [[Special:UserLogin|log in]] aage ke garrbarri roke khatir aur duusra anonymous users se mistake nai kare ke khatir .''",
-'noarticletext'                    => 'Ii time pe ii panna me kuch likhaa nai hai, aap saktaa hai [[Special:Search/{{PAGENAME}}|ii panna ke title khoje]] duusra panna me nai to [{{fullurl:{{FULLPAGENAME}}|action=edit}} ii panna ke badlo].',
+'noarticletext'                    => 'Ii time pe ii panna me kuch likhaa nai hai.
+Aap saktaa hai [[Special:Search/{{PAGENAME}}|ii panna ke title khoje]] duusra panna me,
+<span> nai to [{{fullurl:{{FULLPAGENAME}}|action=edit}} ii panna ke badlo]</span>.',
 'userpage-userdoesnotexist'        => 'User account "$1" abi registered nai hai.
 Check karo ki Ii panna ke aap banae/badle mangta hai.',
 'clearyourcache'                   => "'''Note - Save kare ke baad, aap ke sait browser ke cache ke bypass kare ke parri badlao ke dekhe khatir.''' '''Mozilla / Firefox / Safari:''' hold ''Shift'' while clicking ''Reload,'' or press either ''Ctrl-F5'' or ''Ctrl-R'' (''Command-R'' on a Macintosh); '''Konqueror: '''click ''Reload'' or press ''F5;'' '''Opera:''' clear the cache in ''Tools → Preferences;'' '''Internet Explorer:''' hold ''Ctrl'' while clicking ''Refresh,'' or press ''Ctrl-F5.''",
-'usercssjsyoucanpreview'           => "<strong>Tip:</strong> Save kare se pahile 'Show preview' button ke use kar ke aapan nawaa  CSS/JS ke test karo.",
-'usercsspreview'                   => "'''Yaad rakhna ki aap khali aapan CSs ke preview kartaa hai, iske abhi save nai karaa gais hai!'''",
+'usercssjsyoucanpreview'           => "'''Tip:''' Save kare se pahile 'Show preview' button ke use kar ke aapan nawaa  CSS/JS ke test karo.",
+'usercsspreview'                   => "'''Yaad rakhna ki aap khali aapan CSS ke jhalak dekhta hai. 
+Iske abhi save nai karaa gais hai!'''",
 'userjspreview'                    => "'''Yaad rakhna ki aap khali aapan JavaScript ke testing/previewing  karta hai, iske abhi save nai karaa gais hai!'''",
 'userinvalidcssjstitle'            => "'''Warning:''' Koi skin \"\$1\" nai hai.
 Yaad rakhna ki custom .css aur .js panna owercase title use kare hai, jaise ki {{ns:user}}:Foo/monobook.css aur{{ns:user}}:Foo/Monobook.css nai.",
 'updated'                          => '(Update kar dewa gais hai)',
-'note'                             => '<strong>Note:</strong>',
-'previewnote'                      => '<strong>Ii khali ek jhalak dekhae hai; badlao abhi save nai bhae hai!</strong>',
+'note'                             => "'''Dhyan rakkho:'''",
+'previewnote'                      => "'''Ii khali ek jhalak dekhae hai; badlao abhi save nai bhae hai!'''",
 'previewconflict'                  => 'Ii preview uu text dekhae hai jon ki uppar ke text editing area me dekhai agar aap iske save karaa.',
-'session_fail_preview'             => '<strong> Maaf karna! Ham log aap ke badlao ke process nai kare paya hai due to a loss of session data.
+'session_fail_preview'             => "''' Maaf karna! Ham log aap ke badlao ke process nai kare paya hai due to a loss of session data.
 Fir se kosis karna.
-Agar ii fir bhi nai chale tab kosis karna [[Special:UserLogout|logging out]]aur fir logging back in.</strong>',
-'session_fail_preview_html'        => "<strong>Maaf karna! Ham log aap ke badlao ke process ke process nai kare sakaa kahe ki session data abhi nai dekhae hai.</strong>
+Agar ii fir bhi nai chale tab kosis karna [[Special:UserLogout|logging out]]aur fir logging back in.'''",
+'session_fail_preview_html'        => "'''Maaf karna! Ham log aap ke badlao ke process ke process nai kare sakaa kahe ki session data abhi nai dekhae hai.'''
 
 ''Iske kaaran hai ki {{SITENAME}} me raw HTML enabled hai, preview ke lukae dewa gais hai as a precaution against JavaScript attacks.''
 
-<strong> Agar ii legitimate edit attempt tab, fir se kosis karna.
-Agar ii fir bhi kaam nai kare, tab [[Special:UserLogout|logging out]] aur logging back in ke kosis karna.</strong>",
-'token_suffix_mismatch'            => '<strong> Aap ke badlao ke reject kar dewa gais hai kahe ki aap ke client punctuation charcters ke token edit me mangle kar diis hai.
+'''Agar ii kanuni badlao hai, tab fir se kosis karna.
+Agar ii fir bhi kaam nai kare, tab [[Special:UserLogout|logging out]] aur logging back in ke kosis karna.'''",
+'token_suffix_mismatch'            => "''' Aap ke badlao ke reject kar dewa gais hai kahe ki aap ke client punctuation charcters ke token edit me mangle kar diis hai.
 Ii badlao ke reject kar dewa gais hai to prevent corruption of the page text.
-Ii kabhi kabhi hoe hai jab aap ek buggy web-based anonymous proxy service ke use karta hai.</strong>',
+Ii kabhi kabhi hoe hai jab aap ek buggy web-based anonymous proxy service ke use karta hai.'''",
 'editing'                          => '$1 badlawa jae hai',
 'editingsection'                   => 'Sampadan $1 (bhaag)',
-'editingcomment'                   => '$1 badla jae hai (comment)',
+'editingcomment'                   => '$1 ke badla jae hai (nawaa section)',
 'editconflict'                     => 'Badle me conflict: $1',
 'explainconflict'                  => "Aap ke ii panna ke badle ke suruu kare ke baad, aur koi ii panna ke badal diis hai.
 Uppar ke text area panna ke text jaise abhi hai ke dekhawa jae hai.
@@ -609,26 +622,27 @@ Aap ke aapan badlao ke existing text me merge kare ke parri.
 '''Khali''' text in the upper text area  ke save karaa jai jab aap \"Save page\" ke press karega.",
 'yourtext'                         => 'Aap ke text',
 'storedversion'                    => 'Bachawa gais version',
-'nonunicodebrowser'                => '<strong>WARNING: Aap ke browser unicode compliant nai hai.
-A workaround is in place to allow you to safely edit pages: non-ASCII characters will appear in the edit box as hexadecimal codes.</strong>',
-'editingold'                       => '<strong>WARNING: Aap ii panna ke purana version ke badalata hai
-Agar aap iske save kar lia tab last badlao se abi tak ke changes will be lost.</strong>',
+'nonunicodebrowser'                => "'''CHETAUNI: Aap ke browser unicode ke nai maane hae.
+Ek workaround uu jagah hae jahan pe aap thik se panna ke badle sakta hae: non-ASCII akchhar edit box me hexadecimal codes dekhai.'''",
+'editingold'                       => "'''WARNING: Aap ii panna ke purana version ke badalata hae.'''
+Agar aap iske save kar lia tab last badlao se abi tak ke changes will be lost.",
 'yourdiff'                         => 'Antar',
-'copyrightwarning'                 => 'Dhyann me rakho ki {{SITENAME}} ke sab yog daan $2 ($1 ke dekho aur kaankari khatir) ke niche dewa gae hai. Agar aap nai mangtaa ki aap ke likha gae koi chij ke duusra logan badle tab hain par nahii likho.<br />
+'copyrightwarning'                 => "Dhyann me rakho ki {{SITENAME}} ke sab yog daan $2 ($1 ke dekho aur kaankari khatir) ke niche dewa gae hai. Agar aap nai mangtaa ki aap ke likha gae koi chij ke duusra logan badle tab hain par nahii likho.<br />
 Aap ii bhi waada kartaa hai ki iske aap likha hai aur koi duusra jagah se copy nahi karaa hai.
-<strong>COPYRIGHT CHIJ KE BINA ANUMATI KE HIAN PAR NAHI SUBMIT KARNA!</strong>',
-'copyrightwarning2'                => 'Yaad rakhna ki {{SITENAME}} pe sab yogdaan ke duusra sadasya LOG badle, nai to delete, kare sake hai.
+'''COPYRIGHT CHIJ KE BINA ANUMATI KE HIAN PAR NAHI SUBMIT KARNA!'''",
+'copyrightwarning2'                => "Yaad rakhna ki {{SITENAME}} pe sab yogdaan ke duusra sadasya LOG badle, nai to delete, kare sake hai.
 Agar aap nai mangta ki koi aur aap ke yogdaan ke badle, tab aap hian par nai likho.<br />
 Aap ii bhi kasam khata hai ki aap iske apne se likha hai aur kahin se copy nai karaa hai (Aur jaankari khatir $1 ke dekho). 
-<strong> COPYRIGHT WORK KE BINA AUNUMATI KE SUBMIT NAI KARNA!</strong>',
-'longpagewarning'                  => '<strong>Sawadhan: Ii panna $1 kilobytes lamba hai; kuch browsers sait etna barra panna ke khole nai pai.
-Meherbani kar ke ii page ke chotachota tukrra me kar do.</strong>',
-'longpageerror'                    => '<strong>ERROR: Jon text aap submit karaa hai uu $1 kilobytes lamba hai, ii maximum $2 kilobytes se lamba hai.
-Iske save nai karaa jae sake hai.</strong>',
-'protectedpagewarning'             => '<strong>WARNING: Ii panna ke band kar dewa gais hai jisse ke khali uu sadasya jiske sysop privileges hai iske badle sake hai.</strong>',
+''' COPYRIGHT WORK KE BINA AUNUMATI KE SUBMIT NAI KARNA!'''",
+'longpagewarning'                  => "'''Chetauni:''' Ii panna $1 kilobytes lamba hae; kuch browsers sait etna barra panna ke khole nai pai.
+Meherbani kar ke ii panna ke chota chota tukrra me kar do.",
+'longpageerror'                    => "'''ERROR: Jon text aap submit karaa hai uu $1 kilobytes lamba hai, ii maximum $2 kilobytes se lamba hai.
+Iske save nai karaa jae sake hai.'''",
+'readonlywarning'                  => '<strong>CHETAUNI:Database ke marammat khatir band kar dewa gais hai, iske matlab hai ki aap aapan badlao ke bachae nai sakta hai. Aap cut-n-paste  kar ke likha gae text ke ek text file me save kare sakta hai.</strong>',
+'protectedpagewarning'             => "'''WARNING: Ii panna ke band kar dewa gais hai jisse ke khali uu sadasya jiske sysop privileges hai iske badle sake hai.'''",
 'semiprotectedpagewarning'         => "'''Suchna:''' Ii panna ke band kar dewa gais hai jisse ki khali registered sadasya iske badle sake hai.",
 'cascadeprotectedwarning'          => "'''Chetawani:''' Ii panna ke band kar dewa gais jiske kaaran khali uu sadasya jiske lage sysop privileges hai iske badle sake hai, kahe ki iske niche likha gais cascade-protected {{PLURAL:$1|panna|panna}} me rakkha gais hai:",
-'titleprotectedwarning'            => '<strong>CHETAUNI: Ii panna ke lock kar dewa gais hai jisse ki khali kuch sadasya iske badle sake hai.</strong>',
+'titleprotectedwarning'            => "'''CHETAUNI: Ii panna ke lock kar dewa gais hai jisse ki [[Special:ListGroupRights|specific rights]] ke jarie iske badla jaae sake hai.'''",
 'templatesused'                    => 'Ii panna me kaam me lawa gae templates:',
 'templatesusedpreview'             => 'Ii jhalak me jon template kaam me lawa gais hai',
 'templatesusedsection'             => 'Ii section me kaam me lawa gais templates:',
@@ -638,8 +652,8 @@ Iske save nai karaa jae sake hai.</strong>',
 'edittools'                        => '<!-- Hian ke text edit aur upload forms ke niche dekhai. -->',
 'nocreatetitle'                    => 'Panna ke banae pe rukawat hai',
 'nocreatetext'                     => '{{SITENAME}} me nawaa panna banae ke rukawat hai.
-Aap pichhe jae ke ek panna jon hai ke sampadan kare sakta hai, nai to  [[Special:UserLogin|log in or create an account]].',
-'nocreate-loggedin'                => 'Aap ke {{SITENAME}} me nawaa panna banae ke ijajat nai hai.',
+Aap pichhe jaae ke, ek panna jon hai, ke sampadan kare sakta hai, nai to [[Special:UserLogin|log in or create an account]].',
+'nocreate-loggedin'                => 'Aap ke nawaa panna banaae ke ijaajat nai hai.',
 'permissionserrors'                => 'Permissions Errors',
 'permissionserrorstext'            => 'Aap ke uu chij kare ke ijajat nai hai, ii {{PLURAL:$1|kaaran|kaaran}} khatir:',
 'permissionserrorstext-withaction' => 'Aap ke lage $2 kare khatir ijajat nai hai, ii {{PLURAL:$1|kaaran|kaaran}} se:',
@@ -649,9 +663,12 @@ Aap soco ki ii pann ake sampadan aap ke karte rahe ke chaahi ki nai.
 Aap ke aaram khatir hatae waala suchi hian pe dewa jae hai:",
 
 # Parser/template warnings
+'expensive-parserfunction-warning'        => 'Chetauni: Ii panna me me dher mahanga parser function calls hai.
+
+Is ke $2 ke kamti hoe ke chaahi, abhi $1 hai.',
 'expensive-parserfunction-category'       => 'Panna jisme bahut jaada expensive parser function calls hai',
-'post-expand-template-inclusion-warning'  => 'Warning: Template include size bahut barraa hai.
-Some templates will not be included.',
+'post-expand-template-inclusion-warning'  => "'''Chetauni:''' Template include size bahut barraa hai.
+Kutch templates ke include nai karaa jaai.",
 'post-expand-template-inclusion-category' => 'Panna jon ki template include size se barra hai',
 'post-expand-template-argument-warning'   => 'Warning: Ii panna me kamti se kamti ek template argument hai jiske expansion size bahut barraa hai.
 Ii sab arguments ke omit kar dewa gais hai.',
@@ -688,7 +705,6 @@ Aap jon URL ke use kar ke ii panna ke acess karaa hai, uske check karo.',
 'page_first'          => 'pahila',
 'page_last'           => 'aakhri',
 'histlegend'          => 'Farak pasand: Antar dekhe khatir radio box me chinh lagao aur enter ke nai to niche ke button dabao.<br />
-
 Legend: (abhi) = abhi ke version se farka,
 (pahile waala) = pahile waala version se farka, M = chhota sampadan.',
 'deletedrev'          => '[matae dewa gais hai]',
@@ -710,33 +726,34 @@ Try karo [[Special:Search|wiki me khije ke]] aur nawaa panna ke.',
 'rev-deleted-user'            => '(username ke hatae dewa gais hai)',
 'rev-deleted-event'           => '(log action ke hatae dewa gais hai)',
 'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">
-Panna ke ii badla ke public archives me se hatae dewa gais hai.
-Iske baare me aur jaankari [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log me saait hoi.</div>',
+Panna ke ii badlao ke public archives me se hatae dewa gais hai.
+Iske baare me aur jaankari [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] me saait hoi.</div>',
 'rev-deleted-text-view'       => '<div class="mw-warning plainlinks">
-Panna ke ii badla ke public archives me se hatae dewa gais hai.
-Aap {{SITENAME}} me ek administrator hoe ke kaara iske dekhe sakta hai;
-Iske baare me aur jaankari [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log me saait hoi.</div>',
+Panna ke ii badlao ke public archives me se hatae dewa gais hai.
+Aap {{SITENAME}} me ek administrator hoe ke kaaran iske dekhe sakta hai;
+iske baare me aur jaankari [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] me saait hoi.</div>',
 'rev-delundel'                => 'dekhao/lukao',
 'revisiondelete'              => 'Badlao ke mitao/nai mitao',
 'revdelete-nooldid-title'     => 'Target revision jon ki valid nai hai',
 'revdelete-nooldid-text'      => 'Aap chaahe target revision(s) ke specify nai karaa hai, ii function ke perform kare ke khatir, specified revision haiye nai, nai to aap abhi ke badlao ke lukae ke kosis karta hai.',
-'revdelete-selected'          => '{{PLURAL:$2|Selected badlao|Selected badlao}} of [[:$1]]:',
-'logdelete-selected'          => '{{PLURAL:$1|Chuna gais log event|Chuna gais log events}}:',
-'revdelete-text'              => 'Mitawa gae badlao aur ghatna panna ke itihaas me dekhai, lekin content ke kuch part janta nai access kare saki.
-Duusra admins {{SITENAME}} me, lukawa gais content ke khole saki aur iske mitae bhi saki yahi interface use kar ke, jab tak ki aur rukawat nai lagawa jaae.',
+'revdelete-selected'          => "'''{{PLURAL:$2|Selected badlao|Selected badlao}} of [[:$1]]:'''",
+'logdelete-selected'          => "'''{{PLURAL:$1|Chuna gais log event|Chuna gais log events}}:'''",
+'revdelete-text'              => "'''Mitawa gae badlao aur ghatna panna ke itihaas me dekhai, lekin content ke kuch part janta nai access kare saki.'''
+Duusra admins {{SITENAME}} me, lukawa gais content ke khole sake aur iske mitae bhi sake hai interface use kar ke, jab tak ki aur rukawat nai lagawa jaae.
+Meharbaani kar ke ii confirm karo ki aap ii chij kare mangta hai, aap iske natija samajhta hai, aur aap iske [[{{MediaWiki:Policy-url}}|the policy]] ke niche karta hai.",
 'revdelete-legend'            => 'Dekhe waala rukawat set karo',
 'revdelete-hide-text'         => 'Badlawa gais text ke lukao',
 'revdelete-hide-name'         => 'Kaam aur manjil ke lukao',
 'revdelete-hide-comment'      => 'Badlao ke baare me comment ke lukao',
 'revdelete-hide-user'         => "Editor's username/IP ke lukao",
-'revdelete-hide-restricted'   => 'Ii rukawat ke Sysops pe lagae ke interface ke lock karo.',
+'revdelete-hide-restricted'   => 'Ii rukawat ke administrator aur duusra log se lukao.',
 'revdelete-suppress'          => 'Sysops ke saathe saathe aur sab se data ke suppress karo',
 'revdelete-hide-image'        => 'File content ke lukao',
-'revdelete-unsuppress'        => 'Restored revisions me se rukawat hatao',
+'revdelete-unsuppress'        => 'Pahile jaise karaa gais badlao me se rukawat hatao',
 'revdelete-log'               => 'Comment ke log karo:',
 'revdelete-submit'            => 'Chuna gae badlao ke apply karo',
-'revdelete-logentry'          => 'badla gae revision visibility of [[$1]]',
-'logdelete-logentry'          => 'badla gais event visibility of [[$1]]',
+'revdelete-logentry'          => '[[$1]] ke badlao ke visibility ke badal dewa gais hai',
+'logdelete-logentry'          => '[[$1]] keevent visibility ke badal dewa gais hae',
 'revdelete-success'           => "'''Badlao dekhe khatir taiyaar hai.'''",
 'logdelete-success'           => "'''Log dekhe khatir taiyaar hai.'''",
 'revdel-restore'              => 'Visibility ke badlo',
@@ -744,7 +761,7 @@ Duusra admins {{SITENAME}} me, lukawa gais content ke khole saki aur iske mitae 
 'deletedhist'                 => 'Mitawa gae itihass',
 'revdelete-content'           => 'suchi',
 'revdelete-summary'           => 'summary ke badlo',
-'revdelete-uname'             => 'username',
+'revdelete-uname'             => 'Sadasya ke naam',
 'revdelete-restricted'        => 'sysops pe llabu restrictions',
 'revdelete-unrestricted'      => 'sysops se hatawa gae rukawat',
 'revdelete-hid'               => '$1 lukaya',
@@ -754,29 +771,29 @@ Duusra admins {{SITENAME}} me, lukawa gais content ke khole saki aur iske mitae 
 
 # Suppression log
 'suppressionlog'     => 'Dabae waala log',
-'suppressionlogtext' => 'Niche ke suchi me sysops se lukawa gais deletions au rukawat hai.
-Dekho [[Special:IPBlockList|IP block list]] for the list of currently operational bans and blocks.',
+'suppressionlogtext' => 'Niche ke suchi me administrators se lukawa gais deletions au rukawat hae.
+Abhi ke laabu rukawat ke suchi ke khatir [[Special:IPBlockList|IP block list]] ke dekho.',
 
 # History merging
 'mergehistory'                     => 'Panna ke itihass ke jorro',
-'mergehistory-header'              => 'Ii panna aap ke ek panna ke balao ke itihaas ke duusra panna ke badlao ke itihaas se jorre sake hai.
-Make sure that this change will maintain historical page continuity.',
+'mergehistory-header'              => 'Ii panna aap ke ek panna ke balao ke itihaas ke duusra panna ke badlao ke itihaas se jorre sake hae.
+Ii baat ke dhyan me rakhna ki panna ke itihaas ek ke baad ek rahe.',
 'mergehistory-box'                 => 'Dui panna ke badlao ke itihaas ke jorro:',
 'mergehistory-from'                => 'Source panna:',
 'mergehistory-into'                => 'Destination panna:',
 'mergehistory-list'                => 'Mergeable badalao ke itihaas',
-'mergehistory-merge'               => 'Niche likha [[:$1]] ke badlao ke [[:$2]] me jorra jaae sake hai.
-Use the radio button column to merge in only the revisions created at and before the specified time.
-Note that using the navigation links will reset this column.',
+'mergehistory-merge'               => 'Niche likha [[:$1]] ke badlao ke [[:$2]] me jorra jaae sake hae.
+Radio button column ke kaam me laae ke khaali wahi badlao ke jorro jon ki batawa gais time pe, nai to usse pahile, banawa gais hae. 
+Ii baat ke dhyan me rakhna ki navigation jorr ke kaam me laae se ii column reset hoe jaai.',
 'mergehistory-go'                  => 'Jorre jaae sake badlao ke dekhao',
 'mergehistory-submit'              => 'Badlao ke jorro',
 'mergehistory-empty'               => 'Koi badlao ke jorraa nai jaae sake hai.',
 'mergehistory-success'             => '[[:$1]]ke $3 {{PLURAL:$3|badlao|badlao}} ke safalta se [[:$2]] me jorr dewa gais hai.',
-'mergehistory-fail'                => 'Itihas ke nai jorre paya hai, please recheck the page and time parameters.',
+'mergehistory-fail'                => 'Itihaas ke nai jorre paaya hae, meharbaani kar ke panna aur time parameters ke check karo.',
 'mergehistory-no-source'           => 'Source panna $1 nai hai.',
 'mergehistory-no-destination'      => 'Destination panna $1 nai hai.',
-'mergehistory-invalid-source'      => 'Source panna must be a valid title.',
-'mergehistory-invalid-destination' => 'Destination panna must be a valid title.',
+'mergehistory-invalid-source'      => 'Suruu waala panna ke must sahi naam hoe ke chaahi.',
+'mergehistory-invalid-destination' => 'Manzil waala panna ke sahi naam rahe ke chaahi.',
 'mergehistory-autocomment'         => '[[:$1]] [[:$2]] me jorr dewa gais hai',
 'mergehistory-comment'             => '[[:$1]] [[:$2]] me jorr dewa gais hai: $3',
 
@@ -795,44 +812,244 @@ Note that using the navigation links will reset this column.',
 'diff-multi'              => '({{PLURAL:$1|Ek biich waala badlao|$1 biich waala badlao}} nai dekhawa jae hai.)',
 
 # Search results
-'searchresults' => 'Khij ke results',
-'noexactmatch'  => "'''\"\$1\" naam ke koi panna nai hai.''' Aap saktaa hai [[:\$1|ii panna ke banae]].",
-'prevn'         => 'pahile waala $1',
-'nextn'         => 'aage waala $1',
-'viewprevnext'  => 'Dekho ($1) ($2) ($3)',
-'powersearch'   => 'Visesh khoj',
+'searchresults'             => 'Khij ke results',
+'searchresulttext'          => '{{SITENAME}} me khoje khatir aur jaankari khatir, dekho [[{{MediaWiki:Helppage}}|{{int:help}}]].',
+'searchsubtitle'            => 'Aap khoja rahaa  \'\'\'[[:$1]]\'\'\' ([[Special:Prefixindex/$1|sab panna jon ki "$1" se suruu hoe hai]] | [[Special:WhatLinksHere/$1|sab panna jon ki "$1" se jurre hai]])',
+'searchsubtitleinvalid'     => "Aap '''$1''' ke khoja hai",
+'noexactmatch'              => "'''\"\$1\" naam ke koi panna nai hai.''' Aap saktaa hai [[:\$1|ii panna ke banae]].",
+'noexactmatch-nocreate'     => "'''\"\$1\" naam ke koi panna nai hai.'''",
+'toomanymatches'            => 'Bahut dher match mila, duusra query se kosis karo',
+'titlematches'              => 'Panna ke jon naam mile hai',
+'notitlematches'            => 'Koi pannake naam nai mile hai',
+'textmatches'               => 'Panna ke jon text mile hai',
+'notextmatches'             => 'Koi panna ke text nai mile hai',
+'prevn'                     => 'pahile waala $1',
+'nextn'                     => 'aage waala $1',
+'viewprevnext'              => 'Dekho ($1) ($2) ($3)',
+'search-result-size'        => '$1 ({{PLURAL:$2|1 sabd|$2 sabd}})',
+'search-result-score'       => 'Len den: $1%',
+'search-redirect'           => '(redirect $1)',
+'search-section'            => '(section $1)',
+'search-suggest'            => 'Kya aap ke matlab rahaa: $1',
+'search-interwiki-caption'  => 'Saathe ke project',
+'search-interwiki-default'  => '$1 ke result:',
+'search-interwiki-more'     => '(aur)',
+'search-mwsuggest-enabled'  => 'bichar ke saathe',
+'search-mwsuggest-disabled' => 'koi bichar nai hai',
+'search-relatedarticle'     => 'sambandh rakkhe hai',
+'mwsuggest-disable'         => 'AJAX sughao ke beasar karo',
+'searchrelated'             => 'sambhand rakkhe hai',
+'searchall'                 => 'sab',
+'showingresults'            => "Niche dekhae hai {{PLURAL:$1|'''1''' result|'''$1''' results}} #'''$2''' se suruu hoe ke.",
+'showingresultsnum'         => "Niche dekhawa jae hai {{PLURAL:$3|'''1''' result|'''$3''' results}}, #'''$2''' se suruu hoe ke.",
+'showingresultstotal'       => "Niche dekhae hai {{PLURAL:$3|result '''$1''' of '''$3'''|results '''$1 - $2''' of '''$3'''}}",
+'nonefound'                 => "'''Yaad rakhna''': apne se khaali thora namespaces me khoja jaae hai.
+Aapan query ke ''all:'' se suruu kar ke visay suchi me khojo (including talk pages, templates, etc), nai to jon namespace aap mangtaa hai usse query suruu karo.",
+'powersearch'               => 'Visesh khoj',
+'powersearch-legend'        => 'Gahira khoj',
+'powersearch-ns'            => 'Namespaces me khojo:',
+'powersearch-redir'         => 'Redirects ke list karo',
+'powersearch-field'         => 'Iske khojo',
+'search-external'           => 'Bahaari khoj',
+'searchdisabled'            => '{{SITENAME}} me abhi khoje ke anumati nai hai.
+Aap tab tak Google se khoje sakta hai.
+Yaad rakhna ki uu log ke {{SITENAME}} ke index saait purana hoi.',
 
 # Preferences page
-'preferences'   => 'Pasand',
-'mypreferences' => 'Hamaar preferences',
-'retypenew'     => 'Password fir se type karo:',
+'preferences'              => 'Pasand',
+'mypreferences'            => 'Hamaar preferences',
+'prefs-edits'              => 'Badlao ke number:',
+'prefsnologin'             => 'Aap abhi logged in nai hai',
+'prefsnologintext'         => 'Aaap ke <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} logged in]</span> chaahi rahe ke user preferences ke badle ke khatir.',
+'prefsreset'               => 'Preferences ke godaam se reset kar dewa gais hai.',
+'qbsettings'               => 'Quickbar',
+'qbsettings-none'          => 'Koi nai',
+'qbsettings-fixedleft'     => 'Left me fixed hai',
+'qbsettings-fixedright'    => 'Right me fixed hai',
+'qbsettings-floatingleft'  => 'Floating left',
+'qbsettings-floatingright' => 'Floating right',
+'changepassword'           => 'Pasword ke badlo',
+'skin'                     => 'Skin',
+'math'                     => 'Math',
+'dateformat'               => 'Date ke format',
+'datedefault'              => 'Koi pasand nai',
+'datetime'                 => 'Tarik aur time',
+'math_failure'             => 'Parse nai kare sakaa',
+'math_unknown_error'       => 'galti ke nai samajhta',
+'math_unknown_function'    => 'nai samajhta ki ii kon chij khatir hai',
+'math_lexing_error'        => 'lexing error',
+'math_syntax_error'        => 'syntax error',
+'math_image_error'         => 'PNG conversion fail hoe gais;
+latex, dvips aur gs ke correct installation ke check kar ke convert convert karo',
+'math_bad_tmpdir'          => 'Math temporary directory nai banae sakta hai',
+'math_bad_output'          => 'Math output directory me likhe nai to banae nai sakta hai',
+'math_notexvc'             => 'Texvc executable nai hai;
+Configure kare khatir meharbani kar ke math/README ke dekho.',
+'prefs-personal'           => 'Sadasya ke profile',
+'prefs-rc'                 => 'Nawaa badlao',
+'prefs-watchlist'          => 'Dhyan suchi',
+'prefs-watchlist-days'     => 'Dhyan suchi me ketna roj dekhawa jaae:',
+'prefs-watchlist-edits'    => 'Barraa dhyan suchi me jaada se jaada ketna badlao dekhawa jaae:',
+'prefs-misc'               => 'Futkar',
+'saveprefs'                => 'Save karo',
+'resetprefs'               => 'Binaa bachawa gias badlao ke mitao',
+'oldpassword'              => 'Purana password:',
+'newpassword'              => 'Nawaa password:',
+'retypenew'                => 'Password fir se type karo:',
+'textboxsize'              => 'Badaltaa hai',
+'rows'                     => 'Rows:',
+'columns'                  => 'Columns:',
+'searchresultshead'        => 'Khojo',
+'resultsperpage'           => 'Panna ke ketna dafe dekha gais hai:',
+'contextlines'             => 'Lines per hit:',
+'contextchars'             => 'Context per line:',
+'stub-threshold'           => 'Threshold for <a href="#" class="stub">stub link</a> formatting (bytes):',
+'recentchangesdays'        => 'Nawaa badlao me ketna roj dekhawa jaae:',
+'recentchangescount'       => 'Nawaa badlao me ketna badlao ke dekhae ke chaahi, panna ke itihaas, aur log me, default se:',
+'savedprefs'               => 'Aap ke pasand ke save kar lewa gais hai.',
+'timezonelegend'           => 'Time ke zone:',
+'timezonetext'             => '¹ Aap ke local time aur server time (UTC) me ketna farka hai.',
+'localtime'                => 'Sthaniye samay',
+'timezoneoffset'           => 'Offset¹',
+'servertime'               => 'Server ke time',
+'guesstimezone'            => 'Browser se bharo',
+'allowemail'               => 'Aur sadasya se e-mail enable karo',
+'prefs-searchoptions'      => 'Khoje ke option',
+'prefs-namespaces'         => 'Namespaces',
+'defaultns'                => 'Default se ii namespacesme khojo:',
+'default'                  => 'default',
+'files'                    => 'Files',
 
-'grouppage-sysop' => '{{ns:project}}:Administrators',
+# User rights
+'userrights'                  => 'Sadasya ke adhikaar ke chalao', # Not used as normal message but as header for the special page itself
+'userrights-lookup-user'      => 'Sadasya ke group ke manage karo',
+'userrights-user-editname'    => 'Ek Username ke enter karo:',
+'editusergroup'               => 'User groups ke badlo',
+'editinguser'                 => "'''[[User:$1|$1]]''' ke user rights badaltaa hai ([[User talk:$1|{{int:talkpagelinktext}}]] | [[Special:Contributions/$1|{{int:contribslink}}]])",
+'userrights-editusergroup'    => 'User groupske badlo',
+'saveusergroups'              => 'User groups ke save karo',
+'userrights-groupsmember'     => 'Iske member hai:',
+'userrights-groups-help'      => 'Aap jon group me ii sadasya hai ke badle sakta hai:
+* Ek checked box ke matlab hai ki sadasya ii group me hai.
+* Ek unchecked box ke matlab hai ki sadasya ii group me nai hai.
+* Ek * ke matlab hai ki aap group ke jorre ke baad hatae nai sakta hai, nai to hatae ke baad jorre nai sakta hai.',
+'userrights-reason'           => 'Badle ke kaaran:',
+'userrights-no-interwiki'     => 'Aap ke duusra wiki me user rights ke badle ke adhikaar nai hai.',
+'userrights-nodatabase'       => 'Database $1 abhi hai nai, nai to local nai hai.',
+'userrights-nologin'          => 'Sadasya ke user rights de ke khatir, ap ke chaahi ki aap [[Special:UserLogin|log in]] karo ek administrator ke account se.',
+'userrights-notallowed'       => 'Aap ke account ke user rights de ke adhikar nai hai.',
+'userrights-changeable-col'   => 'Groups jiske aap badle sakta hai',
+'userrights-unchangeable-col' => 'Groups jiske aap badle nai sakta hai',
+
+# Groups
+'group'               => 'Group:',
+'group-user'          => 'Sadasya',
+'group-autoconfirmed' => 'Autoconfirmed sadasya',
+'group-bot'           => 'Bots',
+'group-sysop'         => 'Sysops',
+'group-bureaucrat'    => 'Bureaucrats',
+'group-suppress'      => 'Oversights',
+'group-all'           => '(sab)',
+
+'group-user-member'          => 'Sadasya',
+'group-autoconfirmed-member' => 'Autoconfirmed sadasya',
+'group-bot-member'           => 'Bot',
+'group-sysop-member'         => 'Sysop',
+'group-bureaucrat-member'    => 'Bureaucrat',
+'group-suppress-member'      => 'Oversight',
+
+'grouppage-user'          => '{{ns:project}}:Sadasya',
+'grouppage-autoconfirmed' => '{{ns:project}}:Autoconfirmed sadasya',
+'grouppage-bot'           => '{{ns:project}}:Bots',
+'grouppage-sysop'         => '{{ns:project}}:Administrators',
+'grouppage-bureaucrat'    => '{{ns:project}}:Bureaucrats',
+'grouppage-suppress'      => '{{ns:project}}:Oversight',
+
+# Rights
+'right-read'                 => 'Panna ke parrho',
+'right-edit'                 => 'Panna ke badlo',
+'right-createpage'           => 'Panna banao (jon ki salah kare waala panna nai hai)',
+'right-createtalk'           => 'Salah kare waala panna banao',
+'right-createaccount'        => 'Nawaa sadasya ke account banao',
+'right-minoredit'            => 'Badlao ke chhota mark karo',
+'right-move'                 => 'Panna ke naam badlo',
+'right-move-subpages'        => 'Panna aur uske subpanna ke naam badlo',
+'right-suppressredirect'     => 'Panna ke naam badalte ke time, purana naam se redirect ke nai banao.',
+'right-upload'               => 'File ke upload karo',
+'right-reupload'             => 'Ek abhi waala file ke uppar se likho',
+'right-reupload-own'         => 'Ek abhi waala file jiske aap upload karaa hai ke uppar likh do',
+'right-reupload-shared'      => 'Share media repository ke file ke uppar likh do',
+'right-upload_by_url'        => 'URL address se ek file ke upload karo',
+'right-purge'                => 'Site cache se ek panna ke mina fir se puchhe mitae do',
+'right-autoconfirmed'        => 'Semi-protected panna ke badlo',
+'right-bot'                  => 'Automated process ke rakam treat karo',
+'right-nominornewtalk'       => 'Not have minor edits to discussion pages trigger the new messages prompt',
+'right-apihighlimits'        => 'Use higher limits in API queries',
+'right-writeapi'             => 'Use of the write API',
+'right-delete'               => 'Panna ke mitao',
+'right-bigdelete'            => 'Barraa itihaas waala panna ke mitao',
+'right-deleterevision'       => 'Panna ke khaas badlao ke mitao nai to bachao',
+'right-deletedhistory'       => 'Mitawa gais itihass ke entry ke binaa saathe waala text ke dekho',
+'right-browsearchive'        => 'Mitawa gais panna ke khojo',
+'right-undelete'             => 'Ek panna ke undelete karo',
+'right-suppressrevision'     => 'Review and restore revisions hidden from Sysops',
+'right-suppressionlog'       => 'Private logs ke dekho',
+'right-block'                => 'Duusra sadasya ke badle se roko',
+'right-blockemail'           => 'Sadasya ke email bheje se roko',
+'right-hideuser'             => 'Username ke roko, jisse ki janta iske dekhe nai sake',
+'right-ipblock-exempt'       => 'Bypass IP blocks, auto-blocks and range blocks',
+'right-proxyunbannable'      => 'Proxies ke automatic blocks ke bypass karo',
+'right-protect'              => 'Protection level ke badlo aur bachawa gais panna ke badlo',
+'right-editprotected'        => 'Bachawa gais panna ke badlo (without cascading protection)',
+'right-editinterface'        => 'User interface ke badlo',
+'right-editusercssjs'        => 'Duusra sadsya ke CSS aur JS files ke badlo',
+'right-rollback'             => 'Jaldi se ek khaas panna ke pichhla sadasya ke badlao ke ulta kar do',
+'right-markbotedits'         => 'Rolled-back edits ke bot edits mark karo',
+'right-noratelimit'          => 'Rrate limits se koi asar nai hai',
+'right-import'               => 'Duusra wiki me se panna ke import karo',
+'right-importupload'         => 'Ek file upload se panna ke import karo',
+'right-patrol'               => 'Duusra ke badlao pr pahraa do',
+'right-autopatrol'           => 'Aapan badlao pe apne se pahraa do',
+'right-patrolmarks'          => 'Haali ke badlao ke pahraa ke mark ke dekho',
+'right-unwatchedpages'       => 'Unwatched panna ke suchi ke dekho',
+'right-trackback'            => 'Ek trackback ke submit karo',
+'right-mergehistory'         => 'Panna ke itihass ke jorro',
+'right-userrights'           => 'Sadasya ke adhikar ke badlo',
+'right-userrights-interwiki' => 'Duusra wiki me sadasya ke adhikar ke badlo',
+'right-siteadmin'            => 'Database ke band karo aur kholo',
 
 # User rights log
-'rightslog' => 'Sadasya adhikar suchi',
+'rightslog'      => 'Sadasya adhikar suchi',
+'rightslogtext'  => 'Ii sadasya ke adhikar ke badlao ke suchi hai.',
+'rightslogentry' => '$1 ke group ke membership ke $2 se $3 badal dia hai',
+'rightsnone'     => '(koi nai hai)',
 
 # Recent changes
-'nchanges'                       => '$1 {{PLURAL:$1|badlao|badlao}}',
-'recentchanges'                  => 'Nawaa badlao',
-'recentchanges-feed-description' => 'Abhi haali me bhae ii wiki ke feed me ke track karo.',
-'rcnote'                         => "Niche {{PLURAL:$1|hai '''1''' badlao|aakhri hai '''$1''' badlao}} pahile {{PLURAL:$2|din|'''$2''' din}}, $5, $4 talak.",
-'rcnotefrom'                     => "Niche '''$2''' se badlao hai ('''$1''' tak )",
-'rclistfrom'                     => '$1 se suruu kar ke nawaa badlao dekhao',
-'rcshowhideminor'                => '$1 chhota badlao',
-'rcshowhidebots'                 => '$1 bots',
-'rcshowhideliu'                  => '$1 logged-in sadasya',
-'rcshowhideanons'                => '$1 bina naam ke sadasya',
-'rcshowhidepatr'                 => '$1 pahra dewa gae sampadan',
-'rcshowhidemine'                 => '$1 hamaar sampadan',
-'rclinks'                        => 'Pichhla $1 badlao pichle $2 din me dekhao <br />$3',
-'diff'                           => 'farka',
-'hist'                           => 'itihaas',
-'hide'                           => 'Chhupao',
-'show'                           => 'Dekhao',
-'minoreditletter'                => 'm',
-'newpageletter'                  => 'N',
-'boteditletter'                  => 'b',
+'nchanges'                          => '$1 {{PLURAL:$1|badlao|badlao}}',
+'recentchanges'                     => 'Nawaa badlao',
+'recentchangestext'                 => 'Wiki me ii panna ke nawaa badlao pe dhyan rakho.',
+'recentchanges-feed-description'    => 'Abhi haali me bhae ii wiki ke feed me ke track karo.',
+'rcnote'                            => "Niche {{PLURAL:$1|hai '''1''' badlao|aakhri hai '''$1''' badlao}} pahile {{PLURAL:$2|din|'''$2''' din}}, $5, $4 talak.",
+'rcnotefrom'                        => "Niche '''$2''' se badlao hai ('''$1''' tak )",
+'rclistfrom'                        => '$1 se suruu kar ke nawaa badlao dekhao',
+'rcshowhideminor'                   => '$1 chhota badlao',
+'rcshowhidebots'                    => '$1 bots',
+'rcshowhideliu'                     => '$1 logged-in sadasya',
+'rcshowhideanons'                   => '$1 bina naam ke sadasya',
+'rcshowhidepatr'                    => '$1 pahra dewa gae sampadan',
+'rcshowhidemine'                    => '$1 hamaar sampadan',
+'rclinks'                           => 'Pichhla $1 badlao pichle $2 din me dekhao <br />$3',
+'diff'                              => 'farka',
+'hist'                              => 'itihaas',
+'hide'                              => 'Chhupao',
+'show'                              => 'Dekhao',
+'minoreditletter'                   => 'm',
+'newpageletter'                     => 'N',
+'boteditletter'                     => 'b',
+'number_of_watching_users_pageview' => '[$1 watching {{PLURAL:$1|user|users}}]',
+'rc_categories'                     => 'Limit to categories (separate with "|")',
+'rc_categories_any'                 => 'Koi bhi',
+'newsectionsummary'                 => '/* $1 */ nawaa vibhag',
 
 # Recent changes linked
 'recentchangeslinked'          => 'Panna ke jurraa badlao',
@@ -840,168 +1057,551 @@ Note that using the navigation links will reset this column.',
 'recentchangeslinked-noresult' => 'Linked pages me ii time ke bhitar koi changes nai bhae.',
 'recentchangeslinked-summary'  => "Ii panna pahile waala badlao jon panna hian par linked hai ke list kare hai (nai to visesh vibhag ke sadasya).
 Panna jon [[Special:Watchlist|aap ke dhyan suchi]] me hai '''bold''' karal hai.",
+'recentchangeslinked-page'     => 'Panna ke naam:',
+'recentchangeslinked-to'       => 'Badalo jon ki given panna se linked hai ke dekhao',
 
 # Upload
-'upload'        => 'File ke upload karo',
-'uploadbtn'     => 'File upload karo',
-'uploadlogpage' => 'Suchi ke upload karo',
-'uploadedimage' => '"[[$1]]" ke upload kar dewa gae',
+'upload'                      => 'File ke upload karo',
+'uploadbtn'                   => 'File upload karo',
+'reupload'                    => 'Fir se upload karo',
+'reuploaddesc'                => 'Upload ke cancel kar ke upload form pe lauto',
+'uploadnologin'               => 'Aap abhi loged in nai hai',
+'uploadnologintext'           => 'Aap ke [[Special:UserLogin|logged in]] kare ke chaahi, file upload kare ke khatir.',
+'upload_directory_missing'    => 'Upload directory ($1) nai hai aur webserver iske nai banae sakis hai.',
+'upload_directory_read_only'  => 'Upload directory ($1) ke webserver nai likhe sake hai.',
+'uploaderror'                 => 'Upload nai hoe paais hai',
+'uploadtext'                  => "Niche ke form ke use kar ke file ke upload karo.
+Pahile ke upload karaa gais file ke dekhe ke khatir [[Special:ImageList|list of uploaded files]] , fir se upload karaa gais file ke dekhe nai to khoje ke khatir [[Special:Log/upload|upload log]], aur mitawa gais files ke khatir [[Special:Log/delete|deletion log]] jaao.
+Ek file ke koi panna me include kare ke khatir, niche ke ek rakam ke jorr ke kaam me laao:
+* '''<tt><nowiki>[[</nowiki>{{ns:image}}<nowiki>:File.jpg]]</nowiki></tt>''' file ke puura version ke use kare ke khatir
+* '''<tt><nowiki>[[</nowiki>{{ns:image}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></tt>''' to use a 200 pixel wide rendition in a box in the left margin with 'alt text' as description
+* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>''' for directly linking to the file without displaying the file",
+'upload-permitted'            => 'File types jiske ijajat hai: $1.',
+'upload-preferred'            => 'Kon rakam ke file ke mangtaa hai: $1.',
+'upload-prohibited'           => 'Ii rakam ke file ke upload nai karaa jaae sake hai: $1.',
+'uploadlog'                   => 'upload karaa gae file ke log',
+'uploadlogpage'               => 'Suchi ke upload karo',
+'uploadlogpagetext'           => 'Nawaa upload karaa gais file ke suchi niche dekhae hai.
+Aur jaada visual overview khatir, [[Special:NewImages|gallery of new files]] ke dekho.',
+'filename'                    => 'Filename',
+'filedesc'                    => 'Sanchhipt me',
+'fileuploadsummary'           => 'Sanchhipt me:',
+'filestatus'                  => 'Copyright ke haalat:',
+'filesource'                  => 'File ke source:',
+'uploadedfiles'               => 'Files jiske upload karaa gais hai.',
+'ignorewarning'               => 'Chetauni pe dhyan nai de ke file ke save karo',
+'ignorewarnings'              => 'Koi bhi chetauni pe dhyan nai do',
+'minlength1'                  => 'File ke naam me kamti se kamti ek letter hoe ke chaahi.',
+'illegalfilename'             => 'Filename "$1" me uu akchhar hai jiske panna ke title me allowed nai hai.
+Maharbaani kar ke file ke naam ke badal ke fir se upload kare ke kosis karo.',
+'badfilename'                 => 'File ke naam badak ke "$1" kar dewa gais hai.',
+'filetype-badmime'            => 'MIME rakam "$1" ke upload kare ke ijajat nai hai.',
+'filetype-bad-ie-mime'        => 'Ii file ke upload nai kare sakta hai kahe ki Internet Explorer iske "$1" ke rakam dekhi, jon ki allowed nai hai aur khatarnaat rakam ke file jaana jaae hai.',
+'filetype-unwanted-type'      => "'''\".\$1\"''' rakam ke file ke hian nai maaga jaae hai.
+Maange waala {{PLURAL:\$3|file ke rakam hai|file ke rakam hai}} \$2.",
+'filetype-banned-type'        => "'''\".\$1\"''' ke rakam ke file hian pe allowed nai hai.
+Allowed {{PLURAL:\$3|rakam ke file hai|rakam ke fle hai}} \$2.",
+'filetype-missing'            => 'File ke koi extension nai hai (jaise ki ".jpg").',
+'large-file'                  => 'Ii salah hai ki file ke size $1 se barraa nai rahe;
+ii file hai $2',
+'largefileserver'             => 'Ii file, jetna ki server allow kare hai, se barraa hai.',
+'emptyfile'                   => 'Jon file aap upload karaa rahaa uu khaali rahaa.
+Ii saait file ke naam likhe me typing mistake ke kaaran hoi.
+Meharbaani kar ke ii dekho ki aap such me ii file upload kare mangtaa hai ki nai.',
+'fileexists'                  => "Ii naam ke file abhi hai, meharbani kar ke check karo '''<tt>$1</tt>''' agar jo aap sure nai hai ki aap iske badle mangta hai.",
+'filepageexists'              => "Ii file ke description ke '''<tt>$1</tt>''' me banae dewa gais rakaa, lekin ii naam ke koi file abhi nai hai.
+Aap jon summary likhtaa hai uu panna ke description me nai dekhai.
+Description ke dekhae ke khatir, aap ke iske manually badle ke parri.",
+'fileexists-extension'        => "Ii rakam ke naam ke ek aur file hai:<br />
+Uploading file ke naam: '''<tt>$1</tt>'''<br />
+Abhi ke file ke naam: '''<tt>$2</tt>'''<br />
+Meharbani kar ke duusra naam chuno.",
+'fileexists-thumb'            => "<center>'''Abhi ke file'''</center>",
+'fileexists-thumbnail-yes'    => "Ii janawe hai ki ii file ek chhota chapa hai ''(thumbnail)''.
+Meharbani kar ke file ke check karo '''<tt>$1</tt>'''.<br />
+Agar jo check karaa gais file wahi chhapa ke original size hai tab ek aur thumbnail ke upload kare ke jaruri nai hai.",
+'file-thumbnail-no'           => "File ke naam '''<tt>$1</tt>''' se suruu hoe hai.
+Ii janawe hai ki ii chhota size ke chapa hai ''(thumbnail)''.
+Agar jo aap ke lage ii chapa full resolution me hai tab uske upload karna, nai to file ke naam badlo.",
+'fileexists-forbidden'        => 'Ii naam ke file abhi hai.  Agar jo aap fir bhi aapan file upload kare mangtaa hai tab nawaa naam use karo. [[Image:$1|thumb|center|$1]]',
+'fileexists-shared-forbidden' => 'Ii naam ke file abhi shared file repository me hai. Agar jo aap fir bhi aapan file upload kare manta hai tab pichhe jaae ke nawaa naam use karo. [[Image:$1|thumb|center|$1]]',
+'file-exists-duplicate'       => 'Ii file following file ke duplicate hai {{PLURAL:$1|file|files}}:',
+'successfulupload'            => 'Upload safal bhais',
+'uploadwarning'               => 'Upload warning',
+'savefile'                    => 'File ke save karo',
+'uploadedimage'               => '"[[$1]]" ke upload kar dewa gae',
+'overwroteimage'              => '"[[$1]]" ke nawaa version ke upload karaa gais hai',
+'uploaddisabled'              => 'Uploads ke disable kar dewa gais hai',
+'uploaddisabledtext'          => 'File uploads ke disable kar dewa gais hai.',
+'uploadscripted'              => 'Ii file me HTML nai to script code hai jiske web browser erroneously interpret kare sake hai.',
+'uploadcorrupt'               => 'Ii file chaahe ke corrupt hai nai to isme wrong extension hai.
+Meharbani kar ke file ke check kar ke fir se upload karo.',
+'uploadvirus'                 => 'Ii file me virus hai! Details: $1',
+'sourcefilename'              => 'Source filename:',
+'destfilename'                => 'Destination filename:',
+'upload-maxfilesize'          => 'jaada se jaada file size: $1',
+'watchthisupload'             => 'Ii panna pe dhyan rakhho',
+'filewasdeleted'              => 'Ii naam ke file ke pahile upload kar ke baad me delete karaa gais hai.
+Aap ke chaahi ki aap $1 check kar lo fir se upload kare se pahile.',
+'upload-wasdeleted'           => "'''Chetauni: Aap uu file ke upload karta hai jiske pahile delete karaa gais hai.'''
+Aap ke ii soche ke chaahi ki ii file ke upload karna appropriate hai ki nai.
+Aap ke subidha khatir deletion log hian pe hai:",
+'filename-bad-prefix'         => "Jon file aap upload kartaa hai uske naam '''\"\$1\"''' se suruu hoe hai, jon ki non-descriptive naam hai jiske jaada kar ke digital camera automatically assign kare hai.
+Meharbaani kar ke aur jaada descriptive filename chose karo.",
+
+'upload-proto-error'      => 'Protocol right nai hai',
+'upload-proto-error-text' => 'Duur ke upload maange hai URLs jon ki suruu hoe hai <code>http://</code> nai to <code>ftp://</code>.',
+'upload-file-error'       => 'Bhitri error',
+'upload-file-error-text'  => 'Server pe temporary file banae ke time ek bhitri error hoe gais.
+[[Special:ListUsers/sysop|administrator]] ke contact karo.',
+'upload-misc-error'       => 'Unknown upload error',
+'upload-misc-error-text'  => 'Upload kare ke time ek unknown error hoe gais hai.
+Meharbani kar ke verify karo ki URL valid aur accessible hai aur fir se kosis karo.
+Agar jo problem fir nai khatam hoe tab [[Special:ListUsers/sysop|administrator]] ke contact karo.',
+
+# Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
+'upload-curl-error6'       => 'URL pe pahunche nai paya hai',
+'upload-curl-error6-text'  => 'URL tak nahi pahunche sakaa hai.
+Meharbani kar ke fir se check karo ki URL correct hai aur site chale hai.',
+'upload-curl-error28'      => 'Upload ke time khalaas hoe gais hai',
+'upload-curl-error28-text' => 'Ii site respond kare ke bahut time liis hai.
+Meharbani kar ke dekho ki ii site chale hai, thora deri tak wait kar ke fir se kosis karo.
+Saait aap ke kamti busy time kosis kare ke chaahi.',
+
+'license'            => 'Licensing:',
+'nolicense'          => 'Koi bhi selct nai karaa gais hai',
+'license-nopreview'  => '(Preview abhi taiyaar nai hai)',
+'upload_source_url'  => ' (ek valid, publicly accessible URL)',
+'upload_source_file' => ' (aap ke computer me ek file)',
 
 # Special:ImageList
-'imagelist' => 'Chapa ke suchi',
+'imagelist-summary'     => 'Ii khaas panna sab uploaded file ke dekhae hai.
+Default se akhri uploaded file ke list me pahile dekhawa gais hai.
+Column header me click kare se sorting badal jaai.',
+'imagelist_search_for'  => 'Media ke naam khojo:',
+'imgfile'               => 'file',
+'imagelist'             => 'Chapa ke suchi',
+'imagelist_date'        => 'Tarik',
+'imagelist_name'        => 'Naam',
+'imagelist_user'        => 'Sadasya',
+'imagelist_size'        => 'Size',
+'imagelist_description' => 'Description',
 
 # Image description page
-'filehist'                  => 'File ke itihaas',
-'filehist-help'             => 'File ke dekhe khatir, jaise uu time dekhe me lagat rahaa, date/time pe click karo.',
-'filehist-current'          => 'abhi waala',
-'filehist-datetime'         => 'Din/Time',
-'filehist-user'             => 'Sadasya',
-'filehist-dimensions'       => 'Lambai aur chaurai',
-'filehist-filesize'         => 'File ke size',
-'filehist-comment'          => 'Tiprrin',
-'imagelinks'                => 'Jorr',
-'linkstoimage'              => 'Ii sab panna ii file {{PLURAL:$1|panna ke jorr|$1 panna ke jorr}} se link hoe hai:',
-'nolinkstoimage'            => 'Ii file se koi panna nai jurre hai.',
-'sharedupload'              => 'Ii file baatal hai aur duusra project me bhi kaam lawa jaae sake hai.',
-'noimage'                   => 'Ii naam ke koi file nai hai, aap sakta hai $1.',
-'noimage-linktext'          => 'upload karo',
-'uploadnewversion-linktext' => 'Ii file ke nawaa version ke upload karo',
+'filehist'                       => 'File ke itihaas',
+'filehist-help'                  => 'File ke dekhe khatir, jaise uu time dekhe me lagat rahaa, date/time pe click karo.',
+'filehist-deleteall'             => 'sab ke mitao',
+'filehist-deleteone'             => 'mitao',
+'filehist-revert'                => 'pahile jaise karo',
+'filehist-current'               => 'abhi waala',
+'filehist-datetime'              => 'Din/Time',
+'filehist-user'                  => 'Sadasya',
+'filehist-dimensions'            => 'Lambai aur chaurai',
+'filehist-filesize'              => 'File ke size',
+'filehist-comment'               => 'Tiprrin',
+'imagelinks'                     => 'File ke jorr',
+'linkstoimage'                   => 'Ii sab panna ii file {{PLURAL:$1|panna ke jorr|$1 panna ke jorr}} se link hoe hai:',
+'nolinkstoimage'                 => 'Ii file se koi panna nai jurre hai.',
+'morelinkstoimage'               => 'Dekho [[Special:WhatLinksHere/$1|more links]] ii file se.',
+'redirectstofile'                => 'Niche waala file ii file {{PLURAL:$1|file redirects|$1 files redirect}} se redirect hoe hai:',
+'duplicatesoffile'               => 'Niche ke suchi waala {{PLURAL:$1|file ke dui copy hai|$1 files ke dui copy hai}} ii file ke:',
+'sharedupload'                   => 'Ii file baatal hai aur duusra project me bhi kaam lawa jaae sake hai.',
+'shareduploadwiki'               => 'Aur jaankari khatir $1 ke dekho.',
+'shareduploadwiki-desc'          => 'Iske $1 pe description niche dekhawa gais hai.',
+'shareduploadwiki-linktext'      => 'file description waala panna',
+'shareduploadduplicate'          => 'Ii file shared repository me ke  $1  ke duplicate hai.',
+'shareduploadduplicate-linktext' => 'duusra file',
+'shareduploadconflict'           => 'Ii file ke naam ke ek file $1 shared repository me hai.',
+'shareduploadconflict-linktext'  => 'duusra file',
+'noimage'                        => 'Ii naam ke koi file nai hai, lekin aap sakta hai $1.',
+'noimage-linktext'               => 'ek ke upload karo',
+'uploadnewversion-linktext'      => 'Ii file ke nawaa version ke upload karo',
+'imagepage-searchdupe'           => 'Dugna files ke khojo',
+
+# File reversion
+'filerevert'                => '$1 ke pahile jaise karo',
+'filerevert-legend'         => 'File ke pahile jaise karo',
+'filerevert-intro'          => "Aap '''[[Media:$1|$1]]''' ke [$4 version as of $3, $2] jaise kartaa hai.",
+'filerevert-comment'        => 'Vichar:',
+'filerevert-defaultcomment' => 'Version as of $2, $1 pe revert kar dewa gais hai',
+'filerevert-submit'         => 'Pahile jaise karo',
+'filerevert-success'        => "'''[[Media:$1|$1]]''' ke [$4 version as of $3, $2] pe revert kar dewa gais hai.",
+'filerevert-badversion'     => 'Dewa gais timestamp ke pahile ke ii file ke koi version nai hai.',
+
+# File deletion
+'filedelete'                  => '$1 ke mitao',
+'filedelete-legend'           => 'File ke mitao',
+'filedelete-intro'            => "Aap file '''[[Media:$1|$1]]''' ke delete kare waala hai iske itihaas ke saathe.",
+'filedelete-intro-old'        => "Aap '''[[Media:$1|$1]]''' ke version as of [$4 $3, $2] ke delete kartaa hai.",
+'filedelete-comment'          => 'Mitae ke kaaran:',
+'filedelete-submit'           => 'Mitao',
+'filedelete-success'          => "'''$1''' ke mitae dewa gais hai.",
+'filedelete-success-old'      => "'''[[Media:$1|$1]]''' ke version as of $3, $2 ke delete kar dewa gais hai.",
+'filedelete-nofile'           => "'''$1''' nai hai.",
+'filedelete-nofile-old'       => "'''$1''' ke specified attributes ke koi archived version nai hai.",
+'filedelete-iscurrent'        => 'Aap file ke sab se nawaa version ke mitae ke kosis kartaa hai.
+Meharbani kar ke, ek purana version pe pahile jaao.',
+'filedelete-otherreason'      => 'Duusra/aur kaaran:',
+'filedelete-reason-otherlist' => 'Duusra kaaran',
+'filedelete-reason-dropdown'  => '* Sadharan delete kare ke kaaran
+** Copyright ke violation
+** Dugnaa file',
+'filedelete-edit-reasonlist'  => 'Delete kare ke kaaran ke badlo',
 
 # MIME search
-'mimesearch' => 'MIME khojo',
+'mimesearch'         => 'MIME khojo',
+'mimesearch-summary' => 'Ii panna filtering of files for its MIME-type ke enable kare hai.
+Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
+'mimetype'           => 'MIME ke rakam:',
+'download'           => 'download karo',
+
+# Unwatched pages
+'unwatchedpages' => 'Panna jispe dhyan nai rakha gais hai',
 
 # List redirects
 'listredirects' => 'Redirects list karo',
 
 # Unused templates
-'unusedtemplates' => 'Bina use bhae templates',
+'unusedtemplates'     => 'Bina use bhae templates',
+'unusedtemplatestext' => 'Ii panna {{ns:template}} namespace me uu panna ake suchi de hai jon ki koi duusra panna me nai hai.
+Templates ke delete kare se pahile duusra links ke bhi check kare ke nai bhulna.',
+'unusedtemplateswlh'  => 'duusra jorr',
 
 # Random page
-'randompage' => 'Koi bhi panna',
+'randompage'         => 'Koi bhi panna',
+'randompage-nopages' => 'Ii namespace me koi panna nai hai.',
 
 # Random redirect
-'randomredirect' => 'Random redirect',
+'randomredirect'         => 'Random redirect',
+'randomredirect-nopages' => 'Ii namespace me koi redirects nai hai.',
 
 # Statistics
-'statistics' => 'Aankrra',
+'statistics'             => 'Aankrra',
+'sitestats'              => '{{SITENAME}} statistics',
+'userstats'              => 'Sadasya ke statistics',
+'sitestatstext'          => "Database me {{PLURAL:\$1|'''1''' panna hai|'''\$1''' pura panna hai}}.
+Isme \"salah\"  waala panna, panna {{SITENAME}} ke baare mein, chhota \"stub\" panna, redirects, aur duusra jon ki content panna khatir nai qualify hoe hai.
+Iske chhorr ke {{PLURAL:\$2|'''1''' panna hai jon ki|'''\$2''' panna hai jon ki}} saait legitimate content {{PLURAL:\$2|panna|panna}} hai.
 
-'disambiguations' => 'Disambiguation panna',
+'''\$8''' {{PLURAL:\$8|file ke|file ke}} upload karaa gais hai.
 
-'doubleredirects' => 'Dugna redirects',
+Puura milaae ke  '''\$3''' {{PLURAL:\$3|dafe panna ke dekha gais hai|dafe panna ke dekha gais hai}}, aur '''\$4''' {{PLURAL:\$4|panna badlaa|panna badlaa}} gais hais hai, jab se {{SITENAME}} banawa gais hai.
+Sab jorr ke ii '''\$5''' average badlao per panna, aur '''\$6''' views per badlao hai.
 
-'brokenredirects' => 'Tuuta redirects',
+[http://www.mediawiki.org/wiki/Manual:Job_queue job queue] ke lambai hai '''\$7'''.",
+'userstatstext'          => "{{PLURAL:$1|'''1''' registered [[Special:ListUsers|sadasya]] hai| '''$1''' registered [[Special:ListUsers|sadasya]] hai}}, jisme se  
+'''$2''' (nai to '''$4%''') {{PLURAL:$2|ke lage|ke lage}} $5 adhikar hai.",
+'statistics-mostpopular' => 'Sab se jaada dekha gae panna',
 
-'withoutinterwiki' => 'Bina bhasa ke link waala panna',
+'disambiguations'      => 'Disambiguation panna',
+'disambiguationspage'  => 'Template:disambig',
+'disambiguations-text' => "Niche ke panna '''disambiguation panna''' se link hoe hai.
+They should link to the appropriate topic instead.<br />
+A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
+
+'doubleredirects'            => 'Dugna redirects',
+'doubleredirectstext'        => 'Ii panna uu panna ke suchi de hai jon ki duusra redirect panna pe redirect kare hai. 
+Sab row me pahila aur duusra redirect ke jorr hae, aur isme duusra redirect ke nisana bhi hae, jon ki jaada kar ke "aslii" nisana waala panna, jon ki pahila redirect ke dekhae hae.
+<s>Mitawa gais</s> entires ke solve kar dewa gais hae.',
+'double-redirect-fixed-move' => '[[$1]] ke naam badal dewa gais hai, ab ii [[$2]] pe redirect kare hai',
+'double-redirect-fixer'      => 'Redirect ke banae waala',
+
+'brokenredirects'        => 'Tuuta redirects',
+'brokenredirectstext'    => 'Niche ke suchi me uu redirects hai jon ki non-existent panna pe redirect kare hai:',
+'brokenredirects-edit'   => '(badlo)',
+'brokenredirects-delete' => '(mitao)',
+
+'withoutinterwiki'         => 'Bina bhasa ke link waala panna',
+'withoutinterwiki-summary' => 'Niche waala panna duusra bhasa ke versions se nai jurre hai.',
+'withoutinterwiki-legend'  => 'Prefix',
+'withoutinterwiki-submit'  => 'Dekhao',
 
 'fewestrevisions' => 'Uu panna jisme sab se kamti badlao bhae hai.',
 
 # Miscellaneous special pages
 'nbytes'                  => '$1 {{PLURAL:$1|byte|bytes}}',
+'ncategories'             => '$1 {{PLURAL:$1|vibhag|vibhag}}',
 'nlinks'                  => '$1 {{PLURAL:$1|jorr|jorr}}',
 'nmembers'                => '$1 {{PLURAL:$1|sadasya|sadasya}}',
+'nrevisions'              => '$1 {{PLURAL:$1|badlao|badlao}}',
+'nviews'                  => '$1 {{PLURAL:$1|dafe dekha gais hai|dafe dekha gais hai}}',
+'specialpage-empty'       => 'Ii report khatir koi results nai hai.',
 'lonelypages'             => 'Akele waala panna',
+'lonelypagestext'         => 'Niche ke panna ke duusra paana jorre nai to  transclude nai kare hai {{SITENAME}} me.',
 'uncategorizedpages'      => 'Jon panna koi vibhag me nai hai',
 'uncategorizedcategories' => 'Uncategorized vibhag',
 'uncategorizedimages'     => 'Uncategorized files',
 'uncategorizedtemplates'  => 'Uncategorized templates',
 'unusedcategories'        => 'Bina use bhae category',
 'unusedimages'            => 'Bina use bhae files',
+'popularpages'            => 'Popular panna',
 'wantedcategories'        => 'Maange waala vibhag',
 'wantedpages'             => 'Jaruri panna',
+'missingfiles'            => 'Jon file abhi nai hai',
 'mostlinked'              => 'Jon panna me sab se jaada chij jorra hai',
 'mostlinkedcategories'    => 'Jon vibhag me sab se jaada chij jorra hai',
 'mostlinkedtemplates'     => 'Jon template me sab se jaada fike jorra hai',
 'mostcategories'          => 'Sab se jaada vibhag waala panna',
 'mostimages'              => 'Jon file me sab se jaada file jorra hai',
 'mostrevisions'           => 'Sab se jaada badlao waala panna',
-'prefixindex'             => 'Prefix index',
+'prefixindex'             => 'Sab panna jisme prefix index hai',
 'shortpages'              => 'Chhota panna',
 'longpages'               => 'Lamba panna',
 'deadendpages'            => 'Jon panna se koi jurre nai hai',
+'deadendpagestext'        => 'Niche ke panna {{SITENAME}} ke koi bhi panna se nai jurre hai.',
 'protectedpages'          => 'Surakchhit panna',
+'protectedpages-indef'    => 'Khaali indefinite bachao',
+'protectedpagestext'      => 'Niche ke panna ke naam badle aur badle se rok lagawa gais hai',
+'protectedpagesempty'     => 'Ii parameters se koi bhi panna ke nai bachawa gais hai.',
+'protectedtitles'         => 'Bachawa gais titles',
+'protectedtitlestext'     => 'Niche ke title ke nai banawa jaae sake hai',
+'protectedtitlesempty'    => 'Ii parameters se koi bhi title ke nai bacawa gais hai.',
 'listusers'               => 'Sadasya ke suchi',
 'newpages'                => 'Nawaa panna',
+'newpages-username'       => 'Username:',
 'ancientpages'            => 'Sab se purana panna',
 'move'                    => 'Naam badlo',
 'movethispage'            => 'Panna ke naam badlo',
+'unusedimagestext'        => 'Yaad rakhna ki duusra web bhi direct URL se ek file se link hoe sake hai, aur may still be listed here despite being in active use.',
+'unusedcategoriestext'    => 'Niche ke category panna hai, jab ki koi aur panna aur category iske nai use kare hai.',
+'notargettitle'           => 'Koi target nai hai',
+'notargettext'            => 'Aap iifunction ke perform kare ke khatir koi target panna ke nai specify karaa hai.',
+'nopagetitle'             => 'Ii naam ke koi target panna nai hai',
+'nopagetext'              => 'Target panna jiske aap specify karaa hai exist nai hoe hai.',
+'pager-newer-n'           => '{{PLURAL:$1|nawaa 1|nawaa $1}}',
+'pager-older-n'           => '{{PLURAL:$1|purana 1|purana $1}}',
+'suppress'                => 'Oversight',
 
 # Book sources
-'booksources' => 'Pustak sources',
+'booksources'               => 'Pustak sources',
+'booksources-search-legend' => 'Book sources ke khojo',
+'booksources-go'            => 'Jao',
+'booksources-text'          => 'Niche ke suchi me uu websites ke jorr hai jon ki nawaa aur use karaa gais book ke beche hai aur jon book ke aap khojtaa hai uske baare aur jaankari de sake hai:',
 
 # Special:Log
 'specialloguserlabel'  => 'Sadasya:',
 'speciallogtitlelabel' => 'Title:',
 'log'                  => 'Suchi',
-'all-logs-page'        => 'Sab suchi',
+'all-logs-page'        => 'Sab janta waala suchi',
+'log-search-legend'    => 'Logs ke khojo',
+'log-search-submit'    => 'Jaao',
+'alllogstext'          => '{{SITENAME}} ke sab logs ke combined display.
+You can narrow down the view by selecting a log type, the user name (case-sensitive), or the affected page (also case-sensitive).',
+'logempty'             => 'Log me koi matching item nai hai.',
+'log-title-wildcard'   => 'Ii text se suruu hoe waala titles ke khojo',
 
 # Special:AllPages
-'allpages'       => 'Sab panna',
-'alphaindexline' => '$1 se $2',
-'nextpage'       => 'Aglaa panna ($1)',
-'prevpage'       => 'Pichhla panna ($1)',
-'allpagesfrom'   => 'Panna dekhae ke suruu karo hian se:',
-'allarticles'    => 'Sab panna',
-'allpagessubmit' => 'Jao',
-'allpagesprefix' => 'Uu panna dekhao jiske prefix hai:',
+'allpages'          => 'Sab panna',
+'alphaindexline'    => '$1 se $2',
+'nextpage'          => 'Aglaa panna ($1)',
+'prevpage'          => 'Pichhla panna ($1)',
+'allpagesfrom'      => 'Panna dekhae ke suruu karo hian se:',
+'allarticles'       => 'Sab panna',
+'allinnamespace'    => 'Sab panna ($1 namespace)',
+'allnotinnamespace' => 'Sab panna ($1 namespace me nai hai)',
+'allpagesprev'      => 'Pahile',
+'allpagesnext'      => 'Aage',
+'allpagessubmit'    => 'Jao',
+'allpagesprefix'    => 'Uu panna dekhao jiske prefix hai:',
+'allpagesbadtitle'  => 'Dewa gias panna ke title kharaab rahaa nai to inter-language nai to inter-wiki ke prefix hai.
+Is me ek nai to jaada akchhar hai jiske title me nai kaam me lawa jaae sake hai.',
+'allpages-bad-ns'   => '{{SITENAME}} me namespace "$1" nai hai.',
 
 # Special:Categories
-'categories' => 'Vibhag',
+'categories'                    => 'Vibhag',
+'categoriespagetext'            => 'Niche ke category me panna aur media hai.
+[[Special:UnusedCategories|Unused categories]] hian nai dekhawa jaae hai.
+[[Special:WantedCategories|wanted categories]] ke bhi dekho.',
+'categoriesfrom'                => 'Vibhag jon ki hian pe suruu hoe hai, ke dekhao:',
+'special-categories-sort-count' => 'ginti se sort karo',
+'special-categories-sort-abc'   => 'alphabetically sort karo',
+
+# Special:ListUsers
+'listusersfrom'      => 'Sadasya jon ki hian se suruu hoe hai ke dekhao:',
+'listusers-submit'   => 'Dekhao',
+'listusers-noresult' => 'Koi sadasya ke nai pawa gais hai.',
+
+# Special:ListGroupRights
+'listgrouprights'          => 'Sadasya  ke group adhikar',
+'listgrouprights-summary'  => 'Niche likha hai ek suchi hai groups ke jon ki ii wiki me defined hai, aapan  associated access rights ke saathe
+[[{{MediaWiki:Listgrouprights-helppage}}|additional information]] individual rights ke baare me sait hoi.',
+'listgrouprights-group'    => 'Group',
+'listgrouprights-rights'   => 'Adhikar',
+'listgrouprights-helppage' => 'Help:Group waala adhikar',
+'listgrouprights-members'  => '(sadasya ke suchi)',
 
 # E-mail user
-'emailuser' => 'Ii user ke E-mail karo',
+'mailnologin'     => 'Koi bheje waala address nai hai',
+'mailnologintext' => 'Duusra logan ke lage e-mail bheje ke khatir aap ke [[Special:UserLogin|logged in]] aur [[Special:Preferences|preferences]]  me thik e-mail hoew ke chaahi.',
+'emailuser'       => 'Ii user ke E-mail karo',
+'emailpage'       => 'User ke e-mail karo',
+'emailpagetext'   => 'Aap niche ke form ke use kar ke ii sadasya ke e-mail bheje sakta hai.
+Jon e-mail address aap [[Special:Preferences|your user preferences]] me enter karaa rahaa, "From" ke e-mail rahii, jisse ki e-mail receive kare waala aap ke sidha reply kare sake hai.',
+'usermailererror' => 'Mail object error return karis hai:',
+'defemailsubject' => '{{SITENAME}} e-mail',
+'noemailtitle'    => 'E-mail address nai hai',
+'noemailtext'     => 'Ii sadasya thiik e-mail address nai diis hai.',
+'emailfrom'       => 'Iske lage se:',
+'emailto'         => 'Iske lage:',
+'emailsubject'    => 'Vishay:',
+'emailmessage'    => 'Sandes:',
+'emailsend'       => 'Bhejo',
+'emailccme'       => 'Hamaar khabar ke ek copy ke hamaar lage e-mail karo.',
+'emailccsubject'  => 'Aapke $1 ke khatir khabar ke copy: $2',
+'emailsent'       => 'E-mail ke bhej dewa gais hai',
+'emailsenttext'   => 'Aap ke e-mail sandes ke bhej dewa gais hai.',
+'emailuserfooter' => 'Ii e-mail ke $1, $2 ke lage "E-mail user" function ke {{SITENAME}}se kaam me laae ke bhejis hai.',
 
 # Watchlist
 'watchlist'            => 'Hamaar dhyan suchi',
 'mywatchlist'          => 'Hamaar dhyaan suchi',
 'watchlistfor'         => "('''$1''' ke khatir)",
+'nowatchlist'          => 'Aap ke dhyan suchi me koi chij nai hai.',
+'watchlistanontext'    => 'Aapan dhyan suchi me ke dekhe nai to badle ke khatir meharbani kar ke $1 karo.',
+'watchnologin'         => 'Logged in nai hai',
+'watchnologintext'     => 'Aapan dhyan suchi ke badle ke khatir aap ke [[Special:UserLogin|logged in]] rahe ke chaahi.',
 'addedwatch'           => 'Dhyan suchi me jorro',
 'addedwatchtext'       => "Panna \"[[:\$1]]\" ke aap ke [[Special:Watchlist|watchlist]] me jorr dewa gais hai.
 Ii panna ke aage ke badlao
 Future changes to this page and its associated talk page will be listed there, and the page will appear '''bolded''' in the [[Special:RecentChanges|list of recent changes]] to make it easier to pick out.",
 'removedwatch'         => 'Dhyan suchi me se hatao',
-'removedwatchtext'     => 'Panna "[[:$1]]" ke aap ke dhyan suchi se hatae dewa gae hai.',
+'removedwatchtext'     => 'Panna "[[:$1]]" ke aap ke [[Special:Watchlist|aap ke dhyan suchi]] se hatae dewa gais hai.',
 'watch'                => 'Dekho',
 'watchthispage'        => 'Ii panna par dhyan rakho',
 'unwatch'              => 'Nai dhyaan rakho',
-'watchlist-details'    => '{{PLURAL:$1|$1 panna|$1 panna}} pe dhyan dewa jae hai, baat waala panna chorr ke.',
+'unwatchthispage'      => 'Ab dhyan nai rakkho',
+'notanarticle'         => 'Ii content panna nai hai',
+'notvisiblerev'        => 'Badlao ke mitae dewa gais hai',
+'watchnochange'        => 'Aap ke koi bhi dhyan me rakkhaa gae chij ke ii time me badla nai gais hai.',
+'watchlist-details'    => '{{PLURAL:$1|$1 panna|$1 panna}} pe dhyan dewa jae hai, baat waala panna ke chhorr ke.',
+'wlheader-enotif'      => '* E-mail notification ke enable kar dewa gais hai.',
+'wlheader-showupdated' => "* Panna jiske aap ke pichhla visit ke ke baad badal dewa gais hia ke '''bold''' me dekhawa gais hai",
+'watchmethod-recent'   => 'Dhyan me rakkhaa gais panna ke nawaa badlao ke check karaa jaawe hai',
+'watchmethod-list'     => 'dhyan me rakkha gais panna ke nawaa badlao ke khatir check karaa jaawe hai',
+'watchlistcontains'    => 'Aap ke dhyan suchi me  $1 {{PLURAL:$1|panna|panna}} hai.',
+'iteminvalidname'      => "'$1' chij se kuchh garrbarr hai, galat naam...",
+'wlnote'               => "Niche {{PLURAL:$1|pahile waala badlao hai| pahile'''$1''' badlao hai}} pichhle {{PLURAL:$2|ghanta|'''$2''' ghanta}} me.",
 'wlshowlast'           => 'Pichhla $1 ghanta $2 din $3 ke dekhao',
+'watchlist-show-bots'  => 'Bot waala badlao dekhao',
 'watchlist-hide-bots'  => 'Bot sampadan ke lukao',
+'watchlist-show-own'   => 'Hamaar badlao ke dekhao',
 'watchlist-hide-own'   => 'Hamaar sampadan ke lukao',
+'watchlist-show-minor' => 'Chhota badlao ke dekhao',
 'watchlist-hide-minor' => 'Chhota sampadan ke nai dekhao.',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'Dekhtaa...',
 'unwatching' => 'Nai dekhtaa...',
 
+'enotif_mailer'                => '{{SITENAME}} Notification Mailer',
+'enotif_reset'                 => 'Sab panna ke visited mark karo',
+'enotif_newpagetext'           => 'Ii ek nawaa panna hai.',
+'enotif_impersonal_salutation' => '{{SITENAME}} sadasya',
+'changed'                      => 'badal dewa gais hai',
+'created'                      => 'banae dewa gais hai',
+'enotif_subject'               => '$PAGEEDITOR {{SITENAME}} panna $PAGETITLE ke badal $CHANGEDORCREATED diis hai',
+'enotif_lastvisited'           => 'Aap ke pichhla visit ke baad ke badlao ke khatir $1 ke dekho.',
+'enotif_lastdiff'              => 'Ii badlao ke dekhe ke khatir $1 ke dekho.',
+'enotif_anon_editor'           => 'bina naam ke sadasya $1',
+'enotif_body'                  => 'Dear $WATCHINGUSERNAME,
+
+
+{{SITENAME}} panna $PAGETITLE ke $CHANGEDORCREATED kar dewa gais hai $PAGEEDITDATE ke din, $PAGEEDITOR ke dwara, current version ke khatir $PAGETITLE_URL ke dekho.
+
+$NEWPAGE
+
+Editor\'s summary: $PAGESUMMARY $PAGEMINOREDIT
+
+Editor ke contact karo:
+mail: $PAGEEDITOR_EMAIL
+wiki: $PAGEEDITOR_WIKI
+
+Aur koi notifications nai rahii, kahe ki koi aur badlao hoe sake hai, jab talak aap ii panna ke visit nai karta hai.
+Aap aapan dhyan suchi me sab dhyan me rakha gais panna pe notification flags ke reset kare sakta hai.
+             Aap ke  friendly {{SITENAME}} notification system
+
+--
+Aapan dhyan ke settings ke badle ke khatir, visit
+{{fullurl:{{ns:special}}:Watchlist/edit}}
+
+Feedback aur aage ke sahaeta:
+{{fullurl:{{MediaWiki:Helppage}}}}',
+
 # Delete/protect/revert
 'deletepage'                  => 'Pana ke delete karo',
+'confirm'                     => 'Confirm karo',
+'excontent'                   => "content rahaa: '$1'",
+'excontentauthor'             => "content rahaa: '$1' (aur khaali ek contributor rahaa '[[Special:Contributions/$2|$2]]')",
+'exbeforeblank'               => "blanking se pahile content rahaa: '$1'",
+'exblank'                     => 'panna khaali rahaa',
+'delete-confirm'              => '"$1" ke mitao',
+'delete-legend'               => 'Mitao',
 'historywarning'              => 'Sawadhan: Jon page aap delete kare waala hai ke itihaas hai:',
 'confirmdeletetext'           => 'Aap ek panna ke uske itihaas ke saathe delete kare waala hai.
 Meharbani kar ke iske confirm karo, ki aap iske consequences ke samajhta hai, aur aap iske [[{{MediaWiki:Policy-url}}|the policy]] ke policy ke niche delete karta hai.',
 'actioncomplete'              => 'Action puura hoe gais hai',
 'deletedtext'                 => '"<nowiki>$1</nowiki>" ke delete kar dewa gais hai. Abhi jaldi ke deletions ke record dekhe khatir $2 ke dekho.',
 'deletedarticle'              => '"[[$1]]" ke hatae dewa gis hai',
+'suppressedarticle'           => 'suppressed "[[$1]]"',
 'dellogpage'                  => 'Hatane ke suchi',
+'dellogpagetext'              => 'Niche nawaa mitawa gais panna ke suchi hai.',
+'deletionlog'                 => 'deletion log',
+'reverted'                    => 'Pahile ke revision pe lautae dewa gais hai',
 'deletecomment'               => 'Delete kare ke kaaran:',
 'deleteotherreason'           => 'Aur/duusra kaaran:',
 'deletereasonotherlist'       => 'Duusra kaaran',
+'deletereason-dropdown'       => '*Sadharan mitae ke kaaran
+** Author ke request
+** Copyright ke violation
+** Vandalism',
+'delete-edit-reasonlist'      => 'Mitae ke kaaran ke badlo',
+'delete-toobig'               => 'Ii panna ke barraa balao ke itihass hai, $1 se jaada {{PLURAL:$1|revision|revisions}}.
+Aisan panna ke mitae pe rok lagawa gais hai so that accidental disruption of {{SITENAME}} ke roka jaae sake hai.',
+'delete-warning-toobig'       => 'Ii panna ke lambaa badlao ke itihaas hai, $1 {{PLURAL:$1|revision|revisions}} se jaada.
+Iske mitae se {{SITENAME}} me database operations me baadha parri;
+sawadhani se aage barrho.',
+'rollback'                    => 'Pahile jaise kare waala badlao',
+'rollback_short'              => 'Pahile jaise karo',
 'rollbacklink'                => 'pahile jaise karo',
+'rollbackfailed'              => 'Pahile jaise kare ke kosis safal nai bhais',
+'cantrollback'                => 'Badlao ke pahile jaise nai kare sakta hai;
+isse pahile waala sadasya ii panna ke khaali yogdaan de waala hai.',
+'alreadyrolled'               => '[[:$1]] ke pahile waala badlao, jon ki [[User:$2|$2]]  ([[User talk:$2|Talk]] | [[Special:Contributions/$2|{{int:contribslink}}]]); karis rahaa, ke pahile jaise nai kare sakta hai; aur koi ii panna ke badlis nai to pahile jaise kar diis hai.
+Ii panna ke pichla badlao [[User:$3|$3]] ([[User talk:$3|Talk]] | [[Special:Contributions/$3|{{int:contribslink}}]]) se rahaa.',
+'editcomment'                 => "Badlao ke summary rahaa: \"''\$1''\".", # only shown if there is an edit comment
+'revertpage'                  => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) ke badlao ke [[User:$1|$1]] ke aakhri badlao ke jaise kar dewa gais hai.', # Additional available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+'rollback-success'            => '$1 ke badlao ke pahile jaise kar dewa gais hai;
+badal ke $2 ke aakhri version kar dewa gais hai.',
+'sessionfailure'              => 'Aap ke login session me kuch karrbarr hai.
+iske cancel kar dewa gais hai jisse ki koi iisession ke hijack nai kar.
+Meharbani kar ke  "back" ke press kar ke jon pana se aap aae rahaa ke fir se load karo, tab fir kosis karo.',
 'protectlogpage'              => 'Surakchha suchi',
-'protectcomment'              => 'Tiprri:',
+'protectlogtext'              => 'Niche panna ke lock aur unlock ke suchi hai
+Abhi ke laabu panna protection ke dekho [[Special:ProtectedPages|protected pages list]]',
+'protectedarticle'            => 'bachawal "[[$1]]"',
+'modifiedarticleprotection'   => '[[$1]]" ke protection level ke badal dia hai',
+'unprotectedarticle'          => 'bina bachawal "[[$1]]"',
+'protect-title'               => '"$1" ke protection level ke badlo',
+'protect-legend'              => 'Protection ke confirm karo',
+'protectcomment'              => 'Kaaran:',
 'protectexpiry'               => 'Khalas hoe hai:',
 'protect_expiry_invalid'      => 'Khalas hoe waala time valid nai hai.',
 'protect_expiry_old'          => 'Khalas hoe waala time past me hai.',
 'protect-unchain'             => 'Naam badle waala ijaajat kholo',
-'protect-text'                => 'Aap ii panna ke protection level ke dekhe aur badle sakta hai
-<strong><nowiki>$1</nowiki></strong>.',
-'protect-locked-access'       => 'Aap ke account ke panna ke ijaajat badle ijaajat nai dewe hai.
-Panna ke abhi ke settings hian hai <strong>$1</strong>:',
+'protect-text'                => "Aap ii panna ke protection level ke dekhe aur badle sakta hai
+'''<nowiki>$1</nowiki>'''.",
+'protect-locked-blocked'      => "Aap blocked rahe pe protection level ke nai badle sakta hai.
+Panna '''$1''' ke abhi ke settings hai:",
+'protect-locked-dblock'       => "Active database lock ke kaaran protection level ke bala nai jaawe sake hai.
+Panna '''$1''' ke abhi ke settings hai:",
+'protect-locked-access'       => "Aap ke account ke panna ke ijaajat badle ijaajat nai dewe hai.
+Panna ke abhi ke settings hian hai '''$1''':",
 'protect-cascadeon'           => 'Ii panna abhi surakchhit hai kahe ki isme hai {{PLURAL:$1|page, which has|pages, which have}} cascading protection turned on.
 
 Aap ii panna ke ijaajat level badle sakta hai, lekin ii cascading protection nai affect kari.',
-'protect-default'             => '(default)',
+'protect-default'             => 'Sab sadasya ke allow karo',
 'protect-fallback'            => '"$1" permission chaahi',
-'protect-level-autoconfirmed' => 'Unregistered sadasya ke roko',
+'protect-level-autoconfirmed' => 'Nawaa aur unregistered sadasya ke roko',
 'protect-level-sysop'         => 'Khali sysops',
 'protect-summary-cascade'     => 'cascading',
 'protect-expiring'            => '$1 khalaas hoe hai (UTC)',
@@ -1009,9 +1609,72 @@ Aap ii panna ke ijaajat level badle sakta hai, lekin ii cascading protection nai
 'protect-cantedit'            => 'Aap ii panna ke protection level badle nai sakta hai, kahe ki aap ke badle ke ijaajat nai hai.',
 'restriction-type'            => 'Ijaajat:',
 'restriction-level'           => 'Roke ke niyam:',
+'minimum-size'                => 'Kamti se kamti size',
+'maximum-size'                => 'Jaada se jaada size:',
+'pagesize'                    => '(bytes)',
+
+# Restrictions (nouns)
+'restriction-edit'   => 'Badlo',
+'restriction-move'   => 'Hatao',
+'restriction-create' => 'Banao',
+'restriction-upload' => 'Upload karo',
+
+# Restriction levels
+'restriction-level-sysop'         => 'puura protected',
+'restriction-level-autoconfirmed' => 'thora protected',
+'restriction-level-all'           => 'koi bhi level',
 
 # Undelete
-'undeletebtn' => 'Pahile jaise kar do',
+'undelete'                     => 'Mitawa gais panna ke dekho',
+'undeletepage'                 => 'Dekho aur mitawa gais panna ke pahile jaise karo',
+'undeletepagetitle'            => "'''Niche ke list me [[:$1|$1]] ke mitawa gais badlao hai'''.",
+'viewdeletedpage'              => 'Mitawa gais panna ke dekho',
+'undeletepagetext'             => 'Niche dekhawa gais panna ke mitae dewa gais hai lekin abhi talak archive me hai aur iske pahile jaise karaa jaawe sake hai. Archive ke time time se safaa karaa jaawe hai.',
+'undelete-fieldset-title'      => 'Badlao ke pahile jaise karo',
+'undeleteextrahelp'            => "Panna ke itihaas ke pahile jaise kare ke khatir sab checkboxes me kuch nai karna aur '''''Restore''''' ke click karo.
+Chuna gais panna ke pahile jaise kare ke khatir, uu box ke check karo jon badlao ke aap pahile jaise kare mangta hai aur '''''Restore''''' ke click karo.
+'''''Reset''''' click kare se comment field aur sab checkboxes clear hoe jaai.",
+'undeleterevisions'            => '$1 {{PLURAL:$1|badlao|badlao}} ke archive kar dewa gais hai',
+'undeletehistory'              => 'Agar aap panna ke pahile jaise karaa tab sab badlao itihass me restore hoe jaai.
+Agar koi wahii naam ke nawaa panna mitae ke baad banaa hoi tab restore karaa gais badlao pahile ke itihass me dekhai.',
+'undeleterevdel'               => 'Pahile jaise nai kare sakega agar isse uppar waala panna nai to file revision bhi delete hoe jaai.
+Aisan time pe, aap ke chaahi ki aap sab se nawaa deleted revision ke uncheck nai to unhide karo.',
+'undeletehistorynoadmin'       => 'Ii panna ke mitae dewa gais hai.
+Mitae ke kaaran niche ke summary me dewa gais hai, aur iske saathe uu sadasya ke baare me bhi jaankari hai jon ki ii panna ke badle rahin.
+Ii mitawa gais badlao ke baare me puura jankari khaali administrators ke mile sake hai.',
+'undelete-revision'            => '$1 ke badlao (as of $2), jiske $3 karis rahaa, ke mitae dewa gais hai:',
+'undeleterevision-missing'     => 'Badlao kharaab nai to pawa nai jaawe sake hai.
+Sait aap ke kharaab link hoi, nai to badlao ke sait pahile jaise kar dewa gais hoi, nai to archive se mitae dewa gais hoi.',
+'undelete-nodiff'              => 'Koi pahile ke badlao ke nai pawa gais hai.',
+'undeletebtn'                  => 'Pahile jaise kar do',
+'undeletelink'                 => 'dekho/pahile jaise karo',
+'undeletereset'                => 'Pahile jaise karo',
+'undeletecomment'              => 'Aapan bichar do:',
+'undeletedarticle'             => '"[[$1]]" ke pahile jaise kar dewa gais hai',
+'undeletedrevisions'           => '{{PLURAL:$1|1 badlao|$1 badlao}} ke pahile jaise kar dewa gais hai',
+'undeletedrevisions-files'     => '{{PLURAL:$1|1 badlao|$1 badlao}} aur {{PLURAL:$2|1 file|$2 files}} ke pahile jaise kar dewa gais hai',
+'undeletedfiles'               => '{{PLURAL:$1|1 file|$1 files}} ke pahile jaise kar dewa gais hai',
+'cannotundelete'               => 'Pahile jaise nai kare sakaa;
+saait aur koi panna ke pahile jaise kar diis hai.',
+'undeletedpage'                => "<big>'''$1 ke pahile jaise kar dewa gais hai'''</big>
+
+Nawaa mitawa gais aur badlao ke ulta karaa gais panna ke dekhe ke khatir [[Special:Log/delete|deletion log]] ke dekho.",
+'undelete-header'              => 'Nawaa mitawa gais panna ke dekhe ke khatir [[Special:Log/delete|the deletion log]] ke dekho.',
+'undelete-search-box'          => 'Mitawa gais panna ke khojo',
+'undelete-search-prefix'       => 'Uu panna ke dekhao jon ki isse suruu hoe hai:',
+'undelete-search-submit'       => 'Khojo',
+'undelete-no-results'          => 'Mitawa gais panna ke archive me ii rakam ke koi panna ke nai pawa gais hai.',
+'undelete-filename-mismatch'   => 'File revision jiske timestamp $1 hai ke pahile jaise nai karaa jaawe sake hai: filename mismatch',
+'undelete-bad-store-key'       => 'File revision jiske timestamp $1 hai ke pahile jaise nai karaa jaawe sake hai: file was missing before deletion.',
+'undelete-cleanup-error'       => 'Bina use karaa gais archive file "$1" ke delete kare me mistake hoe gais.',
+'undelete-missing-filearchive' => 'File archive ID $1 ke pahile jaise nai kare sakaa hai kahe ki ii database me nai hai.
+Saait iske aur koi pahile jaise kar diis hai.',
+'undelete-error-short'         => 'File ke pahile jaise kare me eror: $1',
+'undelete-error-long'          => 'Ii file ke pahile jaise kare me error hoe gais:
+
+$1',
+'undelete-show-file-confirm'   => 'Ka aap sure hai ki aap mitawa gais file ke badlao ke dekhe mangta hai  "<nowiki>$1</nowiki>" from $2 at $3?',
+'undelete-show-file-submit'    => 'Haan',
 
 # Namespace form on various pages
 'namespace'      => 'Namespace:',
@@ -1022,96 +1685,319 @@ Aap ii panna ke ijaajat level badle sakta hai, lekin ii cascading protection nai
 'contributions' => 'Sadasya ke yogdaan',
 'mycontris'     => 'Hamaar yogdaan',
 'contribsub2'   => '$1 ($2) ke khatir',
+'nocontribs'    => 'Ii critera ke rakam ke koi badlao nai pawa gais hai.',
 'uctop'         => '(uppar)',
 'month'         => 'Mahina se (aur pahile):',
 'year'          => 'Saal se (aur pahile):',
 
+'sp-contributions-newbies'     => 'Khaali nawaa account ke yogdaan dekhao',
 'sp-contributions-newbies-sub' => 'Nawaa account khatir',
 'sp-contributions-blocklog'    => 'Suchi roko',
+'sp-contributions-search'      => 'Yogdaan ke khojo',
+'sp-contributions-username'    => 'IP Address nai to username:',
+'sp-contributions-submit'      => 'Khojo',
 
 # What links here
-'whatlinkshere'       => 'Hian konchi link hoe',
-'whatlinkshere-title' => 'Panna jon ki $1 se jurre hai',
-'linklistsub'         => '(Links ke list)',
-'linkshere'           => "Niche waala panna '''[[:$1]]''' se jorre hai:",
-'nolinkshere'         => "Koi panna '''[[:$1]]''' ke nai jorre hai.",
-'isredirect'          => 'panna ke redirect karo',
-'istemplate'          => 'milao',
-'whatlinkshere-prev'  => '{{PLURAL:$1|pahile waala|pahile waala $1}}',
-'whatlinkshere-next'  => '{{PLURAL:$1|aage waala|aage waala $1}}',
-'whatlinkshere-links' => '← jorr',
+'whatlinkshere'            => 'Hian konchi link hoe',
+'whatlinkshere-title'      => 'Panna jon ki $1 se jurre hai',
+'whatlinkshere-page'       => 'Panna:',
+'linklistsub'              => '(Links ke list)',
+'linkshere'                => "Niche waala panna '''[[:$1]]''' se jorre hai:",
+'nolinkshere'              => "Koi panna '''[[:$1]]''' ke nai jorre hai.",
+'nolinkshere-ns'           => "Chuna gais namespace me koi panna '''[[:$1]]''' se nai jiurre hai.",
+'isredirect'               => 'panna ke redirect karo',
+'istemplate'               => 'milao',
+'isimage'                  => 'chapa ke jorr',
+'whatlinkshere-prev'       => '{{PLURAL:$1|pahile waala|pahile waala $1}}',
+'whatlinkshere-next'       => '{{PLURAL:$1|aage waala|aage waala $1}}',
+'whatlinkshere-links'      => '← jorr',
+'whatlinkshere-hideredirs' => '$1 redirects',
+'whatlinkshere-hidetrans'  => '$1 transclusions',
+'whatlinkshere-hidelinks'  => '$1 jorr',
+'whatlinkshere-hideimages' => '$1 chapa ke jorr',
+'whatlinkshere-filters'    => 'Filters',
 
 # Block/unblock
-'blockip'       => 'Sadasya ke roko',
-'ipboptions'    => '2 ghanta:2 hours,1 din:1 day,3 din:3 daya,1 hapta:1 week,2 hapta:2 weeks,1 mahina:1 month,3 mahina:3 months,6 mahina:6 months,1 saal:1 year,pura:infinite', # display1:time1,display2:time2,...
-'ipblocklist'   => 'Roka gais IP addresses aur username ke suchi',
-'blocklink'     => 'rok do',
-'unblocklink'   => 'rukawat khatam karo',
-'contribslink'  => 'yogdaan',
-'blocklogpage'  => 'Suchi ke roko',
-'blocklogentry' => '[[$1]] ke roka jon ki $2 $3 khala hoi',
+'blockip'                         => 'Sadasya ke roko',
+'blockip-legend'                  => 'Sadasya ke roko',
+'blockiptext'                     => 'Niche ke form ke use kar ke koi khaas IP address nai to username ke write access ke roko.
+Iske khaali vandalism ke roke ke khatir use kare ke chaahi [[{{MediaWiki:Policy-url}}|policy]] ke niche.
+Niche ek khaas kaaran likho (jaise ki, citing particular pages that were vandalized).',
+'ipaddress'                       => 'IP Address:',
+'ipadressorusername'              => 'IP Address nai to username:',
+'ipbexpiry'                       => 'Expiry:',
+'ipbreason'                       => 'Kaaran:',
+'ipbreasonotherlist'              => 'Duusra kaaran',
+'ipbreason-dropdown'              => '*Sadharan block kare ke kaaran
+** Galat jaankari dewe
+** Panna se content nikalo
+** Spamming links to external sites
+** Inserting nonsense/gibberish into pages
+** Intimidating behaviour/harassment
+** Abusing multiple accounts
+** Unacceptable username',
+'ipbanononly'                     => 'Khaali anonymous sadasya ke roko',
+'ipbcreateaccount'                => 'account banae se roko',
+'ipbemailban'                     => 'Sadasya ke e-mail bheje se roko',
+'ipbenableautoblock'              => 'Apne se sadasya ke kaam me lawa gais last IP address ke roko, aur iske saathe aur koi IPs jisme se baad me badlao kare ke kosis karaa jaae ke bhi roko.',
+'ipbsubmit'                       => 'Ii sadasya ke roko',
+'ipbother'                        => 'Duusra time:',
+'ipboptions'                      => '2 ghanta:2 hours,1 din:1 day,3 daya:3 days,1 hapta:1 week,2 hapta:2 weeks,1 mahina:1 month,3 mahina:3 months,6 mahina:6 months,1 saal:1 year,pura:infinite', # display1:time1,display2:time2,...
+'ipbotheroption'                  => 'duusra',
+'ipbotherreason'                  => 'Duusra/aur kaaran:',
+'ipbhidename'                     => 'Badlao aur suchi se username ke hatao',
+'ipbwatchuser'                    => 'Ii sadasya ke user aur talk panna pe dhyan rakho',
+'badipaddress'                    => 'IP address kharaab hai',
+'blockipsuccesssub'               => 'Rukawat safal rahaa',
+'blockipsuccesstext'              => '[[Special:Contributions/$1|$1]] ke rok dewa gais hai.<br />
+Ii rukawat pe fir se bichar kare ke khatir [[Special:IPBlockList|IP block list]] ke dekho.',
+'ipb-edit-dropdown'               => 'Badlao ke roke ke kaaran',
+'ipb-unblock-addr'                => '$1 ke rukawat ke khalaas karo',
+'ipb-unblock'                     => 'Ek username nai to IP address ke rukawat ke khalaas karo',
+'ipb-blocklist-addr'              => '$1 ke abhi ke rukawat',
+'ipb-blocklist'                   => 'Abhi ke rukawat ke dekho',
+'unblockip'                       => 'Sadasya ke rukawat ke khalaas karo',
+'unblockiptext'                   => 'Niche ke form ke use kar ke pahile roka gais IP address nai to username ke likhe ke adhikar do.',
+'ipusubmit'                       => 'Ii rukawat ke hatao',
+'unblocked'                       => '[[User:$1|$1]] ke rukawat ke khalaas kar dewa gais hai',
+'unblocked-id'                    => 'Roko $1 ke khalaas kar dewa gais hai',
+'ipblocklist'                     => 'Roka gais IP addresses aur usernames',
+'ipblocklist-legend'              => 'Ek roka gais sadasya ke khojo',
+'ipblocklist-username'            => 'Username nai to IP address:',
+'ipblocklist-submit'              => 'Khojo',
+'blocklistline'                   => '$1, $2 $3 ($4) ke rok diis hai',
+'infiniteblock'                   => 'sab din ke khatir',
+'expiringblock'                   => 'khalaas hoe hai $1',
+'anononlyblock'                   => 'khaali bina naam ke',
+'noautoblockblock'                => 'ab apne se rokaa nai jaawe sake hai',
+'createaccountblock'              => 'account banae ke adhikar ke rok dewa gais hai',
+'emailblock'                      => 'e-mail ke rok dewa gais hai',
+'ipblocklist-empty'               => 'Rukawat ke suchi khaali hai.',
+'ipblocklist-no-results'          => 'Maanga gais IP address nai to username rokaa nai gais hai.',
+'blocklink'                       => 'rok do',
+'unblocklink'                     => 'rukawat khatam karo',
+'contribslink'                    => 'yogdaan',
+'autoblocker'                     => 'Apne se rokaa gais hai kaahe ki aap ke IP address ke abhi haali "[[User:$1|$1]]" use karis hai.
+$1 ke roke ke kaaran hai: "$2"',
+'blocklogpage'                    => 'Suchi ke roko',
+'blocklogentry'                   => '[[$1]] ke roka jon ki $2 $3 khala hoi',
+'blocklogtext'                    => 'Ii suchi sadasya ke rukawat aur rukawat ke reverse kare ke baare me hai.
+Apne se rokaa gais IP adress ii suchi me nai hai.
+Abhi ke rukawat ke dekhe ke khatir meharbani kar ke [[Special:IPBlockList|IP block list]] ke dekho.',
+'unblocklogentry'                 => '$1 ke rukawat ke reverse kar dewa gais hai',
+'block-log-flags-anononly'        => 'khaali bina naam ke sadasya',
+'block-log-flags-nocreate'        => 'nawaa account banae ke nai hai',
+'block-log-flags-noautoblock'     => 'apne se block kare ke ijajat nai hai',
+'block-log-flags-noemail'         => 'e-mail ke rok dewa gais hai',
+'block-log-flags-angry-autoblock' => 'enhanced autoblock enabled',
+'range_block_disabled'            => 'Administrator ke adhikar, jisse range block banawa jaawat rahaa, ke rok dewa gais hai.',
+'ipb_expiry_invalid'              => 'Khalaas hoe waala time galat hai.',
+'ipb_expiry_temp'                 => 'Lukawa gais username ke rukawat ke permanent hoe ke chaahi.',
+'ipb_already_blocked'             => '"$1" ke pahile rok dewa gais hai',
+'ipb_cant_unblock'                => 'Error: Roke waala ID $1 nai milaa.
+Saait iske pahile khol dewa gais hoi.',
+'ipb_blocked_as_range'            => 'Error: Ii IP $1 ke directly nai block karaa gais hai aur ii kaaran se iske unblock nai karaa jaawe sake hai.
+Lekin iske, as part of the range $2, block karaa gais hai, jiske unblock karaa jaawe sake hai.',
+'ip_range_invalid'                => 'IP ke range me galti hai.',
+'blockme'                         => 'Ham ke roko',
+'proxyblocker'                    => 'Proxy roke waala',
+'proxyblocker-disabled'           => 'Ii function pe rukawat hai.',
+'proxyblockreason'                => 'Aap ke IP address ke block kar dewa gais hai kahe ki ii ek open proxy hai.
+Meharbaani kar ke aap aapan Internet service provider, nai to tech support, ke contact kar ke ii serious security problem ke baare me batao.',
+'proxyblocksuccess'               => 'Hoe gais hai.',
+'sorbsreason'                     => 'DNSBL used by {{SITENAME}} me aap ke IP address ke as an open proxy list karaa gais hai.',
+'sorbs_create_account_reason'     => 'DNSBL used by {{SITENAME}} me aap ke IP address ke as an open proxy list karaa gais hai.
+Aap ke ek account banae ke ijajat nai hai',
+
+# Developer tools
+'lockdb'              => 'Database ke band karo',
+'unlockdb'            => 'Database ke kholo',
+'lockdbtext'          => 'Database lock kare se duusra users ke panna badle, preferences badle, watchlists badle aur kuch chij jon ki database me kare ke parre hai, nai kare sakega.
+Meharbani kar ke ii confirm karo ki aap yahi chij kare mangta hai aur aap maintenance ke baad, database ke khol degaa.',
+'unlockdbtext'        => 'Database unlock kare se duusra users ke panna badle, preferences badle, watchlists badle aur kuch chij jon ki database me kare ke parre hai, fir se kare sakega.
+Meharbani kar ke ii confirm karo ki aap yahi chij kae mangtaa hai.',
+'lockconfirm'         => 'Haan, ham asliyat me database khole mangtaa hai.',
+'unlockconfirm'       => 'Haan, ham asliyat me database khole mangtaa hai.',
+'lockbtn'             => 'Database ke band karo',
+'unlockbtn'           => 'Database ke band karo',
+'locknoconfirm'       => 'Aap confirmation box ke tick nai karaa hai.',
+'lockdbsuccesssub'    => 'Database lock kar dewa gais hai',
+'unlockdbsuccesssub'  => 'Database khol dewa gais hai',
+'lockdbsuccesstext'   => 'Database ke band kar dewa gais hai.<br />
+Yaad kar ke [[Special:UnlockDB|lock ke hatae dena]] maintenance khalaas kare ke baad.',
+'unlockdbsuccesstext' => 'Database ke khol dewa gais hai.',
+'lockfilenotwritable' => 'Database lock file me likha nai jaawe sake hai.
+Database ke khole nai to band kare ke khatir, this needs to be writable by the web server.',
+'databasenotlocked'   => 'Database band nai hai.',
 
 # Move page
-'movepagetext'     => 'Niche ke form kaam me laae se panna ke naam badal jaai aur iske itihass nawaa naam ke niche hoe jaai.
+'move-page'               => '$1 ke naam badlo',
+'move-page-legend'        => 'Panna ke naam badlo',
+'movepagetext'            => "Niche ke form kaam me laae se panna ke naam badal jaai aur iske itihass nawaa naam ke niche hoe jaai.
 Puraana title nawaa title pe redirect hoe jaai.
-Puraana panna ke link nahi badlii lekin double aur broken redirect ke check karo.
+Aap uu redirect, jon ki pahile waala title pe jawe hai, ke update kare sakta hai.
+Agar aap ii nai kare mangta hai, tab [[Special:DoubleRedirects|double]] nai to [[Special:BrokenRedirects|broken redirects]] ke check karna.
 Aap ke jimewaari hai ki dekho ki links right jagah point kare hai.
 
-Khayal rakhna ki agar jo nawaa title ke naam ke ek panna hai tab panna move nai hae saki jab tak ki panna khali nahi hai yah to redirect hai yah to koi pahile ke edit itihaas nahi hai. Iske matlab ii hai ki aap ek panna ke naam badal ke wahi naam rakh de sakta hai jon naam pahile rahaa aur agar aap mistake karaa tab abhi ke panna ke overwrite nahi kare saktaa.
+Khayal rakhna ki agar jo nawaa title ke naam ke ek panna hai tab panna move '''nai''' hae saki jab tak ki panna khali nahi hai yah to redirect hai yah to koi pahile ke edit itihaas nahi hai. 
+Iske matlab ii hai ki aap ek panna ke naam badal ke wahi naam rakh de sakta hai jon naam pahile rahaa aur agar aap mistake karaa tab abhi ke panna ke overwrite nahi kare saktaa.
 
-<b> CHETAWANI </b>
-Ii ek lokpriye panna ke galti se badal de sake hai; Meharbaani kar ke aap aapan karya ke natiija ke baare me socho aage kuch kare se pahile.',
-'movepagetalktext' => "Saathe ke talk panna ke automatically move kar dewa jai ii panna ke saathe '''agar jo:'''
+'''CHETAWANI''' 
+Ii ek lokpriye panna ke galti se badal de sake hai; 
+meharbaani kar ke aap aapan karya ke natiija ke baare me socho aage kuch kare se pahile.",
+'movepagetalktext'        => "Saathe ke talk panna ke automatically move kar dewa jai ii panna ke saathe '''agar jo:'''
 * khali nahi talk page nawaa naam ke already hai, yah
 * Aap nivhe waala box ke uncheck karo
 Ii prastithi me, aap ke manually move yah merge kare ke parri.",
-'movearticle'      => 'Panna ke naam badli karo:',
-'newtitle'         => 'Nawaa title pe:',
-'move-watch'       => 'Ii panna pe dhyan rakho',
-'movepagebtn'      => 'Panna ke naam badlo',
-'pagemovedsub'     => 'Panna ke naam badle me safalta',
-'movepage-moved'   => '<big>\'\'\'"$1" ke naam badal ke "$2" kar dewa gais hai\'\'\'</big>', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
-'articleexists'    => 'Uu naam ke panna abhi hai, nai to jon naam aap choose karaa hai valid nai hai.
+'movearticle'             => 'Panna ke naam badli karo:',
+'movenotallowed'          => 'Aap ke panna ke naam badle ke ijajat nai hai.',
+'newtitle'                => 'Nawaa title pe:',
+'move-watch'              => 'Ii panna pe dhyan rakho',
+'movepagebtn'             => 'Panna ke naam badlo',
+'pagemovedsub'            => 'Panna ke naam badle me safalta',
+'movepage-moved'          => '<big>\'\'\'"$1" ke naam badal ke "$2" kar dewa gais hai\'\'\'</big>', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'articleexists'           => 'Uu naam ke panna abhi hai, nai to jon naam aap choose karaa hai valid nai hai.
 Meharbani kar ke duusra naam choose karo.',
-'talkexists'       => "'''Panna ke naam badle me safalta hoe gais hai, lekin talk page ke naam nai badle sakaa hai kaheki uu naam ke talk page already hai. Iske manually merge karo.'''",
-'movedto'          => 'naam badal ke',
-'movetalk'         => 'Saathe ke baat waala panna ke bhi naam badlo',
-'1movedto2'        => '[[$1]] ke naam badal ke [[$2]] kar dewa gae hai',
-'movelogpage'      => 'Suchi ke jagah badlo',
-'movereason'       => 'Kaaran:',
-'revertmove'       => 'purana copy pe lae jao',
+'cantmove-titleprotected' => 'Aap panna ke hatae ke ii jagah pe nai kare saktaa hai kahe ki nawaa title ke banae pe rukawat hai',
+'talkexists'              => "'''Panna ke naam badle me safalta hoe gais hai, lekin talk page ke naam nai badle sakaa hai kaheki uu naam ke talk page already hai. Iske manually merge karo.'''",
+'movedto'                 => 'naam badal ke',
+'movetalk'                => 'Saathe ke baat waala panna ke bhi naam badlo',
+'move-subpages'           => 'Move all subpages, if applicable',
+'move-talk-subpages'      => 'Subpages ke hatae ke baat waala panna pe kar do, agar hoe sake tab',
+'movepage-page-exists'    => 'Panna $1 abhi hai aur iske uppar se nai likha jaawe sake hai.',
+'movepage-page-moved'     => 'Panna $1 ke naam badal ke $2 kar dewa gais hai.',
+'movepage-page-unmoved'   => 'Panna $1 ke naam badal ke $2 nai kare sakaa hai.',
+'movepage-max-pages'      => 'Jaada se jaada $1 {{PLURAL:$1|panna|panna}} ke hatae dewa gais hai, aur jaada ke ab nai hatawa jaai.',
+'1movedto2'               => '[[$1]] ke naam badal ke [[$2]] kar dewa gae hai',
+'1movedto2_redir'         => 'Redirect ke uppar se [[$1]] ke badal ke  [[$2]] kar dewa gais hai',
+'movelogpage'             => 'Suchi ke jagah badlo',
+'movelogpagetext'         => 'Niche sab panna, jiske naam badla gais hai, ke suchi hai.',
+'movereason'              => 'Kaaran:',
+'revertmove'              => 'purana copy pe lae jao',
+'delete_and_move'         => 'Mitao aur hatao',
+'delete_and_move_text'    => '== Mitae ke jaruri hai ==
+Destination panna "[[:$1]]" abhi hai.
+Ka aap mangta hai ki iske mitae dewa jaae, jisse ki ii naam se duusra paana ke save karaa jaae sake?',
+'delete_and_move_confirm' => 'Haan, panna ke mitao',
+'delete_and_move_reason'  => 'Naam badle ke khatir mitao',
+'selfmove'                => 'Source aur destination title ke naam ekke hai;
+panna ke wahi ke uppar nai save karaa jaae sake hai.',
+'immobile_namespace'      => 'Source or destination title ek special rakam ke hai;
+uu namespace me aur usse pana ke hatae nai sakta hai.',
+'imagenocrossnamespace'   => 'File ke non-file namespace me hatae ke nai kare sakta hai',
+'imagetypemismatch'       => 'Nawaa file extension uske type se nai match kare hai.',
+'imageinvalidfilename'    => 'Jon naam pe aap badle mangtaa hai valid nai hai',
+'fix-double-redirects'    => 'Update any redirects that point to the original title',
 
 # Export
-'export' => 'Panna niryat karo',
+'export'            => 'Panna niryat karo',
+'exporttext'        => 'Aap ek khaas panna, nai to dher panna jon ki XML me bandha hai, ke text aur balao ke itihass ke export kare saktaa hai.
+Iske duusra wiki me MediaWiki [[Special:Import|import panna]] se import karaa jaawe sake hai.
+
+Panna ke export kare ke khatir titles ke niche ke text box me likho, ek line pe ek title, aur ii select karo ki aap abhi ke version ke saathe purana version mangtaa hai, panna ke itihaas ke saathe, nai to abhi ke version jisme last badlao ke jankari hai.
+
+Duusra case me aap ek link ke bhi use kare saktaa hai, jaise ki [[{{#Special:Export}}/{{MediaWiki:Mainpage}}]] panna ke khatir "[[{{MediaWiki:Mainpage}}]]".',
+'exportcuronly'     => 'Khaali abhi ke badlao ke export karo, puura itihass nai',
+'exportnohistory'   => "----
+'''Note:''' Ii form se panna ke puura itihass ke export kare pe rok lagae dewa gais hai due to performance reasons.",
+'export-submit'     => 'Export karo',
+'export-addcattext' => 'Ii vibhag me se panna jorro:',
+'export-addcat'     => 'Jorro',
+'export-download'   => 'Save as file',
+'export-templates'  => 'Templates ke include karo',
 
 # Namespace 8 related
-'allmessages' => 'System sandesh',
+'allmessages'               => 'System sandesh',
+'allmessagesname'           => 'Naam',
+'allmessagesdefault'        => 'Default text',
+'allmessagescurrent'        => 'Abhi ke text',
+'allmessagestext'           => 'Ii ek system sandes ke suchi hai jon ki MediaWiki namespace me pawa jaae sake hai.
+Agar aap generic MediaWiki localisation ke yogdaan de mangtaa hai tab meharbani kar ke [http://www.mediawiki.org/wiki/Localisation MediaWiki Localisation] aur [http://translatewiki.net translatewiki.net]  pe jao.',
+'allmessagesnotsupportedDB' => "Ii panna ke kaam me nai lawa jaae sake hai kahe ki '''\$wgUseDatabaseMessages''' ke band kar dewa gais hai.",
+'allmessagesfilter'         => 'Message naam ke filter:',
+'allmessagesmodified'       => 'Khaali badlawa gae ke dekhao',
 
 # Thumbnails
-'thumbnail-more'  => 'Barraa karo',
-'thumbnail_error' => 'Thumbnail banae me galti hoe gais: $1',
+'thumbnail-more'           => 'Barraa karo',
+'filemissing'              => 'File missing',
+'thumbnail_error'          => 'Thumbnail banae me galti hoe gais: $1',
+'djvu_page_error'          => 'DjVu page out of range',
+'djvu_no_xml'              => 'Unable to fetch XML for DjVu file',
+'thumbnail_invalid_params' => 'Invalid thumbnail parameters',
+'thumbnail_dest_directory' => 'Unable to create destination directory',
+
+# Special:Import
+'import'                     => 'Panna ke import karo',
+'importinterwiki'            => 'Transwiki import',
+'import-interwiki-text'      => 'Ek wiki aur panna ke title ke select karo.
+Badalo ke tarik aur badle waala sadasya ke naam wahii rakam rahii.
+Sab transwiki import actions ke [[Special:Log/import|import log]] pe log karaa jaawe hai.',
+'import-interwiki-history'   => 'Ii panna ke sab badlao ke itihaas ke copy karo',
+'import-interwiki-submit'    => 'Import karo',
+'import-interwiki-namespace' => 'Destination namespace:',
+'importtext'                 => 'Meharbani kar ke file ke [[Special:Export|export utility]] use kar ke source wiki me se export karo.
+Aapan computer me save kar ke  hian pe upload karo.',
+'importstart'                => 'Panna ke import karta hai...',
+'import-revision-count'      => '$1 {{PLURAL:$1|badlao|badlao}}',
+'importnopages'              => 'Koi panna import kare ke nai hai.',
+'importfailed'               => 'Import fail hoe gais: <nowiki>$1</nowiki>',
+'importunknownsource'        => 'Unknown import source type',
+'importcantopen'             => 'Import file ke khole nai sakaa',
+'importbadinterwiki'         => 'Kharaab interwiki jorr',
+'importnotext'               => 'Khaali nai to kuchh nai likha hai',
+'importsuccess'              => 'Import khalaas hoe gais hai!',
+'importhistoryconflict'      => 'Badlao ke itihass me conflict hai (saait ii panna ke pahile import karaa gais rahaa)',
+'importnosources'            => 'Koi interwiki import source ke define nai karaa gais hai aur direct itihass ke upload ke rok dewa gais hai.',
+'importnofile'               => 'Koi import file ke upload nai karaa gais hai.',
+'importuploaderrorsize'      => 'Import file ke upload nai kare sakaa hai.
+Ii file ke size allowed upload size se barraa hai.',
+'importuploaderrorpartial'   => 'Import file ke upload nai kare sakaa hai. 
+Ii file ke khaali thora hissa ke upload karaa gais hai.',
+'importuploaderrortemp'      => 'Import file ke upload nai kare sakaa hai. 
+Ek temporary file nai hai.',
+'import-parse-failure'       => 'XML import parse fail hoe gais hai',
+'import-noarticle'           => 'Koi panna import kare ke nai hai!',
+'import-nonewrevisions'      => 'Sab badlao ke pahile import karaa gais hai.',
+'xml-error-string'           => '$1 at line $2, col $3 (byte $4): $5',
+'import-upload'              => 'XML data ke upload karo',
+'import-token-mismatch'      => 'Loss of session data.
+Meharbani kar ke, fir se kosis karo.',
+'import-invalid-interwiki'   => 'Naam dewa gais wiki se import nai kare saktaa hai.',
 
 # Import log
-'importlogpage' => 'Suchi ke import karo',
+'importlogpage'                    => 'Suchi ke import karo',
+'importlogpagetext'                => 'Duusra wiki se panna aur badlao ke itihaas ke administrative imports.',
+'import-logentry-upload'           => 'file upload se [[$1]] ke import karaa gais hai',
+'import-logentry-upload-detail'    => '$1 {{PLURAL:$1|badlao|badlao}}',
+'import-logentry-interwiki'        => 'transwikied $1',
+'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|badlao|badlao}} $2 se',
 
 # Tooltip help for the actions
-'tooltip-pt-userpage'             => 'Hamaar sadasya panna',
-'tooltip-pt-mytalk'               => 'Hamaar baat waala panna',
+'tooltip-pt-userpage'             => 'Aap ke sadasya panna',
+'tooltip-pt-anonuserpage'         => 'IP jisme se aap edit karta hai ke sadasya panna',
+'tooltip-pt-mytalk'               => 'Aap ke baat waala panna',
+'tooltip-pt-anontalk'             => 'Ii IP address se badlao pe salah',
 'tooltip-pt-preferences'          => 'Hamaar pasand',
 'tooltip-pt-watchlist'            => 'Panna ke list jispe aap dhyan rakhaa hai',
-'tooltip-pt-mycontris'            => 'Hamaar yog daan ke list',
+'tooltip-pt-mycontris'            => 'Aap ke yogdaan ke suchi',
 'tooltip-pt-login'                => 'Aap log in karo ke to achchha hai, lekin jarurat nahi hai.',
+'tooltip-pt-anonlogin'            => 'Aap ke login kare ke encourage karaa jaawe hai lekin ii jaruri nai hai',
 'tooltip-pt-logout'               => 'Log out',
 'tooltip-ca-talk'                 => 'Content page ke baare me salah',
 'tooltip-ca-edit'                 => 'Aap ii panna ke badle sakta hai. Meherbaani kar ke save kare se pahile preview button ke kaam me laana.',
-'tooltip-ca-addsection'           => 'Ii bahas me aapan bichar do.',
+'tooltip-ca-addsection'           => 'Nawaa section suruu karo',
 'tooltip-ca-viewsource'           => 'Ii panna surakchhit hai. Aap iske sooti dekhe sakta hai.',
+'tooltip-ca-history'              => 'Ii panna ke pahile ke badlao',
 'tooltip-ca-protect'              => 'Ii panna ke bachao',
 'tooltip-ca-delete'               => 'Ii panna ke delete karo',
+'tooltip-ca-undelete'             => 'Ii panna ke mitae se pahile ke sab badlao ke pahile jaise karo',
 'tooltip-ca-move'                 => 'Ii panna ke duusra jagah karo',
 'tooltip-ca-watch'                => 'Ii page ke aapan watchlist me jorro',
 'tooltip-ca-unwatch'              => 'Ii panna ke aapan dhyan suchi se hatao',
 'tooltip-search'                  => '{{SITENAME}} khojo',
+'tooltip-search-go'               => 'Ekdam ii naam ke panna pe jaao agar ii abhi hai',
+'tooltip-search-fulltext'         => 'Ii text ke sab panna me khojo',
+'tooltip-p-logo'                  => 'Pahila panna pe jaao',
 'tooltip-n-mainpage'              => 'Pahila panna dekho',
 'tooltip-n-portal'                => 'Project ke baare me, app kaunchi kare sakta hai, kahaan pe chij milii',
 'tooltip-n-currentevents'         => 'Abhi ke samachar ke baare me aur jankari',
@@ -1119,13 +2005,22 @@ Meharbani kar ke duusra naam choose karo.',
 'tooltip-n-randompage'            => 'Ek random panna load karo',
 'tooltip-n-help'                  => 'Khoje waala jagah.',
 'tooltip-t-whatlinkshere'         => 'Sab wiki panna ke list jon ki hian par link hoe hai',
+'tooltip-t-recentchangeslinked'   => 'Panna jon ki ii panna se jurra hai ke nawaa badlao',
+'tooltip-feed-rss'                => 'Ii panna ke khatir RSS feed',
+'tooltip-feed-atom'               => 'Ii panna ke khatir atom feed',
 'tooltip-t-contributions'         => 'Ii sadasya ke yogdaan ke suchi dekho',
 'tooltip-t-emailuser'             => 'Ii user ke lage ek mail bhejo',
 'tooltip-t-upload'                => 'File upload karo',
 'tooltip-t-specialpages'          => 'Sab visesh panna ke list',
+'tooltip-t-print'                 => 'Ii panna ke printable version',
+'tooltip-t-permalink'             => 'Ii panna ke ii badlao ke pakka jorr',
+'tooltip-ca-nstab-main'           => 'Content panna ke dekho',
 'tooltip-ca-nstab-user'           => 'Sadasya ke panna dekho',
+'tooltip-ca-nstab-media'          => 'Media panna ke dekho',
+'tooltip-ca-nstab-special'        => 'Ii ek khaas panna hai, ii panna ke aap badle nai sakta hai',
 'tooltip-ca-nstab-project'        => 'Project panna ke dekho',
 'tooltip-ca-nstab-image'          => 'File panna ke dekho',
+'tooltip-ca-nstab-mediawiki'      => 'system sandes ke dekho',
 'tooltip-ca-nstab-template'       => 'Template dekho',
 'tooltip-ca-nstab-help'           => 'Sahaeta waala panna dekho',
 'tooltip-ca-nstab-category'       => 'Category panna ke dekho',
@@ -1135,12 +2030,86 @@ Meharbani kar ke duusra naam choose karo.',
 'tooltip-diff'                    => 'Dekhao aap kon chij badlaa hai.',
 'tooltip-compareselectedversions' => 'Ii panna ke chuna gae version ke antar dekho.',
 'tooltip-watch'                   => 'Ii panna ke aapan dhyan suchi me jorro',
+'tooltip-recreate'                => 'Ii panna ke pahile mitaae pe bhi iske fir se banao',
+'tooltip-upload'                  => 'Upload suruu karo',
+
+# Metadata
+'nodublincore'      => 'Ii server ke khatir Dublin Core RDF metadata ke disable kar dewa gais hai',
+'nocreativecommons' => 'Ii server ke khatir Creative Commons RDF metadata ke disable kar dewa gais hai.',
+'notacceptable'     => 'Wiki server uu rakam se data nai dewe sake hai jisse ki aap ke client parrhe sake.',
+
+# Attribution
+'anonymous'        => '{{SITENAME}} ke bina naam ke sadasya',
+'siteuser'         => '{{SITENAME}} sadasya $1',
+'lastmodifiedatby' => 'Ii panna ke aakhri dafe $3 badlis rahaa $2, $1.', # $1 date, $2 time, $3 user
+'othercontribs'    => 'Based on work by $1.',
+'others'           => 'duusra jane',
+'siteusers'        => '{{SITENAME}} sadasya $1',
+'creditspage'      => 'Panna ke credit',
+'nocredits'        => 'Ii panna ke khatir koi credit ke baare me jaankari nai hai.',
+
+# Spam protection
+'spamprotectiontitle' => 'Spam protection filter',
+'spamprotectiontext'  => 'Jon panna ke aap save kare mangta rahaa ke spam filter rok diis hai.
+Ii saait ii kaaran se hoi ki panna ke ek jorr koi blacklisted external site se hai.',
+'spamprotectionmatch' => 'Ii text spam filter ke trigger karis rahaa: $1',
+'spambot_username'    => 'MediaWiki spam ke safai',
+'spam_reverting'      => 'Pahile waala badalo, jisme $1 se link nai hai, pe karaa jaawe hai',
+'spam_blanking'       => 'Sab badlao jisme $1 se jorr hai, ke mitawa jaawe hai',
+
+# Info page
+'infosubtitle'   => 'Panna ke baare me jaankari',
+'numedits'       => 'Badlao ke ginti (panna): $1',
+'numtalkedits'   => 'Badlao ke ginti (salah waala panna): $1',
+'numwatchers'    => 'Dekhe waala ke ginti: $1',
+'numauthors'     => 'Likhe waala ke ginti (panna): $1',
+'numtalkauthors' => 'Likhe waala ke ginti (salah waala panna): $1',
+
+# Math options
+'mw_math_png'    => 'PNG ke sab time render karo',
+'mw_math_simple' => 'HTML agar bahut sahaj hai, nai to PNG',
+'mw_math_html'   => 'HTML agar hoe sake, nai to PNG',
+'mw_math_source' => 'TeX ke rakam chhorr do (text browsers ke khatir)',
+'mw_math_modern' => 'Modern browsers khatir thiik hai',
+'mw_math_mathml' => 'MathML hoe sake tab (experimental)',
+
+# Patrolling
+'markaspatrolleddiff'                 => 'Mark karo ke pahraa dewa jaawe hai',
+'markaspatrolledtext'                 => 'Mark karo ki panna pe pahraa dewa jaawe hai',
+'markedaspatrolled'                   => 'Mark karo ke pahraa dewa jaawe hai',
+'markedaspatrolledtext'               => 'Pasand karaa gais badlao pe pahraa dewa jaawe hai',
+'rcpatroldisabled'                    => 'Nawaa badlao pe pahraa de ke ijajat nai hai',
+'rcpatroldisabledtext'                => 'Nawaa badla pe abhi pahraa nai dewa jaawe hai',
+'markedaspatrollederror'              => 'Ispe pahraa nai dewa jaawe sake hai',
+'markedaspatrollederrortext'          => 'Aap ke ek badlao ke mark kare ke chaahi jispe pahraa dewa jaawe sake hai',
+'markedaspatrollederror-noautopatrol' => 'Aap ke aapan badlao pe pahraa dewe ke ijajat nai hai.',
+
+# Patrol log
+'patrol-log-page'   => 'Pahraa de waala suchi',
+'patrol-log-header' => 'Ii pahraa dewa gais badlao ke suchi hai.',
+'patrol-log-line'   => 'mark karaa gais $1 of $2 pahraa dewa gais $3',
+'patrol-log-auto'   => '(apne se)',
+'patrol-log-diff'   => 'badlao $1',
+
+# Image deletion
+'deletedrevision'                 => 'Purana badlao ke mitae dia hai $1',
+'filedeleteerror-short'           => 'File ke mitae me galti hoe gais: $1',
+'filedeleteerror-long'            => 'File ke mitae ke time garrbarr hoe gais: $1',
+'filedelete-missing'              => 'File "$1" ke nai mitawa jaawe sake hai, kahe ki ii naam ke koi file nai hai.',
+'filedelete-old-unregistered'     => 'Specified file ke badlao "$1" database me nai hai.',
+'filedelete-current-unregistered' => 'Specify karaa gais file "$1" database me nai hai.',
+'filedelete-archive-read-only'    => 'Archive directory "$1" me webserver se nai likha jaawe sake hai.',
 
 # Browsing diffs
-'previousdiff' => '← Pahile ke farka',
-'nextdiff'     => 'Aglaa antar →',
+'previousdiff' => '← Purana badlao',
+'nextdiff'     => 'Nawaa badlao →',
 
 # Media information
+'mediawarning'         => "'''Chetauni''': Ii file me saait kharaab code hoi, iske execute kare se aap ke system me garrbarr hoe sake hai.<hr />",
+'imagemaxsize'         => "Chapa jaada se jaada ketnaa barraahoe sake hai:<br />''(file ke baare me panna)''",
+'thumbsize'            => 'Anguutha ke nakkhuun etna barraa:',
+'widthheightpage'      => '$1×$2, $3 {{PLURAL:$3|panna|panna}}',
+'file-info'            => '(file etnaa barraa: $1, MIME rakam: $2)',
 'file-info-size'       => '($1 × $2 pixel, file ke size: $3, MIME type: $4)',
 'file-nohires'         => '<small>Aur achchha resolution nai hai.</small>',
 'svg-long-desc'        => '(SVG file, nominally $1 × $2 pixels, file size: $3)',
@@ -1148,7 +2117,13 @@ Meharbani kar ke duusra naam choose karo.',
 'show-big-image-thumb' => '<small>Ii preview ke size: $1 × $2 pixels</small>',
 
 # Special:NewImages
-'newimages' => 'Nawaa files ke gallery',
+'newimages'         => 'Nawaa files ke gallery',
+'imagelisttext'     => "Niche ek suchi hai '''$1''' ke {{PLURAL:$1|file|files}} sorted $2.",
+'newimages-summary' => 'Ii khaas panna pahile waala upload karaa gais file ke dekhae hai.',
+'showhidebots'      => '($1 bots)',
+'noimages'          => 'Koi chij dekhe ke nai hai.',
+'ilsubmit'          => 'Khojo',
+'bydate'            => 'tarik se',
 
 # Bad image list
 'bad_image_list' => 'Format ii rakam hai:
@@ -1167,11 +2142,18 @@ Wahii line pe aur koi link exception consider karaa jai i.e. jahan par panna sak
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
+
+# EXIF tags
+'exif-imagewidth'       => 'Chaurrai',
+'exif-imagelength'      => 'Unchai',
+'exif-imagedescription' => 'Chapa ke padwi',
+'exif-aperturevalue'    => 'Aperture',
 
 # External editor support
 'edit-externally'      => 'Edit this file using an external application',
-'edit-externally-help' => 'Aur jaankari khatir [http://www.mediawiki.org/wiki/Manual:External_editors setup instructions] ke dekho.',
+'edit-externally-help' => '(Aur jaankari khatir [http://www.mediawiki.org/wiki/Manual:External_editors setup instructions] ke dekho)',
 
 # 'all' in various places, this might be different for inflected languages
 'watchlistall2' => 'sab',

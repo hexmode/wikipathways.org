@@ -1,6 +1,9 @@
 <?php
 /** Shona (chiShona)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -83,9 +86,9 @@ $messages = array(
 'viewsource' => 'Wona mabviro',
 
 # Login and logout pages
-'welcomecreation'    => '= Tigashire, $1! == 
-
-Akaunzi yako yagadzirwa. Usakanganwe kuchinga mapreferences ako eWikipedia.',
+'welcomecreation'    => '== Tigashire, $1! == 
+Akaunzi yako yagadzirwa.
+Usakanganwe kuchinga [[Special:Preferences|mapreferences ako {{SITENAME}}]].',
 'yourname'           => 'Zita:',
 'yourpassword'       => 'Password:',
 'yourpasswordagain'  => 'Nyorazve password:',

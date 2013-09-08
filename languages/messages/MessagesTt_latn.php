@@ -1,10 +1,14 @@
 <?php
-/** Tatar (Latin) (Tatarça/Татарча (Latin))
+/** Tatar (Latin) (Татарча/Tatarça (Latin))
+ *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
  *
  * @ingroup Language
  * @file
  *
  * @author Albert Fazlî
+ * @author Urhixidur
  * @author לערי ריינהארט
  */
 
@@ -294,7 +298,7 @@ Anı alğaç monda tağın kerep qara.',
 'nowiki_tip'      => 'Wiki-qalıp eşkärtmäskä',
 'image_sample'    => 'Mísal.jpg',
 'image_tip'       => 'Quşılğan räsem',
-'media_sample'    => 'Mísal.mp3',
+'media_sample'    => 'Mísal.ogg',
 'sig_tip'         => 'Ímzañ belän zaman/waqıt tamğası',
 'hr_tip'          => 'Yatma sızıq (siräk qullan)',
 
@@ -315,15 +319,15 @@ Anı alğaç monda tağın kerep qara.',
 'newarticle'         => '(Yaña)',
 'clearyourcache'     => "'''İskärmä:''' Saqlawdan soñ, üzgärmälärne kürü öçen browserıñnıñ alxäteren buşatası bar: '''Mozilla:''' click ''reload''(yä ki ''ctrl-r''), '''IE / Opera:''' ''ctrl-f5'', '''Safari:''' ''cmd-r'', '''Konqueror''' ''ctrl-r''.",
 'updated'            => '(Yañartıldı)',
-'note'               => '<strong>İskärmä:</strong>',
+'note'               => "'''İskärmä:'''",
 'editing'            => 'Üzgärtü: $1',
 'editconflict'       => 'Üzgärtü qíınlığı: $1',
 'yourtext'           => 'Mäteneñ',
 'storedversion'      => 'Saqlanğan yurama',
-'editingold'         => '<strong>KİSÄTMÄ: Sin bu bitneñ iskergän yuramasın üzgärtäsen.
-Ägär sin monı saqlísıñ ikän, şul yuramadan soñ yasalğan üzgärmälär yuğalır.</strong>',
+'editingold'         => "'''KİSÄTMÄ: Sin bu bitneñ iskergän yuramasın üzgärtäsen.
+Ägär sin monı saqlísıñ ikän, şul yuramadan soñ yasalğan üzgärmälär yuğalır.'''",
 'yourdiff'           => 'Ayırmalar',
-'longpagewarning'    => "KİSÄTMÄ: Bu bit zurlığı $1 KB; qayber browserlarda 32 KB'tan da zurraq bulğan bitlärne kürsätkändä qíınlıqlar bula.
+'longpagewarning'    => "KİSÄTMÄ: Bu bit zurlığı $1 kB; qayber browserlarda 32 kB'tan da zurraq bulğan bitlärne kürsätkändä qíınlıqlar bula.
 Zínhar, bu bitneñ wağraq kisäklärgä bülü turında uylap qara.",
 'template-protected' => '(yaqlanmış)',
 
@@ -558,7 +562,7 @@ Soñğı beterülär $2 bitendä terkälenä.',
 ** Yazğanı soradı
 ** Qelemxaqq bozılışı
 ** Bozıp yöriwçi işi',
-'editcomment'           => 'Bu üzgärtü taswírı: "<i>$1</i>".', # only shown if there is an edit comment
+'editcomment'           => "Bu üzgärtü taswírı: \"''\$1''\".", # only shown if there is an edit comment
 'protectlogpage'        => 'Yaqlaw_köndälege',
 'protectedarticle'      => '[[$1]] yaqlandı',
 'unprotectedarticle'    => '[[$1]] ireklände',

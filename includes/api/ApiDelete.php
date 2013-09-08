@@ -69,15 +69,15 @@ class ApiDelete extends ApiBase {
 			$retval = self::deletefile($params['token'], $titleObj, $params['oldimage'], $reason, false);
 			if(!empty($retval))
 				// We don't care about multiple errors, just report one of them
-				$this->dieUsageMsg(current($retval));
+				$this->dieUsageMsg(reset($retval));
 		} else {
 			$articleObj = new Article($titleObj);
 			$retval = self::delete($articleObj, $params['token'], $reason);
-
+			
 			if(!empty($retval))
 				// We don't care about multiple errors, just report one of them
-				$this->dieUsageMsg(current($retval));
-
+				$this->dieUsageMsg(reset($retval));
+			
 			if($params['watch'] || $wgUser->getOption('watchdeletion'))
 				$articleObj->doWatch();
 			else if($params['unwatch'])
@@ -92,11 +92,11 @@ class ApiDelete extends ApiBase {
 		global $wgUser;
 		// Check wiki readonly
 		if (wfReadOnly()) return array(array('readonlytext'));
-
+		
 		// Check permissions
 		$errors = $title->getUserPermissionsErrors('delete', $wgUser);
 		if (count($errors) > 0) return $errors;
-
+		
 		// Check token
 		if(!$wgUser->matchEditToken($token))
 			return array(array('sessionfailure'));
@@ -114,7 +114,7 @@ class ApiDelete extends ApiBase {
 	public static function delete(&$article, $token, &$reason = NULL)
 	{
 		global $wgUser;
-
+		
 		$errors = self::getPermissionsError($article->getTitle(), $token);
 		if (count($errors)) return $errors;
 
@@ -128,7 +128,7 @@ class ApiDelete extends ApiBase {
 			if($reason === false)
 				return array(array('cannotdelete'));
 		}
-
+		
 		if (!wfRunHooks('ArticleDelete', array(&$article, &$wgUser, &$reason)))
 			$this->dieUsageMsg(array('hookaborted'));
 
@@ -150,21 +150,21 @@ class ApiDelete extends ApiBase {
 
 		$file = wfFindFile($title, false, FileRepo::FIND_IGNORE_REDIRECT);
 		$oldfile = false;
-
+		
 		if( $oldimage )
 			$oldfile = RepoGroup::singleton()->getLocalRepo()->newFromArchiveName( $title, $oldimage );
-
+			
 		if( !FileDeleteForm::haveDeletableFile($file, $oldfile, $oldimage) )
 			return array(array('nofile'));
 
 		$status = FileDeleteForm::doDelete( $title, $file, $oldimage, $reason, $suppress );
-
+				
 		if( !$status->isGood() )
 			return array(array('cannotdelete', $title->getPrefixedText()));
-
+			
 		return array();
 	}
-
+	
 	public function mustBePosted() { return true; }
 
 	public function getAllowedParams() {

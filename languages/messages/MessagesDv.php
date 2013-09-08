@@ -1,6 +1,9 @@
 <?php
 /** Divehi (ދިވެހިބަސް)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -13,37 +16,63 @@ $rtl = true;
 
 $messages = array(
 # User preference toggles
-'tog-hideminor'    => 'ކުޑަ ކުޑަ އުނި އިތުރުތައް ފަހު ބަދަލު އިން ފޮރުއްވަވާ',
+'tog-hideminor'    => 'ކުޑަ ކުޑަ އުނި އިތުރުތައް އެންމެފަހުގެ ބަދަލުތަކުގެ ލިސްޓުން ފޮރުއްވަވާ',
 'tog-ccmeonemails' => 'އަޅުގަނޑު އެހެން މެމްބަރުންނަށް ފޮނުވާ އީމެއިލްގެ ނަކަލެއް އަޅުގަނޑަށް ފޮނުވާ',
 
 'underline-always' => 'އަބަދުވެސް',
 'underline-never'  => 'ހަމަހިލާ ނޫން',
 
 # Dates
-'sunday'    => 'އާދީއްތަ',
-'monday'    => 'ހޯމަ',
-'tuesday'   => 'އަންގާރަ',
-'wednesday' => 'ބުދަ',
-'thursday'  => 'ބުރާސްފަތި',
-'friday'    => 'ހުކުރު',
-'saturday'  => 'ހޮނިހިރު',
-'january'   => 'ޖެނުއަރީ',
-'february'  => 'ފެބްރުއަރީ',
-'march'     => 'މާރޗް',
-'april'     => 'އެޕްރީލް',
-'may_long'  => 'މެއި',
-'june'      => 'ޖޫން',
-'july'      => 'ޖުލައި',
-'august'    => 'އޮގަސްޓު',
-'september' => 'ސެޕްޓެމްބަރު',
-'october'   => 'އޮކްޓޫބަރު',
-'november'  => 'ނޮވެމްބަރު',
-'december'  => 'ޑިސެމްބަރު',
-'may'       => 'މެއި',
-'sep'       => 'ސެޕްޓެމްބަރ',
-'oct'       => 'އޮކްޓޯބަރ',
-'nov'       => 'ނޮވެމްބަރ',
-'dec'       => 'ޑިސެމްބަރ',
+'sunday'        => 'އާދީއްތަ',
+'monday'        => 'ހޯމަ',
+'tuesday'       => 'އަންގާރަ',
+'wednesday'     => 'ބުދަ',
+'thursday'      => 'ބުރާސްފަތި',
+'friday'        => 'ހުކުރު',
+'saturday'      => 'ހޮނިހިރު',
+'sun'           => 'އާދީއްތަ',
+'mon'           => 'ހޯމަ',
+'tue'           => 'އަންގާރަ',
+'wed'           => 'ބުދަ',
+'thu'           => 'ބުރާސްފަތި',
+'fri'           => 'ހުކުރު',
+'sat'           => 'ހޮނިހިރު',
+'january'       => 'ޖެނުއަރީ',
+'february'      => 'ފެބްރުއަރީ',
+'march'         => 'މާރޗް',
+'april'         => 'އެޕްރީލް',
+'may_long'      => 'މެއި',
+'june'          => 'ޖޫން',
+'july'          => 'ޖުލައި',
+'august'        => 'އޮގަސްޓު',
+'september'     => 'ސެޕްޓެމްބަރު',
+'october'       => 'އޮކްޓޫބަރު',
+'november'      => 'ނޮވެމްބަރު',
+'december'      => 'ޑިސެމްބަރު',
+'january-gen'   => 'ޖެނުއަރީ',
+'february-gen'  => 'ފެބްރުއަރީ',
+'march-gen'     => 'މާޗް',
+'april-gen'     => 'އޭޕްރިލް',
+'may-gen'       => 'މޭއި',
+'june-gen'      => 'ޖޫން',
+'july-gen'      => 'ޖުލައި',
+'august-gen'    => 'އޯގަސްޓް',
+'september-gen' => 'ސެޕްޓެމްބަރ',
+'october-gen'   => 'އޮކްޓޯބަރ',
+'november-gen'  => 'ނޮވެމްބަރ',
+'december-gen'  => 'ޑިސެމްބަރ',
+'jan'           => 'ޖެނުއަރީ',
+'feb'           => 'ފެބްރުއަރީ',
+'mar'           => 'މާޗް',
+'apr'           => 'އޭޕްރިލް',
+'may'           => 'މެއި',
+'jun'           => 'ޖޫން',
+'jul'           => 'ޖުލައި',
+'aug'           => 'އޯގަސްޓް',
+'sep'           => 'ސެޕްޓެމްބަރ',
+'oct'           => 'އޮކްޓޯބަރ',
+'nov'           => 'ނޮވެމްބަރ',
+'dec'           => 'ޑިސެމްބަރ',
 
 # Categories related messages
 'category_header' => 'ގިސްމު "$1" ގައިވާ މަޒުމޫނުތައް',
@@ -79,10 +108,13 @@ $messages = array(
 'delete'            => 'ފޮހެލައްވާ',
 'deletethispage'    => 'މި ޞަފްޙާ ފޮހެލައްވާ',
 'protect'           => 'ދިފާއުކުރައްވާ',
+'protect_change'    => 'ބަދަލު ގެންނަވާ',
 'protectthispage'   => 'މި ޞަފްޙާ ދިފާއުކުރައްވާ',
 'unprotect'         => 'ދިފާއުކުރުން ހުއްޓަވާލައްވާ',
 'unprotectthispage' => 'މި ޞަފްޙާ ދިފާއުކުރުން ހުއްޓަވާލައްވާ',
+'newpage'           => 'އާ ސަފްޙާ',
 'talkpage'          => 'މި ސަފްޙާއާ މެދު ބަހުސްކުރައްވާ',
+'talkpagelinktext'  => 'ޚިޔާލު ސަފްޙާ',
 'specialpage'       => 'ހާއްސަ ޞަފްޙާ',
 'articlepage'       => 'ފިހުރިސްތު ޞަފްޙާ ބައްލަވާ',
 'talk'              => 'ބަހުސް',
@@ -106,6 +138,7 @@ $messages = array(
 'currentevents'        => 'ހިނގަމުންދާ ހާދިސާތައް',
 'disclaimers'          => 'އިއުލާނުތައް',
 'edithelp'             => 'ބަދަލުތައް ގެނައުމަށް އެހީ އެއް',
+'edithelppage'         => 'އެހީ: އުނިއިތުރު ގެންނެވުން',
 'helppage'             => 'Help:ފިހުރިސްތު',
 'mainpage'             => 'މައި ޞަފްޙާ',
 'mainpage-description' => 'މައި ޞަފްޙާ',
@@ -114,11 +147,12 @@ $messages = array(
 
 'badaccess' => 'ހުއްދައިގެ ކުށެއް',
 
-'ok'          => 'ރަނގަޅު',
-'editsection' => 'އުނިއިތުރު ގެންނަވާ',
-'toc'         => 'ފިހުރިސްތު',
-'showtoc'     => 'ދައްކަވާ',
-'hidetoc'     => 'ފޮރުއްވާ',
+'ok'              => 'ރަނގަޅު',
+'editsection'     => 'އުނިއިތުރު ގެންނަވާ',
+'editsectionhint' => 'މަޒްމޫނުގެ $1 ބަޔަށް އުނިއިތުރު ގެންނަނީ',
+'toc'             => 'ފިހުރިސްތު',
+'showtoc'         => 'ދައްކަވާ',
+'hidetoc'         => 'ފޮރުއްވާ',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'މަޒުމޫނު',
@@ -197,6 +231,7 @@ $messages = array(
 'accmailtitle'             => 'ސިއްރުބަސް ފޮނުވިއްޖެ.',
 'accmailtext'              => '"$1" އަށްޓަކައިވާ ސިއްރު ބަސް $2 އަށް ވަނީ ފޮނުވިފައި',
 'newarticle'               => '(އައު)',
+'editing'                  => '$1 އަށް އުނިއިތުރު ގެންނަނީ',
 'editingsection'           => '$1 ގެ (ބަޔަކަށް) އުނި އިތުރު ގެންނަނީ',
 'editconflict'             => 'އުނިއިތުރުގެންނެވުމުގައި އަރާރުން: $1',
 'yourtext'                 => 'ތިޔބޭފުޅާގެ ލިޔުއްވުން',
@@ -336,6 +371,7 @@ $messages = array(
 'badipaddress'      => 'ނުރަނގަޅު އައި.ޕީ އެޑްރެހެއް',
 'expiringblock'     => 'މުއްދަތު ހަމަވާނީ $1',
 'blocklink'         => 'ފިޔަވަޅުއަޅުއްވާ',
+'contribslink'      => 'ޙިއްޞާ',
 'proxyblocksuccess' => 'ފުރިހަމަވެއްޖެ.',
 
 # Developer tools
@@ -363,6 +399,10 @@ $messages = array(
 'allmessagesname'    => 'ނަން',
 'allmessagesdefault' => 'ކުރީގެ މަތަން',
 'allmessagescurrent' => 'މިހާރުގެ މަތަން',
+
+# Tooltip help for the actions
+'tooltip-pt-logout'  => 'ބޭރަށްވަޑައިގަންނަވާ',
+'tooltip-n-mainpage' => 'މައި ސަފްޙާއަށް ވަަޑައިގަންނަވާ',
 
 # Special:NewImages
 'showhidebots' => '($1 ސެއްޓި)',

@@ -1,6 +1,9 @@
 <?php
 /** Sranan Tongo (Sranantongo)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -8,6 +11,7 @@
  * @author Jordi
  * @author Ooswesthoesbes
  * @author Stretsh
+ * @author Urhixidur
  */
 
 $fallback = 'nl';
@@ -134,7 +138,7 @@ $messages = array(
 
 * [http://www.mediawiki.org/wiki/Manual:Configuration_settings Den seti]
 * [http://www.mediawiki.org/wiki/Manual:FAQ Sani di ben aksi furu (FAQ)]
-* [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Boskopu grupu gi nyun meki]',
+* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce Boskopu grupu gi nyun meki]',
 
 'about'          => 'Abra',
 'article'        => 'Papira',
@@ -322,9 +326,9 @@ Fu san ede: ''$2''.",
 
 # Login and logout pages
 'logouttitle'               => 'Kenroikiman psa gwe',
-'logouttext'                => '<strong>Yu psa gwe now.</strong><br />
+'logouttext'                => "'''Yu psa gwe now.'''<br />
 Yu kan tan kebroiki {{SITENAME}} sondro nen, noso yu kan psa kon baka leki a srefi noso wan tra kebroikiman.
-Sabi taki a kan gersi leki yu psa kon ete, te leki yu leygi a cache fu yu browser.',
+Sabi taki a kan gersi leki yu psa kon ete, te leki yu leygi a cache fu yu browser.",
 'welcomecreation'           => '== Welkom, $1! ==
 Yu account meki now.
 No fergiti fu kenki den seti fu yu gi {{SITENAME}}.',
@@ -462,9 +466,9 @@ Yu IP now na $3 en a tapu pasi ID na #$5. Gi wan, noso ala tu, ini yu brifi te y
 Kebroiki a '''back''' knopo ini yu browser, efu yu no ben wan opo a papira disi.",
 'noarticletext'          => 'A papira disi leigi.
 Yu kan [[Special:Search/{{PAGENAME}}|suku a papira nen disi]] ini tra papira noso <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} kenki a papira disi]</span>.',
-'note'                   => '<strong>Opotaki:</strong>',
-'previewnote'            => '<strong>Disi na soso fu luku na fesi;
-yu kenki no kibri ete!</strong>',
+'note'                   => "'''Opotaki:'''",
+'previewnote'            => "'''Disi na soso fu luku na fesi;
+yu kenki no kibri ete!'''",
 'editing'                => 'E Kenki $1',
 'editingsection'         => 'E kenki $1 (pisi papira)',
 'editingcomment'         => 'Kenki fu $1 (opotaki)',
@@ -473,10 +477,10 @@ yu kenki no kibri ete!</strong>',
 'copyrightwarning'       => "Ala sani di yu e poti na tapu {{SITENAME}} de leki efu den ben gi fri ondro a $2 (luku $1 gi a fin'fini).
 Efu yu no wani dati trawan e kenki noso panya san yu skrifi, no skrifi noti dyaso.<br />
 Yu e pramisi unu dati na yu skrifi disi yusrefi, noso yu teki en puru fu wan fri, opo presi.<br />
-<strong>NO KEBROIKI SANI DI KIBRI BAKA SKRIFIMAN-LETI, SONDRO FU ABI PRIMISI FU DU SO!</strong>",
-'longpagewarning'        => '<strong>WARSKOW: A papira disi de $1 kilobyte bigi;
-Son browser abi problema fu kenki papira di bigi moro leki 32kb.
-Kande yu kan prati a papira disi ini moro pikin pisi.</strong>',
+'''NO KEBROIKI SANI DI KIBRI BAKA SKRIFIMAN-LETI, SONDRO FU ABI PRIMISI FU DU SO!'''",
+'longpagewarning'        => "'''WARSKOW: A papira disi de $1 kilobyte bigi;
+Son browser abi problema fu kenki papira di bigi moro leki 32 kb.
+Kande yu kan prati a papira disi ini moro pikin pisi.'''",
 'templatesused'          => 'Template di ben kebroiki tapu a papira disi:',
 'templatesusedpreview'   => 'Template di ben kebroiki ini a Luku-na-fesi disi:',
 'templatesusedsection'   => 'Ankra teki opo disi seksi:',
@@ -731,7 +735,7 @@ Papira ini [[Special:Watchlist|yu Tan Luku réy]] '''fatu'''.",
 'filedelete-submit'      => 'Trowe',
 'filedelete-success'     => "'''$1''' ben e trowe.",
 'filedelete-success-old' => '<span class="plainlinks">A si fu \'\'\'[[Media:$1|$1]]\'\'\' fu $3, $2 ben e trowen.</span>',
-'filedelete-nofile'      => "'''$1''' ben no da ini {{SITENAME}}.",
+'filedelete-nofile'      => "'''$1''' ben no da.",
 
 # MIME search
 'mimesearch' => 'Suku MIME-type',
@@ -911,9 +915,9 @@ Iksi yu wan papira no langar wana si, go na a papira nanga du opo \"No si\" ini 
 'protect_expiry_invalid'      => 'A lasi ben fowtu.',
 'protect_expiry_old'          => 'A lasi ben ini iksini.',
 'protect-unchain'             => 'Gi dribi u',
-'protect-text'                => 'Dyaso ben yu kan tu kenki nanga aluku a tapunivo fu a papira <strong><nowiki>$1</nowiki></strong>.',
+'protect-text'                => "Dyaso ben yu kan tu kenki nanga aluku a tapunivo fu a papira '''<nowiki>$1</nowiki>'''.",
 'protect-locked-access'       => "'''Yu masyin abi no lesi tu kenki a tapunivo.'''
-Disi ben a tapunivo fu a papira <strong>[[$1]]</strong> now:",
+Disi ben a tapunivo fu a papira '''[[$1]]''' now:",
 'protect-cascadeon'           => 'Disi papira ben tapu sins a ini den folo {{PLURAL:$1|papira|peprewoysi}} ben e presi, dy tapu ben nanga a kaskade-opsi. A tapunivo kenki abi no efekti.',
 'protect-default'             => '(soma saki)',
 'protect-fallback'            => 'Dyaso ben a lesi "$1" fanowdu',
@@ -1107,6 +1111,7 @@ Trawan o kibri.
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # External editor support

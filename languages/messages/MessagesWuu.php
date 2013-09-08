@@ -1,9 +1,13 @@
 <?php
 /** Wu (吴语)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
+ * @author Hercule
  * @author O
  */
 
@@ -99,7 +103,7 @@ $messages = array(
 'subcategories'                 => '亚类',
 'category-media-header'         => '"$1"分类中个媒体',
 'category-empty'                => "''该个分类中尚未包含任何文章或媒体。''",
-'hidden-categories'             => '个囥脱分类',
+'hidden-categories'             => '$1隐藏分类',
 'hidden-category-category'      => '囥脱分类', # Name of the category where hidden categories will be listed
 'category-subcat-count-limited' => '该个分类中有个亚类。',
 
@@ -109,11 +113,11 @@ $messages = array(
 == 入门 ==
 * [http://www.mediawiki.org/wiki/Manual:Configuration_settings MediaWiki 配置设置列表]
 * [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki 常见问题解答]
-* [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki 发布邮件列表]',
+* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki 发布邮件列表]',
 
 'about'          => '关于',
 'article'        => '文章',
-'newwindow'      => '(在新窗口中打开)',
+'newwindow'      => '（在新窗口中打开）',
 'cancel'         => '取消',
 'qbfind'         => '查找',
 'qbedit'         => '编辑',
@@ -213,6 +217,7 @@ $messages = array(
 'restorelink'             => '个被删除个版本',
 'site-rss-feed'           => '$1的RSS订阅',
 'site-atom-feed'          => '$1的Atom订阅',
+'red-link-title'          => '$1 （网页不存在）',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => '文章',
@@ -232,6 +237,7 @@ $messages = array(
 
 # General errors
 'error'           => '错误',
+'laggedslavemode' => '警告: 页面可能弗包含最近个更新。',
 'filedeleteerror' => '呒能删除文物“$1”。',
 'filenotfound'    => '寻弗着文件 "$1"。',
 'badtitle'        => '该只标题弗来三',
@@ -241,7 +247,7 @@ $messages = array(
 
 # Login and logout pages
 'logouttitle'                => '用户登出',
-'logouttext'                 => '<strong>倷已经登出哉。</strong><br /> 倷可以继续匿名使用{{SITENAME}} ，倷也可以再次以相同或者两样个用户名登录。注意，有星页面作兴还是会搭倷登出前头一样显示，一脚到倷清脱倷个浏览器缓存。',
+'logouttext'                 => "'''倷已经登出哉。'''<br /> 倷可以继续匿名使用{{SITENAME}} ，倷也可以再次以相同或者两样个用户名登录。注意，有星页面作兴还是会搭倷登出前头一样显示，一脚到倷清脱倷个浏览器缓存。",
 'welcomecreation'            => '== 欢迎， $1！ ==
 
 倷个户头已经建立哉。覅忘记脱改动倷个{{SITENAME}}偏好噢。',
@@ -251,12 +257,12 @@ $messages = array(
 'yourpasswordagain'          => '再打一遍密码:',
 'remembermypassword'         => '登该台电脑浪记牢我个登录',
 'login'                      => '登录',
-'loginprompt'                => '定规要启用仔缓存(cookies)倷再好登录到{{SITENAME}}。',
+'loginprompt'                => '定规要启用仔缓存（cookies）倷再好登录到{{SITENAME}}。',
 'userlogin'                  => '登录 / 新开户头',
 'logout'                     => '登出',
 'userlogout'                 => '登出',
 'notloggedin'                => '朆登录',
-'nologin'                    => '还呒拨户头？$1。',
+'nologin'                    => '您还没有账户吗？$1。',
 'nologinlink'                => '新开户头',
 'createaccount'              => '新开户头',
 'gotaccount'                 => '已经有仔帐号哉？ $1。',
@@ -277,7 +283,7 @@ $messages = array(
 'loginsuccess'               => "'''倷现在以 \"\$1\" 个身份登录到{{SITENAME}}。 '''",
 'nouserspecified'            => '侬必须选个用户名。',
 'wrongpassword'              => '密码弗对嗄。请倷再试试看。',
-'mailmypassword'             => '电子邮件发送密码',
+'mailmypassword'             => '将新密码寄给我',
 'acct_creation_throttle_hit' => '对覅起，侬经建了$1个账号。侬呒能再建了。',
 'emailauthenticated'         => '倷个电子邮箱地址勒拉 $1 验证过哉。',
 'accountcreated'             => '户头开好哉',
@@ -312,20 +318,20 @@ $messages = array(
 'loginreqlink'       => '登录',
 'accmailtitle'       => '密码已发送哉。',
 'accmailtext'        => '"$1"个密码已经发送到 $2 哉。',
-'newarticle'         => '(新)',
+'newarticle'         => '（新）',
 'newarticletext'     => "倷跟仔链接来着一个还弗勒里个页面。
 要创建该页面呢，就勒下底个框框里向开始写（[[{{MediaWiki:Helppage}}|帮助页面]]浪有更加多个信息）。
 要是倷是弗用心到该搭个说话，只要点击倷浏览器个'''返回'''揿钮。",
 'noarticletext'      => '个篇文章目前还呒拨内容，倷可以拉别个页面里向[[Special:Search/{{PAGENAME}}|寻寻该只标题看]]或者[{{fullurl:{{FULLPAGENAME}}|action=edit}} 编辑当前页面].',
-'note'               => '<strong>注意：</strong>',
-'previewnote'        => '<strong>该个还只是预览；改动还朆保存！</strong>',
+'note'               => "'''注意：'''",
+'previewnote'        => "'''该个还只是预览；改动还朆保存！'''",
 'editing'            => '正在编辑$1',
 'editingsection'     => '正在编辑$1（段落）',
 'editingcomment'     => '正在编辑$1（评论）',
 'editconflict'       => '编辑冲突: $1',
 'yourtext'           => '侬个文字',
-'editingold'         => '<strong> 注意：倷勒里改动一只已经过期个页面修改。 如果倷保存俚个说话，勒拉该个修改之后个亨白浪当个修改侪会呒拨个。</strong>',
-'template-protected' => '(保护)',
+'editingold'         => "''' 注意：倷勒里改动一只已经过期个页面修改。 如果倷保存俚个说话，勒拉该个修改之后个亨白浪当个修改侪会呒拨个。'''",
+'template-protected' => '（保护）',
 
 # Account creation failure
 'cantcreateaccounttitle' => '呒处建立帐户',
@@ -336,7 +342,7 @@ $messages = array(
 'nextrevision' => '新点个版本→',
 'cur'          => '当前',
 'last'         => '上个',
-'histlegend'   => '选择比较版本：标记要比较个两只版本，回车或者揿页面底里个揿钮。<br /> 图例：(当前) = 搭当前版本有啥两样， (上个) = 搭上个版本有啥两样，小 = 小改动。',
+'histlegend'   => '选择比较版本：标记要比较个两只版本，回车或者揿页面底里个揿钮。<br /> 图例：（当前） = 搭当前版本有啥两样， （上个） = 搭上个版本有啥两样，小 = 小改动。',
 'deletedrev'   => '[已删]',
 'histfirst'    => '顶早',
 'histlast'     => '顶晏',
@@ -351,17 +357,21 @@ $messages = array(
 # Diffs
 'compareselectedversions' => '比较选中个版本',
 'editundo'                => '撤销',
+'diff-multi'              => '（$1个中途个修订版本无没显示。）',
 
 # Search results
-'searchresults'         => '搜索结果',
-'searchresulttext'      => '更加全面个关于拉{{SITENAME}}里向搜索个信息，请倷看[[{{MediaWiki:Helppage}}:搜索|搜索{{SITENAME}}]]。',
-'searchsubtitle'        => "倷搜寻 '''[[:$1]]'''",
-'searchsubtitleinvalid' => "倷搜寻 '''$1'''",
-'noexactmatch'          => "''呒拨叫\"\$1\"个页面啘。''' 倷可以[[:\$1|建立俚]]。",
-'prevn'                 => '上个 $1',
-'nextn'                 => '下个 $1',
-'viewprevnext'          => '查看 ($1) ($2) ($3)',
-'powersearch'           => '搜寻',
+'searchresults'             => '搜索结果',
+'searchresulttext'          => '更加全面个关于拉{{SITENAME}}里向搜索个信息，请倷看[[{{MediaWiki:Helppage}}:搜索|搜索{{SITENAME}}]]。',
+'searchsubtitle'            => "倷搜寻 '''[[:$1]]'''",
+'searchsubtitleinvalid'     => "倷搜寻 '''$1'''",
+'noexactmatch'              => "''呒拨叫\"\$1\"个页面啘。''' 倷可以[[:\$1|建立俚]]。",
+'prevn'                     => '上个 $1',
+'nextn'                     => '下个 $1',
+'viewprevnext'              => '查看 （$1） （$2） （$3）',
+'search-result-size'        => '$1（$2字）',
+'search-mwsuggest-enabled'  => '与建议',
+'search-mwsuggest-disabled' => ' 没有建议',
+'powersearch'               => '高级搜索',
 
 # Preferences page
 'preferences'           => '偏好',
@@ -474,7 +484,7 @@ $messages = array(
 'imagelist_date'        => '日脚',
 'imagelist_name'        => '名字',
 'imagelist_user'        => '用户',
-'imagelist_size'        => '尺寸 (bytes)',
+'imagelist_size'        => '尺寸 （bytes）',
 'imagelist_description' => '描述',
 
 # Image description page
@@ -551,12 +561,12 @@ $messages = array(
 # Special:AllPages
 'allpages'          => '全部页面',
 'alphaindexline'    => '$1到$2',
-'nextpage'          => '下页 ($1)',
+'nextpage'          => '下页 （$1）',
 'prevpage'          => '上一页（$1）',
 'allpagesfrom'      => '显示个页面开始于:',
 'allarticles'       => '所有页面',
-'allinnamespace'    => '所有页面 ($1 名字空间)',
-'allnotinnamespace' => '全部页面 (弗勒 $1 名字空间里向)',
+'allinnamespace'    => '所有页面 （$1 名字空间）',
+'allnotinnamespace' => '全部页面 （弗勒 $1 名字空间里向）',
 'allpagesprev'      => '前头',
 'allpagesnext'      => '下底',
 'allpagesprefix'    => '显示个页面有下底个前缀:',
@@ -623,10 +633,10 @@ $messages = array(
 'rollback_short'  => '恢复',
 'rollbacklink'    => '恢复',
 'rollbackfailed'  => '恢复失败',
-'revertpage'      => '恢复[[Special:Contributions/$2|$2]] ([[User talk:$2|讲张]])个改动；恢复到[[User:$1|$1]]个上一版本', # Additional available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+'revertpage'      => '恢复[[Special:Contributions/$2|$2]] （[[User talk:$2|讲张]]）个改动；恢复到[[User:$1|$1]]个上一版本', # Additional available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
 'protectlogpage'  => '保护日志',
 'protectcomment'  => '保护理由:',
-'protect-default' => '(默认)',
+'protect-default' => '（默认）',
 
 # Restrictions (nouns)
 'restriction-edit' => '编辑',
@@ -645,7 +655,7 @@ $messages = array(
 'contributions' => '用户贡献',
 'mycontris'     => '我个贡献',
 'contribsub2'   => '$1个贡献（$2）',
-'uctop'         => '(顶浪)',
+'uctop'         => '（顶浪）',
 
 'sp-contributions-blocklog' => '查封记录',
 'sp-contributions-username' => 'IP地址或用户名：',
@@ -730,6 +740,7 @@ $messages = array(
 'tooltip-ca-delete'          => '删脱该只页面',
 'tooltip-ca-move'            => '移动该只页面',
 'tooltip-search'             => '搜寻{{SITENAME}}',
+'tooltip-search-go'          => '转到页本确切名称，如果存在',
 'tooltip-p-logo'             => '封面',
 'tooltip-n-mainpage'         => '进入封面',
 'tooltip-n-portal'           => '关于本计划，可以做什么，应该如何做',
@@ -737,7 +748,7 @@ $messages = array(
 'tooltip-n-help'             => '寻求帮助',
 'tooltip-t-whatlinkshere'    => '列出所有与此页相链个页面',
 'tooltip-t-emailuser'        => '发封信拨该个用户',
-'tooltip-t-upload'           => '上载图像或媒体文物',
+'tooltip-t-upload'           => '上传文件',
 'tooltip-t-specialpages'     => '亨白浪当个特殊页面列表',
 'tooltip-ca-nstab-main'      => '查看内容页',
 'tooltip-ca-nstab-user'      => '查看用户页',
@@ -768,6 +779,13 @@ $messages = array(
 'newimages'    => '新文件陈列室',
 'showhidebots' => '（$1机器人）',
 'ilsubmit'     => '搜寻',
+
+# Bad image list
+'bad_image_list' => '格式如下：
+
+只列出项目（线开始* ）的审议。
+第一个环节上线必须是一个链接到一个坏文件。
+其后的任何链接在同一行被认为是例外情况，即网页的文件，则可能会发生内部。',
 
 /*
 Short names for language variants used for language conversion links.
@@ -813,7 +831,7 @@ Variants for Chinese language
 'scarytranscludetoolong' => '[对呒起，URL太长了]',
 
 # Delete conflict
-'confirmrecreate' => "用户[[User:$1|$1]] ([[User talk:$1|讲张]])勒拉倷开始编辑该页面之后拿俚删脱，理由是： : ''$2'' 请拿定章程，倷阿是真个要重建该页面。",
+'confirmrecreate' => "用户[[User:$1|$1]] （[[User talk:$1|讲张]]）勒拉倷开始编辑该页面之后拿俚删脱，理由是： : ''$2'' 请拿定章程，倷阿是真个要重建该页面。",
 
 # action=purge
 'confirm_purge_button' => '确定',
@@ -822,6 +840,9 @@ Variants for Chinese language
 'searchcontaining' => "搜寻里向有 ''$1'' 个页面。",
 'articletitles'    => "以 ''$1'' 开头个页面",
 'hideresults'      => '囥脱结果',
+
+# Separators for various lists, etc.
+'comma-separator' => '、',
 
 # Multipage image navigation
 'imgmultipageprev' => '← 上一页',

@@ -1,15 +1,23 @@
 <?php
 /** Interlingue (Interlingue)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
  * @author Jmb
  * @author Malafaya
+ * @author Remember the dot
+ * @author Valodnieks
  * @author לערי ריינהארט
  */
 
 $messages = array(
+'underline-always' => 'Sempre',
+'underline-never'  => 'Nequande',
+
 # Dates
 'sunday'        => 'soledí',
 'monday'        => 'lunedí',
@@ -137,13 +145,14 @@ $messages = array(
 'newmessageslink'    => 'nov missages',
 'editsection'        => 'modificar',
 'editold'            => 'redacter',
+'editsectionhint'    => 'Modification de section: $1',
 'toc'                => 'Tabelle de contenetes',
 'showtoc'            => 'monstrar',
 'hidetoc'            => 'celar',
 'viewdeleted'        => 'Vider $1?',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
-'nstab-main'      => 'Articul',
+'nstab-main'      => 'Págine',
 'nstab-user'      => 'Usator',
 'nstab-project'   => 'Págine de projecte',
 'nstab-mediawiki' => 'Missage',
@@ -196,10 +205,10 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'accmailtitle'     => 'Li passa-parol es inviat.',
 'accmailtext'      => "Li passa-parol por '$1' ha esset inviat a $2.",
 'newarticle'       => '(Nov)',
-'editing'          => 'modification de $1',
+'editing'          => 'Modification de $1',
 'editingsection'   => 'modification de $1 (section)',
 'editingcomment'   => 'modification de $1 (comenta)',
-'copyrightwarning' => 'Omni contributiones a {{SITENAME}} es considerat quam publicat sub li termines del $2 (ples vider $1 por plu mult detallies). Si vu ne vole que vor ovres mey esser modificat e distribuet secun arbitrie, ples ne inviar les. Adplu, ples contribuer solmen vor propri ovres o ovres ex un fonte quel es líber de jures. <strong>NE UTILISA OVRES SUB JURE EDITORIAL SIN DEFINITIV AUTORISATION!</strong>',
+'copyrightwarning' => "Omni contributiones a {{SITENAME}} es considerat quam publicat sub li termines del $2 (ples vider $1 por plu mult detallies). Si vu ne vole que vor ovres mey esser modificat e distribuet secun arbitrie, ples ne inviar les. Adplu, ples contribuer solmen vor propri ovres o ovres ex un fonte quel es líber de jures. '''NE UTILISA OVRES SUB JURE EDITORIAL SIN DEFINITIV AUTORISATION!'''",
 
 # Diffs
 'lineno' => 'Linea $1:',
@@ -284,6 +293,7 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 
 # Special:AllPages
 'allpages'       => 'Omni págines',
+'alphaindexline' => '$1 a $2',
 'allarticles'    => 'Omni págines',
 'allpagessubmit' => 'Vade',
 
@@ -316,10 +326,11 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'mycontris' => 'Mi contributiones',
 
 # What links here
-'whatlinkshere' => 'Ligat págines',
+'whatlinkshere'      => 'Ligat págines',
+'whatlinkshere-page' => 'Págine:',
 
 # Block/unblock
-'ipblocklist'  => 'Liste de blocat adresses e usatores',
+'ipblocklist'  => 'Blocat adresses e usatores',
 'contribslink' => 'contribs',
 
 # Move page
@@ -336,7 +347,7 @@ Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse aperter un session d
 'allmessages' => 'Liste del missages del sistema',
 
 # Tooltip help for the actions
-'tooltip-pt-mytalk'      => 'Mi discussion',
+'tooltip-pt-mytalk'      => 'Vor discussion',
 'tooltip-pt-preferences' => 'Mi preferenties',
 'tooltip-ca-delete'      => 'Deleter ti págine',
 'tooltip-ca-move'        => 'Moer ti págine',

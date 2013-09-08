@@ -31,7 +31,7 @@ require_once( "$IP/includes/SiteConfiguration.php" );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.13.1';
+$wgVersion			= '1.13.5';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -76,7 +76,7 @@ $wgServer = $wgProto.'://' . $wgServerName;
 # If the port is a non-standard one, add it to the URL
 if(    isset( $_SERVER['SERVER_PORT'] )
 	&& !strpos( $wgServerName, ':' )
-	&& (    ( $wgProto == 'http' && $_SERVER['SERVER_PORT'] != 80 )
+    && (    ( $wgProto == 'http' && $_SERVER['SERVER_PORT'] != 80 )
 	 || ( $wgProto == 'https' && $_SERVER['SERVER_PORT'] != 443 ) ) ) {
 
 	$wgServer .= ":" . $_SERVER['SERVER_PORT'];
@@ -776,6 +776,13 @@ $wgExtraLanguageNames = array();
 $wgInputEncoding  = 'UTF-8';
 $wgOutputEncoding = 'UTF-8';
 $wgEditEncoding   = '';
+
+/**
+ * Locale for LC_CTYPE, to work around http://bugs.php.net/bug.php?id=45132
+ * For Unix-like operating systems, set this to to a locale that has a UTF-8 
+ * character set. Only the character set is relevant.
+ */
+$wgShellLocale = 'en_US.utf8';
 
 /**
  * Set this to eg 'ISO-8859-1' to perform character set
@@ -1787,6 +1794,8 @@ $wgMimeTypeBlacklist= array(
 	'application/x-php', 'text/x-php',
 	# Other types that may be interpreted by some servers
 	'text/x-python', 'text/x-perl', 'text/x-bash', 'text/x-sh', 'text/x-csh',
+	# Client-side hazards on Internet Explorer
+	'text/scriptlet', 'application/x-msdownload',
 	# Windows metafile, client-side vulnerability on some systems
 	'application/x-msmetafile'
 );

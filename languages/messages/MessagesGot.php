@@ -1,5 +1,8 @@
 <?php
-/** Gothic (𐌲𐌿𐍄𐌹𐍃𐌺)
+/** Gothic (Gothic)
+ *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
  *
  * @ingroup Language
  * @file
@@ -207,7 +210,7 @@ $messages = array(
 'showdiff'               => 'Witan máideins',
 'newarticle'             => '(Niu)',
 'updated'                => '(Nuwisan)',
-'previewnote'            => '<strong>Sah ist faúrsaiƕa. Máideins gameljiþ ni af þizos seidos!</strong>',
+'previewnote'            => "'''Sah ist faúrsaiƕa. Máideins gameljiþ ni af þizos seidos!'''",
 'editing'                => 'Máidjan af $1',
 'editingsection'         => 'Máidjan af $1 (fera)',
 'editingcomment'         => 'Máidjan af $1 (rodjafera)',

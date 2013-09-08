@@ -1,6 +1,9 @@
 <?php
 /** Neapolitan (Nnapulitano)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -34,37 +37,56 @@ $messages = array(
 'underline-never'  => 'Màje',
 
 # Dates
-'sunday'    => 'dumméneca',
-'monday'    => 'lunnerì',
-'tuesday'   => 'marterì',
-'wednesday' => 'miercurì',
-'thursday'  => 'gioverì',
-'friday'    => 'viernarì',
-'saturday'  => 'sàbbato',
-'january'   => 'jennaro',
-'february'  => 'frevàro',
-'march'     => 'màrzo',
-'april'     => 'abbrile',
-'may_long'  => 'màjo',
-'june'      => 'giùgno',
-'july'      => 'luglio',
-'august'    => 'aústo',
-'september' => 'settembre',
-'october'   => 'ottobbre',
-'november'  => 'nuvembre',
-'december'  => 'dicèmbre',
-'jan'       => 'jen',
-'feb'       => 'fre',
-'mar'       => 'mar',
-'apr'       => 'abb',
-'may'       => 'maj',
-'jun'       => 'giu',
-'jul'       => 'lug',
-'aug'       => 'aus',
-'sep'       => 'set',
-'oct'       => 'ott',
-'nov'       => 'nuv',
-'dec'       => 'dic',
+'sunday'        => 'dumméneca',
+'monday'        => 'lunnerì',
+'tuesday'       => 'marterì',
+'wednesday'     => 'miercurì',
+'thursday'      => 'gioverì',
+'friday'        => 'viernarì',
+'saturday'      => 'sàbbato',
+'sun'           => 'dum',
+'mon'           => 'lun',
+'tue'           => 'mar',
+'wed'           => 'mier',
+'thu'           => 'gio',
+'fri'           => 'ven',
+'sat'           => 'sab',
+'january'       => 'jennaro',
+'february'      => 'frevàro',
+'march'         => 'màrzo',
+'april'         => 'abbrile',
+'may_long'      => 'màjo',
+'june'          => 'giùgno',
+'july'          => 'luglio',
+'august'        => 'aústo',
+'september'     => 'settembre',
+'october'       => 'ottobbre',
+'november'      => 'nuvembre',
+'december'      => 'dicèmbre',
+'january-gen'   => 'jennaro',
+'february-gen'  => 'frevaro',
+'march-gen'     => 'màrzo',
+'april-gen'     => 'abbrile',
+'may-gen'       => 'maggio',
+'june-gen'      => 'giùgno',
+'july-gen'      => 'luglio',
+'august-gen'    => 'aùsto',
+'september-gen' => 'settembre',
+'october-gen'   => 'ottovre',
+'november-gen'  => 'nuvembre',
+'december-gen'  => 'dicembre',
+'jan'           => 'jen',
+'feb'           => 'fre',
+'mar'           => 'mar',
+'apr'           => 'abb',
+'may'           => 'maj',
+'jun'           => 'giu',
+'jul'           => 'lug',
+'aug'           => 'aus',
+'sep'           => 'set',
+'oct'           => 'ott',
+'nov'           => 'nuv',
+'dec'           => 'dic',
 
 # Categories related messages
 'category_header' => 'Paggene rìnt\'a categurìa "$1"',
@@ -84,6 +106,11 @@ $messages = array(
 'mytalk'         => "'E mmie chiacchieriàte",
 'anontalk'       => 'Chiacchierate pe chisto IP',
 
+# Metadata in edit box
+'metadata_help' => 'Metadate:',
+
+'errorpagetitle'    => 'Sbaglio',
+'returnto'          => 'Torna a $1.',
 'help'              => 'Ajùto',
 'search'            => 'Truova',
 'searchbutton'      => 'Truova',
@@ -155,7 +182,7 @@ $messages = array(
 'badtitle'        => "'O nnomme nun è jùsto",
 
 # Login and logout pages
-'logouttext'                 => "<strong>Site asciùte.</strong><br />
+'logouttext'                 => "'''Site asciùte.'''<br />
 Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putite trasì n'ata vota, cu 'o stesso nomme o cu n'ato nomme.",
 'welcomecreation'            => "== Bemmenuto, $1! ==
 
@@ -200,7 +227,7 @@ Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putit
 'loginreqpagetext'  => "Pe' veré ate ppaggene abbesognate $1.",
 'accmailtitle'      => "'O password è stato mannato.",
 'accmailtext'       => '\'A password pe ll\'utente "$1" fuje mannata ô nnerizzo $2.',
-'previewnote'       => "<strong>Chesta è sola n'anteprimma; 'e cagnamiénte â paggena NUN songo ancora sarvate!</strong>",
+'previewnote'       => "'''Chesta è sola n'anteprimma; 'e cagnamiénte â paggena NUN songo ancora sarvate!'''",
 'editing'           => "Cagnamiento 'e $1",
 'templatesused'     => "Template ausate 'a chesta paggena:",
 
