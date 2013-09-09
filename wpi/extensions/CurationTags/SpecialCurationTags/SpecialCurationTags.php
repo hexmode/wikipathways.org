@@ -12,5 +12,4 @@ $wgAutoloadClasses['SpecialCurationTags'] = dirname(__FILE__) . '/SpecialCuratio
 $wgAutoloadClasses['LegacySpecialCurationTags'] = dirname(__FILE__) . '/SpecialCurationTags_body.php';
 $wgSpecialPages['SpecialCurationTags'] = 'LegacySpecialCurationTags';
 $wgSpecialPages['CurationTags'] = 'SpecialCurationTags';
-$wgExtensionMessagesFiles['CurationTags'] = dirname( __FILE__ ) . '/SpecialCurationTags.i18n.php';
-
+$wgExtensionMessagesFiles['SpecialCurationTags'] = dirname( __FILE__ ) . '/SpecialCurationTags.i18n.php';

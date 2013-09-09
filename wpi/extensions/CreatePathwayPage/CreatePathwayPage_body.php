@@ -1,13 +1,11 @@
 <?php
-require_once("wpi/wpi.php");
 
 class CreatePathwayPage extends SpecialPage {
 	private $this_url;
 	private $create_priv_msg;
 
-	function CreatePathwayPage() {
-		SpecialPage::SpecialPage("CreatePathwayPage");
-		self::loadMessages();
+	function __construct(  ) {
+		parent::__construct("CreatePathwayPage");
 	}
 
 	function execute( $par ) {
@@ -15,13 +13,7 @@ class CreatePathwayPage extends SpecialPage {
 		$this->setHeaders();
 		$this->this_url = SITE_URL . '/index.php';
 
-		$wgParser->clearState();
-		$wgParser->mStripState = new StripState;
-		$wgParser->mOptions = new ParserOptions;
-		$wgParser->mTitle = Title::newFromText( wfMsg( 'createpathwaypage' ) );
-
-		$this->create_priv_msg = $wgParser->recursiveTagParse( wfMsg('create_private') );
-		$wgParser->replaceLinkHolders( $this->create_priv_msg );
+		$this->create_priv_msg = wfMessage( 'create_private')->parse();
 
 		if(wfReadOnly()) {
 			$wgOut->readOnlyPage( "" );
@@ -85,10 +77,12 @@ class CreatePathwayPage extends SpecialPage {
 	}
 
 	function doUpload($uploading, $private2) {
+		global $wgRequest, $wgOut, $wpiScriptURL, $wgUser;
+
+
 		try {
-			global $wgRequest, $wgOut, $wpiScriptURL, $wgUser;
 			//Check for something... anything
-			if (!empty($_FILES['gpml']['name'])) {
+			if ( count( $_FILES ) && isset( $_FILES["gpml"] ) ) {
 				$size = $_FILES['gpml']['size'];
 				//Check file size
 				if ($size > 1000000) {
@@ -230,16 +224,4 @@ class CreatePathwayPage extends SpecialPage {
 		");
 	}
 
-	static function loadMessages() {
-		static $messagesLoaded = false;
-		global $wgMessageCache;
-		if ( $messagesLoaded ) return true;
-		$messagesLoaded = true;
-
-		require( dirname( __FILE__ ) . '/CreatePathwayPage.i18n.php' );
-		foreach ( $allMessages as $lang => $langMessages ) {
-			$wgMessageCache->addMessages( $langMessages, $lang );
-		}
-		return true;
-	}
 }

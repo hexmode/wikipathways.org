@@ -1,7 +1,5 @@
 <?php
-$allMessages = array(
-        'en' => array( 
-                'specialwishlist' => 'Pathway wishlist'
-        )
+$messages = array();
+$messages['en'] = array(
+	'specialwishlist' => 'Pathway wishlist'
 );
-?>

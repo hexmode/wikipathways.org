@@ -1,7 +1,6 @@
 <?php
-$allMessages = array(
-        'en' => array( 
-                'newpathwayspage' => 'New Pathways'
-        )
+$messages = array(
+	'en' => array(
+		'newpathwayspage' => 'New Pathways'
+	)
 );
-?>

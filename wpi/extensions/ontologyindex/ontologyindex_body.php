@@ -5,7 +5,6 @@ class ontologyindex extends SpecialPage {
 
 	function __construct() {
 		parent::__construct( 'ontologyindex' );
-		wfLoadExtensionMessages('ontologyindex');
 	}
 
 	function execute( $par ) {
@@ -14,7 +13,7 @@ class ontologyindex extends SpecialPage {
 		$this->init();
 	}
 
-	function init()
+	function init($name, $restriction, $listed, $function, $file, $includable)
 	{
 		global $wgOut, $wgRequest, $wgOntologiesJSON, $wgStylePath;
 		$opath = WPI_URL . "/extensions/ontologyindex" ;

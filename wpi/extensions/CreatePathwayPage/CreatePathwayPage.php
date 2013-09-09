@@ -8,6 +8,7 @@ EOT;
 		exit( 1 );
 }
 
+$wgExtensionMessagesFiles['CreatePathwayPage'] = __DIR__ . '/CreatePathwayPage.i18n.php';
 $wgAutoloadClasses['CreatePathwayPage'] = dirname(__FILE__) . '/CreatePathwayPage_body.php';
 $wgSpecialPages['CreatePathwayPage'] = 'CreatePathwayPage';
 $wgHooks['LoadAllMessages'][] = 'CreatePathwayPage::loadMessages';

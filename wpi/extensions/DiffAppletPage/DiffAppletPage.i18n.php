@@ -1,5 +1,5 @@
 <?php
-$allMessages = array(
+$messages = array(
 	'en' => array(
 		'diffappletpage' => 'Pathway Difference Viewer'
 	)

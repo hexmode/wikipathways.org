@@ -4,7 +4,6 @@ require_once("QueryPage.php");
 class NewPathwaysPage extends SpecialPage {
 	function NewPathwaysPage() {
 		SpecialPage::SpecialPage("NewPathwaysPage");
-		self::loadMessages();
 	}
 
 	function execute( $par ) {
@@ -19,18 +18,6 @@ class NewPathwaysPage extends SpecialPage {
 		return $rcp->doQuery( $offset, $limit );
 	}
 
-	static function loadMessages() {
-		static $messagesLoaded = false;
-		global $wgMessageCache;
-		if ( $messagesLoaded ) return true;
-		$messagesLoaded = true;
-
-		require( dirname( __FILE__ ) . '/NewPathwaysPage.i18n.php' );
-		foreach ( $allMessages as $lang => $langMessages ) {
-			$wgMessageCache->addMessages( $langMessages, $lang );
-		}
-		return true;
-	}
 }
 
 class RCQueryPage extends QueryPage {

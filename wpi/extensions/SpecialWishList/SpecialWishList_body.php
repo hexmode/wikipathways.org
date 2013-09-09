@@ -1,7 +1,4 @@
 <?php
-require_once("wpi/wpi.php");
-require_once("PathwayWishList.php");
-
 class SpecialWishList extends SpecialPage {
 	private $wishlist;
 
@@ -9,7 +6,6 @@ class SpecialWishList extends SpecialPage {
 
 	function SpecialWishList() {
 		SpecialPage::SpecialPage("SpecialWishList");
-		self::loadMessages();
 	}
 
 	function execute( $par ) {
@@ -414,17 +410,4 @@ HELP;
 		return "<a href='{$this->this_url}&wishaction=$action&id=$id' title='$title'>$label</a>";
 	}
 
-
-	static function loadMessages() {
-		static $messagesLoaded = false;
-		global $wgMessageCache;
-		if ( $messagesLoaded ) return true;
-		$messagesLoaded = true;
-
-		require( dirname( __FILE__ ) . '/SpecialWishList.i18n.php' );
-		foreach ( $allMessages as $lang => $langMessages ) {
-			$wgMessageCache->addMessages( $langMessages, $lang );
-		}
-		return true;
-	}
 }

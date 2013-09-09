@@ -5,12 +5,6 @@ class SearchPathways extends SpecialPage
 
 	function __construct( $empty = null ) {
 		parent::__construct("SearchPathways");
-		self::initMsg();
-	}
-
-	static function initMsg( ) {
-		# Need this called in hook early on so messages load... maybe a bug in old MW?
-		wfLoadExtensionMessages( 'SearchPathways' );
 	}
 
 	function execute( $par ) {

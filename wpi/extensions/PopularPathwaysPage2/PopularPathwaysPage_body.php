@@ -1,11 +1,8 @@
 <?php
-require_once("QueryPage.php");
-
 class PopularPathwaysPage extends SpecialPage
 {
 		function PopularPathwaysPage() {
 				SpecialPage::SpecialPage("PopularPathwaysPage");
-				self::loadMessages();
 		}
 
 		function execute( $par ) {
@@ -20,18 +17,6 @@ class PopularPathwaysPage extends SpecialPage
 				return $ppp->doQuery( $offset, $limit );
 		}
 
-		static function loadMessages() {
-				static $messagesLoaded = false;
-				global $wgMessageCache;
-				if ( $messagesLoaded ) return true;
-				$messagesLoaded = true;
-
-				require( dirname( __FILE__ ) . '/PopularPathwaysPage.i18n.php' );
-				foreach ( $allMessages as $lang => $langMessages ) {
-						$wgMessageCache->addMessages( $langMessages, $lang );
-				}
-				return true;
-		}
 }
 
 class PPQueryPage extends QueryPage {

@@ -1,7 +1,6 @@
 <?php
-$allMessages = array(
-        'en' => array( 
-                'mosteditedpathwayspage' => 'Most edited pathways'
-        )
+$messages = array(
+		'en' => array(
+				'mosteditedpathwayspage' => 'Most edited pathways'
+		)
 );
-?>

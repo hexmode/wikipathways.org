@@ -1,4 +1,5 @@
 <?php
+$messages = array();
 $messages['en'] = array(
 	'nstab-pathway'   => 'Pathway',
 	'browsepathways' => 'Browse pathways',

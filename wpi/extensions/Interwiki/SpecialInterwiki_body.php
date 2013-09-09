@@ -4,7 +4,6 @@
  */
 class SpecialInterwiki extends SpecialPage {
 	function __construct() {
-		wfLoadExtensionMessages( 'Interwiki' );
 		parent::__construct( 'Interwiki' );
 	}
 

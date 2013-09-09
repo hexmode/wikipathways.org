@@ -1,15 +1,14 @@
 <?php
 # Not a valid entry point, skip unless MEDIAWIKI is defined
 if (!defined('MEDIAWIKI')) {
-        echo <<<EOT
+		echo <<<EOT
 To install NewPathwaysPage, put the following line in LocalSettings.php:
 require_once( "$IP/extensions/NewPathwaysPage/NewPathwaysPage.php" );
 EOT;
-        exit( 1 );
+		exit( 1 );
 }
 
-$wgAutoloadClasses['NewPathwaysPage'] = dirname(__FILE__) . '/NewPathwaysPage_body.php';
-$wgSpecialPages['NewPathwaysPage'] = 'NewPathwaysPage';
-$wgHooks['LoadAllMessages'][] = 'NewPathwaysPage::loadMessages';
-
-?>
+$c = "NewPathwaysPage";
+$wgAutoloadClasses[$c] = dirname(__FILE__) . "/{$c}_body.php";
+$wgSpecialPages[$c] = $c;
+$wgExtensionMessagesFiles[$c] = dirname( __FILE__ ) . "/{$c}.i18n.php";

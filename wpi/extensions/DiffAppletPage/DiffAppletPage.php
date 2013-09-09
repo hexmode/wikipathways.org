@@ -8,6 +8,7 @@ EOT;
 	exit( 1 );
 }
 
-$wgAutoloadClasses['DiffAppletPage'] = dirname(__FILE__) . '/DiffAppletPage_body.php';
-														 $wgSpecialPages['DiffAppletPage'] = 'DiffAppletPage';
-$wgHooks['LoadAllMessages'][] = 'DiffAppletPage::loadMessages';
+$c = 'DiffAppletPage';
+$wgAutoloadClasses[$c] = dirname(__FILE__) . "/{$c}_body.php";
+$wgSpecialPages[$c] = $c;
+$wgExtensionMessagesFiles[$c] = dirname( __FILE__ ) . "/{$c}.i18n.php";

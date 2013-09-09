@@ -5,7 +5,6 @@ class DiffAppletPage extends SpecialPage
 {
 	function __construct( ) {
 		parent::__construct( "DiffAppletPage" );
-		self::loadMessages();
 	}
 
 	function execute( $par ) {
@@ -33,19 +32,6 @@ class DiffAppletPage extends SpecialPage
 TABLE;
 		$wgOut->addHTML($headerTable);
 		$wgOut->addHTML(self::createDiffApplet($pathway, $revOld, $revNew));
-	}
-
-	static function loadMessages() {
-		static $messagesLoaded = false;
-		global $wgMessageCache;
-		if ( $messagesLoaded ) return true;
-		$messagesLoaded = true;
-
-		require( dirname( __FILE__ ) . '/DiffAppletPage.i18n.php' );
-		foreach ( $allMessages as $lang => $langMessages ) {
-			$wgMessageCache->addMessages( $langMessages, $lang );
-		}
-		return true;
 	}
 
 	static function createDiffApplet($pathway, $revOld, $revNew) {
