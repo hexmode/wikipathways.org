@@ -120,14 +120,11 @@ function makeThumbLinkObj( $pathway, $label = '', $href = '', $alt, $align = 'ri
 		$boxheight = $height;
 		$thumbUrl  = $img->getViewURL();
 	} else {
-		if ( $boxheight === false ) $boxheight = -1;
-		$thumb = $img->getThumbnail( $boxwidth, $boxheight );
-		if ( $thumb ) {
-			$thumbUrl = $thumb->getUrl();
-			$boxwidth = $thumb->width;
-			$boxheight = $thumb->height;
-		} else {
-			$error = $img->getLastError();
+		try {
+			list($thumb, $thumbUrl, $boxwidth, $boxheight) = wpiGetThumb( $img, $boxwidth, $boxheight );
+		} catch (MWException $e) {
+			$error = $e->getMessage();
+
 		}
 	}
 	$oboxwidth = $boxwidth + 2;

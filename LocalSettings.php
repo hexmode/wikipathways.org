@@ -341,9 +341,9 @@ require_once('extensions/GoogleAnalytics/googleAnalytics.php'); //Google Analyti
 require_once('extensions/inputbox.php');
 require_once('extensions/GoogleGroups.php');
 require_once("$IP/extensions/LocalHooks.php");
-require_once('extensions/EmbedVideo.php');
+#require_once('extensions/EmbedVideo.php');
 #require_once('extensions/LiquidThreads/LiquidThreads.php');
-require_once('extensions/SocialRewarding/SocialRewarding.php');
+#require_once('extensions/SocialRewarding/SocialRewarding.php');
 require_once('extensions/UserMerge/UserMerge.php');
 require_once('extensions/parseViewRedirect.php');
 require_once( "$IP/wpi/autoload-setup.php" );

@@ -257,6 +257,23 @@ content requires special attention. <b>Please keep your
 		}
 		return true;
 	}
+
+	static public function checkPathwayImgAuth( &$title, &$path, &$name, &$result ) {
+		## WPI Mod 2013-Aug-22
+		//Check for pathway cache
+		var_dump($title);exit;
+		$id = Pathway::parseIdentifier($title);
+		if($id) {
+			//Check pathway permissions
+			$pwTitle = Title::newFromText($id, NS_PATHWAY);
+
+			if(!$pwTitle->userCan('read')) {
+				wfDebugLog( 'img_auth', "User not permitted to view pathway $id" );
+				wfForbidden();
+			}
+		}
+	}
+
 }
 
 $wgHooks['SpecialListusersFormatRow'][] = 'LocalHooks::addSnoopLink';
@@ -264,6 +281,7 @@ $wgHooks['ContributionsLineEnding'][]   = 'LocalHooks::contributionLineEnding';
 $wgHooks['LinkerMakeExternalLink'][]    = 'LocalHooks::externalLink';
 $wgHooks['SpecialWatchlistQuery'][]     = 'LocalHooks::dontWatchRedirect';
 $wgHooks['SpecialPage_initList'][]      = 'LocalHooks::blockPage';
+$wgHooks['ImgAuthBeforeStream'][]       = 'LocalHooks::checkPathwayImgAuth';
 $wgHooks['ArticleSaveComplete'][]       = 'LocalHooks::updateTags';
 $wgHooks['DisplayOldSubtitle'][]        = 'LocalHooks::subtitleOverride';
 $wgHooks['UserLoginComplete'][]         = 'LocalHooks::loginMessage';

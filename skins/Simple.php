@@ -1,8 +1,23 @@
 <?php
 /**
- * See docs/skin.txt
+ * Simple: A lightweight skin with a simple white-background sidebar and no
+ * top bar.
  *
- * @todo document
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @file
  * @ingroup Skins
  */
@@ -11,60 +26,33 @@ if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
 /** */
-require_once( dirname(__FILE__) . '/MonoBook.php' );
+require_once( __DIR__ . '/MonoBook.php' );
 
 /**
- * @todo document
+ * Inherit main code from SkinTemplate, set the CSS and template filter.
  * @ingroup Skins
  */
 class SkinSimple extends SkinTemplate {
-	function initPage( &$out ) {
-		SkinTemplate::initPage( $out );
-		$this->skinname  = 'simple';
-		$this->stylename = 'simple';
-		$this->template  = 'MonoBookTemplate';
-		$this->cssfiles  = array( 'rtl' );
-	}
+	var $skinname = 'simple', $stylename = 'simple',
+		$template = 'MonoBookTemplate', $useHeadElement = true;
 
-	function reallyDoGetUserStyles() {
-		global $wgUser;
-		$s = '';
-		if (($undopt = $wgUser->getOption("underline")) != 2) {
-			$underline = $undopt ? 'underline' : 'none';
-			$s .= "a { text-decoration: $underline; }\n";
+	/**
+	 * @param $out OutputPage
+	 */
+	function setupSkinUserCss( OutputPage $out ) {
+		parent::setupSkinUserCss( $out );
+
+		$out->addModuleStyles( 'skins.simple' );
+
+		/* Add some userprefs specific CSS styling */
+		$rules = array();
+		$underline = "";
+
+		if ( $this->getUser()->getOption( 'underline' ) < 2 ) {
+			$underline = "text-decoration: " . $this->getUser()->getOption( 'underline' ) ? 'underline !important' : 'none' . ";";
 		}
-		if ($wgUser->getOption('highlightbroken')) {
-			$s .= "a.new, #quickbar a.new { text-decoration: line-through; }\n";
-		} else {
-			$s .= <<<END
-a.new, #quickbar a.new,
-a.stub, #quickbar a.stub {
-	color: inherit;
-	text-decoration: inherit;
-}
-a.new:after, #quickbar a.new:after {
-	content: "?";
-	color: #CC2200;
-	text-decoration: $underline;
-}
-a.stub:after, #quickbar a.stub:after {
-	content: "!";
-	color: #772233;
-	text-decoration: $underline;
-}
-END;
-		}
-		if ($wgUser->getOption('justify')) {
-			$s .= "#article, #bodyContent { text-align: justify; }\n";
-		}
-		if (!$wgUser->getOption('showtoc')) {
-			$s .= "#toc { display: none; }\n";
-		}
-		if (!$wgUser->getOption('editsection')) {
-			$s .= ".editsection { display: none; }\n";
-		}
-		return $s;
+		$style = implode( "\n", $rules );
+		$out->addInlineStyle( $style, 'flip' );
+
 	}
 }
-
-

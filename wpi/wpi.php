@@ -15,6 +15,9 @@ try {
 
 	require_once( 'MwUtils.php' );
 	require_once( 'globals.php' );
+	require_once( "$IP/wpi/extensions/Pathways/Organism.php" );
+	require_once( "$IP/wpi/extensions/Pathways/PathwayData.php" );
+	require_once( "$IP/wpi/extensions/Pathways/MetaDataCache.php" );
 	require_once( "$IP/wpi/extensions/Pathways/Pathway.php" );
 	require_once( 'MimeTypes.php' );
 	//Parse HTTP request (only if script is directly called!)
@@ -200,14 +203,10 @@ function toGlobalLink($localLink) {
 	return urlencode("http://" . $_SERVER['HTTP_HOST'] . "$wgScriptPath$localLink");
 }
 
-function writeFile($filename, $data) {
-	$dir = dirname($filename);
-	if(!file_exists($dir)) {
-		wfDebug( "Making $dir for $filename.\n" );
-		if( !wfMkdirParents( $dir ) ) {
-			throw new Exception( "Couldn't make directory for pathway!" );
-		}
-	}
+function writeFile($file, $data) {
+	$upload = new UploadBase();
+	$filename = $file->getPath();
+
 	$handle = fopen($filename, 'w');
 	if(!$handle) {
 		throw new Exception ("Couldn't open file $filename");
@@ -268,5 +267,19 @@ function wfJavaExec( $cmd, &$retval=null ) {
 	$output = ob_get_contents();
 	ob_end_clean();
 	return $output;
+}
 
+function wpiGetThumb( $img, $w, $h = false ) {
+	if( !$h && $h !== 0 ) {
+		$h = -1;
+	}
+
+    $thumb = $img->transform
+		( array( 'width' => $h, 'height' => $h ) );
+	if( is_null( $thumb ) ) {
+		throw new MWException( "Unknown failure in thumbnail" );
+	} elseif( $thumb->isError() ) {
+		throw new MWException( $thumb->getHtmlMsg() );
+	}
+	return array( $thumb, $thumb->getUrl(), $thumb->width, $thumb->height );
 }

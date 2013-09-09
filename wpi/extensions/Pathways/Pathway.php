@@ -928,7 +928,7 @@ class Pathway {
 			$deprev = $this->getMetaDataCache()->getValue(MetaDataCache::$FIELD_DELETED);
 			if($deprev) {
 				$rev = $this->getActiveRevision();
-				if($rev == 0 || $rev == $deprev) return true;
+				if($rev == 0 || $rev == $deprev->getPageRevision()) return true;
 			}
 
 			return false;

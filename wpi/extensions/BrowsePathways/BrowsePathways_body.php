@@ -27,8 +27,10 @@ class BrowsePathways extends SpecialPage {
 	}
 
 	static function initMsg( ) {
-		# Need this called in hook early on so messages load... maybe a bug in old MW?
-		wfLoadExtensionMessages( 'BrowsePathways' );
+		if( function_exists( 'wfLoadExtensionMessages' ) ) {
+			# Need this called in hook early on so messages load... maybe a bug in old MW?
+			wfLoadExtensionMessages( 'BrowsePathways' );
+		}
 	}
 
 	protected $species;
