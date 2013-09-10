@@ -7,6 +7,9 @@ images/thumb
 images/cache
 wpi/tmp
 wpi/cache
+wpi/applet/cache_version
+wpi/applet/cache_archive
+
 # Repository management
 .svn
 
