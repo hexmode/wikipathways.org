@@ -261,7 +261,6 @@ content requires special attention. <b>Please keep your
 	static public function checkPathwayImgAuth( &$title, &$path, &$name, &$result ) {
 		## WPI Mod 2013-Aug-22
 		//Check for pathway cache
-		var_dump($title);exit;
 		$id = Pathway::parseIdentifier($title);
 		if($id) {
 			//Check pathway permissions
@@ -270,8 +269,10 @@ content requires special attention. <b>Please keep your
 			if(!$pwTitle->userCan('read')) {
 				wfDebugLog( 'img_auth', "User not permitted to view pathway $id" );
 				wfForbidden();
+				return false;
 			}
 		}
+		return true;
 	}
 
 }

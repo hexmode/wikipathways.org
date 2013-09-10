@@ -432,3 +432,7 @@ $wgPathwayRecentSinceDays = 30;
 
 /* For UserMailer mod in older WikiPathways */
 $wgPasswordSenderName = "WikiPathways";
+
+// Non-intutive name https://www.mediawiki.org/wiki/Manual:$wgImgAuthPublicTest
+// needed to protect pathways here.
+$wgImgAuthPublicTest = false;
