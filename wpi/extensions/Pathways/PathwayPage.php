@@ -1,5 +1,6 @@
 <?php
 
+$wgExtensionMessagesFiles['PathwayPage'] = dirname( __FILE__ ) . '/PathwayPage.i18n.php';
 $wgHooks['ParserBeforeStrip'][] = array('renderPathwayPage');
 $wgHooks['BeforePageDisplay'][] = array('addPreloaderScript');
 
@@ -55,20 +56,10 @@ function addPreloaderScript($out) {
 class PathwayPage {
 	private $pathway;
 	private $data;
-	static $msgLoaded = false;
 
 	function __construct($pathway) {
 		$this->pathway = $pathway;
 		$this->data = $pathway->getPathwayData();
-
-		global $wgMessageCache;
-		if(!self::$msgLoaded) {
-			$wgMessageCache->addMessages( array(
-					'private_warning' => '{{SERVER}}{{SCRIPTPATH}}/skins/common/images/lock.png This pathway will not be visible to other users until $DATE. ' .
-					'To make it publicly available before that time, <span class="plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=manage_permissions}} change the permissions]</span>.'
-				), 'en' );
-			self::$msgLoaded = true;
-		}
 	}
 
 	function getContent() {

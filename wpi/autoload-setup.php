@@ -1,5 +1,8 @@
 <?php
 require_once( "$IP/wpi/wpi.php" );
+require_once( "$IP/wpi/extensions/Pathways/Organism.php" );
+require_once( "$IP/wpi/extensions/Pathways/PathwayData.php" );
+require_once( "$IP/wpi/extensions/Pathways/MetaDataCache.php" );
 require_once( "$IP/wpi/extensions/PathwayOfTheDay/PathwayOfTheDay.php" );
 require_once( "$IP/wpi/extensions/siteStats.php" );
 require_once( "$IP/wpi/extensions/pathwayInfo.php" );

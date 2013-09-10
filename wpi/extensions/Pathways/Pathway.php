@@ -1,7 +1,4 @@
 <?php
-require_once('Organism.php');
-require_once('PathwayData.php');
-require_once('MetaDataCache.php');
 
 /**
 Class that represents a Pathway on WikiPathways
@@ -1086,7 +1083,7 @@ class Pathway {
 		}
 
 		$file = $this->getFileLocation($fileType, false);
-		$repo = RepoGroup::singleton();
+		$repo = RepoGroup::singleton()->getLocalRepo();
 
 		if($repo->fileExists($file)) {
 			$fmt = $repo->getFileTimestamp( $file );

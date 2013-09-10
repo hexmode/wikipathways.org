@@ -204,8 +204,11 @@ function toGlobalLink($localLink) {
 }
 
 function writeFile($file, $data) {
-	$upload = new UploadBase();
-	$filename = $file->getPath();
+	if( file_exists( $file ) ) {
+		$filename = $file;
+	} else {
+		throw new Exception( "Don't know what to do!" );
+	}
 
 	$handle = fopen($filename, 'w');
 	if(!$handle) {
