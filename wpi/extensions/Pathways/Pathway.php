@@ -1066,8 +1066,9 @@ class Pathway {
 			$this->clearCache(FILETYPE_IMG);
 		} else {
 			$file = $this->getFileLocation($fileType, false);
-			if(file_exists($file)) {
-				unlink($file); //Delete the cached file
+			$repo = RepoGroup::singleton()->getLocalRepo();
+			if($repo->fileExists( $file ) ) {
+				$repo->delete( $file, "archive" );
 			}
 		}
 	}
@@ -1085,9 +1086,10 @@ class Pathway {
 		}
 
 		$file = $this->getFileLocation($fileType, false);
+		$repo = RepoGroup::singleton();
 
-		if(file_exists($file)) {
-			$fmt = wfTimestamp(TS_MW, filemtime($file));
+		if($repo->fileExists($file)) {
+			$fmt = $repo->getFileTimestamp( $file );
 			wfDebug("\tFile exists, cache: $fmt, gpml: $gpmlDate\n");
 			return  $fmt < $gpmlDate;
 		} else { //No cached version yet, so definitely out of date
