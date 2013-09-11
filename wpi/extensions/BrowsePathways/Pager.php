@@ -27,9 +27,10 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 		/* FIXME: magic nums for file size */
 		$path = $img->getPath( );
 
-		if( $img->isLocal() && file_exists( $path )
-			&& filesize( $path ) < 20480 ) { /* 20k is probably too much */
-			$c = file_get_contents( $path );
+		$repo = RepoGroup::singleton()->getLocalRepo();
+		if( $img->isLocal() && $repo->fileExists( $path )
+			&& $repo->getFileSize( $path ) < 20480 ) { /* 20k is probably too much */
+			$c = file_get_contents( $repo->getLocalReference( $path )->getPath() );
 			return "data:" . $img->getMimeType() . ";base64," . base64_encode( $c );
 		}
 		return $thumb->getThumbUrl( $suffix );
@@ -379,6 +380,7 @@ class ThumbPathwaysPager extends BasePathwaysPager {
 	function __construct( $species, $tag, $sortOrder ) {
 		parent::__construct( $species, $tag, $sortOrder );
 
+		$this->mExtraSortFields = array();
 		$this->mLimit = 10;
 	}
 
