@@ -545,7 +545,14 @@ class Pathway {
 	 * \param the file type to get the name for (one of the FILETYPE_* constants)
 	 */
 	public function getFileName($fileType) {
-		return $this->getFileTitle($fileType)->getDBKey();
+		$repo = RepoGroup::singleton()->getLocalRepo();
+		$img = LocalFile::newFromTitle( $this->getFileTitle( $fileType ),
+			$repo );
+		$path = $img->getPath();
+		if( $img->isLocal() && $repo->fileExists( $path ) ) {
+			return $repo->getLocalReference( $path )->getPath();
+		}
+		return null;
 	}
 
 	/**
@@ -558,7 +565,7 @@ class Pathway {
 			$this->updateCache($fileType);
 		}
 		$fn = $this->getFileName($fileType);
-		return wfLocalFile( $fn )->getPath();
+		return $fn;
 	}
 
 	/**
