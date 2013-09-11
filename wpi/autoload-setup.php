@@ -47,7 +47,15 @@ require_once( "$IP/wpi/extensions/PrivatePathways/PrivatePathways.php" );
 require_once( "$IP/wpi/extensions/PrivatePathways/ListPrivatePathways.php" );
 require_once( "$IP/wpi/extensions/PrivatePathways/PrivateContributions.php" );
 require_once( "$IP/wpi/extensions/recentChangesBox.php" );
-#require_once( "$IP/wpi/extensions/pathwayBibliography.php" );
+
+
+$wgExtensionFunctions[] = "wfPathwayBibliography";
+$wgAutoloadClasses['PathwayBibliography'] = "$IP/wpi/extensions/pathwayBibliography.php";
+function wfPathwayBibliography() {
+	global $wgParser;
+	$wgParser->setHook( "pathwayBibliography", "PathwayBibliography::output" );
+}
+
 require_once( "$IP/wpi/extensions/otag/otags_main.php" );
 require_once( "$IP/wpi/extensions/ontologyindex/ontologyindex.php" );
 require_once( "$IP/wpi/extensions/PathwayViewer/PathwayViewer.php" );

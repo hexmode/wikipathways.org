@@ -1,14 +1,4 @@
 <?php
-require_once('wpi/wpi.php');
-require_once('Pager.php');
-require_once('PageHistory.php');
-
-$wgExtensionFunctions[] = "wfPathwayBibliography";
-
-function wfPathwayBibliography() {
-	global $wgParser;
-	$wgParser->setHook( "pathwayBibliography", "PathwayBibliography::output" );
-}
 
 class PathwayBibliography {
 	public static function output($input, $argv, $parser) {
