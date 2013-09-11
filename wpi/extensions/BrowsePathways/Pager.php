@@ -205,13 +205,11 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 			$width  = $img->getWidth();
 			$height = $img->getHeight();
 
-			$thumb = $img->getThumbnail( $boxwidth, $boxheight );
-			if ( $thumb ) {
-				$thumbUrl = $this->thumbToData($img);
-				$boxwidth = $thumb->width;
-				$boxheight = $thumb->height;
-			} else {
-				$error = $img->getLastError();
+			try {
+				list( $thumb, $thumUrl, $boxwidth, $boxheight )
+					= wpiGetThumb( $img, $boxwidth, $boxheight );
+			} catch ( MWException $e ) {
+				$error = $e->getMessage();
 			}
 
 			if( $thumbUrl == '' ) {
