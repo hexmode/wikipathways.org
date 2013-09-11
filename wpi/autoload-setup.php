@@ -18,7 +18,6 @@ require_once( "$IP/wpi/extensions/LabeledSectionTransclusion/lsth.php" );
 require_once( "$IP/wpi/extensions/SearchPathways/SearchPathways.php" );
 require_once( "$IP/wpi/extensions/SearchPathways/searchPathwaysBox.php" );
 require_once( "$IP/wpi/extensions/button.php" );
-require_once( "$IP/wpi/extensions/pathwayThumb.php" );
 require_once( "$IP/wpi/extensions/imageLink.php" );
 require_once( "$IP/wpi/extensions/BrowsePathways/BrowsePathways.php" );
 require_once( "$IP/wpi/extensions/editApplet.php" );
@@ -48,7 +47,6 @@ require_once( "$IP/wpi/extensions/PrivatePathways/PrivateContributions.php" );
 require_once( "$IP/wpi/extensions/recentChangesBox.php" );
 require_once( "$IP/wpi/extensions/otag/otags_main.php" );
 require_once( "$IP/wpi/extensions/ontologyindex/ontologyindex.php" );
-require_once( "$IP/wpi/extensions/PathwayViewer/PathwayViewer.php" );
 require_once( "$IP/wpi/extensions/StubManager/StubManager.php" );
 require_once( "$IP/wpi/extensions/ParserFunctionsHelper/ParserFunctionsHelper.php" );
 require_once( "$IP/wpi/extensions/SecureHTML/SecureHTML.php" );
@@ -58,7 +56,7 @@ require_once( "$IP/wpi/statistics/StatisticsHook.php" );
 require_once( "$IP/wpi/extensions/PageEditor/PageEditor.php" );
 require_once( "$IP/wpi/extensions/ContributionScores/ContributionScores.php" );
 require_once( "$IP/wpi/extensions/PullPages/PullPages.php" );
-
+require_once( "$IP/wpi/DetectBrowserOS.php");
 
 $wgExtensionFunctions[] = "wfPathwayBibliography";
 $wgAutoloadClasses['PathwayBibliography'] = "$IP/wpi/extensions/pathwayBibliography.php";
@@ -72,5 +70,33 @@ $wgAutoloadClasses['GpmlHistoryPager'] = "$IP/wpi/extensions/pathwayHistory.php"
 function wfPathwayHistory() {
 	global $wgParser;
 	$wgParser->setHook( "pathwayHistory", "GpmlHistoryPager::history" );
+}
+
+$wfPathwayViewerPath = WPI_URL . "/extensions/PathwayViewer";
+$wgExtensionFunctions[] = 'wfPathwayViewer';
+$wgAutoloadClasses['PathwayViewer'] = "$IP/wpi/extensions/PathwayViewer/PathwayViewer.php";
+$wgHooks['LanguageGetMagic'][]  = 'wfPathwayViewer_Magic';
+function wfPathwayViewer() {
+	global $wgParser;
+	$wgParser->setFunctionHook( "PathwayViewer", "PathwayViewer::display" );
+}
+function wfPathwayViewer_Magic( &$magicWords, $langCode ) {
+	$magicWords['PathwayViewer'] = array( 0, 'PathwayViewer' );
+	return true;
+}
+
+
+$wgAutoloadClasses['PathwayThumb'] = "$IP/wpi/extensions/pathwayThumb.php";
+$wgExtensionFunctions[] = 'wfPathwayThumb';
+$wgHooks['LanguageGetMagic'][]  = 'wfPathwayThumb_Magic';
+
+function wfPathwayThumb() {
+	global $wgParser;
+	$wgParser->setFunctionHook( "pwImage", "PathwayThumb::render" );
+}
+
+function wfPathwayThumb_Magic( &$magicWords, $langCode ) {
+	$magicWords['pwImage'] = array( 0, 'pwImage' );
+	return true;
 }
 
