@@ -203,11 +203,20 @@ function toGlobalLink($localLink) {
 	return urlencode("http://" . $_SERVER['HTTP_HOST'] . "$wgScriptPath$localLink");
 }
 
-function writeFile($file, $data) {
-	if( file_exists( $file ) ) {
-		$filename = $file;
-	} else {
-		throw new Exception( "Don't know what to do!" );
+function writeFile($filename, $data) {
+	if( is_object( $filename ) ) {
+		throw new Exception( "Don't know what to do with objects!" );
+	}
+	if( substr( $filename, 0, 10 ) === "mwstore://" ) {
+		throw new Exception( "Don't know what to do with mwstore paths!" );
+	}
+
+	$dir = dirname( $filename );
+	if( !is_dir( $dir ) && file_exists( $dir ) ) {
+		mkdir( $dir, 0777, true );
+	}
+	if( !is_writable( $dir ) ) {
+		throw new MWExeption( "Can't write to $dir." );
 	}
 
 	$handle = fopen($filename, 'w');
