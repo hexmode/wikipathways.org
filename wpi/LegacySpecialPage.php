@@ -21,9 +21,10 @@ class LegacySpecialPage extends SpecialPage {
 		if( isset( $wgRequest->data['title'] ) ) unset( $wgRequest->data['title'] );
 
 		$query = array();
-		foreach( $wgRequest->data as $k => $v) {
+		foreach( $wgRequest->getValues() as $k => $v) {
 			$query[] = urlencode( $k ) . '=' . urlencode( $v );
 		}
+		unset( $query['title'] );
 
 		$wgRequest->response()->header( "HTTP/1.1 301 Moved Permanently" );
 		$wgRequest->response()->header( "Content-Type: text/html; charset=utf-8" );
