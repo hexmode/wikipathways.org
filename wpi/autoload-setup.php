@@ -12,7 +12,6 @@ require_once( "$IP/wpi/extensions/PopularPathwaysPage2/PopularPathwaysPage.php" 
 require_once( "$IP/wpi/extensions/MostEditedPathwaysPage/MostEditedPathwaysPage.php" );
 require_once( "$IP/wpi/extensions/NewPathwaysPage/NewPathwaysPage.php" );
 require_once( "$IP/wpi/extensions/CreatePathwayPage/CreatePathwayPage.php" );
-#require_once( "$IP/wpi/extensions/pathwayHistory.php" );
 require_once( "$IP/wpi/extensions/LabeledSectionTransclusion/compat.php" );
 require_once( "$IP/wpi/extensions/LabeledSectionTransclusion/lst.php" );
 require_once( "$IP/wpi/extensions/LabeledSectionTransclusion/lsth.php" );
@@ -47,15 +46,6 @@ require_once( "$IP/wpi/extensions/PrivatePathways/PrivatePathways.php" );
 require_once( "$IP/wpi/extensions/PrivatePathways/ListPrivatePathways.php" );
 require_once( "$IP/wpi/extensions/PrivatePathways/PrivateContributions.php" );
 require_once( "$IP/wpi/extensions/recentChangesBox.php" );
-
-
-$wgExtensionFunctions[] = "wfPathwayBibliography";
-$wgAutoloadClasses['PathwayBibliography'] = "$IP/wpi/extensions/pathwayBibliography.php";
-function wfPathwayBibliography() {
-	global $wgParser;
-	$wgParser->setHook( "pathwayBibliography", "PathwayBibliography::output" );
-}
-
 require_once( "$IP/wpi/extensions/otag/otags_main.php" );
 require_once( "$IP/wpi/extensions/ontologyindex/ontologyindex.php" );
 require_once( "$IP/wpi/extensions/PathwayViewer/PathwayViewer.php" );
@@ -68,4 +58,19 @@ require_once( "$IP/wpi/statistics/StatisticsHook.php" );
 require_once( "$IP/wpi/extensions/PageEditor/PageEditor.php" );
 require_once( "$IP/wpi/extensions/ContributionScores/ContributionScores.php" );
 require_once( "$IP/wpi/extensions/PullPages/PullPages.php" );
+
+
+$wgExtensionFunctions[] = "wfPathwayBibliography";
+$wgAutoloadClasses['PathwayBibliography'] = "$IP/wpi/extensions/pathwayBibliography.php";
+function wfPathwayBibliography() {
+	global $wgParser;
+	$wgParser->setHook( "pathwayBibliography", "PathwayBibliography::output" );
+}
+
+$wgExtensionFunctions[] = "wfPathwayHistory";
+$wgAutoloadClasses['GpmlHistoryPager'] = "$IP/wpi/extensions/pathwayHistory.php";
+function wfPathwayHistory() {
+	global $wgParser;
+	$wgParser->setHook( "pathwayHistory", "GpmlHistoryPager::history" );
+}
 
