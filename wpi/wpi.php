@@ -216,7 +216,7 @@ function writeFile($filename, $data) {
 		mkdir( $dir, 0777, true );
 	}
 	if( !is_writable( $dir ) ) {
-		throw new MWExeption( "Can't write to $dir." );
+		throw new MWException( "Can't write to $dir." );
 	}
 
 	$handle = fopen($filename, 'w');
@@ -286,7 +286,7 @@ function wpiGetThumb( $img, $w, $h = false ) {
 		$h = -1;
 	}
 
-    $thumb = $img->transform
+	$thumb = $img->transform
 		( array( 'width' => $h, 'height' => $h ) );
 	if( is_null( $thumb ) ) {
 		throw new MWException( "Unknown failure in thumbnail" );
