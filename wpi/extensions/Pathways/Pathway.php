@@ -600,8 +600,9 @@ class Pathway {
 		if($this->revision) {
 			$rev_stuffix = "_" . $this->revision;
 		}
-		$title = Title::newFromText( "{$this->getIdentifier()}{$rev_stuffix}." . $fileType, NS_IMAGE );
-		if(!$title) {
+		$fileName = "{$this->getIdentifier()}{$rev_stuffix}." . $fileType;
+		$title = Title::newFromText( $fileName, NS_IMAGE );
+		if(!$title || !$fileType ) {
 			throw new Exception("Invalid file title for pathway " . $fileName);
 		}
 		return $title;
@@ -1120,8 +1121,14 @@ class Pathway {
 	private function saveConvertedCache($fileType) {
 		# Convert gpml to fileType
 		$gpmlFile = realpath($this->getFileLocation(FILETYPE_GPML));
-		wfDebug( "Saving $gpmlFile to $fileType" );
+		if( !file_exists( $gpmlFile ) ) {
+			throw new MWException( "File does not exist: $gpmlFile" );
+		}
 		$conFile = $this->getFileLocation($fileType, false);
+		if ( $conFile === null ) {
+			$conFile = "";
+		}
+		wfDebug( "Saving $gpmlFile to $fileType in $conFile\n" );
 		$dir = dirname($conFile);
 		if ( !is_dir( $dir ) && !wfMkdirParents( $dir ) ) {
 			throw new MWException( "Couldn't make directory: $dir" );
@@ -1151,8 +1158,8 @@ class Pathway {
 			//each revision, so it's guaranteed to update.
 			////Remove cached GPML file
 			//unlink($gpmlFile);
-			throw new Exception("Unable to convert to $outFile:\n<BR>Status:$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
 			wfDebug("Unable to convert to $outFile:\n<BR>Status:$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
+			throw new Exception("Unable to convert to $outFile:\n<BR>Status:$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
 		}
 		return true;
 	}
@@ -1162,7 +1169,7 @@ class Pathway {
 		if($gpml) { //Only write cache if there is GPML
 			$file = $this->getFileLocation(FILETYPE_GPML, false);
 			writeFile($file, $gpml);
-			wfDebug( "GPML CACHE SAVED: $file" );
+			wfDebug( "GPML CACHE SAVED: $file\n" );
 		}
 	}
 
