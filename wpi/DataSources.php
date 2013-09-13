@@ -36,9 +36,11 @@ class DataSource {
 		$txt = DataSourcesCache::getContent();
 		foreach(explode("\n", $txt) as $line) {
 			$cols = explode("\t", $line);
-			$name = $cols[0];
-			$type = $cols[5];
-			self::$types[$name] = $type;
+			if( isset( $cols[5] ) ) {
+				$name = $cols[0];
+				$type = $cols[5];
+				self::$types[$name] = $type;
+			}
 		}
 	}
 
