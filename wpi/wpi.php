@@ -204,11 +204,14 @@ function toGlobalLink($localLink) {
 }
 
 function writeFile($filename, $data) {
+	if( $filename === null ) {
+		throw new MWException( "Need a filename, got null!" );
+	}
 	if( is_object( $filename ) ) {
-		throw new Exception( "Don't know what to do with objects!" );
+		throw new MWException( "Don't know what to do with objects!" );
 	}
 	if( substr( $filename, 0, 10 ) === "mwstore://" ) {
-		throw new Exception( "Don't know what to do with mwstore paths!" );
+		throw new MWException( "Don't know what to do with mwstore paths!" );
 	}
 
 	$dir = dirname( $filename );
@@ -221,13 +224,13 @@ function writeFile($filename, $data) {
 
 	$handle = fopen($filename, 'w');
 	if(!$handle) {
-		throw new Exception ("Couldn't open file $filename");
+		throw new MWException ("Couldn't open file $filename");
 	}
 	if(fwrite($handle, $data) === FALSE) {
-		throw new Exception ("Couldn't write file $filename");
+		throw new MWException ("Couldn't write file $filename");
 	}
 	if(fclose($handle) === FALSE) {
-		throw new Exception ("Couln't close file $filename");
+		throw new MWException ("Couln't close file $filename");
 	}
 }
 
