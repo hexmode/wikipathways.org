@@ -227,7 +227,7 @@ content requires special attention. <b>Please keep your
 		$userlinks = $sk->revUserTools( $revision, false );
 
 		$m = wfMessage( 'revision-info-current' )->text();
-		$infomsg = $current && !wfEmptyMsg( 'revision-info-current', $m ) && $m != '-'
+		$infomsg = $current && !wfMessage( 'revision-info-current' )->inContentLanguage()->isBlank() && $m !== '-'
 			? 'revision-info-current'
 			: 'revision-info';
 

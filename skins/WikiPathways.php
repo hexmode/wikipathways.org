@@ -412,7 +412,7 @@ class WikiPathwaysTemplate extends QuickTemplate {
 	function customBox( $bar, $cont ) {
 ?>
 	<div class='generated-sidebar portlet' id='p-<?php echo Sanitizer::escapeId($bar) ?>'<?php echo $this->skin->tooltip('p-'.$bar) ?>>
-					<h5><?php $out = wfMessage( $bar )->text(); if (wfEmptyMsg($bar, $out)) echo $bar; else echo $out; ?></h5>
+					<h5><?php $out = wfMessage( $bar )->text(); if ( wfMessage( $bar )->inContentLanguage()->isBlank() ) echo $bar; else echo $out; ?></h5>
 		<div class='pBody'>
 <?php   if ( is_array( $cont ) ) { ?>
 			<ul>
