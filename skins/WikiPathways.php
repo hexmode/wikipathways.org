@@ -126,8 +126,6 @@ class WikiPathwaysTemplate extends QuickTemplate {
 		<?php } if( in_array( 'IE70', $skin->cssfiles ) ) { ?><!--[if IE 7]><style type="text/css">@import "<?php echo $thisStylePath ?>/IE70Fixes.css?<?php echo $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
 		<?php } ?><!--[if lt IE 7]><?php if( in_array( 'IE', $skin->cssfiles ) ) { ?><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath') ?>/common/IEFixes.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"></script>
 		<?php } ?><meta http-equiv="imagetoolbar" content="no" /><![endif]-->
-
-		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
 		<!-- TK: Import custom script -->
 		<script type="<?php $this->text('jsmimetype') ?>" src="<?php echo $thisStylePath ?>/wikipathways-custom.js"></script>
 		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
