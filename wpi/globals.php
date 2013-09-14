@@ -19,7 +19,7 @@ $wpiScriptFile = 'wpi.php';
 
 $host = isset( $_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : "wikipathways.org";
 $wpiScriptPath = realpath(dirname(__FILE__));
-$wpiScript = "$wpiScriptPath/$wpiScriptFile"; 
+$wpiScript = "$wpiScriptPath/$wpiScriptFile";
 $wpiTmpPath = "$wpiScriptPath/$wpiTmpName";
 $siteURL = "http://$host/$wgScriptPath";
 $wpiURL = "$siteURL/$wpiPathName";

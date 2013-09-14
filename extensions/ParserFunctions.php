@@ -124,11 +124,11 @@ class ExtParserFunctions {
 		}
 		
 		if ( $unix == -1 || $unix == false ) {
-			$result = wfMsgForContent( 'pfunc_time_error' );
+			$result = wfMessage( 'pfunc_time_error' )->inContentLanguage()->text();
 		} else {
 			$this->mTimeChars += strlen( $format );
 			if ( $this->mTimeChars > $this->mMaxTimeChars ) {
-				return wfMsgForContent( 'pfunc_time_too_long' );
+				return wfMessage( 'pfunc_time_too_long' )->inContentLanguage()->text();
 			} else {
 				$ts = wfTimestamp( TS_MW, $unix );
 				if ( method_exists( $wgContLang, 'sprintfDate' ) ) {

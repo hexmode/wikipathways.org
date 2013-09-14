@@ -403,12 +403,12 @@ class ExtParserFunctions {
 
         if ( $unix == -1 || $unix == false ) {
             wfLoadExtensionMessages( 'ParserFunctions' );
-            $result = '<strong class="error">' . wfMsgForContent( 'pfunc_time_error' ) . '</strong>';
+            $result = '<strong class="error">' . wfMessage( 'pfunc_time_error' )->inContentLanguage()->text() . '</strong>';
         } else {
             $this->mTimeChars += strlen( $format );
             if ( $this->mTimeChars > $this->mMaxTimeChars ) {
                 wfLoadExtensionMessages( 'ParserFunctions' );
-                return '<strong class="error">' . wfMsgForContent( 'pfunc_time_too_long' ) . '</strong>';
+                return '<strong class="error">' . wfMessage( 'pfunc_time_too_long' )->inContentLanguage()->text() . '</strong>';
             } else {
                 if ( $local ) {
                     # Use the time zone
@@ -484,7 +484,7 @@ class ExtParserFunctions {
                 wfLoadExtensionMessages( 'ParserFunctions' );
                 $warning = wfMsg( 'pfunc_ifexist_warning', $parser->pf_ifexist_count, $wgMaxIfExistCount );
                 $parser->mOutput->addWarning( $warning );
-                $cat = Title::makeTitleSafe( NS_CATEGORY, wfMsgForContent( 'pfunc_max_ifexist_category' ) );
+                $cat = Title::makeTitleSafe( NS_CATEGORY, wfMessage( 'pfunc_max_ifexist_category' )->inContentLanguage()->text() );
                 if ( $cat ) {
                     $parser->mOutput->addCategory( $cat->getDBkey(), $parser->getDefaultSort() );
                 }

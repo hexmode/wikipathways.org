@@ -45,8 +45,8 @@ class TagChangeNotification extends EmailNotification {
 		$subject = $this->template_subject;
 		$body    = $this->template_body;
 
-		$subject = wfMsgForContent( 'tagemail_subject' );
-		$body    = wfMsgForContent( 'tagemail_body' );
+		$subject = wfMessage( 'tagemail_subject' )->inContentLanguage()->text();
+		$body    = wfMessage( 'tagemail_body' )->inContentLanguage()->text();
 
 		$from    = ''; /* fail safe */
 		$replyto = ''; /* fail safe */
@@ -84,10 +84,10 @@ class TagChangeNotification extends EmailNotification {
 
 		if( $editor->isIP( $name ) ) {
 			#real anon (user:xxx.xxx.xxx.xxx)
-			$utext = wfMsgForContent('enotif_anon_editor', $name);
+			$utext = wfMessage('enotif_anon_editor', $name)->inContentLanguage()->text();
 			$subject = str_replace('$PAGEEDITOR', $utext, $subject);
 			$keys['$PAGEEDITOR']       = $utext;
-			$keys['$PAGEEDITOR_EMAIL'] = wfMsgForContent( 'noemailtitle' );
+			$keys['$PAGEEDITOR_EMAIL'] = wfMessage( 'noemailtitle' )->inContentLanguage()->text();
 		} else {
 			$subject = str_replace('$PAGEEDITOR', $name, $subject);
 			$keys['$PAGEEDITOR']          = $name;

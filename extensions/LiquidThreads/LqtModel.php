@@ -929,7 +929,7 @@ class Threads {
 		$talkpage = new Article($talkpage_t);
 		if( ! $talkpage->exists() ) {
 			try {
-				$talkpage->doEdit( "", wfMsg('lqt_talkpage_autocreate_summary'), EDIT_NEW | EDIT_SUPPRESS_RC );
+				$talkpage->doEdit( "", wfMessage( 'lqt_talkpage_autocreate_summary' )->text(), EDIT_NEW | EDIT_SUPPRESS_RC );
 
 			} catch( DBQueryError $e ) {
 				// The article already existed by now. No need to do anything.

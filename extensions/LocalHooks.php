@@ -180,26 +180,26 @@ content requires special attention. <b>Please keep your
 		$td = $wgLang->timeanddate( $article->mTimestamp, true );
 		$sk = $wgUser->getSkin();
 		$lnk = $current
-			? wfMsgHtml( 'currentrevisionlink' )
-			: $sk->makeKnownLinkObj( $article->mTitle, wfMsgHtml( 'currentrevisionlink' ) );
+			? wfMessage( 'currentrevisionlink' )->escaped()
+			: $sk->makeKnownLinkObj( $article->mTitle, wfMessage( 'currentrevisionlink' )->escaped() );
 		$curdiff = $current
-			? wfMsgHtml( 'diff' )
-			: $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMsgHtml( 'diff' ),
+			? wfMessage( 'diff' )->escaped()
+			: $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMessage( 'diff' )->escaped(),
 				"old={$oldid}&new={$article->mLatest}&pwTitle={$article->mTitle}" );
 		$prev = $article->mTitle->getPreviousRevisionID( $oldid ) ;
 		$prevlink = $prev
-			? $sk->makeKnownLinkObj( $article->mTitle, wfMsgHtml( 'previousrevision' ), 'direction=prev&oldid='.$oldid )
-			: wfMsgHtml( 'previousrevision' );
+			? $sk->makeKnownLinkObj( $article->mTitle, wfMessage( 'previousrevision' )->escaped(), 'direction=prev&oldid='.$oldid )
+			: wfMessage( 'previousrevision' )->escaped();
 		$prevdiff = $prev
-			? $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMsgHtml( 'diff' ),
+			? $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMessage( 'diff' )->escaped(),
 				"old={$oldid}&new={$prev}&pwTitle={$article->mTitle}" )
-			: wfMsgHtml( 'diff' );
+			: wfMessage( 'diff' )->escaped();
 		$nextlink = $current
-			? wfMsgHtml( 'nextrevision' )
-			: $sk->makeKnownLinkObj( $article->mTitle, wfMsgHtml( 'nextrevision' ), 'direction=next&oldid='.$oldid );
+			? wfMessage( 'nextrevision' )->escaped()
+			: $sk->makeKnownLinkObj( $article->mTitle, wfMessage( 'nextrevision' )->escaped(), 'direction=next&oldid='.$oldid );
 		$nextdiff = $current
-			? wfMsgHtml( 'diff' )
-			: $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMsgHtml( 'diff' ),
+			? wfMessage( 'diff' )->escaped()
+			: $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMessage( 'diff' )->escaped(),
 				"old={$oldid}&new={$next}&pwTitle={$article->mTitle}" );
 
 		$cdel='';
@@ -207,13 +207,13 @@ content requires special attention. <b>Please keep your
 			$revdel = SpecialPage::getTitleFor( 'Revisiondelete' );
 			if( $revision->isCurrent() ) {
 			// We don't handle top deleted edits too well
-				$cdel = wfMsgHtml('rev-delundel');
+				$cdel = wfMessage( 'rev-delundel' )->escaped();
 			} else if( !$revision->userCan( Revision::DELETED_RESTRICTED ) ) {
 			// If revision was hidden from sysops
-				$cdel = wfMsgHtml('rev-delundel');
+				$cdel = wfMessage( 'rev-delundel' )->escaped();
 			} else {
 				$cdel = $sk->makeKnownLinkObj( $revdel,
-					wfMsgHtml('rev-delundel'),
+					wfMessage( 'rev-delundel' )->escaped(),
 					'target=' . urlencode( $article->mTitle->getPrefixedDbkey() ) .
 					'&oldid=' . urlencode( $oldid ) );
 				// Bolden oversighted content
@@ -226,7 +226,7 @@ content requires special attention. <b>Please keep your
 		# are hidden regardless, but since we can already see the text here...
 		$userlinks = $sk->revUserTools( $revision, false );
 
-		$m = wfMsg( 'revision-info-current' );
+		$m = wfMessage( 'revision-info-current' )->text();
 		$infomsg = $current && !wfEmptyMsg( 'revision-info-current', $m ) && $m != '-'
 			? 'revision-info-current'
 			: 'revision-info';

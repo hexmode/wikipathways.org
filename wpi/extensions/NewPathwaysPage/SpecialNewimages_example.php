@@ -148,14 +148,14 @@ function wfSpecialNewimages( $par, $specialPage ) {
 		$lastTimestamp = $timestamp;
 	}
 
-	$bydate = wfMsg( 'bydate' );
+	$bydate = wfMessage( 'bydate' )->text();
 	$lt = $wgLang->formatNum( min( $shownImages, $limit ) );
 	if ($shownav) {
 		$text = wfMsgExt( 'imagelisttext', array('parse'), $lt, $bydate );
 		$wgOut->addHTML( $text . "\n" );
 	}
 
-	$sub = wfMsg( 'ilsubmit' );
+	$sub = wfMessage( 'ilsubmit' )->text();
 	$titleObj = SpecialPage::getTitleFor( 'Newimages' );
 	$action = $titleObj->escapeLocalURL( $hidebots ? '' : 'hidebots=0' );
 	if ($shownav) {
@@ -180,7 +180,7 @@ function wfSpecialNewimages( $par, $specialPage ) {
 	$date = $wgLang->timeanddate( $now, true );
 	$dateLink = $sk->makeKnownLinkObj( $titleObj, wfMsg( 'sp-newimages-showfrom', $date ), 'from='.$now.$botpar.$searchpar );
 
-	$botLink = $sk->makeKnownLinkObj($titleObj, wfMsg( 'showhidebots', ($hidebots ? wfMsg('show') : wfMsg('hide'))),'hidebots='.($hidebots ? '0' : '1').$searchpar);
+	$botLink = $sk->makeKnownLinkObj($titleObj, wfMsg( 'showhidebots', ($hidebots ? wfMessage( 'show' )->text() : wfMessage( 'hide' )->text())),'hidebots='.($hidebots ? '0' : '1').$searchpar);
 
 	$prevLink = wfMsg( 'prevn', $wgLang->formatNum( $limit ) );
 	if( $firstTimestamp && $firstTimestamp != $latestTimestamp ) {
@@ -202,7 +202,7 @@ function wfSpecialNewimages( $par, $specialPage ) {
 		if ($shownav)
 			$wgOut->addHTML( $prevnext );
 	} else {
-		$wgOut->addWikiText( wfMsg( 'noimages' ) );
+		$wgOut->addWikiText( wfMessage( 'noimages' )->text() );
 	}
 }
 

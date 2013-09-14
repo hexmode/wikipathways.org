@@ -56,10 +56,10 @@ class UserMerge extends SpecialPage
 
                       if ( !is_object( $objOldUser ) ) {
                         $validOldUser = false;
-                        $wgOut->addHTML( "<span style=\"color: red;\">" . wfMsg('usermerge-badolduser') . "</span><br />\n" );
+                        $wgOut->addHTML( "<span style=\"color: red;\">" . wfMessage( 'usermerge-badolduser' )->text() . "</span><br />\n" );
 					  } elseif ( $olduserID == $wgUser->getID() ) {
                         $validOldUser = false;
-                        $wgOut->addHTML( "<span style=\"color: red;\">" . wfMsg('usermerge-noselfdelete') . "</span><br />\n" );
+                        $wgOut->addHTML( "<span style=\"color: red;\">" . wfMessage( 'usermerge-noselfdelete' )->text() . "</span><br />\n" );
                       } else {
 						global $wgUserMergeProtectedGroups;
 
@@ -72,7 +72,7 @@ class UserMerge extends SpecialPage
 
 						if ( $boolProtected ) {
 							$validOldUser = false;
-							$wgOut->addHTML( "<span style=\"color: red;\">" . wfMsg('usermerge-protectedgroup') . "</span><br />\n" );
+							$wgOut->addHTML( "<span style=\"color: red;\">" . wfMessage( 'usermerge-protectedgroup' )->text() . "</span><br />\n" );
 						} else {
 	                        $validOldUser = true;
 
@@ -89,7 +89,7 @@ class UserMerge extends SpecialPage
 								} else {
 									//invalid newuser entered
 									$validNewUser = false;
-									$wgOut->addHTML( "<span style=\"color: red;\">" . wfMsg('usermerge-badnewuser') . "</span><br />\n" );
+									$wgOut->addHTML( "<span style=\"color: red;\">" . wfMessage( 'usermerge-badnewuser' )->text() . "</span><br />\n" );
 								}
 	                          } else {
 	                            //newuser looks good
@@ -105,7 +105,7 @@ class UserMerge extends SpecialPage
                       }
                     } else {
                       $validOldUser = false;
-                      $wgOut->addHTML( "<span style=\"color: red;\">" . wfMsg('usermerge-noolduser') . "</span><br />\n" );
+                      $wgOut->addHTML( "<span style=\"color: red;\">" . wfMessage( 'usermerge-noolduser' )->text() . "</span><br />\n" );
                     }
                 } else {
                     //NO POST data found
@@ -118,20 +118,20 @@ class UserMerge extends SpecialPage
 <form id='usermergeform' method='post' action=\"$action\">
 <table>
         <tr>
-                <td align='right'>" . wfMsg('usermerge-olduser') . "</td>
+                <td align='right'>" . wfMessage( 'usermerge-olduser' )->text() . "</td>
                 <td align='left'><input tabindex='1' type='text' size='20' name='olduser' id='olduser' value=\"$olduser_text\" onFocus=\"document.getElementById('olduser').select;\" /></td>
         </tr>
         <tr>
-                <td align='right'>" . wfMsg('usermerge-newuser') . "</td>
+                <td align='right'>" . wfMessage( 'usermerge-newuser' )->text() . "</td>
                 <td align='left'><input tabindex='2' type='text' size='20' name='newuser' id='newuser' value=\"$newuser_text\" onFocus=\"document.getElementById('newuser').select;\" /></td>
         </tr>
         <tr>
-                <td align='right'>" . wfMsg('usermerge-deleteolduser') . "</td>
+                <td align='right'>" . wfMessage( 'usermerge-deleteolduser' )->text() . "</td>
                 <td align='left'><input tabindex='3' type='checkbox' name='deleteuser' id='deleteuser' $deleteUserCheck/></td>
         </tr>
         <tr>
                 <td>&nbsp;</td>
-                <td align='right'><input type='submit' name='submit' value=\"" . wfMsg('usermerge-submit') . "\" /></td>
+                <td align='right'><input type='submit' name='submit' value=\"" . wfMessage( 'usermerge-submit' )->text() . "\" /></td>
         </tr>
 </table>
 <input type='hidden' name='token' value='$token' />
@@ -141,7 +141,7 @@ class UserMerge extends SpecialPage
                   //go time, baby
                   if (!$wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) ) {
                     //bad editToken
-                    $wgOut->addHTML( "<span style=\"color: red;\">" . wfMsg('usermerge-badtoken') . "</span><br />\n" );
+                    $wgOut->addHTML( "<span style=\"color: red;\">" . wfMessage( 'usermerge-badtoken' )->text() . "</span><br />\n" );
                   } else {
                     //good editToken
                     $this->mergeUser($newuser_text,$newuserID,$olduser_text,$olduserID);

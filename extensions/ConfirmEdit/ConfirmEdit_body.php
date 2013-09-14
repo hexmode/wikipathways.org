@@ -132,10 +132,10 @@ class SimpleCaptcha {
 	 */
 	function getMessage( $action ) {
 		$name = 'captcha-' . $action;
-		$text = wfMsg( $name );
+		$text = wfMessage( $name  )->text();
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
-		return wfEmptyMsg( $name, $text ) ? wfMsg( 'captcha-edit' ) : $text;
+		return wfEmptyMsg( $name, $text ) ? wfMessage( 'captcha-edit' )->text() : $text;
 	}
 
 	/**
@@ -374,7 +374,7 @@ class SimpleCaptcha {
 	 */
 	function filterLink( $url ) {
 		global $wgCaptchaWhitelist;
-		$source = wfMsgForContent( 'captcha-addurl-whitelist' );
+		$source = wfMessage( 'captcha-addurl-whitelist' )->inContentLanguage()->text();
 
 		$whitelist = wfEmptyMsg( 'captcha-addurl-whitelist', $source )
 			? false
@@ -517,7 +517,7 @@ class SimpleCaptcha {
 		if( $wgCaptchaTriggers['createaccount'] ) {
 			$this->trigger = "new account '" . $u->getName() . "'";
 			if( !$this->passCaptcha() ) {
-				$message = wfMsg( 'captcha-createaccount-fail' );
+				$message = wfMessage( 'captcha-createaccount-fail' )->text();
 				return false;
 			}
 		}
@@ -534,7 +534,7 @@ class SimpleCaptcha {
 		if( $this->isBadLoginTriggered() ) {
 			$this->trigger = "post-badlogin login '" . $u->getName() . "'";
 			if( !$this->passCaptcha() ) {
-				$message = wfMsg( 'captcha-badlogin-fail' );
+				$message = wfMessage( 'captcha-badlogin-fail' )->text();
 				// Emulate a bad-password return to confuse the shit out of attackers
 				$retval = LoginForm::WRONG_PASS;
 				return false;
@@ -654,10 +654,10 @@ class SimpleCaptcha {
 	 */
 	function showHelp() {
 		global $wgOut, $ceAllowConfirmedEmail;
-		$wgOut->setPageTitle( wfMsg( 'captchahelp-title' ) );
-		$wgOut->addWikiText( wfMsg( 'captchahelp-text' ) );
+		$wgOut->setPageTitle( wfMessage( 'captchahelp-title' )->text() );
+		$wgOut->addWikiText( wfMessage( 'captchahelp-text' )->text() );
 		if ( $this->storage->cookiesNeeded() ) {
-			$wgOut->addWikiText( wfMsg( 'captchahelp-cookies-needed' ) );
+			$wgOut->addWikiText( wfMessage( 'captchahelp-cookies-needed' )->text() );
 		}
 	}
 

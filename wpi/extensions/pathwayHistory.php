@@ -142,7 +142,7 @@ class GpmlHistoryPager extends HistoryPager {
 				'type'  => 'radio',
 				'value' => $rev->getId(),
 				# do we really need to flood this on every item?
-				#                               'title' => wfMsgHtml( 'selectolderversionfordiff' )
+				#                               'title' => wfMessage( 'selectolderversionfordiff' )->escaped()
 			);
 
 			if( !$rev->userCan( Revision::DELETED_TEXT ) ) {

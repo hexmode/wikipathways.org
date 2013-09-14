@@ -17,7 +17,7 @@ class PrivateContributions {
 
 		self::loadMessages();
 
-		$title = wfMsg("pcontr_title");
+		$title = wfMessage( "pcontr_title" )->text();
 		$wgOut->addWikiText("==$title==");
 
 		$table = "<TABLE class='prettytable sortable'><TH>Pathway<TH>Allowed users<TH>Expires";
@@ -44,7 +44,7 @@ class PrivateContributions {
 			$table .= $rows . "</TABLE>";
 			$wgOut->addHTML($table);
 		} else {
-			$wgOut->addWikiText("<P>" . wfMsg("pcontr_empty") . "</P>");
+			$wgOut->addWikiText("<P>" . wfMessage( "pcontr_empty" )->text() . "</P>");
 		}
 
 		$wgOut->addHTML("<H2>My contributions</H2>");

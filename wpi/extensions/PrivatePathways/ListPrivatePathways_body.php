@@ -14,7 +14,7 @@ class ListPrivatePathways extends SpecialPage {
 
 		$this->setHeaders();
 
-		$wgOut->addWikiText(wfMsg("listprivatepathways-desc"));
+		$wgOut->addWikiText(wfMessage( "listprivatepathways-desc" )->text());
 		$permissions = MetaTag::getTags(PermissionManager::$TAG);
 
 		$table = "<TABLE class='prettytable sortable'>";

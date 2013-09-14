@@ -114,7 +114,7 @@ class EmbedVideo {
      * @return String Encoded representation of input params (to be processed later)
      */
     function parserFunction( $parser, $service=null, $id=null, $width=null ) {
-        if ($service===null || $id===null) return '<div class="errorbox">'.wfMsg('embedvideo-missing-params').'</div>';
+        if ($service===null || $id===null) return '<div class="errorbox">'.wfMessage( 'embedvideo-missing-params' )->text().'</div>';
 
         $params = array(
             'service' => trim($service),

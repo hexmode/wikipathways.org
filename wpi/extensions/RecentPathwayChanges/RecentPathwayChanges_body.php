@@ -68,7 +68,7 @@ class RecentQueryPage extends QueryPage {
 		$out .= wfCloseElement( 'select' ) . ' ';;# . wfElement( 'br' );
 
 		# Submit button and form bottom
-		$out .= wfElement( 'input', array( 'type' => 'submit', 'value' => wfMsg( 'allpagessubmit' ) ) );
+		$out .= wfElement( 'input', array( 'type' => 'submit', 'value' => wfMessage( 'allpagessubmit' )->text() ) );
 		$out .= wfCloseElement( 'form' );
 
 		return $out;

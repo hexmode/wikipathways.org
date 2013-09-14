@@ -86,7 +86,7 @@ function wfLqtBeforeWatchlistHook( $options, $user, &$hook_sql ) {
 
 	LqtView::addJSandCSS();
 	$messages_url = SpecialPage::getPage('NewMessages')->getTitle()->getFullURL();
-	$new_messages = wfMsg ( 'lqt-new-messages' );
+	$new_messages = wfMessage( 'lqt-new-messages' )->text();
 	$wgOut->addHTML(<<< HTML
 		<a href="$messages_url" class="lqt_watchlist_messages_notice">
 			&#x2712; {$new_messages}

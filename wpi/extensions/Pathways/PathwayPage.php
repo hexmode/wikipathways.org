@@ -87,7 +87,7 @@ return $text;
 		$warn = '';
 		if(!$this->pathway->isPublic()) {
 			$url = SITE_URL;
-			$msg = wfMsg('private_warning');
+			$msg = wfMessage( 'private_warning' )->text();
 
 			$pp = $this->pathway->getPermissionManager()->getPermissions();
 			$expdate = $pp->getExpires();

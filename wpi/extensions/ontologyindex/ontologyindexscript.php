@@ -449,7 +449,7 @@ function makeThumbNail( $pathway, $label = '', $href = '', $alt,
 	}
 	$oboxwidth = $boxwidth + 2;
 
-	$more = htmlspecialchars( wfMsg( 'thumbnail-more' ) );
+	$more = htmlspecialchars( wfMessage( 'thumbnail-more' )->text() );
 	$magnifyalign = $wgContLang->isRTL() ? 'left' : 'right';
 	$textalign = $wgContLang->isRTL() ? ' style="text-align:right"' : '';
 

@@ -20,8 +20,8 @@ class SetPermissionsPage {
 
 		//Check if user is allowed to manage permissions
 		if(!$this->title->userCan(PermissionManager::$ACTION_MANAGE)) {
-			$h = wfMsg('pp_forbidden_title');
-			$p = wfMsg('pp_forbidden_user');
+			$h = wfMessage( 'pp_forbidden_title' )->text();
+			$p = wfMessage( 'pp_forbidden_user' )->text();
 			$wgOut->addHTML("<h1>$t</h1><p>$p</p>");
 			return;
 		}
@@ -91,7 +91,7 @@ class SetPermissionsPage {
 	function showForm() {
 		global $wgOut, $wgUser, $wgLang;
 
-		$descr = $wgOut->parse(wfMsg( 'pp_descr' ));
+		$descr = $wgOut->parse(wfMessage( 'pp_descr' )->text());
 		$wgOut->addHTML("<P>$descr</P>");
 
 		//Show warnings
@@ -104,8 +104,8 @@ class SetPermissionsPage {
 			$wgOut->addHTML($warn);
 		}
 
-		$descr_pub = $wgOut->parse(wfMsg( 'pp_descr_pub' ));
-		$descr_pri = $wgOut->parse(wfMsg( 'pp_descr_pri' ));
+		$descr_pub = $wgOut->parse(wfMessage( 'pp_descr_pub' )->text());
+		$descr_pri = $wgOut->parse(wfMessage( 'pp_descr_pri' )->text());
 
 		$pub_vis = '';
 		$pri_vis = '';
@@ -124,10 +124,10 @@ class SetPermissionsPage {
 			$expdate = $this->permissions->getExpires();
 			$expdate = $wgLang->date($expdate, true);
 			if($expdate) {
-				$expires = wfMsg( 'pp_expires' );
+				$expires = wfMessage( 'pp_expires' )->text();
 				$expires = str_replace('$EXPIRE', $expdate, $expires);
 				$expires = $wgOut->parse($expires);
-				$postpone = wfMsg( 'pp_resetexpires' );
+				$postpone = wfMessage( 'pp_resetexpires' )->text();
 				$postpone = "<INPUT type='submit' name='apply' value='$postpone'>";
 			}
 		} else {

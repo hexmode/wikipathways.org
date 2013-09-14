@@ -38,7 +38,7 @@ class DeletePathway extends SpecialPage {
 			exit;
 		} else {
 			//Show a form
-			$descr = wfMsgForContent( 'deletepathway_descr' );
+			$descr = wfMessage( 'deletepathway_descr' )->inContentLanguage()->text();
 			$descr = str_replace("[[PATHWAY]]" ,
 				"<B><A href='{$pathway->getTitleObject()->getFullURL()}'>" .
 				"{$pathway->getName()} ({$pathway->getSpecies()})</A></B>",

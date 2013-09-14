@@ -143,7 +143,7 @@ class SecureHTML
 
 		// make sure that the page in question is protected
 		if ($result === false)
-			return 'SecureHTML: '.wfMsg('badaccess');
+			return 'SecureHTML: '.wfMessage( 'badaccess' )->text();
 
 		if ($result === null)
 			return null;

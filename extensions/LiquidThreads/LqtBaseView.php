@@ -188,14 +188,14 @@ class LqtDispatch {
 		if( $rc->getTitle()->getNamespace() == NS_LQT_THREAD ) {
 			$thread = Threads::withRoot(new Post( $rc->getTitle() ));
 			if($thread) {
-				$msg = wfMsg('lqt_changes_from');
+				$msg = wfMessage( 'lqt_changes_from' )->text();
 				$link = $thread->article()->getTitle()->getTalkPage();
 			}
 		}
 		else if( $rc->getTitle()->getNamespace() == NS_LQT_SUMMARY ) {
 			$thread = Threads::withSummary(new Article( $rc->getTitle() ));
 			if($thread) {
-				$msg = wfMsg('lqt_changes_summary_of');
+				$msg = wfMessage( 'lqt_changes_summary_of' )->text();
 				$link = $thread->title();
 			}
 		}
@@ -218,10 +218,10 @@ class LqtDispatch {
 				// But maybe that's what we want.
 				if( $thread->editedness() == Threads::EDITED_BY_OTHERS )
 					$appendix = ' <span class="lqt_rc_author_notice lqt_rc_author_notice_others">'.
-						wfMsg('lqt_rc_author_others').'</span>';
+						wfMessage( 'lqt_rc_author_others' )->text().'</span>';
 				else
 					$appendix = ' <span class="lqt_rc_author_notice lqt_rc_author_notice_original">'.
-						wfMsg('lqt_rc_author_original').'</span>';
+						wfMessage( 'lqt_rc_author_original' )->text().'</span>';
 				$s = preg_replace( '/\<\/li\>$/', $appendix . '</li>', $s );
 			}
 			else {
@@ -232,7 +232,7 @@ class LqtDispatch {
 				$quote = Revision::newFromId($rc->mAttribs['rc_this_oldid'])->getText();
 				if( strlen($quote) > 230 ) {
 					$quote = substr($quote, 0, 200) .
-						$changeslist->skin->link($thread->title(), wfMsg('lqt_rc_ellipsis'),
+						$changeslist->skin->link($thread->title(), wfMessage( 'lqt_rc_ellipsis' )->text(),
 							array('class'=>'lqt_rc_ellipsis'), array(), array('known'));
 				}
 				// TODO we must parse or sanitize the quote.
@@ -487,7 +487,7 @@ HTML;
 		$log_url = SpecialPage::getTitleFor('Log')->getFullURL(
 			"type=protect&user=&page={$thread->title()->getPrefixedURL()}");
 		$this->output->addHTML('<p>' . wfMsg('lqt_protectedfromreply',
-			'<a href="'.$log_url.'">'.wfMsg('lqt_protectedfromreply_link').'</a>'));
+			'<a href="'.$log_url.'">'.wfMessage( 'lqt_protectedfromreply_link' )->text().'</a>'));
 	}
 
 	function showNewThreadForm() {
@@ -546,7 +546,7 @@ HTML;
 			// This is a top-level post; show the subject line.
 			$db_subject = $thread ? $thread->subjectWithoutIncrement() : '';
 			$subject = $this->request->getVal('lqt_subject_field', $db_subject);
-			$subject_label = wfMsg('lqt_subject');
+			$subject_label = wfMessage( 'lqt_subject' )->text();
 			$e->editFormTextBeforeContent .= <<<HTML
 			<label for="lqt_subject_field">$subject_label</label>
 			<input type="text" size="60" name="lqt_subject_field" id="lqt_subject_field" value="$subject" tabindex="1"><br />
@@ -610,7 +610,7 @@ HTML;
 		return Title::newFromText( "Thread:$token" );
 	}
 	function newScratchTitle($subject) {
-		return $this->incrementedTitle( $subject?$subject:wfMsg('lqt_nosubject'), NS_LQT_THREAD );
+		return $this->incrementedTitle( $subject?$subject:wfMessage( 'lqt_nosubject' )->text(), NS_LQT_THREAD );
 	}
 	function newSummaryTitle($t) {
 		return $this->incrementedTitle( $t->subject(), NS_LQT_SUMMARY );
@@ -677,27 +677,27 @@ HTML;
 
 		$user_can_edit = $thread->root()->getTitle()->quickUserCan( 'edit' );
 
-		$commands[] = array( 'label' => $user_can_edit ? wfMsg('edit') : wfMsg('viewsource'),
+		$commands[] = array( 'label' => $user_can_edit ? wfMessage( 'edit' )->text() : wfMessage( 'viewsource' )->text(),
 							 'href' => $this->talkpageUrl( $this->title, 'edit', $thread ),
 							 'enabled' => true );
 
-		$commands[] = array( 'label' => wfMsg('history_short'),
+		$commands[] = array( 'label' => wfMessage( 'history_short' )->text(),
 							 'href' =>  $this->permalinkUrlWithQuery($thread, 'action=history'),
 							 'enabled' => true );
 
-		$commands[] = array( 'label' => wfMsg('lqt_permalink'),
+		$commands[] = array( 'label' => wfMessage( 'lqt_permalink' )->text(),
 							 'href' =>  $this->permalinkUrl( $thread ),
 							 'enabled' => true );
 
 		if ( in_array('delete',  $this->user->getRights()) ) {
 			$delete_url = SpecialPage::getTitleFor('DeleteThread')->getFullURL()
 				. '/' . $thread->title()->getPrefixedURL();
-			$commands[] = array( 'label' => $thread->type() == Threads::TYPE_DELETED ? wfMsg('lqt_undelete') : wfMsg('delete'),
+			$commands[] = array( 'label' => $thread->type() == Threads::TYPE_DELETED ? wfMessage( 'lqt_undelete' )->text() : wfMessage( 'delete' )->text(),
 								 'href' =>  $delete_url,
 								 'enabled' => true );
 		}
 
-		$commands[] = array( 'label' => '<b class="lqt_reply_link">' . wfMsg('lqt_reply') . '</b>',
+		$commands[] = array( 'label' => '<b class="lqt_reply_link">' . wfMessage( 'lqt_reply' )->text() . '</b>',
 							 'href' =>  $this->talkpageUrl( $this->title, 'reply', $thread ),
 							 'enabled' => $user_can_edit );
 
@@ -707,23 +707,23 @@ HTML;
 	function topLevelThreadCommands($thread) {
 		$commands = array();
 
-		$commands[] = array( 'label' => wfMsg('history_short'),
+		$commands[] = array( 'label' => wfMessage( 'history_short' )->text(),
 							 'href' => $this->permalinkUrl($thread, 'thread_history'),
 							 'enabled' => true );
 
 		if( in_array('move', $this->user->getRights()) ) {
 			$move_href = SpecialPage::getTitleFor('MoveThread')->getFullURL()
 				. '/' . $thread->title()->getPrefixedURL();
-			$commands[] = array( 'label' => wfMsg('move'),
+			$commands[] = array( 'label' => wfMessage( 'move' )->text(),
 								 'href' => $move_href,
 								 'enabled' => true );
 		}
 		if( !$this->user->isAnon() && !$thread->title()->userIsWatching() ) {
-			$commands[] = array( 'label' => wfMsg('watch'),
+			$commands[] = array( 'label' => wfMessage( 'watch' )->text(),
 								 'href' => $this->permalinkUrlWithQuery($thread, 'action=watch'),
 								 'enabled' => true );
 		} else if( !$this->user->isAnon() ) {
-			$commands[] = array( 'label' => wfMsg('unwatch'),
+			$commands[] = array( 'label' => wfMessage( 'unwatch' )->text(),
 								 'href' => $this->permalinkUrlWithQuery($thread, 'action=unwatch'),
 								 'enabled' => true );
 		}
@@ -820,7 +820,7 @@ HTML
 			$editedness_url = $this->permalinkUrlWithQuery($thread, 'action=history');
 			$editedness_color_number = $thread->editedness() == Threads::EDITED_BY_AUTHOR ?
 				$color_number : ($color_number == self::number_of_user_colors ? 1 : $color_number + 1);
-			$this->output->addHTML("<li class=\"lqt_edited_notice lqt_post_color_{$editedness_color_number}\">".'<a href="'.$editedness_url.'">'.wfMsg('lqt_edited_notice').'</a>'.'</li>');
+			$this->output->addHTML("<li class=\"lqt_edited_notice lqt_post_color_{$editedness_color_number}\">".'<a href="'.$editedness_url.'">'.wfMessage( 'lqt_edited_notice' )->text().'</a>'.'</li>');
 		}
 
 		$this->output->addHTML("</span><li>$timestamp</li>");
@@ -967,10 +967,10 @@ HTML
 		if ( $thread->type() == Threads::TYPE_DELETED ) {
 			if ( in_array('deletedhistory',  $this->user->getRights()) ) {
 				$this->output->addHTML('<p>'. wfMsg('lqt_thread_deleted_for_sysops',
-					'<b>'.wfMsg('lqt_thread_deleted_for_sysops_deleted').'</b>') .'</p>');
+					'<b>'.wfMessage( 'lqt_thread_deleted_for_sysops_deleted' )->text().'</b>') .'</p>');
 			}
 			else {
-				$this->output->addHTML('<p><em>'.wfMsg('lqt_thread_deleted').'</em></p>');
+				$this->output->addHTML('<p><em>'.wfMessage( 'lqt_thread_deleted' )->text().'</em></p>');
 				return;
 			}
 		}
@@ -981,7 +981,7 @@ HTML
 		} else if ( $timestamp->isBefore(Date::now()->nDaysAgo($this->archive_start_days))
 					&& !$thread->summary() && !$thread->hasSuperthread() && !$thread->isHistorical() ) {
 			$this->output->addHTML('<p class="lqt_summary_notice">'. wfMsg('lqt_summary_notice',
-				'<a href="'.$this->permalinkUrl($thread, 'summarize').'">'.wfMsg('lqt_summary_notice_link').'</a>',
+				'<a href="'.$this->permalinkUrl($thread, 'summarize').'">'.wfMessage( 'lqt_summary_notice_link' )->text().'</a>',
 				$this->archive_start_days
 				) .'</p>');
 		}
@@ -1032,9 +1032,9 @@ HTML
 
 	function showSummary($t) {
 		if ( !$t->summary() ) return;
-		$label = wfMsg('lqt_summary_label');
-		$edit = strtolower(wfMsg('edit'));
-		$link = strtolower(wfMsg('lqt_permalink'));
+		$label = wfMessage( 'lqt_summary_label' )->text();
+		$edit = strtolower(wfMessage( 'edit' )->text());
+		$link = strtolower(wfMessage( 'lqt_permalink' )->text());
 		$this->output->addHTML(<<<HTML
 			<div class='lqt_thread_permalink_summary'>
 			<span class="lqt_thread_permalink_summary_title">

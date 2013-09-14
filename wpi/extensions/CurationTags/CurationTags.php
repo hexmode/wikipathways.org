@@ -215,7 +215,7 @@ class CurationTag {
 				$rest[] = $tag;
 			}
 		}
-		$visible[ wfMsg('browsepathways-all-tags') ] = $rest;
+		$visible[ wfMessage( 'browsepathways-all-tags' )->text() ] = $rest;
 		return $visible;
 	}
 

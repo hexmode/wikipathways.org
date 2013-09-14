@@ -101,7 +101,7 @@ class deleteRow extends tableRow {
 			$row = "row".$this->action;
 		}
 		return parent::format( $row )."<td>".( $this->action !== false ?
-			$this->deleteButton( $row ) : wfMsg( "wpict-too-new" ) );
+			$this->deleteButton( $row ) : wfMessage( "wpict-too-new" )->text() );
 	}
 }
 

@@ -19,7 +19,7 @@ class ContributionScores extends IncludableSpecialPage
 	}
 
 	function getDescription() {
-		return wfMsg( 'contributionscores' );
+		return wfMessage( 'contributionscores' )->text();
 	}
 
 	///Generates a "Contribution Scores" table for a given LIMIT and date range
@@ -95,10 +95,10 @@ class ContributionScores extends IncludableSpecialPage
 		
 		$output = "<table class=\"wikitable plainlinks{$sortable}\" >\n".
 			"<tr class='table-orange-tableheadings'>\n".
-			"<td class=\"table-orange-headercell\">" . wfMsgHtml( 'contributionscores-score' ) . "</td>\n" .
-			"<td class=\"table-orange-headercell\">" . wfMsgHtml( 'contributionscores-pages' ) . "</td>\n" .
-			"<td class=\"table-orange-headercell\">" . wfMsgHtml( 'contributionscores-changes' ) . "</td>\n" .
-			"<td class=\"table-orange-headercell\">" . wfMsgHtml( 'contributionscores-username' ) . "</td>\n";
+			"<td class=\"table-orange-headercell\">" . wfMessage( 'contributionscores-score' )->escaped() . "</td>\n" .
+			"<td class=\"table-orange-headercell\">" . wfMessage( 'contributionscores-pages' )->escaped() . "</td>\n" .
+			"<td class=\"table-orange-headercell\">" . wfMessage( 'contributionscores-changes' )->escaped() . "</td>\n" .
+			"<td class=\"table-orange-headercell\">" . wfMessage( 'contributionscores-username' )->escaped() . "</td>\n";
 
 		$skin =& $wgUser->getSkin();
 		$altrow = '';
@@ -181,7 +181,7 @@ class ContributionScores extends IncludableSpecialPage
 		if ( $days > 0 ) {
 			$reportTitle = wfMsg( 'contributionscores-days', $days );
 		} else {
-			$reportTitle = wfMsg( 'contributionscores-allrevisions' );
+			$reportTitle = wfMessage( 'contributionscores-allrevisions' )->text();
 		}
 		$reportTitle .= " " . wfMsg( 'contributionscores-top', $limit );
 		$title = Xml::element( 'h4', array( 'class' => 'table-orange-title' ), $reportTitle ) . "\n";
@@ -198,13 +198,13 @@ class ContributionScores extends IncludableSpecialPage
 				array(0,50));
 		}
 
-		$wgOut->addWikiText( wfMsg( 'contributionscores-info' ) );
+		$wgOut->addWikiText( wfMessage( 'contributionscores-info' )->text() );
 
 		foreach ( $contribScoreReports as $scoreReport) {
 			if ( $scoreReport[0] > 0 ) {
 				$reportTitle = wfMsg( 'contributionscores-days', $scoreReport[0] );
 			} else {
-				$reportTitle = wfMsg( 'contributionscores-allrevisions' );
+				$reportTitle = wfMessage( 'contributionscores-allrevisions' )->text();
 			}
 			$reportTitle .= " " . wfMsg('contributionscores-top', $scoreReport[1] );
 			$title = Xml::element( 'h2', array( 'class' => 'table-orange-title' ), $reportTitle ) . "\n";

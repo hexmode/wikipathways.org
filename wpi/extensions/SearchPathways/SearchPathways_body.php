@@ -12,7 +12,7 @@ class SearchPathways extends SpecialPage
 
 		$this->setHeaders();
 		$this->this_url = SITE_URL . '/index.php';
-		$wgOut->setPagetitle( wfMsg( "searchpathways" ) );
+		$wgOut->setPagetitle( wfMessage( "searchpathways" )->text() );
 
 		$query   = isset( $_GET['query'] ) ?   $_GET['query']   : null;
 		$species = isset( $_GET['species'] ) ? $_GET['species'] : null;
@@ -159,7 +159,7 @@ class SearchPathways extends SpecialPage
 		}
 		$oboxwidth = $boxwidth + 2;
 
-		$more = htmlspecialchars( wfMsg( 'thumbnail-more' ) );
+		$more = htmlspecialchars( wfMessage( 'thumbnail-more' )->text() );
 		$magnifyalign = $wgContLang->isRTL() ? 'left' : 'right';
 		$textalign = $wgContLang->isRTL() ? ' style="text-align:right"' : '';
 

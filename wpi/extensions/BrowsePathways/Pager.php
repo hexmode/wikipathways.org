@@ -82,7 +82,7 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 			$this->tag = $tag;
 		} else {
 			$label = CurationTag::getUserVisibleTagNames();
-			$this->tag = $label[ wfMsg('browsepathways-all-tags') ];
+			$this->tag = $label[ wfMessage( 'browsepathways-all-tags' )->text() ];
 		}
 
 		// Follwing bit copy-pasta from Pager's IndexPager with some bits replace

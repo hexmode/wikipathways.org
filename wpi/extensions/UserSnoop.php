@@ -247,26 +247,26 @@ class UserSnoop extends SpecialPage
 		global $wgServer, $wgScript, $wgContLang, $wgRequest, $wgUser;
 
 		$out = '<form name="usersnoop" id="usersnoop" method="post">';
-		$out .= wfMsg('usersnoopusername').': <input type="text" name="username" value="'.$this->targetUser.'">';
-		$out .= '&nbsp;&nbsp;&nbsp;&nbsp;'.wfMsg('usersnoopaction').': <select name="action">';
-		$out .= '<option>'.wfMsg('usersnoopnone').'</option>';
+		$out .= wfMessage( 'usersnoopusername' )->text().': <input type="text" name="username" value="'.$this->targetUser.'">';
+		$out .= '&nbsp;&nbsp;&nbsp;&nbsp;'.wfMessage( 'usersnoopaction' )->text().': <select name="action">';
+		$out .= '<option>'.wfMessage( 'usersnoopnone' )->text().'</option>';
 		$out .= '<option value="pageviews"'.($wgRequest->getVal('action')=='pageviews'?' selected':'').
-			'>'.wfMsg('usersnooppageviews').'</option>';
+			'>'.wfMessage( 'usersnooppageviews' )->text().'</option>';
 		$out .= '<option value="watchlist"'.($wgRequest->getVal('action')=='watchlist'?' selected':'').
-			'>'.wfMsg('usersnoopwatchlist').'</option>';
+			'>'.wfMessage( 'usersnoopwatchlist' )->text().'</option>';
 		$out .= '<option value="newpages"'.($wgRequest->getVal('action')=='newpages'?' selected':'').
-			'>'.wfMsg('usersnoopnewpages').'</option>';
+			'>'.wfMessage( 'usersnoopnewpages' )->text().'</option>';
 		$out .= '</select>';
-		$out .= '<input type="submit" value="'.wfMsg('usersnoopsubmit').'">';
+		$out .= '<input type="submit" value="'.wfMessage( 'usersnoopsubmit' )->text().'">';
 		$out .= "</form>\n<hr>\n";
 
 
 		if($this->targetUser != "") {
 			$out .= '<table class="wikitable" width="100%" cellpadding="0" cellspacing="0">';
-			$out .= '<tr><th>'.wfMsg('usersnoopid').'</th><th>'.wfMsg('usersnoopusername').
-				'</th><th>'.wfMsg('usersnooprealname').'</th><th>'.wfMsg('email').'</th>';
-			$out .= '<th>'.wfMsg('usersnoopnewtalk').'</th><th>'.wfMsg('usersnoopregistered').
-				'</th><th>'.wfMsg('usersnoopedits').'</th></tr>';
+			$out .= '<tr><th>'.wfMessage( 'usersnoopid' )->text().'</th><th>'.wfMessage( 'usersnoopusername' )->text().
+				'</th><th>'.wfMessage( 'usersnooprealname' )->text().'</th><th>'.wfMessage( 'email' )->text().'</th>';
+			$out .= '<th>'.wfMessage( 'usersnoopnewtalk' )->text().'</th><th>'.wfMessage( 'usersnoopregistered' )->text().
+				'</th><th>'.wfMessage( 'usersnoopedits' )->text().'</th></tr>';
 
 			$dbr = wfGetDB(DB_SLAVE);
 
@@ -290,20 +290,20 @@ class UserSnoop extends SpecialPage
 			$out .= '<td align="center">';
 			if($this->newUser->getNewTalk()) {
 				$out .= '<a href="'.$wgScript.'?title='.$wgContLang->GetNsText(NS_USER_TALK);
-				$out .= ':'.$this->targetUser.'&diff=cur">'.wfMsg('usernsoopyes').'</a>';
+				$out .= ':'.$this->targetUser.'&diff=cur">'.wfMessage( 'usernsoopyes' )->text().'</a>';
 			} else {
-				$out .= wfMsg('usersnoopno');
+				$out .= wfMessage( 'usersnoopno' )->text();
 			}
 			$out .= '</td><td align="center">'.$reg.'</td><td align="right">';
 			$out .= $this->sandboxParse('[[{{ns:special}}:Contributions/'.$this->targetUser.'|'.
 				$wgContLang->formatNum($this->newUser->getEditCount()).']]');
 			$out .= "</td></tr>";
 
-			$out .= '<tr><th>'.wfMsg('usersnoopblk').'</th><th colspan="2">'.wfMsg('usersnoopblockreason').
-				'</th><th colspan="2">'.wfMsg('usersnoopgroups').'</th>';
-			$out .= '<th>'.wfMsg('usersnooplastupdated').'</th>';
-			$out .= '<th>'.wfMsg('usersnoopsignature').'</th></tr>';
-			$out .= '<tr><td>'.($this->newUser->isBlocked()==1?wfMsg('usersnoopyes'):wfMsg('usersnoopno')).'</td>';
+			$out .= '<tr><th>'.wfMessage( 'usersnoopblk' )->text().'</th><th colspan="2">'.wfMessage( 'usersnoopblockreason' )->text().
+				'</th><th colspan="2">'.wfMessage( 'usersnoopgroups' )->text().'</th>';
+			$out .= '<th>'.wfMessage( 'usersnooplastupdated' )->text().'</th>';
+			$out .= '<th>'.wfMessage( 'usersnoopsignature' )->text().'</th></tr>';
+			$out .= '<tr><td>'.($this->newUser->isBlocked()==1?wfMessage( 'usersnoopyes' )->text():wfMessage( 'usersnoopno' )->text()).'</td>';
 			$out .= '<td colspan="2">'.$this->newUser->blockedFor().'</td>';
 			$out .= '<td colspan="2">';
 
@@ -335,35 +335,35 @@ class UserSnoop extends SpecialPage
 			#these are the "special" areas, restricted to bureaucrats only
 			if(in_array('bureaucrat', $wgUser->getEffectiveGroups())) {
 				$out .= '<tr>';
-				$out .= '<th colspan="2">'.wfMsg('usersnooplastlogin').'</th>';
+				$out .= '<th colspan="2">'.wfMessage( 'usersnooplastlogin' )->text().'</th>';
 
 				$out .= '<th rowspan="2" valign="center" align="center"><form name="userlogout" id="userlogout" method="post">';
 				$out .= '<input type="hidden" name="useraction" value="logout">';
 				$out .= '<input type="hidden" name="userid" value="'.$this->uid.'">';
 				$out .= '<input type="hidden" name="username" value="'.$this->targetUser.'">';
 				$out .= '<input type="hidden" name="action" value="'.$this->action.'">';
-				$out .= '<input type="submit" value="'.wfMsg('usersnoopforcelogout').'"></form></th>';
+				$out .= '<input type="submit" value="'.wfMessage( 'usersnoopforcelogout' )->text().'"></form></th>';
 
 				$out .= '<th rowspan="2" valign="center" align="center"><form name="userblock" id="userblock" method="post">';
 				$out .= '<input type="hidden" name="useraction" value="block">';
 				$out .= '<input type="hidden" name="userid" value="'.$this->uid.'">';
 				$out .= '<input type="hidden" name="username" value="'.$this->targetUser.'">';
 				$out .= '<input type="hidden" name="action" value="'.$this->action.'">';
-				$out .= '<input type="submit" value="'.wfMsg('usersnoopblock').'"></form></th>';
+				$out .= '<input type="submit" value="'.wfMessage( 'usersnoopblock' )->text().'"></form></th>';
 
 				$out .= '<th rowspan="2" valign="center" align="center"><form name="userspreadblock" id="userspreadblock" method="post">';
 				$out .= '<input type="hidden" name="useraction" value="spreadblock">';
 				$out .= '<input type="hidden" name="userid" value="'.$this->uid.'">';
 				$out .= '<input type="hidden" name="username" value="'.$this->targetUser.'">';
 				$out .= '<input type="hidden" name="action" value="'.$this->action.'">';
-				$out .= '<input type="submit" value="'.wfMsg('usersnoopspreadblock').'"></form></th>';
+				$out .= '<input type="submit" value="'.wfMessage( 'usersnoopspreadblock' )->text().'"></form></th>';
 
 				$out .= '<th rowspan="2" valign="center" align="center"><form name="userunblock" id="userunblock" method="post">';
 				$out .= '<input type="hidden" name="useraction" value="unblock">';
 				$out .= '<input type="hidden" name="userid" value="'.$this->uid.'">';
 				$out .= '<input type="hidden" name="username" value="'.$this->targetUser.'">';
 				$out .= '<input type="hidden" name="action" value="'.$this->action.'">';
-				$out .= '<input type="submit" value="'.wfMsg('usersnoopunblock').'"></form></th>';
+				$out .= '<input type="submit" value="'.wfMessage( 'usersnoopunblock' )->text().'"></form></th>';
 
 				$out .= '<th rowspan="2">&nbsp;</th>';
 
@@ -406,7 +406,7 @@ class UserSnoop extends SpecialPage
 			$user_id = $this->uid;
 		}
 
-		$blk = new Block($this->targetUser, $user_id, $wgUser->getID(), wfMsg('usersnoopblockmessage'),
+		$blk = new Block($this->targetUser, $user_id, $wgUser->getID(), wfMessage( 'usersnoopblockmessage' )->text(),
 			wfTimestamp(), 0, Block::infinity(), 0, 1, 0, 0, 1);
 		if($blk->insert()) {
 			$log = new LogPage('block');
@@ -427,7 +427,7 @@ class UserSnoop extends SpecialPage
 
 		if($blk->delete()) {
 			$log = new LogPage('block');
-			$log->addEntry('unblock', Title::makeTitle(NS_USER, $this->targetUser), wfMsg('usersnoopunblockmessage'));
+			$log->addEntry('unblock', Title::makeTitle(NS_USER, $this->targetUser), wfMessage( 'usersnoopunblockmessage' )->text());
 		}
 	}
 
@@ -482,7 +482,7 @@ class UserSnoop extends SpecialPage
 	static function loadLocalizedName(&$specialPageArray, $code) {
 		self::loadAllMessages();
 
-		$text = wfMsg('usersnoop');
+		$text = wfMessage( 'usersnoop' )->text();
 		$title = Title::newFromText($text);
 		$specialPageArray['UserSnoop'][] = $title->getDBKey();
 
@@ -591,8 +591,8 @@ class UserSnoopPagerPageviews extends UserSnoopPager{
 
 	function getBodyHeader() {
 		$s = '<table class="wikitable" width="100%" cellspacing="0" cellpadding="0">';
-		$s .= '<tr><th>#</th><th>'.wfMsg('usersnooppage').'</th><th>'.wfMsg('usersnoophits').'</th>';
-		$s .= '<th>'.wfMsg('usersnooplast').'</th></tr>';
+		$s .= '<tr><th>#</th><th>'.wfMessage( 'usersnooppage' )->text().'</th><th>'.wfMessage( 'usersnoophits' )->text().'</th>';
+		$s .= '<th>'.wfMessage( 'usersnooplast' )->text().'</th></tr>';
 		return $s;
 	}
 
@@ -662,9 +662,9 @@ class UserSnoopPagerWatchlist extends UserSnoopPager {
 
 	function getBodyHeader() {
 		$s = '<table class="wikitable" width="100%" cellspacing="0" cellpadding="0">';
-		$s .= '<tr><th>#</th><th>'.wfMsg('usersnooppage').'</th><th>'.wfMsg('usersnooplastvisit').
-			'</th><th>'.wfMsg('usersnooplasteditedbythisuser').'</th>';
-		$s .= '<th>'.wfMsg('usersnooplasteditedbyanyuser').'</th></tr>';
+		$s .= '<tr><th>#</th><th>'.wfMessage( 'usersnooppage' )->text().'</th><th>'.wfMessage( 'usersnooplastvisit' )->text().
+			'</th><th>'.wfMessage( 'usersnooplasteditedbythisuser' )->text().'</th>';
+		$s .= '<th>'.wfMessage( 'usersnooplasteditedbyanyuser' )->text().'</th></tr>';
 		return $s;
 	}
 
@@ -737,9 +737,9 @@ class UserSnoopPagerNewPages extends UserSnoopPager {
 
 	function getBodyHeader() {
 		$s = '<table class="wikitable" width="100%" cellspacing="0" cellpadding="0">';
-		$s .= '<tr><th>#</th><th>'.wfMsg('usersnooppage').'</th><th>'.wfMsg('usersnoopcreated').
-			'</th><th>'.wfMsg('usersnooplasteditedbythisuser').'</th>';
-		$s .= '<th>'.wfMsg('usersnooplasteditedbyanyuser').'</th></tr>';
+		$s .= '<tr><th>#</th><th>'.wfMessage( 'usersnooppage' )->text().'</th><th>'.wfMessage( 'usersnoopcreated' )->text().
+			'</th><th>'.wfMessage( 'usersnooplasteditedbythisuser' )->text().'</th>';
+		$s .= '<th>'.wfMessage( 'usersnooplasteditedbyanyuser' )->text().'</th></tr>';
 		return $s;
 	}
 

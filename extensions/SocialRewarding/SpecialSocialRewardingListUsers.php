@@ -88,7 +88,7 @@ class SpecialSocialRewardingListUsers extends QueryPage {
 		// form header
 		$out = '<form method="get" action="'.$action.'">' .
 				'<input type="hidden" name="title" value="'.$special.'" />' .
-				wfMsgHtml( 'groups-editgroup-name' ) . '<select name="group">';
+				wfMessage( 'groups-editgroup-name' )->escaped() . '<select name="group">';
 
 		// get group names
 		$groups = User::getAllGroups();
@@ -107,10 +107,10 @@ class SpecialSocialRewardingListUsers extends QueryPage {
 		}
 		$out .= '</select> ';
 
-		$out .= wfMsgHtml( 'specialloguserlabel' ) . '<input type="text" name="username" /> ';
+		$out .= wfMessage( 'specialloguserlabel' )->escaped() . '<input type="text" name="username" /> ';
 
 		// OK button, end of form.
-		$out .= '<input type="submit" value="' . wfMsgHtml( 'allpagessubmit' ) . '" /></form>';
+		$out .= '<input type="submit" value="' . wfMessage( 'allpagessubmit' )->escaped() . '" /></form>';
 		// congratulations the form is now build
 		return $out;
 	}
@@ -194,7 +194,7 @@ class SpecialSocialRewardingListUsers extends QueryPage {
 
 			if( count( $groups ) > 0 ) {
 				$name .= ' (' .
-					$skin->makeLink( wfMsgForContent( 'administrators' ),
+					$skin->makeLink( wfMessage( 'administrators' )->inContentLanguage()->text(),
 						htmlspecialchars( implode( ', ', $groups ) ) ) .
 					')';
 			}
