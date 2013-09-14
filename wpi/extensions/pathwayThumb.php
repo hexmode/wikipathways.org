@@ -136,6 +136,7 @@ class PathwayThumb {
 				$boxheight = intval( $height * $boxwidth / $width );
 			}
 		}
+		wfDebug("Got thumbUrl: $thumbUrl\n");
 		if ( $error ) {
 			$s .= htmlspecialchars( $error );
 		} elseif( !$img->exists() ) {
