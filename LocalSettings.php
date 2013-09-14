@@ -333,9 +333,9 @@ $wgDebugLogFile = WPI_SCRIPT_PATH . '/tmp/wikipathwaysdebug.txt';
 
 // Uncommenting the following will give you a separate debug log file
 // for each request.
-/* if ( !defined( "STDIN" ) ) { */
-/* 	$wgDebugLogFile .= "-" . $_SERVER['REQUEST_METHOD'] . "-" . urlencode( $_SERVER['REQUEST_URI'] ); */
-/* } */
+if ( !defined( "STDIN" ) ) {
+	$wgDebugLogFile .= "-" . $_SERVER['REQUEST_METHOD'] . "-" . urlencode( $_SERVER['REQUEST_URI'] );
+}
 
 ##New Autoloads
 $wgAutoloadClasses['LegacySpecialPage'] = dirname(__FILE__) . '/wpi/LegacySpecialPage.php';
