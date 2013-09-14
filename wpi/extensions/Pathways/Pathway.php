@@ -537,11 +537,21 @@ class Pathway {
 		return in_array($fileType, array_keys(self::$fileTypes));
 	}
 
+
+	private function getPath( $fileType ) {
+		/* Duplication, ugh! */
+		$repo = RepoGroup::singleton()->getLocalRepo();
+		$img = LocalFile::newFromTitle( $this->getFileTitle( $fileType ), $repo );
+
+		return $img->getPath();
+	}
+
 	/**
 	 * Get the filename of a cached file following the naming conventions
 	 * \param the file type to get the name for (one of the FILETYPE_* constants)
 	 */
 	public function getFileName($fileType) {
+		/* Duplication, ugh! */
 		$repo = RepoGroup::singleton()->getLocalRepo();
 		$img = LocalFile::newFromTitle( $this->getFileTitle( $fileType ), $repo );
 		$path = $img->getPath();
@@ -1067,9 +1077,8 @@ class Pathway {
 			$this->clearCache(FILETYPE_GPML);
 			$this->clearCache(FILETYPE_IMG);
 		} else {
-			$file = $this->getFileLocation($fileType, false);
-			$repo = RepoGroup::singleton()->getLocalRepo();
-			if($repo->fileExists( $file ) ) {
+			$file = $this->getFileName($fileType, false);
+			if( $file ) {
 				$repo->delete( $file, "archive" );
 			}
 		}
@@ -1087,11 +1096,11 @@ class Pathway {
 			$gpmlDate = -1;
 		}
 
-		$file = $this->getFileLocation($fileType, false);
+		$path = $this->getPath( $fileType );
 		$repo = RepoGroup::singleton()->getLocalRepo();
 
-		if($repo->fileExists($file)) {
-			$fmt = $repo->getFileTimestamp( $file );
+		if( $repo->fileExists( $path ) ) {
+			$fmt = $repo->getFileTimestamp( $path );
 			wfDebug("\tFile exists, cache: $fmt, gpml: $gpmlDate\n");
 			return  $fmt < $gpmlDate;
 		} else { //No cached version yet, so definitely out of date
@@ -1159,12 +1168,12 @@ class Pathway {
 			throw new Exception("Unable to convert to $outFile:\n<BR>Status:$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
 		}
 		$repo = RepoGroup::singleton()->getLocalRepo();
-		$img = new LocalFile( $final, $repo );
+		$img = new LocalFile( $baseName, $repo );
 		wfDebug("moving into place $baseName\n");
 		$comment = $pageText = "";
-		$status = $img->upload( $baseName, $comment, $pageText );
+		$status = $img->upload( $final, $comment, $pageText );
 		if( !$status->isOk() ) {
-			throw new MWException( "Error while saving: "  . $status->getHTML() );
+			throw new MWException( "Error while uploading from $final: "  . $status->getHTML() );
 		}
 		wfDebug("moved into place $baseName\n");
 		return true;
