@@ -18,15 +18,26 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
+
+$dir = __DIR__;
+require_once $dir . '/ConfirmEdit.php';
+$wgCaptchaClass = 'FancyCaptcha';
+
+/**
+ * The name of a file backend ($wgFileBackends) to be used for storing files.
+ * Defaults to FSFileBackend using $wgCaptchaDirectory as a base path.
+ */
+$wgCaptchaFileBackend = '';
 
 global $wgCaptchaDirectory;
 $wgCaptchaDirectory = "$wgUploadDirectory/captcha"; // bad default :D
@@ -37,6 +48,29 @@ $wgCaptchaDirectoryLevels = 0; // To break into subdirectories
 global $wgCaptchaSecret;
 $wgCaptchaSecret = "CHANGE_THIS_SECRET!";
 
-$wgExtensionMessagesFiles['FancyCaptcha'] = dirname(__FILE__).'/FancyCaptcha.i18n.php';
-$wgAutoloadClasses['FancyCaptcha'] = dirname( __FILE__ ) . '/FancyCaptcha.class.php';
+/**
+ * By default the FancyCaptcha rotates among all available captchas.
+ * Setting $wgCaptchaDeleteOnSolve to true will delete the captcha
+ * files when they are correctly solved. Thus the user will need
+ * something like a cron creating new thumbnails to avoid drying up.
+ */
+$wgCaptchaDeleteOnSolve = false;
 
+$wgExtensionMessagesFiles['FancyCaptcha'] = $dir . '/FancyCaptcha.i18n.php';
+$wgAutoloadClasses['FancyCaptcha'] = $dir . '/FancyCaptcha.class.php';
+
+$wgResourceModules['ext.confirmEdit.fancyCaptcha.styles'] = array(
+	'localBasePath' => $dir . '/resources',
+	'remoteExtPath' => 'ConfirmEdit/resources',
+	'styles' => 'ext.confirmEdit.fancyCaptcha.css',
+);
+
+$wgResourceModules['ext.confirmEdit.fancyCaptcha'] = array(
+	'localBasePath' => $dir . '/resources',
+	'remoteExtPath' => 'ConfirmEdit/resources',
+	'scripts' => 'ext.confirmEdit.fancyCaptcha.js',
+	'dependencies' => 'mediawiki.api',
+);
+
+$wgAutoloadClasses['ApiFancyCaptchaReload'] = $dir . '/ApiFancyCaptchaReload.php';
+$wgAPIModules['fancycaptchareload'] = 'ApiFancyCaptchaReload';

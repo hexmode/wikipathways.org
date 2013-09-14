@@ -30,59 +30,44 @@ class QuestyCaptcha extends SimpleCaptcha {
 
 	function getCaptcha() {
 		global $wgCaptchaQuestions;
-		if( !isset( $wgCaptchaQuestions ) || count( $wgCaptchaQuestions ) === 0 ) {
-			$all = $this->getMessage( 'qna' );
-			$qna = split( "\n=== Q&A ===\n", $all, 2 );
-			$count = 0;
-
-			if( !isset( $qna[1] ) ) {
-				die( $this->getMessage( 'no-qna' ) );
-			}
-			foreach(split( "\n", $qna[1] ) as $l) {
-				if( strtolower( substr($l, 0, 2) ) == "q:" ) {
-					$wgCaptchaQuestions[$count]["question"] = trim( substr( $l, 2 ) );
-				}
-
-				if( strtolower( substr($l, 0, 2) ) == "a:" ) {
-					$wgCaptchaQuestions[$count]["answer"] = trim( substr( $l, 2 ) );
-				}
-				if( isset( $wgCaptchaQuestions[$count]["answer"] ) &&
-					isset( $wgCaptchaQuestions[$count]["question"] ) ) {
-					global $wgParser;
-					$wgCaptchaQuestions[$count]["question"] = $wgParser->recursiveTagParse
-						( $wgCaptchaQuestions[$count]["question"] );
-					$count++;
-				}
-			}
-			if( $count < 1 ) {
-				die( $this->getMessage( 'no-qna-list' ) );
-			}
-		}
 		return $wgCaptchaQuestions[mt_rand( 0, count( $wgCaptchaQuestions ) - 1 )]; // pick a question, any question
 	}
 
 	function getForm() {
 		$captcha = $this->getCaptcha();
 		if ( !$captcha ) {
-			die( $this->getMessage( 'noquesty' ) );
+			die( "No questions found; set some in LocalSettings.php using the format from QuestyCaptcha.php." );
 		}
 		$index = $this->storeCaptcha( $captcha );
 		return "<p><label for=\"wpCaptchaWord\">{$captcha['question']}</label> " .
-			'<input type="text" name="wpCaptchaWord" id="wpCaptchaWord" required="1">'.
-			'<input type="hidden" name="wpCaptchaId" id="wpCaptchaId" value="'.$index.'">';
+			Html::element( 'input', array(
+				'name' => 'wpCaptchaWord',
+				'id'   => 'wpCaptchaWord',
+				'required',
+				'autocomplete' => 'off',
+				'tabindex' => 1 ) ) . // tab in before the edit textarea
+			"</p>\n" .
+			Xml::element( 'input', array(
+				'type'  => 'hidden',
+				'name'  => 'wpCaptchaId',
+				'id'    => 'wpCaptchaId',
+				'value' => $index ) );
 	}
 
 	function getMessage( $action ) {
 		$name = 'questycaptcha-' . $action;
-		$text = wfMsg( $name );
+		$text = wfMessage( $name )->text();
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
-		return $text == "&lt;$name&gt;" ? wfMsg( 'questycaptcha-edit' ) : $text;
+		return wfMessage( $name, $text )->isDisabled() ? wfMessage( 'questycaptcha-edit' )->text() : $text;
 	}
 
 	function showHelp() {
 		global $wgOut;
-		$wgOut->setPageTitle( wfMsg( 'captchahelp-title' ) );
+		$wgOut->setPageTitle( wfMessage( 'captchahelp-title' )->text() );
 		$wgOut->addWikiMsg( 'questycaptchahelp-text' );
+		if ( CaptchaStore::get()->cookiesNeeded() ) {
+			$wgOut->addWikiMsg( 'captchahelp-cookies-needed' );
+		}
 	}
 }

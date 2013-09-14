@@ -4,15 +4,19 @@
  * Captcha class using simple sums and the math renderer
  * Not brilliant, but enough to dissuade casual spam bots
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  * @copyright © 2006 Rob Church
  * @licence GNU General Public Licence 2.0
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
-	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
-	die( 1 );
+if ( !defined( 'MEDIAWIKI' ) ) {
+	exit;
 }
-$wgAutoloadClasses['MathCaptcha'] = dirname( __FILE__ ) . '/MathCaptcha.class.php';
 
+$dir = __DIR__;
+require_once $dir . '/ConfirmEdit.php';
+$wgCaptchaClass = 'MathCaptcha';
+
+$wgAutoloadClasses['MathCaptcha'] = $dir . '/MathCaptcha.class.php';
