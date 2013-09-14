@@ -180,8 +180,6 @@ class Pathway {
 	 * Find out if the current user has permissions to view this pathway
 	 */
 	public function isReadable() {
-		return $this->getTitleObject()->userCanRead();
-		// After MW 1.19, this form should be used, but in earlier MW it is buggy.
 		return $this->getTitleObject()->userCan('read');
 	}
 
@@ -242,8 +240,7 @@ class Pathway {
 				$pathway = Pathway::newFromTitle($row[0]);
 				if($pathway->isDeleted()) continue; //Skip deleted pathways
 				if($species && $pathway->getSpecies() != $species) continue; //Filter by organism
-				if(!$pathway->getTitleObject()->userCanRead()) continue; //delete this one post 1.19
-				//if(!$pathway->getTitleObject()->userCan('read')) continue; //Skip hidden pathways
+				if(!$pathway->getTitleObject()->userCan('read')) continue; //Skip hidden pathways
 				$allPathways[
 					$pathway->getIdentifier()] = $pathway;
 			} catch(Exception $e) {
@@ -546,9 +543,9 @@ class Pathway {
 	 */
 	public function getFileName($fileType) {
 		$repo = RepoGroup::singleton()->getLocalRepo();
-		$img = LocalFile::newFromTitle( $this->getFileTitle( $fileType ),
-			$repo );
+		$img = LocalFile::newFromTitle( $this->getFileTitle( $fileType ), $repo );
 		$path = $img->getPath();
+
 		if( $img->isLocal() && $repo->fileExists( $path ) ) {
 			return $repo->getLocalReference( $path )->getPath();
 		}
@@ -1120,19 +1117,18 @@ class Pathway {
 	 */
 	private function saveConvertedCache($fileType) {
 		# Convert gpml to fileType
-		$gpmlFile = realpath($this->getFileLocation(FILETYPE_GPML));
+		$gpmlFile = $this->getFileLocation(FILETYPE_GPML);
 		if( !file_exists( $gpmlFile ) ) {
 			throw new MWException( "File does not exist: $gpmlFile" );
 		}
+		$gpmlFile = realpath( $gpmlFile );
 		$conFile = $this->getFileLocation($fileType, false);
+		$outFile = basename( $gpmlFile, FILETYPE_GPML );
+
 		if ( $conFile === null ) {
-			$conFile = "";
+			$conFile = wfTempDir() . "/$outFile$fileType";
 		}
 		wfDebug( "Saving $gpmlFile to $fileType in $conFile\n" );
-		$dir = dirname($conFile);
-		if ( !is_dir( $dir ) && !wfMkdirParents( $dir ) ) {
-			throw new MWException( "Couldn't make directory: $dir" );
-		}
 		self::convert($gpmlFile, $conFile);
 		return $conFile;
 	}
@@ -1144,12 +1140,13 @@ class Pathway {
 	 */
 	public static function convert($gpmlFile, $outFile) {
 		global $wgMaxShellMemory;
-
-		$gpmlFile = realpath($gpmlFile);
+		$gpmlFile = realpath( $gpmlFile );
+		$baseName = basename( $outFile );
+		$final = wfTempDir() . "/$baseName";
 
 		$basePath = WPI_SCRIPT_PATH;
 		$maxMemoryM = intval($wgMaxShellMemory / 1024); //Max script memory on java program in megabytes
-		$cmd = "java -Xmx{$maxMemoryM}M -jar $basePath/bin/pathvisio_core.jar \"$gpmlFile\" \"$outFile\" 2>&1";
+		$cmd = "java -Xmx{$maxMemoryM}M -jar $basePath/bin/pathvisio_core.jar \"$gpmlFile\" \"{$final}\" 2>&1";
 		wfDebug("CONVERTER: $cmd\n");
 		$msg = wfJavaExec($cmd, $status);
 
@@ -1161,11 +1158,21 @@ class Pathway {
 			wfDebug("Unable to convert to $outFile:\n<BR>Status:$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
 			throw new Exception("Unable to convert to $outFile:\n<BR>Status:$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
 		}
+		$repo = RepoGroup::singleton()->getLocalRepo();
+		$img = new LocalFile( $final, $repo );
+		wfDebug("moving into place $baseName\n");
+		$comment = $pageText = "";
+		$status = $img->upload( $baseName, $comment, $pageText );
+		if( !$status->isOk() ) {
+			throw new MWException( "Error while saving: "  . $status->getHTML() );
+		}
+		wfDebug("moved into place $baseName\n");
 		return true;
 	}
 
 	private function saveGpmlCache() {
 		$gpml = $this->getGpml();
+		/* FIXME -- THIS writes multiple times per request */
 		if($gpml) { //Only write cache if there is GPML
 			$file = $this->getFileLocation(FILETYPE_GPML, false);
 			writeFile($file, $gpml);
