@@ -290,7 +290,7 @@ function wpiGetThumb( $img, $w, $h = false ) {
 	}
 
 	$thumb = $img->transform
-		( array( 'width' => $h, 'height' => $h ) );
+		( array( 'width' => $w, 'height' => $h ) );
 	if( is_null( $thumb ) ) {
 		throw new MWException( "Unknown failure in thumbnail" );
 	} elseif( $thumb->isError() ) {
