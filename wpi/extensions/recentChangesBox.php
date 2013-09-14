@@ -126,8 +126,7 @@ class RecentChangesBox {
 
 		$title = Title::newFromText($row->rc_title, $this->namespace);
 
-		if(!$title->userCanRead()) return ''; //Skip titles hidden for this user
-		//if(!$title->userCan('read')) return ''; //Skip titles hidden for this user
+		if(!$title->userCan('read')) return ''; //Skip titles hidden for this user
 
 		$perm = new PermissionManager($title->getArticleId());
 		if($perm->getPermissions()) {
