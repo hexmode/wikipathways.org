@@ -178,7 +178,7 @@ content requires special attention. <b>Please keep your
 
 		$current = ( $oldid == $article->mLatest );
 		$td = $wgLang->timeanddate( $article->mTimestamp, true );
-		$sk = $wgUser->getSkin();
+		$sk = RequestContext::getMain()->getSkin();
 		$lnk = $current
 			? wfMessage( 'currentrevisionlink' )->escaped()
 			: $sk->makeKnownLinkObj( $article->mTitle, wfMessage( 'currentrevisionlink' )->escaped() );

@@ -759,7 +759,7 @@ class Reward {
 	function getDisplayStars($author, $points = false) {
 		global $wgUser, $wgScriptPath;
 
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		$stars = $this->getAuthorStars($author);
 
 		$starFull = $this->SocialRewarding["reward"]["extensionPath"] . "/" . $this->SocialRewarding["reward"]["starsDir"] . "/" . $this->SocialRewarding["reward"]["starsFull"];
@@ -928,7 +928,7 @@ class Reward {
 	function getDisplaySparklines($author) {
 		global $wgUser, $wgScriptPath;
 
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		$this->loadAllSparklinesData();
 		$data = $this->sparklines[$author];
 		$minValue = $this->getSparklinesMin($data);

@@ -60,7 +60,7 @@ function createNewest($wishlist, $limit = 5, $tableAttr = '') {
 			
 		$name = $wish->getTitle()->getText();
 		$user = $wish->getRequestUser();
-		$by = $wgUser->getSkin()->userLink( $user, $user->getName());
+		$by = RequestContext::getMain()->getSkin()->userLink( $user, $user->getName());
 		$date = off($wgLang->date($wish->getRequestDate()));
 		$out .= "<tr><td>$name<td>$by<td>$date";
 		$i++;
@@ -117,7 +117,7 @@ function createTopVoted($wishlist, $limit = 5, $threshold = 1, $tableAttr = '') 
 		
 		$name = $wish->getTitle()->getText();
 		//$user = $wish->getRequestUser();
-		//$by = $wgUser->getSkin()->userLink( $user, $user->getName());
+		//$by = RequestContext::getMain()->getSkin()->userLink( $user, $user->getName());
 		
 		$out .= "<tr><td>$name<td align='center'>$votes";
 		$i++;

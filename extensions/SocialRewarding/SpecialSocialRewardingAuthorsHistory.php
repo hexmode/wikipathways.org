@@ -128,7 +128,7 @@ class SpecialSocialRewardingAuthorsHistory {
 
 		$output = $this->getPageHeader() . "<br>";
 
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 
 		// If no timestamp was set fetch Reward from cache (if enabled)
 		if (!$_GET["sr_timestamp"]) {

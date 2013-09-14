@@ -100,7 +100,7 @@ class ContributionScores extends IncludableSpecialPage
 			"<td class=\"table-orange-headercell\">" . wfMessage( 'contributionscores-changes' )->escaped() . "</td>\n" .
 			"<td class=\"table-orange-headercell\">" . wfMessage( 'contributionscores-username' )->escaped() . "</td>\n";
 
-		$skin =& $wgUser->getSkin();
+		$skin =& RequestContext::getMain()->getSkin();
 		$altrow = '';
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$output .= "</tr><tr class='{$altrow}'>\n<td class='table-orange-contentcell'>" .

@@ -799,7 +799,7 @@ class SpecialSocialRewardingInstall {
 		$output .= "</ul>";
 		$output .= "<br>";
 
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 
 		if ($error) {
 			$output .= "<font color=#FF0000><b>Installation aborted. There were errors during installation. Check error messages.<br>";

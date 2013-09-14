@@ -50,7 +50,7 @@ class ListPrivatePathways extends SpecialPage {
 		$us = "";
 		foreach($array as $uid) {
 			$u = User::newFromId($uid);
-			$us .= $wgUser->getSkin()->userLink( $uid, $u->getName() ) . "; ";
+			$us .= RequestContext::getMain()->getSkin()->userLink( $uid, $u->getName() ) . "; ";
 		}
 		return $us;
 	}

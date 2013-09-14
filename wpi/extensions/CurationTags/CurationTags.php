@@ -463,7 +463,7 @@ class CurationTagsAjax {
 			if($u) {
 				$nm = $u->getName();
 			}
-			$userText = $wgUser->getSkin()->userLink($uid, $nm);
+			$userText = RequestContext::getMain()->getSkin()->userLink($uid, $nm);
 			$elm->setAttribute('userText', $userText);
 
 			$root->appendChild($elm);

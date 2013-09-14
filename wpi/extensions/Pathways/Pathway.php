@@ -906,7 +906,7 @@ class Pathway {
 			throw new Exception("You are trying to revert to a deleted version of the pathway. Please choose another version to revert to.");
 		}
 		if($gpml) {
-			$usr = $wgUser->getSkin()->userLink($wgUser->getId(), $wgUser->getName());
+			$usr = RequestContext::getMain()->getSkin()->userLink($wgUser->getId(), $wgUser->getName());
 			$date = $wgLang->timeanddate( $rev->getTimestamp(), true );
 			$this->updatePathway($gpml, "Reverted to version '$date' by $usr");
 		} else {

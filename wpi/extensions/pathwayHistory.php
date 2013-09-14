@@ -125,10 +125,10 @@ class GpmlHistoryPager extends HistoryPager {
 
 		$dt = $wgLang->timeanddate( wfTimestamp(TS_MW, $rev->getTimestamp()), true );
 		$oldid = $firstInList ? '' : "oldid=" . $rev->getId();
-		$view = $wgUser->getSkin()->makeKnownLinkObj($this->pathway->getTitleObject(), 'view', $oldid );
+		$view = RequestContext::getMain()->getSkin()->makeKnownLinkObj($this->pathway->getTitleObject(), 'view', $oldid );
 
 		$date = $wgLang->timeanddate( $rev->getTimestamp(), true );
-		$user = $wgUser->getSkin()->userLink( $rev->getUser(), $rev->getUserText() );
+		$user = RequestContext::getMain()->getSkin()->userLink( $rev->getUser(), $rev->getUserText() );
 		$descr = $rev->getComment();
 		return array('diff'=>$diff, 'rev'=>$revert, 'view'=>$view, 'date'=>$date, 'user'=>$user, 'descr'=>$descr, 'id'=>$rev->getId());
 	}

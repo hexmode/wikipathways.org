@@ -196,7 +196,7 @@ class SpecialInterwiki extends SpecialPage {
 			$wgOut->addWikiText( wfMsg( 'interwiki_intro', '[http://www.mediawiki.org/wiki/Interwiki_table MediaWiki.org]' ) );
 
 			if ($admin) {
-				$skin = $wgUser->getSkin();
+				$skin = RequestContext::getMain()->getSkin();
 				$addtext = wfMessage( 'interwiki_addtext' )->escaped();
 				$addlink = $skin->makeLinkObj( $selfTitle, $addtext, 'action=add' );
 				$wgOut->addHTML( '<ul>' . '<li>' . $addlink . '</li>' . '</ul>' );

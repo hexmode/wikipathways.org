@@ -107,7 +107,7 @@ class Inputbox {
 	function getSearchForm() {
 		global $wgUser, $wgContLang;
 		
-		$sk=$wgUser->getSkin();
+		$sk=RequestContext::getMain()->getSkin();
 		$searchpath = $sk->escapeSearchLink();		
 		/*EDIT
 		if(!$this->buttonlabel) {
@@ -177,7 +177,7 @@ ENDFORM2;
 	function getSearchForm2() {
 		global $wgUser;
 		
-		$sk=$wgUser->getSkin();
+		$sk=RequestContext::getMain()->getSkin();
 		$searchpath = $sk->escapeSearchLink();		
 		if(!$this->buttonlabel) {
 			$this->buttonlabel = wfMessage( 'tryexact' )->escaped();

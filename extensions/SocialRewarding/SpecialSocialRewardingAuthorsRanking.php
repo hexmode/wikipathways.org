@@ -121,7 +121,7 @@ class SpecialSocialRewardingAuthorsRanking {
 
 		$output = $this->getPageHeader() . "<br>";
 
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 
 		$mReward = new ManageReward();
 		$reward = $mReward->getReward();

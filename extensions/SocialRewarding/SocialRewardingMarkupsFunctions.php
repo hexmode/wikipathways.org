@@ -311,7 +311,7 @@ function SocialRewardingRecommendMarkup($text, $arg) {
 	global $SocialRewarding;
 
 	$user = $wgUser->getName();
-	$skin = $wgUser->getSkin();
+	$skin = RequestContext::getMain()->getSkin();
 
 	$mReward = new ManageReward();
 	$reward = $mReward->getReward();

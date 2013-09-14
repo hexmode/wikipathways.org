@@ -13,7 +13,7 @@ function wfSpecialNewimages( $par, $specialPage ) {
 
 	$wpIlMatch = $wgRequest->getText( 'wpIlMatch' );
 	$dbr =& wfGetDB( DB_SLAVE );
-	$sk = $wgUser->getSkin();
+	$sk = RequestContext::getMain()->getSkin();
 	$shownav = !$specialPage->including();
 	$hidebots = $wgRequest->getBool('hidebots',1);
 

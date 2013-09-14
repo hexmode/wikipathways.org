@@ -141,7 +141,7 @@ class SpecialSocialRewardingRecommenderSystem {
 
 		$output = $this->getPageHeader() . "<br>";
 
-		$skin = $wgUser->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 
 		// Time restriction
 		if ($_GET["sr_recommendTime"]) {
