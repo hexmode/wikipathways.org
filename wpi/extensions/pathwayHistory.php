@@ -119,7 +119,7 @@ class GpmlHistoryPager extends HistoryPager {
 		$diff = self::diffButtons( $rev, $firstInList );
 
 		$revert = "";
-		if($wgUser->getID() != 0 && $wgTitle && $wgTitle->userCanEdit()) {
+		if($wgUser->getID() != 0 && $wgTitle && $wgTitle->userCan('edit') ) {
 			$revert = $cur ? "" : "(<A href=$revUrl>revert</A>), ";
 		}
 
