@@ -18,7 +18,7 @@ class LegacySpecialPage extends SpecialPage {
 			throw new MWException( "legacy-no-destination" );
 		}
 
-		if( isset( $wgRequest->data['title'] ) ) unset( $wgRequest->data['title'] );
+		$wgRequest->unsetVal( 'title' );
 
 		$query = array();
 		foreach( $wgRequest->getValues() as $k => $v) {
