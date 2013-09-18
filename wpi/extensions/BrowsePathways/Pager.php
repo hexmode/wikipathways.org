@@ -33,7 +33,7 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 			$c = file_get_contents( $repo->getLocalReference( $path )->getPath() );
 			return "data:" . $img->getMimeType() . ";base64," . base64_encode( $c );
 		}
-		return $thumb->getThumbUrl( $suffix );
+		return $img->getThumbUrl( $suffix );
 	}
 
 	public function hasRecentEdit( $title ) {
