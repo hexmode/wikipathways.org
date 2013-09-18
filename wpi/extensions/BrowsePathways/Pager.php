@@ -25,6 +25,7 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 	public function imgToData( $img ) {
 		$data = "";
 		/* FIXME: magic nums for file size */
+		$suffix = $img->thumbName( array( "width" => 180 ) );
 		$path = $img->getPath( );
 
 		$repo = RepoGroup::singleton()->getLocalRepo();
