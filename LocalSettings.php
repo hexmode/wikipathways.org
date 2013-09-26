@@ -443,3 +443,6 @@ $wgImgAuthPublicTest = false;
 
 $wgScriptExtension = ".php";
 $wpiXrefPanelDisableAttributes = true;
+
+require_once( "$IP/skins/bootstrap/bootstrap.php");
+$wgDefaultSkin = 'bootstrap';
