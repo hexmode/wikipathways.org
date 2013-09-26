@@ -177,7 +177,7 @@ content requires special attention. <b>Please keep your
 		$revision = Revision::newFromId( $oldid );
 
 		$current = ( $oldid == $article->mLatest );
-		$td = $wgLang->timeanddate( $article->mTimestamp, true );
+		$td = $wgLang->timeanddate( $article->getTimestamp(), true );
 		$sk = RequestContext::getMain()->getSkin();
 		$lnk = $current
 			? wfMessage( 'currentrevisionlink' )->escaped()
@@ -194,6 +194,7 @@ content requires special attention. <b>Please keep your
 			? $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMessage( 'diff' )->escaped(),
 				"old={$oldid}&new={$prev}&pwTitle={$article->mTitle}" )
 			: wfMessage( 'diff' )->escaped();
+		$next = $article->mTitle->getNextRevisionID( $oldid ) ;
 		$nextlink = $current
 			? wfMessage( 'nextrevision' )->escaped()
 			: $sk->makeKnownLinkObj( $article->mTitle, wfMessage( 'nextrevision' )->escaped(), 'direction=next&oldid='.$oldid );
