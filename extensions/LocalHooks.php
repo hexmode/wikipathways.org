@@ -295,16 +295,18 @@ content requires special attention. <b>Please keep your
 				$text = $page->getContent();
 			} catch(Exception $e) { //Return error message on any exception
 				$text = <<<ERROR
-					= Error rendering pathway page =
-					This revision of the pathway probably contains invalid GPML code. If this happens to the most recent revision, try reverting
-					the pathway using the pathway history displayed below or contact the site administrators (see [[WikiPathways:About]]) to resolve this problem.
-					=== Pathway history ===
-					<pathwayHistory></pathwayHistory>
-				=== Error details ===
-						<pre>
-				{$e}
-				</pre>
-				ERROR;
+= Error rendering pathway page =
+This revision of the pathway probably contains invalid GPML code. If this happens to the most recent revision, try reverting
+the pathway using the pathway history displayed below or contact the site administrators (see [[WikiPathways:About]]) to resolve this problem.
+
+=== Pathway history ===
+<pathwayHistory></pathwayHistory>
+
+=== Error details ===
+<pre>
+{$e}
+</pre>
+ERROR;
 
 			}
 		}
