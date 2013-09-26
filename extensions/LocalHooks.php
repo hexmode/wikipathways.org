@@ -276,6 +276,56 @@ content requires special attention. <b>Please keep your
 		return true;
 	}
 
+	static function renderPathwayPage(&$parser, &$text, &$strip_state) {
+		global $wgUser, $wgRequest;
+
+		$title = $parser->getTitle();
+		$oldId = $wgRequest->getVal( "oldid" );
+		if( $title && $title->getNamespace() == NS_PATHWAY &&
+			preg_match("/^\s*\<\?xml/", $text)) {
+			$parser->disableCache();
+
+			try {
+				$pathway = Pathway::newFromTitle($title);
+				if($oldId) {
+					$pathway->setActiveRevision($oldId);
+				}
+				$pathway->updateCache(FILETYPE_IMG); //In case the image page is removed
+				$page = new PathwayPage($pathway);
+				$text = $page->getContent();
+			} catch(Exception $e) { //Return error message on any exception
+				$text = <<<ERROR
+					= Error rendering pathway page =
+					This revision of the pathway probably contains invalid GPML code. If this happens to the most recent revision, try reverting
+					the pathway using the pathway history displayed below or contact the site administrators (see [[WikiPathways:About]]) to resolve this problem.
+					=== Pathway history ===
+					<pathwayHistory></pathwayHistory>
+				=== Error details ===
+						<pre>
+				{$e}
+				</pre>
+				ERROR;
+
+			}
+		}
+		return true;
+	}
+
+	function addPreloaderScript($out) {
+		global $wgTitle, $wgUser, $wgScriptPath;
+
+		if($wgTitle->getNamespace() == NS_PATHWAY && $wgUser->isLoggedIn() &&
+			strstr( $out->getHTML(), "pwImage" ) !== false ) {
+			$base = $wgScriptPath . "/wpi/applet/";
+			$class = "org.wikipathways.applet.Preloader.class";
+
+			$out->addHTML("<applet code='$class' codebase='$base'
+			width='1' height='1' name='preloader'></applet>");
+		}
+		return true;
+	}
+
+
 }
 
 $wgHooks['SpecialListusersFormatRow'][] = 'LocalHooks::addSnoopLink';
@@ -286,6 +336,8 @@ $wgHooks['SpecialPage_initList'][]      = 'LocalHooks::blockPage';
 $wgHooks['ImgAuthBeforeStream'][]       = 'LocalHooks::checkPathwayImgAuth';
 $wgHooks['ArticleSaveComplete'][]       = 'LocalHooks::updateTags';
 $wgHooks['DisplayOldSubtitle'][]        = 'LocalHooks::subtitleOverride';
+$wgHooks['ParserBeforeStrip'][]         = 'LocalHooks::renderPathwayPage';
 $wgHooks['UserLoginComplete'][]         = 'LocalHooks::loginMessage';
+$wgHooks['BeforePageDisplay'][]         = 'LocalHooks::addPreloaderScript';
 $wgHooks['BeforePageDisplay'][]         = 'LocalHooks::stopDisplay';
 $wgHooks['LinkText'][]                  = 'LocalHooks::linkText';

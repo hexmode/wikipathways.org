@@ -100,3 +100,5 @@ function wfPathwayThumb_Magic( &$magicWords, $langCode ) {
 	return true;
 }
 
+$wgAutoloadClasses['PathwayPage'] = "$IP/wpi/extensions/Pathways/PathwayPage.php";
+$wgExtensionMessagesFiles['PathwayPage'] = "$IP/wpi/extensions/Pathways/PathwayPage.i18n.php";
