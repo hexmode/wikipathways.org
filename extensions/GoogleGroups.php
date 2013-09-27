@@ -3,18 +3,17 @@
 $wgExtensionFunctions[] = 'googleGroupSetup';
 
 function googleGroupSetup() {
-    global $wgParser;
-    $wgParser->setHook( 'GoogleGroupSubscribe', 'googleGroupRender' );
+	global $wgParser;
+	$wgParser->setHook( 'GoogleGroupSubscribe', 'googleGroupRender' );
 }
 
 function googleGroupRender( $input, $args, $parser ) {
 	$group = htmlspecialchars( $input );
-        if($args['visitlink'] != 'false') {
+	if(!isset($args['visitlink']) || $args['visitlink'] != 'false') {
 		$visitLink = "<tr><td align=right><a href=\"http://groups.google.com/group/{$group}\">Visit this mailing list</a></td></tr>";
 	}
-	$msg = $args['title'];
-	if(!$msg) $msg = "Subscribe to {$group}";
-        
+	$msg = isset($args['title']) ? $args['title'] : "Subscribe to {$group}";
+
 	$out = <<<HTML
 <table border=0 style="background-color: #fff; padding: 5px;" cellspacing=0>
 <tr><td style="padding-left: 5px">
@@ -30,7 +29,7 @@ ${visitLink}
 </table>
 
 HTML;
-        return $out;
+		return $out;
 }
 
 ?>
