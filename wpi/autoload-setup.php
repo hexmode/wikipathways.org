@@ -1,14 +1,22 @@
 <?php
 
-$wgAutoloadClasses['PathwayPage'] = "$IP/wpi/extensions/Pathways/PathwayPage.php";
+$wgAutoloadClasses['FeaturedPathway']     = "$IP/wpi/extensions/PathwayOfTheDay/FeaturedPathway.php";
+$wgAutoloadClasses['GpmlHistoryPager']    = "$IP/wpi/extensions/pathwayHistory.php";
+$wgAutoloadClasses['Interaction']         = "$IP/wpi/extensions/Pathways/PathwayData.php";
+$wgAutoloadClasses['MetaDataCache']       = "$IP/wpi/extensions/Pathways/MetaDataCache.php";
+$wgAutoloadClasses['MimeTypes']           = "$IP/wpi/MimeTypes.php";
+$wgAutoloadClasses['MwUtils']             = "$IP/wpi/MwUtils.php";
+$wgAutoloadClasses['Organism']            = "$IP/wpi/extensions/Pathways/Organism.php";
+$wgAutoloadClasses['Pathway']             = "$IP/wpi/extensions/Pathways/Pathway.php";
 $wgAutoloadClasses['PathwayBibliography'] = "$IP/wpi/extensions/pathwayBibliography.php";
-$wgAutoloadClasses['GpmlHistoryPager'] = "$IP/wpi/extensions/pathwayHistory.php";
-$wgAutoloadClasses['PathwayViewer'] = "$IP/wpi/extensions/PathwayViewer/PathwayViewer.php";
-$wgAutoloadClasses['PathwayThumb'] = "$IP/wpi/extensions/pathwayThumb.php";
-$wgAutoloadClasses['TaggedPathway'] = "$IP/wpi/extensions/PathwayOfTheDay/TaggedPathway.php";
-$wgAutoloadClasses['FeaturedPathway'] = "$IP/wpi/extensions/PathwayOfTheDay/FeaturedPathway.php";
-$wgAutoloadClasses['PathwayOfTheDay'] = "$IP/wpi/extensions/PathwayOfTheDay/PathwayOfTheDay_class.php";
-$wgAutoloadClasses['PathwayInfo'] = "$IP/wpi/extensions/pathwayInfo.php";
+$wgAutoloadClasses['PathwayData']         = "$IP/wpi/extensions/Pathways/PathwayData.php";
+$wgAutoloadClasses['PathwayInfo']         = "$IP/wpi/extensions/pathwayInfo.php";
+$wgAutoloadClasses['PathwayOfTheDay']     = "$IP/wpi/extensions/PathwayOfTheDay/PathwayOfTheDay_class.php";
+$wgAutoloadClasses['PathwayPage']         = "$IP/wpi/extensions/Pathways/PathwayPage.php";
+$wgAutoloadClasses['PathwayThumb']        = "$IP/wpi/extensions/pathwayThumb.php";
+$wgAutoloadClasses['PathwayViewer']       = "$IP/wpi/extensions/PathwayViewer/PathwayViewer.php";
+$wgAutoloadClasses['TaggedPathway']       = "$IP/wpi/extensions/PathwayOfTheDay/TaggedPathway.php";
+$wgAutoloadClasses['Xref']                = "$IP/wpi/extensions/Pathways/PathwayData.php";
 
 $wgExtensionMessagesFiles['PathwayPage'] = "$IP/wpi/extensions/Pathways/PathwayPage.i18n.php";
 
@@ -22,7 +30,6 @@ $wfPathwayViewerPath = WPI_URL . "/extensions/PathwayViewer";
 require_once( "$IP/wpi/wpi.php" );
 require_once( "$IP/wpi/extensions/siteStats.php" );
 require_once( "$IP/wpi/extensions/pathwayInfo.php" );
-require_once( "$IP/wpi/extensions/imageSize.php" );
 require_once( "$IP/wpi/extensions/magicWords.php" );
 require_once( "$IP/wpi/extensions/PopularPathwaysPage2/PopularPathwaysPage.php" );
 require_once( "$IP/wpi/extensions/MostEditedPathwaysPage/MostEditedPathwaysPage.php" );

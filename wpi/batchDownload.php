@@ -1,8 +1,6 @@
 <?php
 require_once('includes/zip.lib.php');
 require_once('wpi.php');
-require_once("$IP/wpi/extensions/Pathways/Pathway.php");
-require_once("$IP/wpi/MimeTypes.php");
 
 //Register the supported file types
 Pathway::registerFileType(FILETYPE_PDF);

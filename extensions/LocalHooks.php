@@ -335,18 +335,20 @@ ERROR;
 		$magicWords['pwImage'] = array( 0, 'pwImage' );
 		$magicWords['pathwayOfTheDay'] = array( 0, 'pathwayOfTheDay' );
 		$magicWords['pathwayInfo'] = array( 0, 'pathwayInfo' );
+		$magicWords['maxImageSize'] = array( 0, 'maxImageSize' );
 		return true;
 	}
 
 	static function extensionFunctions() {
 		global $wgParser;
-		$wgParser->setHook( "pathwayBibliography", "PathwayBibliography::output" );
-		$wgParser->setHook( "pathwayHistory", "GpmlHistoryPager::history" );
-		$wgParser->setHook( "batchDownload", "BatchDownloader::createDownloadLinks" );
-		$wgParser->setFunctionHook( "PathwayViewer", "PathwayViewer::display" );
-		$wgParser->setFunctionHook( "pwImage", "PathwayThumb::render" );
+		$wgParser->setHook( "pathwayBibliography",     "PathwayBibliography::output" );
+		$wgParser->setHook( "pathwayHistory",          "GpmlHistoryPager::history" );
+		$wgParser->setHook( "batchDownload",           "BatchDownloader::createDownloadLinks" );
+		$wgParser->setFunctionHook( "PathwayViewer",   "PathwayViewer::display" );
+		$wgParser->setFunctionHook( "pwImage",         "PathwayThumb::render" );
+		$wgParser->setFunctionHook( 'maxImageSize',    'LocalHooks::getSize' );
 		$wgParser->setFunctionHook( 'pathwayOfTheDay', 'LocalHooks::getPathwayOfTheDay' );
-		$wgParser->setFunctionHook( 'pathwayInfo', 'LocalHooks::getPathwayInfoText' );
+		$wgParser->setFunctionHook( 'pathwayInfo',     'LocalHooks::getPathwayInfoText' );
 	}
 
 	static function getPathwayInfoText( &$parser, $pathway, $type ) {
@@ -445,6 +447,18 @@ ERROR;
 	static function checkSoleAuthor($title, $user, $action, $result) {
 		$result = null;
 		return true;
+	}
+
+	static function getSize( &$parser, $image, $maxWidth ) {
+		try {
+			$img = new LocalFile(Title::newFromText($image), RepoGroup::singleton()->getLocalRepo());
+			$img->loadFromFile();
+			$w = $img->getWidth();
+			if($w > $maxWidth) $w = $maxWidth;
+			return $w . 'px';
+		} catch (Exception $e) {
+			return "Error: $e";
+		}
 	}
 }
 

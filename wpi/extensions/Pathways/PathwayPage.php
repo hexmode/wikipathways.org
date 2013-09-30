@@ -136,6 +136,13 @@ return $text;
 		return WPI_SCRIPT_URL . "?action=downloadFile&type=$type&pwTitle={$pathway->getTitleObject()->getFullText()}{$oldid}";
 	}
 
+	static function getImageURL($pathway, $type) {
+		if($pathway->getActiveRevision()) {
+			$oldid = "&oldid={$pathway->getActiveRevision()}";
+		}
+		return WPI_SCRIPT_URL . "?action=display&type=$type&pwTitle={$pathway->getTitleObject()->getFullText()}{$oldid}";
+	}
+
 	static function editDropDown($pathway) {
 		global $wgOut;
 

@@ -10,14 +10,6 @@ try {
 		implode( PATH_SEPARATOR, array_map( 'realpath', array( $wpiDir, "$wpiDir/includes",
 					"$wpiDir/../includes", "$dir/../" ) ) ) );
 	putenv( "MW_INSTALL_PATH=$IP" );
-	$wgAutoloadClasses['Interaction']   = "$IP/wpi/extensions/Pathways/PathwayData.php";
-	$wgAutoloadClasses['MetaDataCache'] = "$IP/wpi/extensions/Pathways/MetaDataCache.php";
-	$wgAutoloadClasses['MimeTypes']     = "$IP/wpi/MimeTypes.php";
-	$wgAutoloadClasses['MwUtils']       = "$IP/wpi/MwUtils.php";
-	$wgAutoloadClasses['Organism']      = "$IP/wpi/extensions/Pathways/Organism.php";
-	$wgAutoloadClasses['Pathway']       = "$IP/wpi/extensions/Pathways/Pathway.php";
-	$wgAutoloadClasses['PathwayData']   = "$IP/wpi/extensions/Pathways/PathwayData.php";
-	$wgAutoloadClasses['Xref']          = "$IP/wpi/extensions/Pathways/PathwayData.php";
 	require_once( "WebStart.php" );
 	require_once( "Wiki.php" );
 	require_once( 'globals.php' );
@@ -32,7 +24,7 @@ try {
 			throw new Exception("No pwTitle given!");
 		}
 		$pwTitle = $_GET['pwTitle'];
-		if( !isset( $_GET['oldId'] ) && $action !== "downloadFile" && $action !== "delete" ) {
+		if( !isset( $_GET['oldId'] ) && $action !== "downloadFile" && $action !== "delete" && $action !== "display" ) {
 			throw new Exception("No oldId given!");
 		}
 		$oldId = $_GET['oldid'];
@@ -50,6 +42,12 @@ try {
 				}
 				downloadFile($_GET['type'], $pwTitle);
 				break;
+			case 'display':
+				if( !isset( $_GET['type'] ) ) {
+					throw new Exception("No type given!");
+				}
+				displayFile($_GET['type'], $pwTitle);
+				break;
 			case 'revert':
 				revert($pwTitle, $oldId);
 				break;
@@ -63,7 +61,9 @@ try {
 } catch(Exception $e) {
 	//Redirect to special page that reports the error
 	ob_clean();
-	header("Location: " . SITE_URL . "/index.php?title=Special:ShowError&error=" . urlencode($e->getMessage()));
+	echo "<pre>";
+	echo $e->getMessage();
+	#header("Location: " . SITE_URL . "/index.php?title=Special:ShowError&error=" . urlencode($e->getMessage()));
 	exit;
 }
 
@@ -153,7 +153,7 @@ function createJnlpArg($flag, $value) {
 	return "<argument>" . htmlspecialchars($flag) . "</argument>\n<argument>" . htmlspecialchars($value) . "</argument>\n";
 }
 
-function downloadFile($fileType, $pwTitle) {
+function getFilename( $fileType, $pwTitle ) {
 	$pathway = Pathway::newFromTitle($pwTitle);
 	if(!$pathway->isReadable()) {
 		throw new Exception("You don't have permissions to view this pathway");
@@ -176,9 +176,24 @@ function downloadFile($fileType, $pwTitle) {
 	if(!$mime) $mime = "text/plain";
 
 	ob_clean();
+	return array($file, $fn, $mime);
+}
+
+function downloadFile($fileType, $pwTitle) {
+	list($file, $fn, $mime) = getFilename( $fileType, $pwTitle );
 	header("Content-type: $mime");
 	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 	header("Content-Disposition: attachment; filename=\"$fn\"");
+	//header("Content-Length: " . filesize($file));
+	set_time_limit(0);
+	@readfile($file);
+	exit();
+}
+
+function displayFile($fileType, $pwTitle) {
+	list($file, $fn, $mime) = getFilename( $fileType, $pwTitle );
+	header("Content-type: $mime");
+	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 	//header("Content-Length: " . filesize($file));
 	set_time_limit(0);
 	@readfile($file);
