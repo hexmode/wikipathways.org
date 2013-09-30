@@ -1,18 +1,4 @@
 <?php
-require_once( 'globals.php' );
-
-$wgAutoloadClasses['Interaction']   = "$IP/wpi/extensions/Pathways/PathwayData.php";
-$wgAutoloadClasses['MetaDataCache'] = "$IP/wpi/extensions/Pathways/MetaDataCache.php";
-$wgAutoloadClasses['MimeTypes']     = "$IP/wpi/MimeTypes.php";
-$wgAutoloadClasses['MwUtils']       = "$IP/wpi/MwUtils.php";
-$wgAutoloadClasses['Organism']      = "$IP/wpi/extensions/Pathways/Organism.php";
-$wgAutoloadClasses['Pathway']       = "$IP/wpi/extensions/Pathways/Pathway.php";
-$wgAutoloadClasses['PathwayData']   = "$IP/wpi/extensions/Pathways/PathwayData.php";
-$wgAutoloadClasses['Xref']          = "$IP/wpi/extensions/Pathways/PathwayData.php";
-
-//Register the default organisms
-Organism::registerDefaultOrganisms();
-
 
 try {
 	//Initialize MediaWiki
@@ -24,8 +10,17 @@ try {
 		implode( PATH_SEPARATOR, array_map( 'realpath', array( $wpiDir, "$wpiDir/includes",
 					"$wpiDir/../includes", "$dir/../" ) ) ) );
 	putenv( "MW_INSTALL_PATH=$IP" );
+	$wgAutoloadClasses['Interaction']   = "$IP/wpi/extensions/Pathways/PathwayData.php";
+	$wgAutoloadClasses['MetaDataCache'] = "$IP/wpi/extensions/Pathways/MetaDataCache.php";
+	$wgAutoloadClasses['MimeTypes']     = "$IP/wpi/MimeTypes.php";
+	$wgAutoloadClasses['MwUtils']       = "$IP/wpi/MwUtils.php";
+	$wgAutoloadClasses['Organism']      = "$IP/wpi/extensions/Pathways/Organism.php";
+	$wgAutoloadClasses['Pathway']       = "$IP/wpi/extensions/Pathways/Pathway.php";
+	$wgAutoloadClasses['PathwayData']   = "$IP/wpi/extensions/Pathways/PathwayData.php";
+	$wgAutoloadClasses['Xref']          = "$IP/wpi/extensions/Pathways/PathwayData.php";
 	require_once( "WebStart.php" );
 	require_once( "Wiki.php" );
+	require_once( 'globals.php' );
 
 	//Parse HTTP request (only if script is directly called!)
 	if(realpath($_SERVER['SCRIPT_FILENAME']) == realpath(__FILE__)) {

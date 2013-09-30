@@ -1,52 +1,6 @@
 <?php
-require_once("Article.php");
-require_once("ImagePage.php");
-require_once("wpi/DataSources.php");
 
-/*
-  Generates info text for pathway page
-  - datanode
-  > generate table of datanodes
-*/
-
-#### DEFINE EXTENSION
-# Define a setup function
-$wgExtensionFunctions[] = 'wfPathwayInfo';
-# Add a hook to initialise the magic word
-$wgHooks['LanguageGetMagic'][]  = 'wfPathwayInfo_Magic';
-
-function wfPathwayInfo() {
-	global $wgParser;
-	$wgParser->setFunctionHook( 'pathwayInfo', 'getPathwayInfoText' );
-}
-
-function getPathwayInfoText( &$parser, $pathway, $type ) {
-	global $wgRequest;
-	$parser->disableCache();
-	try {
-		$pathway = Pathway::newFromTitle($pathway);
-		$oldid = $wgRequest->getval('oldid');
-		if($oldid) {
-			$pathway->setActiveRevision($oldid);
-		}
-		$info = new PathwayInfo($parser, $pathway);
-		if(method_exists($info, $type)) {
-			return $info->$type();
-		} else {
-			throw new Exception("method PathwayInfo->$type doesn't exist");
-		}
-	} catch(Exception $e) {
-		return "Error: $e";
-	}
-}
-
-function wfPathwayInfo_Magic( &$magicWords, $langCode ) {
-	$magicWords['pathwayInfo'] = array( 0, 'pathwayInfo' );
-	return true;
-}
-
-require_once("Pathways/Pathway.php");
-/* Need autoloader here */
+$wgAutoloadClasses['PathwayData']   = "$IP/wpi/extensions/Pathways/PathwayData.php";
 class PathwayInfo extends PathwayData {
 	private $parser;
 

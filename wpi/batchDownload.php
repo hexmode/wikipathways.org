@@ -1,20 +1,14 @@
 <?php
 require_once('includes/zip.lib.php');
 require_once('wpi.php');
-
-//As mediawiki extension
-$wgExtensionFunctions[] = "wfBatchDownload";
+require_once("$IP/wpi/extensions/Pathways/Pathway.php");
+require_once("$IP/wpi/MimeTypes.php");
 
 //Register the supported file types
 Pathway::registerFileType(FILETYPE_PDF);
 Pathway::registerFileType(FILETYPE_PWF);
 Pathway::registerFileType(FILETYPE_TXT);
 //Pathway::registerFileType(FILETYPE_BIOPAX);
-
-function wfBatchDownload() {
-	global $wgParser;
-	$wgParser->setHook( "batchDownload", "BatchDownloader::createDownloadLinks" );
-}
 
 //To be called directly
 if(realpath($_SERVER['SCRIPT_FILENAME']) == realpath(__FILE__)) {

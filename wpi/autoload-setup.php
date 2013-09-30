@@ -5,6 +5,10 @@ $wgAutoloadClasses['PathwayBibliography'] = "$IP/wpi/extensions/pathwayBibliogra
 $wgAutoloadClasses['GpmlHistoryPager'] = "$IP/wpi/extensions/pathwayHistory.php";
 $wgAutoloadClasses['PathwayViewer'] = "$IP/wpi/extensions/PathwayViewer/PathwayViewer.php";
 $wgAutoloadClasses['PathwayThumb'] = "$IP/wpi/extensions/pathwayThumb.php";
+$wgAutoloadClasses['TaggedPathway'] = "$IP/wpi/extensions/PathwayOfTheDay/TaggedPathway.php";
+$wgAutoloadClasses['FeaturedPathway'] = "$IP/wpi/extensions/PathwayOfTheDay/FeaturedPathway.php";
+$wgAutoloadClasses['PathwayOfTheDay'] = "$IP/wpi/extensions/PathwayOfTheDay/PathwayOfTheDay_class.php";
+$wgAutoloadClasses['PathwayInfo'] = "$IP/wpi/extensions/pathwayInfo.php";
 
 $wgExtensionMessagesFiles['PathwayPage'] = "$IP/wpi/extensions/Pathways/PathwayPage.i18n.php";
 
@@ -14,10 +18,8 @@ $wgHooks['LanguageGetMagic'][]  = 'LocalHooks::getMagic';
 
 $wfPathwayViewerPath = WPI_URL . "/extensions/PathwayViewer";
 
+/* Need autoloader here */
 require_once( "$IP/wpi/wpi.php" );
-require_once( "$IP/wpi/extensions/Pathways/PathwayData.php" );
-require_once( "$IP/wpi/extensions/Pathways/MetaDataCache.php" );
-require_once( "$IP/wpi/extensions/PathwayOfTheDay/PathwayOfTheDay.php" );
 require_once( "$IP/wpi/extensions/siteStats.php" );
 require_once( "$IP/wpi/extensions/pathwayInfo.php" );
 require_once( "$IP/wpi/extensions/imageSize.php" );
