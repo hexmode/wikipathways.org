@@ -86,5 +86,3 @@ class Organism {
 		self::register('Zea mays', 'Zm');
 	}
 }
-//Register the default organisms
-Organism::registerDefaultOrganisms();

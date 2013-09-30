@@ -1,8 +1,5 @@
 <?php
 
-define('COMMENT_WP_CATEGORY', 'WikiPathways-category');
-define('COMMENT_WP_DESCRIPTION', 'WikiPathways-description');
-
 /**
  * Object that holds the actual data from a pathway (as stored in GPML)
  */

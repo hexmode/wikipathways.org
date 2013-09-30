@@ -21,7 +21,7 @@ class MwUtils {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Get all authors for a page
 	 * @param $pageId The article id
@@ -39,7 +39,7 @@ class MwUtils {
 		$dbr->freeResult($res);
 		return $users;
 	}
-	
+
 	/**
 	 * Get the timestamp of the latest edit
 	 */
@@ -47,7 +47,7 @@ class MwUtils {
 		$revision = Revision::newFromId(self::getLatestRevision($namespace));
 		return $revision->getTimestamp();
 	}
-	
+
 	/**
 	 * Get the latest revision for all pages.
 	 * @param $namespace Only include pages for the given namespace
@@ -65,4 +65,3 @@ class MwUtils {
 		return $rev;
 	}
 }
-?>

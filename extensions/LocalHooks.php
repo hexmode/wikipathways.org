@@ -327,7 +327,59 @@ ERROR;
 		return true;
 	}
 
+	static function getMagic( &$magicWords, $langCode ) {
+		$magicWords['PathwayViewer'] = array( 0, 'PathwayViewer' );
+		$magicWords['pwImage'] = array( 0, 'pwImage' );
+		return true;
+	}
 
+	static function extensionFunctions() {
+		global $wgParser;
+		$wgParser->setHook( "pathwayBibliography", "PathwayBibliography::output" );
+		$wgParser->setHook( "pathwayHistory", "GpmlHistoryPager::history" );
+		$wgParser->setFunctionHook( "PathwayViewer", "PathwayViewer::display" );
+		$wgParser->setFunctionHook( "pwImage", "PathwayThumb::render" );
+	}
+
+	/**
+	 * Special user permissions once a pathway is deleted.
+	 * TODO: Disable this hook for running script to transfer to stable ids
+	 */
+	static function checkUserCan($title, $user, $action, $result) {
+		if( $title->getNamespace() == NS_PATHWAY ) {
+			if($action == 'edit') {
+				$pathway = Pathway::newFromTitle($title);
+				if($pathway->isDeleted()) {
+					if(MwUtils::isOnlyAuthor($user, $title->getArticleId())) {
+						//Users that are sole author of a pathway can always revert deletion
+						$result = true;
+						return false;
+					} else {
+						//Only users with 'delete' permission can revert deletion
+						//So disable edit for all other users
+						$result = $title->getUserPermissionsErrors('delete', $user) == array();
+						return false;
+					}
+				}
+			} else if ( $action == 'delete' ) {
+				//Users are allowed to delete their own pathway
+				if(MwUtils::isOnlyAuthor($user, $title->getArticleId()) && $title->userCan('edit')) {
+					$result = true;
+					return false;
+				}
+			}
+		}
+		$result = null;
+		return true;
+	}
+
+	/*
+	 * Special delete permissions for pathways if user is sole author
+	 */
+	static function checkSoleAuthor($title, $user, $action, $result) {
+		$result = null;
+		return true;
+	}
 }
 
 $wgHooks['SpecialListusersFormatRow'][] = 'LocalHooks::addSnoopLink';
@@ -343,3 +395,5 @@ $wgHooks['UserLoginComplete'][]         = 'LocalHooks::loginMessage';
 $wgHooks['BeforePageDisplay'][]         = 'LocalHooks::addPreloaderScript';
 $wgHooks['BeforePageDisplay'][]         = 'LocalHooks::stopDisplay';
 $wgHooks['LinkText'][]                  = 'LocalHooks::linkText';
+$wgHooks['userCan'][]                   = 'LocalHooks::checkUserCan';
+

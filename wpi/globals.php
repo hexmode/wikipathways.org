@@ -43,4 +43,5 @@ define("JS_SRC_PROTOTYPE", $wgScriptPath . "/wpi/js/prototype.js");
 //Users
 define("USER_MAINT_BOT", "MaintBot"); //User account for maintenance scripts
 
-?>
+define('COMMENT_WP_CATEGORY', 'WikiPathways-category');
+define('COMMENT_WP_DESCRIPTION', 'WikiPathways-description');
