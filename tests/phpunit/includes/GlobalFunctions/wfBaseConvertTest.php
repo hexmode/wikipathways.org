@@ -1,6 +1,6 @@
 <?php
 /**
- * @covers ::wfBaseConvert
+ * Tests for wfBaseConvert()
  */
 class WfBaseConvertTest extends MediaWikiTestCase {
 	public static function provideSingleDigitConversions() {
@@ -152,7 +152,6 @@ class WfBaseConvertTest extends MediaWikiTestCase {
 
 			$x[] = array( $base, $str );
 		}
-
 		return $x;
 	}
 

@@ -5,11 +5,7 @@
  * @group DatabaseBase
  */
 class DatabaseTest extends MediaWikiTestCase {
-	/**
-	 * @var DatabaseBase
-	 */
-	var $db;
-	var $functionTest = false;
+	var $db, $functionTest = false;
 
 	protected function setUp() {
 		parent::setUp();
@@ -23,10 +19,8 @@ class DatabaseTest extends MediaWikiTestCase {
 			$this->functionTest = false;
 		}
 	}
-	/**
-	 * @covers DatabaseBase::dropTable
-	 */
-	public function testAddQuotesNull() {
+
+	function testAddQuotesNull() {
 		$check = "NULL";
 		if ( $this->db->getType() === 'sqlite' || $this->db->getType() === 'oracle' ) {
 			$check = "''";
@@ -34,7 +28,7 @@ class DatabaseTest extends MediaWikiTestCase {
 		$this->assertEquals( $check, $this->db->addQuotes( null ) );
 	}
 
-	public function testAddQuotesInt() {
+	function testAddQuotesInt() {
 		# returning just "1234" should be ok too, though...
 		# maybe
 		$this->assertEquals(
@@ -42,20 +36,20 @@ class DatabaseTest extends MediaWikiTestCase {
 			$this->db->addQuotes( 1234 ) );
 	}
 
-	public function testAddQuotesFloat() {
+	function testAddQuotesFloat() {
 		# returning just "1234.5678" would be ok too, though
 		$this->assertEquals(
 			"'1234.5678'",
 			$this->db->addQuotes( 1234.5678 ) );
 	}
 
-	public function testAddQuotesString() {
+	function testAddQuotesString() {
 		$this->assertEquals(
 			"'string'",
 			$this->db->addQuotes( 'string' ) );
 	}
 
-	public function testAddQuotesStringQuote() {
+	function testAddQuotesStringQuote() {
 		$check = "'string''s cause trouble'";
 		if ( $this->db->getType() === 'mysql' ) {
 			$check = "'string\'s cause trouble'";
@@ -90,46 +84,36 @@ class DatabaseTest extends MediaWikiTestCase {
 			$quote = '';
 		} elseif ( $this->db->getType() === 'mysql' ) {
 			$quote = '`';
-		} elseif ( $this->db->getType() === 'oracle' ) {
-			$quote = '/*Q*/';
 		} else {
 			$quote = '"';
 		}
 
 		if ( $database !== null ) {
-			if ( $this->db->getType() === 'oracle' ) {
-				$database = $quote . $database . '.';
-			} else {
-				$database = $quote . $database . $quote . '.';
-			}
+			$database = $quote . $database . $quote . '.';
 		}
 
 		if ( $prefix === null ) {
 			$prefix = $this->dbPrefix();
 		}
 
-		if ( $this->db->getType() === 'oracle' ) {
-			return strtoupper($database . $quote . $prefix . $table);
-		} else {
-			return $database . $quote . $prefix . $table . $quote;
-		}
+		return $database . $quote . $prefix . $table . $quote;
 	}
 
-	public function testTableNameLocal() {
+	function testTableNameLocal() {
 		$this->assertEquals(
 			$this->prefixAndQuote( 'tablename' ),
 			$this->db->tableName( 'tablename' )
 		);
 	}
 
-	public function testTableNameRawLocal() {
+	function testTableNameRawLocal() {
 		$this->assertEquals(
 			$this->prefixAndQuote( 'tablename', null, null, 'raw' ),
 			$this->db->tableName( 'tablename', 'raw' )
 		);
 	}
 
-	public function testTableNameShared() {
+	function testTableNameShared() {
 		$this->assertEquals(
 			$this->prefixAndQuote( 'tablename', 'sharedatabase', 'sh_' ),
 			$this->getSharedTableName( 'tablename', 'sharedatabase', 'sh_' )
@@ -141,7 +125,7 @@ class DatabaseTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testTableNameRawShared() {
+	function testTableNameRawShared() {
 		$this->assertEquals(
 			$this->prefixAndQuote( 'tablename', 'sharedatabase', 'sh_', 'raw' ),
 			$this->getSharedTableName( 'tablename', 'sharedatabase', 'sh_', 'raw' )
@@ -153,21 +137,21 @@ class DatabaseTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testTableNameForeign() {
+	function testTableNameForeign() {
 		$this->assertEquals(
 			$this->prefixAndQuote( 'tablename', 'databasename', '' ),
 			$this->db->tableName( 'databasename.tablename' )
 		);
 	}
 
-	public function testTableNameRawForeign() {
+	function testTableNameRawForeign() {
 		$this->assertEquals(
 			$this->prefixAndQuote( 'tablename', 'databasename', '', 'raw' ),
 			$this->db->tableName( 'databasename.tablename', 'raw' )
 		);
 	}
 
-	public function testFillPreparedEmpty() {
+	function testFillPreparedEmpty() {
 		$sql = $this->db->fillPrepared(
 			'SELECT * FROM interwiki', array() );
 		$this->assertEquals(
@@ -175,7 +159,7 @@ class DatabaseTest extends MediaWikiTestCase {
 			$sql );
 	}
 
-	public function testFillPreparedQuestion() {
+	function testFillPreparedQuestion() {
 		$sql = $this->db->fillPrepared(
 			'SELECT * FROM cur WHERE cur_namespace=? AND cur_title=?',
 			array( 4, "Snicker's_paradox" ) );
@@ -187,7 +171,7 @@ class DatabaseTest extends MediaWikiTestCase {
 		$this->assertEquals( $check, $sql );
 	}
 
-	public function testFillPreparedBang() {
+	function testFillPreparedBang() {
 		$sql = $this->db->fillPrepared(
 			'SELECT user_id FROM ! WHERE user_name=?',
 			array( '"user"', "Slash's Dot" ) );
@@ -199,7 +183,7 @@ class DatabaseTest extends MediaWikiTestCase {
 		$this->assertEquals( $check, $sql );
 	}
 
-	public function testFillPreparedRaw() {
+	function testFillPreparedRaw() {
 		$sql = $this->db->fillPrepared(
 			"SELECT * FROM cur WHERE cur_title='This_\\&_that,_WTF\\?\\!'",
 			array( '"user"', "Slash's Dot" ) );
@@ -208,7 +192,7 @@ class DatabaseTest extends MediaWikiTestCase {
 			$sql );
 	}
 
-	public function testStoredFunctions() {
+	function testStoredFunctions() {
 		if ( !in_array( wfGetDB( DB_MASTER )->getType(), array( 'mysql', 'postgres' ) ) ) {
 			$this->markTestSkipped( 'MySQL or Postgres required' );
 		}
@@ -224,11 +208,5 @@ class DatabaseTest extends MediaWikiTestCase {
 		$this->db->query( 'DROP FUNCTION IF EXISTS mw_test_function'
 				. ( $this->db->getType() == 'postgres' ? '()' : '' )
 		);
-	}
-
-	public function testUnknownTableCorruptsResults() {
-		$res = $this->db->select( 'page', '*', array( 'page_id' => 1 ) );
-		$this->assertFalse( $this->db->tableExists( 'foobarbaz' ) );
-		$this->assertInternalType( 'int', $res->numRows() );
 	}
 }

@@ -38,9 +38,6 @@ class StringUtils {
 	 * unit testing our internal implementation.
 	 *
 	 * @since 1.21
-	 * @note In MediaWiki 1.21, this function did not provide proper UTF-8 validation.
-	 * In particular, the pure PHP code path did not in fact check for overlong forms.
-	 * Beware of this when backporting code to that version of MediaWiki.
 	 *
 	 * @param string $value String to check
 	 * @param boolean $disableMbstring Whether to use the pure PHP
@@ -50,64 +47,26 @@ class StringUtils {
 	 * @return boolean Whether the given $value is a valid UTF-8 encoded string
 	 */
 	static function isUtf8( $value, $disableMbstring = false ) {
-		$value = (string)$value;
 
-		// If the mbstring extension is loaded, use it. However, before PHP 5.4, values above
-		// U+10FFFF are incorrectly allowed, so we have to check for them separately.
-		if ( !$disableMbstring && function_exists( 'mb_check_encoding' ) ) {
-			static $newPHP;
-			if ( $newPHP === null ) {
-				$newPHP = !mb_check_encoding( "\xf4\x90\x80\x80", 'UTF-8' );
-			}
-
-			return mb_check_encoding( $value, 'UTF-8' ) &&
-				( $newPHP || preg_match( "/\xf4[\x90-\xbf]|[\xf5-\xff]/S", $value ) === 0 );
-		}
-
-		if ( preg_match( "/[\x80-\xff]/S", $value ) === 0 ) {
-			// String contains only ASCII characters, has to be valid
+		if ( preg_match( '/[\x80-\xff]/', $value ) === 0 ) {
+			# no high bit set, this is pure ASCII which is de facto
+			# valid UTF-8
 			return true;
 		}
 
-		// PCRE implements repetition using recursion; to avoid a stack overflow (and segfault)
-		// for large input, we check for invalid sequences (<= 5 bytes) rather than valid
-		// sequences, which can be as long as the input string is. Multiple short regexes are
-		// used rather than a single long regex for performance.
-		static $regexes;
-		if ( $regexes === null ) {
-			$cont = "[\x80-\xbf]";
-			$after = "(?!$cont)"; // "(?:[^\x80-\xbf]|$)" would work here
-			$regexes = array(
-				// Continuation byte at the start
-				"/^$cont/",
-
-				// ASCII byte followed by a continuation byte
-				"/[\\x00-\x7f]$cont/S",
-
-				// Illegal byte
-				"/[\xc0\xc1\xf5-\xff]/S",
-
-				// Invalid 2-byte sequence, or valid one then an extra continuation byte
-				"/[\xc2-\xdf](?!$cont$after)/S",
-
-				// Invalid 3-byte sequence, or valid one then an extra continuation byte
-				"/\xe0(?![\xa0-\xbf]$cont$after)/",
-				"/[\xe1-\xec\xee\xef](?!$cont{2}$after)/S",
-				"/\xed(?![\x80-\x9f]$cont$after)/",
-
-				// Invalid 4-byte sequence, or valid one then an extra continuation byte
-				"/\xf0(?![\x90-\xbf]$cont{2}$after)/",
-				"/[\xf1-\xf3](?!$cont{3}$after)/S",
-				"/\xf4(?![\x80-\x8f]$cont{2}$after)/",
-			);
+		if ( !$disableMbstring && function_exists( 'mb_check_encoding' ) ) {
+			return mb_check_encoding( $value, 'UTF-8' );
+		} else {
+			$hasUtf8 = preg_match( '/^(?>
+				  [\x00-\x7f]
+				| [\xc0-\xdf][\x80-\xbf]
+				| [\xe0-\xef][\x80-\xbf]{2}
+				| [\xf0-\xf7][\x80-\xbf]{3}
+				| [\xf8-\xfb][\x80-\xbf]{4}
+				| \xfc[\x84-\xbf][\x80-\xbf]{4}
+			)+$/x', $value );
+			return ($hasUtf8 > 0 );
 		}
-
-		foreach ( $regexes as $regex ) {
-			if ( preg_match( $regex, $value ) !== 0 ) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	/**
@@ -258,8 +217,8 @@ class StringUtils {
 	/**
 	 * More or less "markup-safe" explode()
 	 * Ignores any instances of the separator inside <...>
-	 * @param string $separator
-	 * @param string $text
+	 * @param $separator String
+	 * @param $text String
 	 * @return array
 	 */
 	static function explodeMarkup( $separator, $text ) {
@@ -274,7 +233,7 @@ class StringUtils {
 
 		// Explode, then put the replaced separators back in
 		$items = explode( $separator, $cleaned );
-		foreach ( $items as $i => $str ) {
+		foreach( $items as $i => $str ) {
 			$items[$i] = str_replace( $placeholder, $separator, $str );
 		}
 
@@ -285,8 +244,8 @@ class StringUtils {
 	 * Escape a string to make it suitable for inclusion in a preg_replace()
 	 * replacement parameter.
 	 *
-	 * @param string $string
-	 * @return string
+	 * @param $string String
+	 * @return String
 	 */
 	static function escapeRegexReplacement( $string ) {
 		$string = str_replace( '\\', '\\\\', $string );
@@ -297,8 +256,8 @@ class StringUtils {
 	/**
 	 * Workalike for explode() with limited memory usage.
 	 * Returns an Iterator
-	 * @param string $separator
-	 * @param string $subject
+	 * @param $separator
+	 * @param $subject
 	 * @return ArrayIterator|ExplodeIterator
 	 */
 	static function explode( $separator, $subject ) {
@@ -331,14 +290,14 @@ class RegexlikeReplacer extends Replacer {
 	var $r;
 
 	/**
-	 * @param string $r
+	 * @param $r string
 	 */
 	function __construct( $r ) {
 		$this->r = $r;
 	}
 
 	/**
-	 * @param array $matches
+	 * @param $matches array
 	 * @return string
 	 */
 	function replace( $matches ) {
@@ -359,7 +318,7 @@ class DoubleReplacer extends Replacer {
 	/**
 	 * @param $from
 	 * @param $to
-	 * @param int $index
+	 * @param $index int
 	 */
 	function __construct( $from, $to, $index = 0 ) {
 		$this->from = $from;
@@ -368,7 +327,7 @@ class DoubleReplacer extends Replacer {
 	}
 
 	/**
-	 * @param array $matches
+	 * @param $matches array
 	 * @return mixed
 	 */
 	function replace( $matches ) {
@@ -384,7 +343,7 @@ class HashtableReplacer extends Replacer {
 
 	/**
 	 * @param $table
-	 * @param int $index
+	 * @param $index int
 	 */
 	function __construct( $table, $index = 0 ) {
 		$this->table = $table;
@@ -392,7 +351,7 @@ class HashtableReplacer extends Replacer {
 	}
 
 	/**
-	 * @param array $matches
+	 * @param $matches array
 	 * @return mixed
 	 */
 	function replace( $matches ) {
@@ -430,7 +389,6 @@ class ReplacementArray {
 
 	/**
 	 * Set the whole replacement array at once
-	 * @param array $data
 	 */
 	function setArray( $data ) {
 		$this->data = $data;
@@ -446,8 +404,8 @@ class ReplacementArray {
 
 	/**
 	 * Set an element of the replacement array
-	 * @param string $from
-	 * @param string $to
+	 * @param $from string
+	 * @param $to string
 	 */
 	function setPair( $from, $to ) {
 		$this->data[$from] = $to;
@@ -455,7 +413,7 @@ class ReplacementArray {
 	}
 
 	/**
-	 * @param array $data
+	 * @param $data array
 	 */
 	function mergeArray( $data ) {
 		$this->data = array_merge( $this->data, $data );
@@ -463,7 +421,7 @@ class ReplacementArray {
 	}
 
 	/**
-	 * @param ReplacementArray $other
+	 * @param $other
 	 */
 	function merge( $other ) {
 		$this->data = array_merge( $this->data, $other->data );
@@ -471,7 +429,7 @@ class ReplacementArray {
 	}
 
 	/**
-	 * @param string $from
+	 * @param $from string
 	 */
 	function removePair( $from ) {
 		unset( $this->data[$from] );
@@ -479,31 +437,31 @@ class ReplacementArray {
 	}
 
 	/**
-	 * @param array $data
+	 * @param $data array
 	 */
 	function removeArray( $data ) {
-		foreach ( $data as $from => $to ) {
+		foreach( $data as $from => $to ) {
 			$this->removePair( $from );
 		}
 		$this->fss = false;
 	}
 
 	/**
-	 * @param string $subject
+	 * @param $subject string
 	 * @return string
 	 */
 	function replace( $subject ) {
 		if ( function_exists( 'fss_prep_replace' ) ) {
-			wfProfileIn( __METHOD__ . '-fss' );
+			wfProfileIn( __METHOD__.'-fss' );
 			if ( $this->fss === false ) {
 				$this->fss = fss_prep_replace( $this->data );
 			}
 			$result = fss_exec_replace( $this->fss, $subject );
-			wfProfileOut( __METHOD__ . '-fss' );
+			wfProfileOut( __METHOD__.'-fss' );
 		} else {
-			wfProfileIn( __METHOD__ . '-strtr' );
+			wfProfileIn( __METHOD__.'-strtr' );
 			$result = strtr( $subject, $this->data );
-			wfProfileOut( __METHOD__ . '-strtr' );
+			wfProfileOut( __METHOD__.'-strtr' );
 		}
 		return $result;
 	}
@@ -536,15 +494,15 @@ class ExplodeIterator implements Iterator {
 
 	/**
 	 * Construct a DelimIterator
-	 * @param string $delim
-	 * @param string $subject
+	 * @param $delim string
+	 * @param $s string
 	 */
-	function __construct( $delim, $subject ) {
-		$this->subject = $subject;
+	function __construct( $delim, $s ) {
+		$this->subject = $s;
 		$this->delim = $delim;
 
 		// Micro-optimisation (theoretical)
-		$this->subjectLength = strlen( $subject );
+		$this->subjectLength = strlen( $s );
 		$this->delimLength = strlen( $delim );
 
 		$this->rewind();
@@ -572,9 +530,6 @@ class ExplodeIterator implements Iterator {
 		return $this->current;
 	}
 
-	/**
-	 * @return int|bool Current position or boolean false if invalid
-	 */
 	function key() {
 		return $this->curPos;
 	}

@@ -42,7 +42,6 @@ class StreamFile {
 		wfProfileIn( __METHOD__ );
 
 		if ( FileBackend::isStoragePath( $fname ) ) { // sanity
-			wfProfileOut( __METHOD__ );
 			throw new MWException( __FUNCTION__ . " given storage path '$fname'." );
 		}
 

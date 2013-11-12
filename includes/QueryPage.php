@@ -35,6 +35,7 @@ $wgQueryPages = array(
 	array( 'AncientPagesPage',              'Ancientpages'                  ),
 	array( 'BrokenRedirectsPage',           'BrokenRedirects'               ),
 	array( 'DeadendPagesPage',              'Deadendpages'                  ),
+	array( 'DisambiguationsPage',           'Disambiguations'               ),
 	array( 'DoubleRedirectsPage',           'DoubleRedirects'               ),
 	array( 'FileDuplicateSearchPage',       'FileDuplicateSearch'           ),
 	array( 'LinkSearchPage',                'LinkSearch'                    ),
@@ -68,9 +69,8 @@ $wgQueryPages = array(
 wfRunHooks( 'wgQueryPages', array( &$wgQueryPages ) );
 
 global $wgDisableCounters;
-if ( !$wgDisableCounters ) {
+if ( !$wgDisableCounters )
 	$wgQueryPages[] = array( 'PopularPagesPage', 'Popularpages' );
-}
 
 /**
  * This is a class for doing query pages; since they're almost all the same,
@@ -89,7 +89,7 @@ abstract class QueryPage extends SpecialPage {
 	/**
 	 * The offset and limit in use, as passed to the query() function
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	var $offset = 0;
 	var $limit = 0;
@@ -111,7 +111,7 @@ abstract class QueryPage extends SpecialPage {
 	/**
 	 * A mutator for $this->listoutput;
 	 *
-	 * @param bool $bool
+	 * @param $bool Boolean
 	 */
 	function setListoutput( $bool ) {
 		$this->listoutput = $bool;
@@ -186,7 +186,7 @@ abstract class QueryPage extends SpecialPage {
 	/**
 	 * Override to sort by increasing values
 	 *
-	 * @return bool
+	 * @return Boolean
 	 */
 	function sortDescending() {
 		return true;
@@ -197,7 +197,7 @@ abstract class QueryPage extends SpecialPage {
 	 * don't let it run in miser mode. $wgDisableQueryPages causes all query
 	 * pages to be declared expensive. Some query pages are always expensive.
 	 *
-	 * @return bool
+	 * @return Boolean
 	 */
 	function isExpensive() {
 		global $wgDisableQueryPages;
@@ -208,7 +208,7 @@ abstract class QueryPage extends SpecialPage {
 	 * Is the output of this query cacheable? Non-cacheable expensive pages
 	 * will be disabled in miser mode and will not have their results written
 	 * to the querycache table.
-	 * @return bool
+	 * @return Boolean
 	 * @since 1.18
 	 */
 	public function isCacheable() {
@@ -219,7 +219,7 @@ abstract class QueryPage extends SpecialPage {
 	 * Whether or not the output of the page in question is retrieved from
 	 * the database cache.
 	 *
-	 * @return bool
+	 * @return Boolean
 	 */
 	function isCached() {
 		global $wgMiserMode;
@@ -230,7 +230,7 @@ abstract class QueryPage extends SpecialPage {
 	/**
 	 * Sometime we don't want to build rss / atom feeds.
 	 *
-	 * @return bool
+	 * @return Boolean
 	 */
 	function isSyndicated() {
 		return true;
@@ -241,16 +241,19 @@ abstract class QueryPage extends SpecialPage {
 	 * skin; you can use it for making links. The result is a single row of
 	 * result data. You should be able to grab SQL results off of it.
 	 * If the function returns false, the line output will be skipped.
-	 * @param Skin $skin
-	 * @param object $result Result row
-	 * @return string|bool String or false to skip
+	 * @param $skin Skin
+	 * @param $result object Result row
+	 * @return mixed String or false to skip
+	 *
+	 * @param $skin Skin object
+	 * @param $result Object: database row
 	 */
 	abstract function formatResult( $skin, $result );
 
 	/**
 	 * The content returned by this function will be output before any result
 	 *
-	 * @return string
+	 * @return String
 	 */
 	function getPageHeader() {
 		return '';
@@ -261,7 +264,7 @@ abstract class QueryPage extends SpecialPage {
 	 * as an associative array. They will be encoded and added to the paging
 	 * links (prev/next/lengths).
 	 *
-	 * @return array
+	 * @return Array
 	 */
 	function linkParameters() {
 		return array();
@@ -282,9 +285,8 @@ abstract class QueryPage extends SpecialPage {
 	/**
 	 * Clear the cache and save new results
 	 *
-	 * @param int|bool $limit Limit for SQL statement
-	 * @param bool $ignoreErrors Whether to ignore database errors
-	 * @throws DBError|Exception
+	 * @param $limit Integer: limit for SQL statement
+	 * @param $ignoreErrors Boolean: whether to ignore database errors
 	 * @return bool|int
 	 */
 	function recache( $limit, $ignoreErrors = true ) {
@@ -349,8 +351,8 @@ abstract class QueryPage extends SpecialPage {
 
 	/**
 	 * Run the query and return the result
-	 * @param int|bool $limit Numerical limit or false for no limit
-	 * @param int|bool $offset Numerical offset or false for no offset
+	 * @param $limit mixed Numerical limit or false for no limit
+	 * @param $offset mixed Numerical offset or false for no offset
 	 * @return ResultWrapper
 	 * @since 1.18
 	 */
@@ -359,28 +361,23 @@ abstract class QueryPage extends SpecialPage {
 		$dbr = wfGetDB( DB_SLAVE );
 		$query = $this->getQueryInfo();
 		$order = $this->getOrderFields();
-
 		if ( $this->sortDescending() ) {
 			foreach ( $order as &$field ) {
 				$field .= ' DESC';
 			}
 		}
-
 		if ( is_array( $query ) ) {
 			$tables = isset( $query['tables'] ) ? (array)$query['tables'] : array();
 			$fields = isset( $query['fields'] ) ? (array)$query['fields'] : array();
 			$conds = isset( $query['conds'] ) ? (array)$query['conds'] : array();
 			$options = isset( $query['options'] ) ? (array)$query['options'] : array();
 			$join_conds = isset( $query['join_conds'] ) ? (array)$query['join_conds'] : array();
-
 			if ( count( $order ) ) {
 				$options['ORDER BY'] = $order;
 			}
-
 			if ( $limit !== false ) {
 				$options['LIMIT'] = intval( $limit );
 			}
-
 			if ( $offset !== false ) {
 				$options['OFFSET'] = intval( $offset );
 			}
@@ -395,14 +392,11 @@ abstract class QueryPage extends SpecialPage {
 			$sql = $dbr->limitResult( $sql, $limit, $offset );
 			$res = $dbr->query( $sql, $fname );
 		}
-
 		return $dbr->resultObject( $res );
 	}
 
 	/**
 	 * Somewhat deprecated, you probably want to be using execute()
-	 * @param int|bool $offset
-	 * @oaram int|bool $limit
 	 * @return ResultWrapper
 	 */
 	function doQuery( $offset = false, $limit = false ) {
@@ -415,14 +409,14 @@ abstract class QueryPage extends SpecialPage {
 
 	/**
 	 * Fetch the query results from the query cache
-	 * @param int|bool $limit Numerical limit or false for no limit
-	 * @param int|bool $offset Numerical offset or false for no offset
+	 * @param $limit mixed Numerical limit or false for no limit
+	 * @param $offset mixed Numerical offset or false for no offset
 	 * @return ResultWrapper
 	 * @since 1.18
 	 */
 	function fetchFromCache( $limit, $offset = false ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		$options = array();
+		$options = array ();
 		if ( $limit !== false ) {
 			$options['LIMIT'] = intval( $limit );
 		}
@@ -457,7 +451,6 @@ abstract class QueryPage extends SpecialPage {
 	/**
 	 * This is the actual workhorse. It does everything needed to make a
 	 * real, honest-to-gosh query page.
-	 * @para $par
 	 * @return int
 	 */
 	function execute( $par ) {
@@ -569,12 +562,12 @@ abstract class QueryPage extends SpecialPage {
 	 * Format and output report results using the given information plus
 	 * OutputPage
 	 *
-	 * @param OutputPage $out OutputPage to print to
-	 * @param Skin $skin User skin to use
-	 * @param DatabaseBase $dbr Database (read) connection to use
-	 * @param int $res Result pointer
-	 * @param int $num Number of available result rows
-	 * @param int $offset Paging offset
+	 * @param $out OutputPage to print to
+	 * @param $skin Skin: user skin to use
+	 * @param $dbr Database (read) connection to use
+	 * @param $res Integer: result pointer
+	 * @param $num Integer: number of available result rows
+	 * @param $offset Integer: paging offset
 	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
 		global $wgContLang;
@@ -587,7 +580,7 @@ abstract class QueryPage extends SpecialPage {
 
 			# $res might contain the whole 1,000 rows, so we read up to
 			# $num [should update this to use a Pager]
-			for ( $i = 0; $i < $num && $row = $res->fetchObject(); $i++ ) {
+			for ( $i = 0; $i < $num && $row = $dbr->fetchObject( $res ); $i++ ) {
 				$line = $this->formatResult( $skin, $row );
 				if ( $line ) {
 					$attr = ( isset( $row->usepatrol ) && $row->usepatrol && $row->patrolled == 0 )
@@ -642,26 +635,25 @@ abstract class QueryPage extends SpecialPage {
 
 	/**
 	 * Do any necessary preprocessing of the result object.
-	 * @param DatabaseBase $db
-	 * @param ResultWrapper $res
 	 */
 	function preprocessResults( $db, $res ) {}
 
 	/**
 	 * Similar to above, but packaging in a syndicated feed instead of a web page
-	 * @param string $class
-	 * @param int $limit
 	 * @return bool
 	 */
 	function doFeed( $class = '', $limit = 50 ) {
-		global $wgFeed, $wgFeedClasses, $wgFeedLimit;
+		global $wgFeed, $wgFeedClasses;
 
 		if ( !$wgFeed ) {
 			$this->getOutput()->addWikiMsg( 'feed-unavailable' );
 			return false;
 		}
 
-		$limit = min( $limit, $wgFeedLimit );
+		global $wgFeedLimit;
+		if ( $limit > $wgFeedLimit ) {
+			$limit = $wgFeedLimit;
+		}
 
 		if ( isset( $wgFeedClasses[$class] ) ) {
 			$feed = new $wgFeedClasses[$class](
@@ -688,7 +680,6 @@ abstract class QueryPage extends SpecialPage {
 	/**
 	 * Override for custom handling. If the titles/links are ok, just do
 	 * feedItemDesc()
-	 * @param object $row
 	 * @return FeedItem|null
 	 */
 	function feedResult( $row ) {
@@ -744,6 +735,7 @@ abstract class QueryPage extends SpecialPage {
  * WantedPages, WantedTemplates, etc
  */
 abstract class WantedQueryPage extends QueryPage {
+
 	function isExpensive() {
 		return true;
 	}
@@ -754,8 +746,6 @@ abstract class WantedQueryPage extends QueryPage {
 
 	/**
 	 * Cache page existence for performance
-	 * @param DatabaseBase $db
-	 * @param ResultWrapper $res
 	 */
 	function preprocessResults( $db, $res ) {
 		if ( !$res->numRows() ) {
@@ -787,8 +777,8 @@ abstract class WantedQueryPage extends QueryPage {
 	/**
 	 * Format an individual result
 	 *
-	 * @param Skin $skin Skin to use for UI elements
-	 * @param object $result Result row
+	 * @param $skin Skin to use for UI elements
+	 * @param $result Result row
 	 * @return string
 	 */
 	public function formatResult( $skin, $result ) {
@@ -822,8 +812,8 @@ abstract class WantedQueryPage extends QueryPage {
 	/**
 	 * Make a "what links here" link for a given title
 	 *
-	 * @param Title $title Title to make the link for
-	 * @param object $result Result row
+	 * @param $title Title to make the link for
+	 * @param $result Object: result row
 	 * @return string
 	 */
 	private function makeWlhLink( $title, $result ) {

@@ -11,7 +11,6 @@
  * @author Jeblad
  * @author Kaganer
  * @author Laila
- * @author Linnea
  * @author Skuolfi
  * @author Teak
  * @author The Evil IP address
@@ -52,13 +51,12 @@ $specialPageAliases = array(
 	'Block'                     => array( 'Hehtte', 'Hehtte_geavaheaddji', 'Hehtte_IP' ),
 	'Blockme'                   => array( 'Hehtte_mu' ),
 	'Booksources'               => array( 'Girjegáldut' ),
-	'BrokenRedirects'           => array( 'Boatkanan_stivremat', 'Boatkanan_ođđasitstivremat' ),
+	'BrokenRedirects'           => array( 'Feaillalaš_stivremat', 'Feaillalaš_ođđasitstivremat' ),
 	'Categories'                => array( 'Kategoriijat' ),
-	'ChangeEmail'               => array( 'Rievdat_E-poastta' ),
 	'ComparePages'              => array( 'Veardit_siidduid' ),
 	'Confirmemail'              => array( 'Sihkaraste_e-poastta' ),
 	'Contributions'             => array( 'Rievdadusat' ),
-	'CreateAccount'             => array( 'Ráhkat_dovddaldaga', 'Ráhkat_konttu' ),
+	'CreateAccount'             => array( 'Ráhkat_dovddaldaga' ),
 	'DeletedContributions'      => array( 'Sihkkojuvvon_rievdadusat' ),
 	'Disambiguations'           => array( 'Liŋkkat_dárkonsiidduide' ),
 	'DoubleRedirects'           => array( 'Guoktegeardásaš_ođđasitstivremat' ),
@@ -70,7 +68,7 @@ $specialPageAliases = array(
 	'Listadmins'                => array( 'Administráhtorlistu', 'Listu_administráhtoriin' ),
 	'Listbots'                  => array( 'Bohttalistu', 'Listu_bohtain' ),
 	'Listfiles'                 => array( 'Fiilalogahallan' ),
-	'Listgrouprights'           => array( 'Listu_joavkkuid_vuoigatvuođain' ),
+	'Listgrouprights'           => array( 'Listu_joavkkuid_vuoigavuođain' ),
 	'Listredirects'             => array( 'Stivrenlistu', 'Listu_stivremiin', 'Listu_ođđasitstivremiin' ),
 	'Listusers'                 => array( 'Geavaheaddjelistu', 'Listu_geavaheddjiin' ),
 	'Log'                       => array( 'Loggat', 'Logga' ),
@@ -96,10 +94,10 @@ $specialPageAliases = array(
 	'Specialpages'              => array( 'Erenoamáš_siiddut', 'Doaibmasiiddut' ),
 	'Statistics'                => array( 'Statistihkat' ),
 	'Unblock'                   => array( 'Sihko_hehttema' ),
-	'Uncategorizedcategories'   => array( 'Klassifiserekeahtes_kategoriijat' ),
-	'Uncategorizedimages'       => array( 'Klassifiserekeahtes_fiillat', 'Klassifiserekeahtes_govat' ),
-	'Uncategorizedpages'        => array( 'Klassifiserekeahtes_siiddut' ),
-	'Uncategorizedtemplates'    => array( 'Klassifiserekeahtes_mállet' ),
+	'Uncategorizedcategories'   => array( 'Kategoriserekeahtes_kategoriijat' ),
+	'Uncategorizedimages'       => array( 'Kategoriserekeahtes_govat', 'Kategoriserekeahtes_fiillat' ),
+	'Uncategorizedpages'        => array( 'Kategoriserekeahtes_siiddut' ),
+	'Uncategorizedtemplates'    => array( 'Kategoriserekeahtes_mállet' ),
 	'Undelete'                  => array( 'Máhccat' ),
 	'Unusedcategories'          => array( 'Geavatkeahtes_kategoriijat' ),
 	'Unusedimages'              => array( 'Geavatkeahtes_govat', 'Geavatkeahtes_fiillat' ),
@@ -120,22 +118,7 @@ $specialPageAliases = array(
 
 $magicWords = array(
 	'redirect'                  => array( '0', '#STIVREN', '#OĐĐASITSTIVREN', '#REDIRECT' ),
-	'notoc'                     => array( '0', '__IISISDOALLU__', '__IISIS__', '__NOTOC__' ),
-	'nogallery'                 => array( '0', '__IIGALLERIIJA__', '__NOGALLERY__' ),
-	'toc'                       => array( '0', '__SISDOALLU__', ' __SIS__', '__TOC__' ),
-	'noeditsection'             => array( '0', '__IIRIEVDADITOASI__', '__NOEDITSECTION__' ),
-	'numberofarticles'          => array( '1', 'ARTIHKKALIIDMEARRI', ' ARTIHKALMEARRI', 'NUMBEROFARTICLES' ),
-	'numberoffiles'             => array( '1', 'FIILLAIDMEARRI', 'FIILAMEARRI', ' GOVAIDMEARRI', ' GOVVAMEARRI', 'NUMBEROFFILES' ),
-	'numberofusers'             => array( '1', 'GEAVAHEDDJIIDMEARRI', ' GEAVAHEADDJIMEARRI', ' GEAVAHEADDJEMEARRI', 'NUMBEROFUSERS' ),
-	'numberofactiveusers'       => array( '1', 'AKTIIVAGEAVAHEDDJIIDMEARRI', ' AKTIIVAGEAVAHEADDJIMEARRI', ' AKTIIVAGEAVAHEADDJEMEARRI', 'NUMBEROFACTIVEUSERS' ),
-	'numberofedits'             => array( '1', 'RIEVDADUSAIDMEARRI', ' RIEVDADUSMEARRI', 'NUMBEROFEDITS' ),
-	'subst'                     => array( '0', 'LIIBME:', 'SUBST:' ),
-	'img_thumbnail'             => array( '1', 'mini', 'thumbnail', 'thumb' ),
-	'img_manualthumb'           => array( '1', 'mini=$1', 'thumbnail=$1', 'thumb=$1' ),
-	'img_right'                 => array( '1', 'olgeš', 'right' ),
-	'img_left'                  => array( '1', 'gurut', 'left' ),
-	'img_center'                => array( '1', 'gasku', 'center', 'centre' ),
-	'img_link'                  => array( '1', 'liŋka=$1', 'link=$1' ),
+	'numberofarticles'          => array( '1', 'ARTIHKKALIIDMEARRI', 'NUMBEROFARTICLES' ),
 );
 
 $separatorTransformTable = array( ',' => "\xc2\xa0", '.' => ',' );
@@ -322,7 +305,7 @@ $messages = array(
 'jumptonavigation' => 'navigašuvdnii',
 'jumptosearch' => 'ohcamii',
 
-# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage).
+# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => '{{SITENAME}} birra',
 'aboutpage' => 'Project:Dieđut',
 'copyright' => 'Sisdoalu sáhttá geavahit liseanssain $1.',
@@ -331,6 +314,7 @@ $messages = array(
 'disclaimers' => 'Friijavuohta vástideamis',
 'disclaimerpage' => 'Project:Friijavuohta vástideamis',
 'edithelp' => 'Rievdadanrávvagat',
+'edithelppage' => 'Help:Mo rievdadit siidduid',
 'helppage' => 'Help:Sisdoallu',
 'mainpage' => 'Váldosiidu',
 'mainpage-description' => 'Váldosiidu',
@@ -397,6 +381,7 @@ $messages = array(
 'viewsource' => 'Geahča gáldu',
 'protectedpagetext' => 'Dát siidu lea suodjaluvvon rievdadusain.',
 'viewsourcetext' => 'Sáhtát geahčat ja kopieret dán siiddu gáldokoda:',
+'sqlhidden' => '(SQL-jearahallan lea čihkojuvvon)',
 
 # Login and logout pages
 'logouttext' => "'''Don leat dál loggen olggos {{GRAMMAR:elative|{{SITENAME}}}}s.'''
@@ -461,7 +446,7 @@ Sáhtát joatkit {{GRAMMAR:genitive|{{SITENAME}}}} geavaheami anonyman dahje log
 'newpassword' => 'Ođđa suollemassátni',
 'retypenew' => 'Ođđa suollemassátni ođđasit',
 'resetpass_submit' => 'Čále suollemassáni ja čálligoađe sisa',
-'changepassword-success' => 'Suollemassáni rievdadeapmim lihkosmuvai.',
+'resetpass_success' => 'Suollemassáni rievdadeapmim lihkosmuvai.',
 'resetpass_forbidden' => 'Suollemassániid rievdan ii lihkosmuva dán wikis.',
 'resetpass-submit-loggedin' => 'Molsso suollemassáni',
 
@@ -617,6 +602,7 @@ Eará bajasdoallit sáhtet lohkat čihkojuvvon sisdoalu ja máhcahit dan.",
 
 $1 {{int:pipe-separator}} $2',
 'searchmenu-new' => "'''Álggat siiddu ''[[:$1]]'' dán Wikipediai'''",
+'searchhelp-url' => 'Help:Rávvagat',
 'searchprofile-articles' => 'Sisdoallosiiddut',
 'searchprofile-project' => 'Veahkke- ja prošeaktasiiddut',
 'searchprofile-everything' => 'Buot',
@@ -629,6 +615,13 @@ $1 {{int:pipe-separator}} $2',
 'powersearch-togglelabel' => 'Rievdat válljema:',
 'powersearch-toggleall' => 'Buot',
 'powersearch-togglenone' => 'Ii mihkkege',
+
+# Quickbar
+'qbsettings-none' => 'Ii maidige',
+'qbsettings-fixedleft' => 'Teaksta mielde, gurut',
+'qbsettings-fixedright' => 'Teaksta mielde, olgeš',
+'qbsettings-floatingleft' => 'Biso gurutbealde',
+'qbsettings-floatingright' => 'Biso olgesbealde',
 
 # Preferences page
 'preferences' => 'Ásahusat',
@@ -717,12 +710,6 @@ $1 {{int:pipe-separator}} $2',
 # User rights log
 'rightslog' => 'Logga geavaheaddjirievttiin',
 'rightslogtext' => 'Vuolábealde lea logga geavaheaddjirivttiid rievdadusain.',
-
-# Associated actions - in the sentence "You do not have permission to X"
-'action-createpage' => 'álggahit siidduid',
-'action-createtalk' => 'álggahit ságastallansiidduid',
-'action-browsearchive' => 'ohcat sihkkojuvvon siidduid',
-'action-sendemail' => 'sáddet e-poasttaid',
 
 # Recent changes
 'nchanges' => '$1 {{PLURAL:$1|rievdadus|rievdadusa}}',
@@ -890,6 +877,8 @@ $1 {{int:pipe-separator}} $2',
 'statistics-users-active-desc' => 'Geavaheaddjit, geat leat bargan juoidá maŋimus {{PLURAL:$1|beaivvi|$1 beaivvi}} áigge.',
 'statistics-mostpopular' => 'Eanemusta gehčojuvvon siiddut',
 
+'disambiguations' => 'Liŋkkat dárkonsiidduide',
+
 'doubleredirects' => 'Guovttegeardán ođđasitstivremat',
 
 'brokenredirects' => 'Bieđganan ođđasitstivremat',
@@ -1034,9 +1023,10 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'unwatch' => 'Heaite čuovvumis',
 'unwatchthispage' => 'Heaite čuovvumis',
 'notanarticle' => 'Ii leat siidu',
+'watchnochange' => 'Válljejuvvon áigodagas oktage du čuovvunlisttui gullevaš siidu leat rievdaduvvon.',
 'watchlist-details' => 'Du čuovvunlisttus {{PLURAL:$1|lea $1 siidu|leat $1 siiddu}}. Lohkui eai leat váldojuvvon ságastallansiidduid.',
-'wlheader-enotif' => 'E-poastaalmmuhusat leat anus.',
-'wlheader-showupdated' => "Siiddut, mat leat rievdaduvvon du maŋimus geavahangearddi maŋŋá leat merkojuvvon '''buoiddes teavsttain'''",
+'wlheader-enotif' => '* E-poastaalmmuhusat leat anus.',
+'wlheader-showupdated' => "* Siiddut, mat leat rievdaduvvon du maŋimus geavahangearddi maŋŋá leat merkojuvvon '''buoiddes teavsttain'''",
 'watchmethod-recent' => 'dárkistuvvo varas rievdadusat čuovvunlisttu siidduide',
 'watchmethod-list' => 'dárkistuvvo čuovvunlisttu siidduid varas rievdadusat',
 'watchlistcontains' => 'Du čuovvunlisttus {{PLURAL:$1|lea okta siidu|leat $1 siiddu}}.',
@@ -1214,6 +1204,7 @@ Siiddus $2 lea listu maŋimus sihkomiin.',
 'blocklink' => 'hehtte',
 'contribslink' => 'rievdadusat',
 'blocklogentry' => 'esttii geavaheaddji dahje IP-čujuhusa [[$1]], eastima bistin lea $2 $3',
+'proxyblocksuccess' => 'Gárvvis.',
 
 # Developer tools
 'lockdb' => 'Gidde diehtovuođu',
@@ -1353,7 +1344,7 @@ Siiddus $2 lea listu maŋimus sihkomiin.',
 'metadata-expand' => 'Čájet buot sisdoallogovvádusaid',
 'metadata-collapse' => 'Čájet beare dehaleamos sisdoallogovvádusaid',
 
-# Exif tags
+# EXIF tags
 'exif-imagewidth' => 'Viidodat',
 'exif-imagelength' => 'Allodat',
 'exif-bitspersample' => 'Bihtá komponeanttas',

@@ -86,6 +86,9 @@ $messages = array(
 'tog-shownumberswatching' => 'Тер халх шинҗлдг демнчнрин то үзүлх',
 'tog-oldsig' => 'Бәәдг тәвсн һарна хәләвр:',
 'tog-fancysig' => 'Эврән тәвсн һарна бики темдлһн (авто заалһта уга)',
+'tog-externaleditor' => 'Һаза чикллгч олзлх (һанцхн эрдмчнрт, тана тоолцврт шишлң көг кергтә. [//www.mediawiki.org/wiki/Manual:External_editors Дәкәд өггцн.])',
+'tog-externaldiff' => 'Һаза йилһән үзүлдг програм олзлх (һанцхн эрдмчнрт, тана тоолцврт шишлң көг кергтә [//www.mediawiki.org/wiki/Manual:External_editors Дәкәд өггцн.])',
+'tog-showjumplinks' => 'Туслмҗ заалһуд «-д/-т һарх» йовулх',
 'tog-uselivepreview' => 'Шамдһа хәләвр олзлх (JavaScript кергтә, амслһн)',
 'tog-forceeditsummary' => 'Учр-утх хоосн бәәхлә медүлх',
 'tog-watchlisthideown' => 'Шинҗллһнә сеткүлд мини сольлһиг бултулх',
@@ -276,7 +279,7 @@ $messages = array(
 
 $1',
 
-# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage).
+# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => '{{SITENAME}} тускар',
 'aboutpage' => 'Project:Тодлҗ бичлһн',
 'copyright' => 'Өггцн $1 йоста орҗ болм',
@@ -286,6 +289,7 @@ $1',
 'disclaimers' => 'Дааврас эс зөвшәрлһн',
 'disclaimerpage' => 'Project:Даарас эс зөвшәрлһн',
 'edithelp' => 'Чикллһнә дөң',
+'edithelppage' => 'Help:Чикллһн',
 'helppage' => 'Help:Һарг',
 'mainpage' => 'Нүр халх',
 'mainpage-description' => 'Нүр халх',
@@ -355,6 +359,17 @@ $1',
 # General errors
 'error' => 'Эндү',
 'databaseerror' => 'Өггцнә базин эндү',
+'dberrortext' => 'Өггцнә базд сурврин синтаксисин эндү аҗглв.
+Эн заклһна теткүлин эндү болвза.
+Шидрә өггцнә базд сурвр:
+<blockquote><tt>$1</tt></blockquote>
+<tt>«$2»</tt> функцас һарад бәәнә.
+Өггцнә баз <tt>«$3: $4»</tt> эндү хәрү өгв.',
+'dberrortextcl' => 'Өггцнә базд сурврин синтаксисин эндү аҗглв.
+Шидрә өггцнә базд сурвр:
+«$1»
+«$2» функцас һарад бәәнә.
+Өггцнә баз «$3: $4» эндү хәрү өгв.',
 'missing-article' => 'Өггцнә халһлд сурсн халхин бичг олв уга. Эн халх олх йоста: "$1" нертә $2.
 
 Тер йовдл һарһсн халхна тууҗин өңгрсн заалһиг дахлһна арһ болад бәәнә.
@@ -372,6 +387,7 @@ $1',
 'badtitletext' => 'Сурсн нерн буру, хоосн, аль му бичсн келн хоорнд нертә. Тиим чигн биз, нерн зөв уга үзгтә.',
 'viewsource' => 'Ишиг хәләх',
 'actionthrottled' => 'Хурдна заг',
+'sqlhidden' => '(SQL сурвр бултулсн)',
 'ns-specialprotected' => 'Шишлң халх чиклсн бәәх болшго.',
 
 # Virus scanner
@@ -433,7 +449,7 @@ $1',
 'oldpassword' => 'Көгшн нууц үг:',
 'newpassword' => 'Шин нууц үг:',
 'retypenew' => 'Шин нууц үгиг дәкәд бичтн:',
-'changepassword-success' => 'Тана нууц үгиг йовудта сольв! Та ода орнат...',
+'resetpass_success' => 'Тана нууц үгиг йовудта сольв! Та ода орнат...',
 'resetpass-submit-loggedin' => 'Нууц үгиг сольх',
 'resetpass-submit-cancel' => 'Уга кех',
 
@@ -588,6 +604,9 @@ $1',
 'powersearch-field' => 'Хәәх',
 'powersearch-togglenone' => 'Уга',
 
+# Quickbar
+'qbsettings' => 'Ормин самбр',
+
 # Preferences page
 'preferences' => 'Дурллһн',
 'mypreferences' => 'Көгүд',
@@ -731,6 +750,7 @@ $1',
 'recentchangeslinked-feed' => 'Садта чикллһн',
 'recentchangeslinked-toolbox' => 'Садта чикллһн',
 'recentchangeslinked-title' => '$1 садта сольлһн',
+'recentchangeslinked-noresult' => 'Садта халх заасн цагт сольсн уга',
 'recentchangeslinked-summary' => "Эн тер халх заалдг халхсин (аль тер янзин халхсин) шидрә сольлһн.
 Тана [[Special:Watchlist|шинҗллһнә сеткүлин]] халхс '''тарһн''' бичәтә.",
 'recentchangeslinked-page' => 'Халхна нернь:',
@@ -990,6 +1010,7 @@ $2 шидрә һарһлһна төлә хәләтн.',
 'blocklogentry' => '[[$1]] бүслсн $2 күртл, $3 учрта',
 'unblocklogentry' => '$1-г бүслсн биш болулв',
 'block-log-flags-nocreate' => 'бичгдлһиг бүтәҗ болшго',
+'blockme' => 'Намаг бүслчк',
 
 # Move page
 'movepagetext' => "Та дораһар цаасар, халхин сольлһна тууҗ көндәд, терүнә нериг сольх.
@@ -1135,7 +1156,7 @@ $2 шидрә һарһлһна төлә хәләтн.',
 * gpslongitude
 * gpsaltitude',
 
-# Exif tags
+# EXIF tags
 'exif-imagewidth' => 'Өргн',
 'exif-imagelength' => 'Өндр',
 'exif-bitspersample' => 'Өңгин гүн',
@@ -1212,6 +1233,11 @@ $2 шидрә һарһлһна төлә хәләтн.',
 # Special:Version
 'version-software-product' => 'Һарц',
 'version-software-version' => 'Һарц',
+
+# Special:FilePath
+'filepath' => 'Боомгд хаалһ',
+'filepath-page' => 'Боомг:',
+'filepath-submit' => 'Орх',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch-filename' => 'Боомгин нерн:',

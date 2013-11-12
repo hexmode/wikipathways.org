@@ -21,13 +21,13 @@ class CSSMinTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider provideMinifyCases
 	 */
-	public function testMinify( $code, $expectedOutput ) {
+	function testMinify( $code, $expectedOutput ) {
 		$minified = CSSMin::minify( $code );
 
 		$this->assertEquals( $expectedOutput, $minified, 'Minified output should be in the form expected.' );
 	}
 
-	public static function provideMinifyCases() {
+	function provideMinifyCases() {
 		return array(
 			// Whitespace
 			array( "\r\t\f \v\n\r", "" ),
@@ -70,14 +70,14 @@ class CSSMinTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider provideRemapCases
 	 */
-	public function testRemap( $message, $params, $expectedOutput ) {
+	function testRemap( $message, $params, $expectedOutput ) {
 		$remapped = call_user_func_array( 'CSSMin::remap', $params );
 
 		$messageAdd = " Case: $message";
 		$this->assertEquals( $expectedOutput, $remapped, 'CSSMin::remap should return the expected url form.' . $messageAdd );
 	}
 
-	public static function provideRemapCases() {
+	function provideRemapCases() {
 		// Parameter signature:
 		// CSSMin::remap( $code, $local, $remote, $embedData = true )
 		return array(
@@ -115,11 +115,11 @@ class CSSMinTest extends MediaWikiTestCase {
 	 * @group Broken
 	 * @dataProvider provideStringCases
 	 */
-	public function testMinifyWithCSSStringValues( $code, $expectedOutput ) {
+	function testMinifyWithCSSStringValues( $code, $expectedOutput ) {
 		$this->testMinifyOutput( $code, $expectedOutput );
 	}
 
-	public static function provideStringCases() {
+	function provideStringCases() {
 		return array(
 			// String values should be respected
 			// - More than one space in a string value

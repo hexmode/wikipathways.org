@@ -7,8 +7,6 @@ class RequestContextTest extends MediaWikiTestCase {
 
 	/**
 	 * Test the relationship between title and wikipage in RequestContext
-	 * @covers RequestContext::getWikiPage
-	 * @covers RequestContext::getTitle
 	 */
 	public function testWikiPageTitle() {
 		$context = new RequestContext();
@@ -27,11 +25,9 @@ class RequestContextTest extends MediaWikiTestCase {
 		$context->setTitle( $curTitle );
 		$this->assertTrue( $curTitle->equals( $context->getWikiPage()->getTitle() ),
 			"When a title is updated the WikiPage should be purged and recreated on-demand with the new title." );
+
 	}
 
-	/**
-	 * @covers RequestContext::importScopedSession
-	 */
 	public function testImportScopedSession() {
 		$context = RequestContext::getMain();
 
@@ -62,7 +58,7 @@ class RequestContextTest extends MediaWikiTestCase {
 		$this->assertEquals( $sinfo['userId'], $context->getUser()->getId(), "Correct context user ID." );
 		$this->assertEquals( 'UnitTestContextUser', $context->getUser()->getName(), "Correct context user name." );
 
-		unset( $sc ); // restore previous context
+		unset ( $sc ); // restore previous context
 
 		$info = $context->exportSession();
 		$this->assertEquals( $oInfo['ip'], $info['ip'], "Correct initial IP address." );

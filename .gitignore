@@ -19,8 +19,6 @@ wpi/applet/cache_archive
 # Editors
 *.kate-swp
 *~
-\#*#
-.#*
 .*.swp
 .project
 cscope.files
@@ -28,9 +26,7 @@ cscope.out
 ## NetBeans
 nbproject*
 project.index
-## Sublime
 sublime-*
-sftp-config.json
 
 # MediaWiki install & usage
 /cache

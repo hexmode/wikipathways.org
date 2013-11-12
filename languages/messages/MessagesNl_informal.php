@@ -468,8 +468,8 @@ Toekomstige bewerkingen van deze pagina en de bijbehorende overlegpagina worden 
 'removedwatchtext' => 'De pagina "[[:$1]]" is van [[Special:Watchlist|je volglijst]] verwijderd.',
 'watchnochange' => "Geen van de pagina's op je volglijst is in deze periode bewerkt.",
 'watchlist-details' => "Er {{PLURAL:$1|staat één pagina|staan $1 pagina's}} op je volglijst, exclusief overlegpagina's.",
-'wlheader-showupdated' => "Pagina's die zijn bewerkt sinds je laatste bezoek worden '''vet''' weergegeven.",
-'watchlistcontains' => "Er {{PLURAL:$1|staat 1 pagina|staan $1 pagina's}} op je volglijst.",
+'wlheader-showupdated' => "* Pagina's die zijn bewerkt sinds je laatste bezoek worden '''vet''' weergegeven",
+'watchlistcontains' => "Er {{PLURAL:$1|staat één pagina|staan $1 pagina's}} op je volglijst.",
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watcherrortext' => 'Er is een fout opgetreden tijdens het wijzigen van je volglijstinstellingen voor "$1".',

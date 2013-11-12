@@ -12,11 +12,11 @@ class ApiParseTest extends ApiTestCase {
 		$this->doLogin();
 	}
 
-	public function testParseNonexistentPage() {
+	function testParseNonexistentPage() {
 		$somePage = mt_rand();
 
 		try {
-			$this->doApiRequest( array(
+			$data = $this->doApiRequest( array(
 				'action' => 'parse',
 				'page' => $somePage ) );
 
@@ -26,4 +26,5 @@ class ApiParseTest extends ApiTestCase {
 				"Parse request for nonexistent page must give 'missingtitle' error: " . var_export( $ex->getMessageArray(), true ) );
 		}
 	}
+
 }

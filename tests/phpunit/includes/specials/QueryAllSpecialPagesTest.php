@@ -51,7 +51,7 @@ class QueryAllSpecialPagesTest extends MediaWikiTestCase {
 	 * Test SQL for each of our QueryPages objects
 	 * @group Database
 	 */
-	public function testQuerypageSqlQuery() {
+	function testQuerypageSqlQuery() {
 		global $wgDBtype;
 
 		foreach ( $this->queryPages as $page ) {

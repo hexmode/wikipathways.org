@@ -55,11 +55,10 @@ class SpecialBlockList extends SpecialPage {
 
 		$action = $request->getText( 'action' );
 
-		if ( $action == 'unblock' || $action == 'submit' && $request->wasPosted() ) {
+		if( $action == 'unblock' || $action == 'submit' && $request->wasPosted() ) {
 			# B/C @since 1.18: Unblock interface is now at Special:Unblock
 			$title = SpecialPage::getTitleFor( 'Unblock', $this->target );
-			$out->redirect( $title->getFullURL() );
-
+			$out->redirect( $title->getFullUrl() );
 			return;
 		}
 
@@ -96,9 +95,7 @@ class SpecialBlockList extends SpecialPage {
 				'default' => 50,
 			),
 		);
-		$context = new DerivativeContext( $this->getContext() );
-		$context->setTitle( $this->getTitle() ); // Remove subpage
-		$form = new HTMLForm( $fields, $context );
+		$form = new HTMLForm( $fields, $this->getContext() );
 		$form->setMethod( 'get' );
 		$form->setWrapperLegendMsg( 'ipblocklist-legend' );
 		$form->setSubmitTextMsg( 'ipblocklist-submit' );
@@ -123,7 +120,7 @@ class SpecialBlockList extends SpecialPage {
 		if ( $this->target !== '' ) {
 			list( $target, $type ) = Block::parseTarget( $this->target );
 
-			switch ( $type ) {
+			switch( $type ) {
 				case Block::TYPE_ID:
 				case Block::TYPE_AUTO:
 					$conds['ipb_id'] = $target;
@@ -144,23 +141,23 @@ class SpecialBlockList extends SpecialPage {
 					break;
 
 				case Block::TYPE_USER:
-					$conds['ipb_address'] = $target->getName();
+					$conds['ipb_address'] = (string)$this->target;
 					$conds['ipb_auto'] = 0;
 					break;
 			}
 		}
 
 		# Apply filters
-		if ( in_array( 'userblocks', $this->options ) ) {
+		if( in_array( 'userblocks', $this->options ) ) {
 			$conds['ipb_user'] = 0;
 		}
-		if ( in_array( 'tempblocks', $this->options ) ) {
+		if( in_array( 'tempblocks', $this->options ) ) {
 			$conds['ipb_expiry'] = 'infinity';
 		}
-		if ( in_array( 'addressblocks', $this->options ) ) {
+		if( in_array( 'addressblocks', $this->options ) ) {
 			$conds[] = "ipb_user != 0 OR ipb_range_end > ipb_range_start";
 		}
-		if ( in_array( 'rangeblocks', $this->options ) ) {
+		if( in_array( 'rangeblocks', $this->options ) ) {
 			$conds[] = "ipb_range_end = ipb_range_start";
 		}
 
@@ -172,7 +169,7 @@ class SpecialBlockList extends SpecialPage {
 
 		# Show additional header for the local block only when other blocks exists.
 		# Not necessary in a standard installation without such extensions enabled
-		if ( count( $otherBlockLink ) ) {
+		if( count( $otherBlockLink ) ) {
 			$out->addHTML(
 				Html::element( 'h2', array(), $this->msg( 'ipblocklist-localblock' )->text() ) . "\n"
 			);
@@ -182,16 +179,18 @@ class SpecialBlockList extends SpecialPage {
 		if ( $pager->getNumRows() ) {
 			$out->addHTML(
 				$pager->getNavigationBar() .
-					$pager->getBody() .
-					$pager->getNavigationBar()
+				$pager->getBody().
+				$pager->getNavigationBar()
 			);
+
 		} elseif ( $this->target ) {
 			$out->addWikiMsg( 'ipblocklist-no-results' );
+
 		} else {
 			$out->addWikiMsg( 'ipblocklist-empty' );
 		}
 
-		if ( count( $otherBlockLink ) ) {
+		if( count( $otherBlockLink ) ) {
 			$out->addHTML(
 				Html::rawElement(
 					'h2',
@@ -200,7 +199,7 @@ class SpecialBlockList extends SpecialPage {
 				) . "\n"
 			);
 			$list = '';
-			foreach ( $otherBlockLink as $link ) {
+			foreach( $otherBlockLink as $link ) {
 				$list .= Html::rawElement( 'li', array(), $link ) . "\n";
 			}
 			$out->addHTML( Html::rawElement( 'ul', array( 'class' => 'mw-ipblocklist-otherblocks' ), $list ) . "\n" );
@@ -239,7 +238,7 @@ class BlockListPager extends TablePager {
 				'ipb_params' => 'blocklist-params',
 				'ipb_reason' => 'blocklist-reason',
 			);
-			foreach ( $headers as $key => $val ) {
+			foreach( $headers as $key => $val ) {
 				$headers[$key] = $this->msg( $val )->text();
 			}
 		}
@@ -268,17 +267,17 @@ class BlockListPager extends TablePager {
 
 		$formatted = '';
 
-		switch ( $name ) {
+		switch( $name ) {
 			case 'ipb_timestamp':
 				$formatted = $this->getLanguage()->userTimeAndDate( $value, $this->getUser() );
 				break;
 
 			case 'ipb_target':
-				if ( $row->ipb_auto ) {
+				if( $row->ipb_auto ) {
 					$formatted = $this->msg( 'autoblockid', $row->ipb_id )->parse();
 				} else {
 					list( $target, $type ) = Block::parseTarget( $row->ipb_address );
-					switch ( $type ) {
+					switch( $type ) {
 						case Block::TYPE_USER:
 						case Block::TYPE_IP:
 							$formatted = Linker::userLink( $target->getId(), $target );
@@ -296,9 +295,9 @@ class BlockListPager extends TablePager {
 				break;
 
 			case 'ipb_expiry':
-				$formatted = $this->getLanguage()->formatExpiry( $value, /* User preference timezone */true );
-				if ( $this->getUser()->isAllowed( 'block' ) ) {
-					if ( $row->ipb_auto ) {
+				$formatted = $this->getLanguage()->formatExpiry( $value, /* User preference timezone */ true );
+				if( $this->getUser()->isAllowed( 'block' ) ) {
+					if( $row->ipb_auto ) {
 						$links[] = Linker::linkKnown(
 							SpecialPage::getTitleFor( 'Unblock' ),
 							$msg['unblocklink'],
@@ -421,7 +420,7 @@ class BlockListPager extends TablePager {
 
 	/**
 	 * Do a LinkBatch query to minimise database load when generating all these links
-	 * @param ResultWrapper $result
+	 * @param $result
 	 */
 	function preprocessResults( $result ) {
 		wfProfileIn( __METHOD__ );
@@ -442,7 +441,7 @@ class BlockListPager extends TablePager {
 		}
 
 		$ua = UserArray::newFromIDs( $userids );
-		foreach ( $ua as $user ) {
+		foreach( $ua as $user ) {
 			$name = str_replace( ' ', '_', $user->getName() );
 			$lb->add( NS_USER, $name );
 			$lb->add( NS_USER_TALK, $name );
@@ -483,4 +482,5 @@ class HTMLBlockedUsersItemSelect extends HTMLSelectField {
 
 		return true;
 	}
+
 }

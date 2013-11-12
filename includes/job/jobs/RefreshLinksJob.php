@@ -37,18 +37,21 @@ class RefreshLinksJob extends Job {
 	 * @return boolean success
 	 */
 	function run() {
+		wfProfileIn( __METHOD__ );
+
 		$linkCache = LinkCache::singleton();
 		$linkCache->clear();
 
 		if ( is_null( $this->title ) ) {
 			$this->error = "refreshLinks: Invalid title";
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		# Wait for the DB of the current/next slave DB handle to catch up to the master.
 		# This way, we get the correct page_latest for templates or files that just changed
 		# milliseconds ago, having triggered this job to begin with.
-		if ( isset( $this->params['masterPos'] ) && $this->params['masterPos'] !== false ) {
+		if ( isset( $this->params['masterPos'] ) ) {
 			wfGetLB()->waitFor( $this->params['masterPos'] );
 		}
 
@@ -56,11 +59,13 @@ class RefreshLinksJob extends Job {
 		if ( !$revision ) {
 			$this->error = 'refreshLinks: Article not found "' .
 				$this->title->getPrefixedDBkey() . '"';
+			wfProfileOut( __METHOD__ );
 			return false; // XXX: what if it was just deleted?
 		}
 
 		self::runForTitleInternal( $this->title, $revision, __METHOD__ );
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -96,9 +101,6 @@ class RefreshLinksJob extends Job {
 
 		$updates = $content->getSecondaryDataUpdates( $title, null, false, $parserOutput );
 		DataUpdate::runUpdates( $updates );
-
-		InfoAction::invalidateCache( $title );
-
 		wfProfileOut( $fname );
 	}
 }
@@ -112,8 +114,6 @@ class RefreshLinksJob extends Job {
 class RefreshLinksJob2 extends Job {
 	function __construct( $title, $params, $id = 0 ) {
 		parent::__construct( 'refreshLinks2', $title, $params, $id );
-		// Base jobs for large templates can easily be de-duplicated
-		$this->removeDuplicates = !isset( $params['start'] ) && !isset( $params['end'] );
 	}
 
 	/**
@@ -123,11 +123,14 @@ class RefreshLinksJob2 extends Job {
 	function run() {
 		global $wgUpdateRowsPerJob;
 
+		wfProfileIn( __METHOD__ );
+
 		$linkCache = LinkCache::singleton();
 		$linkCache->clear();
 
 		if ( is_null( $this->title ) ) {
 			$this->error = "refreshLinks2: Invalid title";
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -141,7 +144,7 @@ class RefreshLinksJob2 extends Job {
 		// Hopefully, when leaf jobs are popped, the slaves will have reached that position.
 		if ( isset( $this->params['masterPos'] ) ) {
 			$masterPos = $this->params['masterPos'];
-		} elseif ( wfGetLB()->getServerCount() > 1 ) {
+		} elseif ( wfGetLB()->getServerCount() > 1  ) {
 			$masterPos = wfGetLB()->getMasterPos();
 		} else {
 			$masterPos = false;
@@ -155,7 +158,7 @@ class RefreshLinksJob2 extends Job {
 			$jobs = array_merge( $jobs, $this->getSingleTitleJobs( $table, $masterPos ) );
 		} else {
 			# This is a base job to trigger the insertion of partitioned jobs...
-			if ( $tbc->getNumLinks( $table, $wgUpdateRowsPerJob + 1 ) <= $wgUpdateRowsPerJob ) {
+			if ( $tbc->getNumLinks( $table ) <= $wgUpdateRowsPerJob ) {
 				# Just directly insert the single per-title jobs
 				$jobs = array_merge( $jobs, $this->getSingleTitleJobs( $table, $masterPos ) );
 			} else {
@@ -164,10 +167,10 @@ class RefreshLinksJob2 extends Job {
 					list( $start, $end ) = $batch;
 					$jobs[] = new RefreshLinksJob2( $this->title,
 						array(
-							'table' => $table,
-							'start' => $start,
-							'end' => $end,
-							'masterPos' => $masterPos,
+							'table'            => $table,
+							'start'            => $start,
+							'end'              => $end,
+							'masterPos'        => $masterPos,
 						) + $this->getRootJobParams() // carry over information for de-duplication
 					);
 				}
@@ -178,6 +181,7 @@ class RefreshLinksJob2 extends Job {
 			JobQueueGroup::singleton()->push( $jobs );
 		}
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 

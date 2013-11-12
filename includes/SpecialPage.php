@@ -27,6 +27,7 @@
  * @ingroup SpecialPage
  */
 class SpecialPage {
+
 	// The canonical name of this special page
 	// Also used for the default <h1> heading, @see getDescription()
 	protected $mName;
@@ -304,14 +305,12 @@ class SpecialPage {
 	 *     If you override execute(), you can recover the default behavior with userCanExecute()
 	 *     and displayRestrictionError()
 	 *
-	 * @param string $name Name of the special page, as seen in links and URLs
-	 * @param string $restriction User right required, e.g. "block" or "delete"
-	 * @param bool $listed Whether the page is listed in Special:Specialpages
-	 * @param Callback|Bool $function Function called by execute(). By default
-	 * it is constructed from $name
-	 * @param string $file File which is included by execute(). It is also
-	 * constructed from $name by default
-	 * @param bool $includable Whether the page can be included in normal pages
+	 * @param string $name name of the special page, as seen in links and URLs
+	 * @param string $restriction user right required, e.g. "block" or "delete"
+	 * @param bool $listed whether the page is listed in Special:Specialpages
+	 * @param $function Callback|Bool: function called by execute(). By default it is constructed from $name
+	 * @param string $file file which is included by execute(). It is also constructed from $name by default
+	 * @param bool $includable whether the page can be included in normal pages
 	 */
 	public function __construct(
 		$name = '', $restriction = '', $listed = true,
@@ -323,14 +322,12 @@ class SpecialPage {
 	/**
 	 * Do the real work for the constructor, mainly so __call() can intercept
 	 * calls to SpecialPage()
-	 * @param string $name Name of the special page, as seen in links and URLs
-	 * @param string $restriction User right required, e.g. "block" or "delete"
-	 * @param bool $listed Whether the page is listed in Special:Specialpages
-	 * @param Callback|Bool $function Function called by execute(). By default
-	 * it is constructed from $name
-	 * @param string $file File which is included by execute(). It is also
-	 * constructed from $name by default
-	 * @param bool $includable Whether the page can be included in normal pages
+	 * @param string $name name of the special page, as seen in links and URLs
+	 * @param string $restriction user right required, e.g. "block" or "delete"
+	 * @param bool $listed whether the page is listed in Special:Specialpages
+	 * @param $function Callback|Bool: function called by execute(). By default it is constructed from $name
+	 * @param string $file file which is included by execute(). It is also constructed from $name by default
+	 * @param bool $includable whether the page can be included in normal pages
 	 */
 	private function init( $name, $restriction, $listed, $function, $file, $includable ) {
 		$this->mName = $name;
@@ -448,10 +445,7 @@ class SpecialPage {
 	 * @return Mixed
 	 * @deprecated since 1.18
 	 */
-	function name( $x = null ) {
-		wfDeprecated( __METHOD__, '1.18' );
-		return wfSetVar( $this->mName, $x );
-	}
+	function name( $x = null ) { wfDeprecated( __METHOD__, '1.18' ); return wfSetVar( $this->mName, $x ); }
 
 	/**
 	 * These mutators are very evil, as the relevant variables should not mutate.  So
@@ -460,10 +454,7 @@ class SpecialPage {
 	 * @return Mixed
 	 * @deprecated since 1.18
 	 */
-	function restriction( $x = null ) {
-		wfDeprecated( __METHOD__, '1.18' );
-		return wfSetVar( $this->mRestriction, $x );
-	}
+	function restriction( $x = null ) { wfDeprecated( __METHOD__, '1.18' ); return wfSetVar( $this->mRestriction, $x ); }
 
 	/**
 	 * These mutators are very evil, as the relevant variables should not mutate.  So
@@ -472,10 +463,7 @@ class SpecialPage {
 	 * @return Mixed
 	 * @deprecated since 1.18
 	 */
-	function func( $x = null ) {
-		wfDeprecated( __METHOD__, '1.18' );
-		return wfSetVar( $this->mFunction, $x );
-	}
+	function func( $x = null ) { wfDeprecated( __METHOD__, '1.18' ); return wfSetVar( $this->mFunction, $x ); }
 
 	/**
 	 * These mutators are very evil, as the relevant variables should not mutate.  So
@@ -484,10 +472,7 @@ class SpecialPage {
 	 * @return Mixed
 	 * @deprecated since 1.18
 	 */
-	function file( $x = null ) {
-		wfDeprecated( __METHOD__, '1.18' );
-		return wfSetVar( $this->mFile, $x );
-	}
+	function file( $x = null ) { wfDeprecated( __METHOD__, '1.18' ); return wfSetVar( $this->mFile, $x ); }
 
 	/**
 	 * These mutators are very evil, as the relevant variables should not mutate.  So
@@ -496,10 +481,7 @@ class SpecialPage {
 	 * @return Mixed
 	 * @deprecated since 1.18
 	 */
-	function includable( $x = null ) {
-		wfDeprecated( __METHOD__, '1.18' );
-		return wfSetVar( $this->mIncludable, $x );
-	}
+	function includable( $x = null ) { wfDeprecated( __METHOD__, '1.18' ); return wfSetVar( $this->mIncludable, $x ); }
 
 	/**
 	 * Whether the special page is being evaluated via transclusion
@@ -553,7 +535,7 @@ class SpecialPage {
 	 *   pages?
 	 */
 	public function isRestricted() {
-		// DWIM: If anons can do something, then it is not restricted
+		// DWIM: If all anons can do something, then it is not restricted
 		return $this->mRestriction != '' && !User::groupHasPermission( '*', $this->mRestriction );
 	}
 
@@ -679,7 +661,7 @@ class SpecialPage {
 		$func = $this->mFunction;
 		// only load file if the function does not exist
 		if ( !is_callable( $func ) && $this->mFile ) {
-			require_once $this->mFile;
+			require_once( $this->mFile );
 		}
 		$this->outputHeader();
 		call_user_func( $func, $subPage, $this );
@@ -752,8 +734,7 @@ class SpecialPage {
 		if ( $this->mContext instanceof IContextSource ) {
 			return $this->mContext;
 		} else {
-			wfDebug( __METHOD__ . " called and \$mContext is null. " .
-				"Return RequestContext::getMain(); for sanity\n" );
+			wfDebug( __METHOD__ . " called and \$mContext is null. Return RequestContext::getMain(); for sanity\n" );
 			return RequestContext::getMain();
 		}
 	}
@@ -801,7 +782,7 @@ class SpecialPage {
 	/**
 	 * Shortcut to get user's language
 	 *
-	 * @deprecated since 1.19 Use getLanguage instead
+	 * @deprecated 1.19 Use getLanguage instead
 	 * @return Language
 	 * @since 1.18
 	 */
@@ -861,11 +842,11 @@ class SpecialPage {
 	protected function addFeedLinks( $params ) {
 		global $wgFeedClasses;
 
-		$feedTemplate = wfScript( 'api' );
+		$feedTemplate = wfScript( 'api' ) . '?';
 
 		foreach ( $wgFeedClasses as $format => $class ) {
 			$theseParams = $params + array( 'feedformat' => $format );
-			$url = wfAppendQuery( $feedTemplate, $theseParams );
+			$url = $feedTemplate . wfArrayToCgi( $theseParams );
 			$this->getOutput()->addFeedLink( $format, $url );
 		}
 	}
@@ -928,11 +909,6 @@ class SpecialPage {
  * a new structure for SpecialPages
  */
 abstract class FormSpecialPage extends SpecialPage {
-	/**
-	 * The sub-page of the special page.
-	 * @var string
-	 */
-	protected $par = null;
 
 	/**
 	 * Get an HTMLForm descriptor array
@@ -941,27 +917,17 @@ abstract class FormSpecialPage extends SpecialPage {
 	abstract protected function getFormFields();
 
 	/**
-	 * Add pre-text to the form
+	 * Add pre- or post-text to the form
 	 * @return String HTML which will be sent to $form->addPreText()
 	 */
-	protected function preText() {
-		return '';
-	}
-
-	/**
-	 * Add post-text to the form
-	 * @return String HTML which will be sent to $form->addPostText()
-	 */
-	protected function postText() {
-		return '';
-	}
+	protected function preText() { return ''; }
+	protected function postText() { return ''; }
 
 	/**
 	 * Play with the HTMLForm if you need to more substantially
 	 * @param $form HTMLForm
 	 */
-	protected function alterForm( HTMLForm $form ) {
-	}
+	protected function alterForm( HTMLForm $form ) {}
 
 	/**
 	 * Get message prefix for HTMLForm
@@ -982,18 +948,9 @@ abstract class FormSpecialPage extends SpecialPage {
 
 		$form = new HTMLForm( $this->fields, $this->getContext(), $this->getMessagePrefix() );
 		$form->setSubmitCallback( array( $this, 'onSubmit' ) );
-		// If the form is a compact vertical form, then don't output this ugly
-		// fieldset surrounding it.
-		// XXX Special pages can setDisplayFormat to 'vform' in alterForm(), but that
-		// is called after this.
-		if ( !$form->isVForm() ) {
-			$form->setWrapperLegendMsg( $this->getMessagePrefix() . '-legend' );
-		}
-
-		$headerMsg = $this->msg( $this->getMessagePrefix() . '-text' );
-		if ( !$headerMsg->isDisabled() ) {
-			$form->addHeaderText( $headerMsg->parseAsBlock() );
-		}
+		$form->setWrapperLegend( $this->msg( $this->getMessagePrefix() . '-legend' ) );
+		$form->addHeaderText(
+			$this->msg( $this->getMessagePrefix() . '-text' )->parseAsBlock() );
 
 		// Retain query parameters (uselang etc)
 		$params = array_diff_key(
@@ -1020,10 +977,8 @@ abstract class FormSpecialPage extends SpecialPage {
 	/**
 	 * Do something exciting on successful processing of the form, most likely to show a
 	 * confirmation message
-	 * @since 1.22 Default is to do nothing
 	 */
-	public function onSuccess() {
-	}
+	abstract public function onSuccess();
 
 	/**
 	 * Basic SpecialPage workflow: get a form, send it to the user; get some data back,
@@ -1045,11 +1000,9 @@ abstract class FormSpecialPage extends SpecialPage {
 
 	/**
 	 * Maybe do something interesting with the subpage parameter
-	 * @param string $par
+	 * @param $par String
 	 */
-	protected function setParameter( $par ) {
-		$this->par = $par;
-	}
+	protected function setParameter( $par ) {}
 
 	/**
 	 * Called from execute() to check if the given user can perform this action.
@@ -1137,16 +1090,17 @@ abstract class RedirectSpecialPage extends UnlistedSpecialPage {
 		$query = $this->getRedirectQuery();
 		// Redirect to a page title with possible query parameters
 		if ( $redirect instanceof Title ) {
-			$url = $redirect->getFullURL( $query );
+			$url = $redirect->getFullUrl( $query );
 			$this->getOutput()->redirect( $url );
 			return $redirect;
+		// Redirect to index.php with query parameters
 		} elseif ( $redirect === true ) {
-			// Redirect to index.php with query parameters
-			$url = wfAppendQuery( wfScript( 'index' ), $query );
+			global $wgScript;
+			$url = $wgScript . '?' . wfArrayToCgi( $query );
 			$this->getOutput()->redirect( $url );
 			return $redirect;
 		} else {
-			$class = get_class( $this );
+			$class = __CLASS__;
 			throw new MWException( "RedirectSpecialPage $class doesn't redirect!" );
 		}
 	}
@@ -1186,7 +1140,6 @@ abstract class RedirectSpecialPage extends UnlistedSpecialPage {
 }
 
 abstract class SpecialRedirectToSpecial extends RedirectSpecialPage {
-	// @todo FIXME: Visibility must be declared
 	var $redirName, $redirSubpage;
 
 	function __construct(
@@ -1233,16 +1186,7 @@ class SpecialListBots extends SpecialRedirectToSpecial {
  */
 class SpecialCreateAccount extends SpecialRedirectToSpecial {
 	function __construct() {
-		parent::__construct( 'CreateAccount', 'Userlogin', 'signup', array( 'returnto', 'returntoquery', 'uselang' ) );
-	}
-
-	// No reason to hide this link on Special:Specialpages
-	public function isListed() {
-		return true;
-	}
-
-	protected function getGroupName() {
-		return 'login';
+		parent::__construct( 'CreateAccount', 'Userlogin', 'signup', array( 'uselang' ) );
 	}
 }
 /**
@@ -1272,7 +1216,7 @@ class SpecialCreateAccount extends SpecialRedirectToSpecial {
  * - limit, offset: Useful for linking to history of one's own user page or
  * user talk page. For example, this would be a link to "the last edit to your
  * user talk page in the year 2010":
- * http://en.wikipedia.org/wiki/Special:MyPage?offset=20110000000000&limit=1&action=history
+ * http://en.wikipedia.org/w/index.php?title=Special:MyPage&offset=20110000000000&limit=1&action=history
  *
  * - feed: would allow linking to the current user's RSS feed for their user
  * talk page:
@@ -1326,9 +1270,9 @@ abstract class RedirectSpecialArticle extends RedirectSpecialPage {
 			'action',
 			'redirect', 'rdfrom',
 			# Options for preloaded edits
-			'preload', 'editintro', 'preloadtitle', 'summary', 'nosummary',
+			'preload', 'editintro', 'preloadtitle', 'summary',
 			# Options for overriding user settings
-			'preview', 'internaledit', 'externaledit', 'mode', 'minor', 'watchthis',
+			'preview', 'internaledit', 'externaledit', 'mode',
 			# Options for history/diffs
 			'section', 'oldid', 'diff', 'dir',
 			'limit', 'offset', 'feed',
@@ -1401,29 +1345,13 @@ class SpecialMycontributions extends RedirectSpecialPage {
 class SpecialMyuploads extends RedirectSpecialPage {
 	function __construct() {
 		parent::__construct( 'Myuploads' );
-		$this->mAllowedRedirectParams = array( 'limit', 'ilshowall', 'ilsearch' );
+		$this->mAllowedRedirectParams = array( 'limit' );
 	}
 
 	function getRedirect( $subpage ) {
 		return SpecialPage::getTitleFor( 'Listfiles', $this->getUser()->getName() );
 	}
 }
-
-/**
- * Redirect Special:Listfiles?user=$wgUser&ilshowall=true
- */
-class SpecialAllMyUploads extends RedirectSpecialPage {
-	function __construct() {
-		parent::__construct( 'AllMyUploads' );
-		$this->mAllowedRedirectParams = array( 'limit', 'ilsearch' );
-	}
-
-	function getRedirect( $subpage ) {
-		$this->mAddedRedirectParams['ilshowall'] = 1;
-		return SpecialPage::getTitleFor( 'Listfiles', $this->getUser()->getName() );
-	}
-}
-
 
 /**
  * Redirect from Special:PermanentLink/### to index.php?oldid=###

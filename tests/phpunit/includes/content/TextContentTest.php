@@ -51,7 +51,6 @@ class TextContentTest extends MediaWikiLangTestCase {
 
 	/**
 	 * @dataProvider dataGetParserOutput
-	 * @covers TextContent::getParserOutput
 	 */
 	public function testGetParserOutput( $title, $model, $text, $expectedHtml, $expectedFields = null ) {
 		$title = Title::newFromText( $title );
@@ -97,7 +96,6 @@ class TextContentTest extends MediaWikiLangTestCase {
 
 	/**
 	 * @dataProvider dataPreSaveTransform
-	 * @covers TextContent::preSaveTransform
 	 */
 	public function testPreSaveTransform( $text, $expected ) {
 		global $wgContLang;
@@ -121,7 +119,6 @@ class TextContentTest extends MediaWikiLangTestCase {
 
 	/**
 	 * @dataProvider dataPreloadTransform
-	 * @covers TextContent::preloadTransform
 	 */
 	public function testPreloadTransform( $text, $expected ) {
 		global $wgContLang;
@@ -143,7 +140,6 @@ class TextContentTest extends MediaWikiLangTestCase {
 
 	/**
 	 * @dataProvider dataGetRedirectTarget
-	 * @covers TextContent::getRedirectTarget
 	 */
 	public function testGetRedirectTarget( $text, $expected ) {
 		$content = $this->newContent( $text );
@@ -158,7 +154,6 @@ class TextContentTest extends MediaWikiLangTestCase {
 
 	/**
 	 * @dataProvider dataGetRedirectTarget
-	 * @covers TextContent::isRedirect
 	 */
 	public function testIsRedirect( $text, $expected ) {
 		$content = $this->newContent( $text );
@@ -167,7 +162,7 @@ class TextContentTest extends MediaWikiLangTestCase {
 	}
 
 	/**
-	 * @todo Test needs database! Should be done by a test class in the Database group.
+	 * @todo: test needs database! Should be done by a test class in the Database group.
 	 */
 	/*
 	public function getRedirectChain() {
@@ -177,7 +172,7 @@ class TextContentTest extends MediaWikiLangTestCase {
 	*/
 
 	/**
-	 * @todo Test needs database! Should be done by a test class in the Database group.
+	 * @todo: test needs database! Should be done by a test class in the Database group.
 	 */
 	/*
 	public function getUltimateRedirectTarget() {
@@ -214,14 +209,17 @@ class TextContentTest extends MediaWikiLangTestCase {
 	/**
 	 * @dataProvider dataIsCountable
 	 * @group Database
-	 * @covers TextContent::isCountable
 	 */
 	public function testIsCountable( $text, $hasLinks, $mode, $expected ) {
-		$this->setMwGlobals( 'wgArticleCountMethod', $mode );
+		global $wgArticleCountMethod;
+
+		$old = $wgArticleCountMethod;
+		$wgArticleCountMethod = $mode;
 
 		$content = $this->newContent( $text );
 
 		$v = $content->isCountable( $hasLinks, $this->context->getTitle() );
+		$wgArticleCountMethod = $old;
 
 		$this->assertEquals( $expected, $v, 'isCountable() returned unexpected value ' . var_export( $v, true )
 			. ' instead of ' . var_export( $expected, true ) . " in mode `$mode` for text \"$text\"" );
@@ -246,7 +244,6 @@ class TextContentTest extends MediaWikiLangTestCase {
 
 	/**
 	 * @dataProvider dataGetTextForSummary
-	 * @covers TextContent::getTextForSummary
 	 */
 	public function testGetTextForSummary( $text, $maxlength, $expected ) {
 		$content = $this->newContent( $text );
@@ -254,18 +251,12 @@ class TextContentTest extends MediaWikiLangTestCase {
 		$this->assertEquals( $expected, $content->getTextForSummary( $maxlength ) );
 	}
 
-	/**
-	 * @covers TextContent::getTextForSearchIndex
-	 */
 	public function testGetTextForSearchIndex() {
 		$content = $this->newContent( 'hello world.' );
 
 		$this->assertEquals( 'hello world.', $content->getTextForSearchIndex() );
 	}
 
-	/**
-	 * @covers TextContent::copy
-	 */
 	public function testCopy() {
 		$content = $this->newContent( 'hello world.' );
 		$copy = $content->copy();
@@ -274,45 +265,30 @@ class TextContentTest extends MediaWikiLangTestCase {
 		$this->assertEquals( 'hello world.', $copy->getNativeData() );
 	}
 
-	/**
-	 * @covers TextContent::getSize
-	 */
 	public function testGetSize() {
 		$content = $this->newContent( 'hello world.' );
 
 		$this->assertEquals( 12, $content->getSize() );
 	}
 
-	/**
-	 * @covers TextContent::getNativeData
-	 */
 	public function testGetNativeData() {
 		$content = $this->newContent( 'hello world.' );
 
 		$this->assertEquals( 'hello world.', $content->getNativeData() );
 	}
 
-	/**
-	 * @covers TextContent::getWikitextForTransclusion
-	 */
 	public function testGetWikitextForTransclusion() {
 		$content = $this->newContent( 'hello world.' );
 
 		$this->assertEquals( 'hello world.', $content->getWikitextForTransclusion() );
 	}
 
-	/**
-	 * @covers TextContent::getModel
-	 */
 	public function testGetModel() {
 		$content = $this->newContent( "hello world." );
 
 		$this->assertEquals( CONTENT_MODEL_TEXT, $content->getModel() );
 	}
 
-	/**
-	 * @covers TextContent::getContentHandler
-	 */
 	public function testGetContentHandler() {
 		$content = $this->newContent( "hello world." );
 
@@ -330,7 +306,6 @@ class TextContentTest extends MediaWikiLangTestCase {
 
 	/**
 	 * @dataProvider dataIsEmpty
-	 * @covers TextContent::isEmpty
 	 */
 	public function testIsEmpty( $text, $empty ) {
 		$content = $this->newContent( $text );
@@ -350,7 +325,6 @@ class TextContentTest extends MediaWikiLangTestCase {
 
 	/**
 	 * @dataProvider dataEquals
-	 * @covers TextContent::equals
 	 */
 	public function testEquals( Content $a, Content $b = null, $equal = false ) {
 		$this->assertEquals( $equal, $a->equals( $b ) );
@@ -372,7 +346,6 @@ class TextContentTest extends MediaWikiLangTestCase {
 
 	/**
 	 * @dataProvider dataGetDeletionUpdates
-	 * @covers TextContent::getDeletionUpdates
 	 */
 	public function testDeletionUpdates( $title, $model, $text, $expectedStuff ) {
 		$ns = $this->getDefaultWikitextNS();
@@ -441,7 +414,6 @@ class TextContentTest extends MediaWikiLangTestCase {
 
 	/**
 	 * @dataProvider provideConvert
-	 * @covers TextContent::convert
 	 */
 	public function testConvert( $text, $model, $lossy, $expectedNative ) {
 		$content = $this->newContent( $text );
@@ -455,4 +427,5 @@ class TextContentTest extends MediaWikiLangTestCase {
 			$this->assertEquals( $expectedNative, $converted->getNativeData() );
 		}
 	}
+
 }

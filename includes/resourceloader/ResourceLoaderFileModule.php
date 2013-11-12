@@ -116,12 +116,6 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	protected $targets = array( 'desktop' );
 
 	/**
-	 * Boolean: Whether getStyleURLsForDebug should return raw file paths,
-	 * or return load.php urls
-	 */
-	protected $hasGeneratedStyles = false;
-
-	/**
 	 * Array: Cache for mtime
 	 * @par Usage:
 	 * @code
@@ -193,8 +187,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 * @endcode
 	 */
 	public function __construct( $options = array(), $localBasePath = null,
-		$remoteBasePath = null
-	) {
+		$remoteBasePath = null )
+	{
 		global $IP, $wgScriptPath, $wgResourceBasePath;
 		$this->localBasePath = $localBasePath === null ? $IP : $localBasePath;
 		if ( $remoteBasePath !== null ) {
@@ -215,7 +209,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				case 'debugScripts':
 				case 'loaderScripts':
 				case 'styles':
-					$this->{$member} = (array)$option;
+					$this->{$member} = (array) $option;
 					break;
 				// Collated lists of file paths
 				case 'languageScripts':
@@ -234,26 +228,26 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 								"'$key' given, string expected."
 							);
 						}
-						$this->{$member}[$key] = (array)$value;
+						$this->{$member}[$key] = (array) $value;
 					}
 					break;
 				// Lists of strings
 				case 'dependencies':
 				case 'messages':
 				case 'targets':
-					$this->{$member} = (array)$option;
+					$this->{$member} = (array) $option;
 					break;
 				// Single strings
 				case 'group':
 				case 'position':
 				case 'localBasePath':
 				case 'remoteBasePath':
-					$this->{$member} = (string)$option;
+					$this->{$member} = (string) $option;
 					break;
 				// Single booleans
 				case 'debugRaw':
 				case 'raw':
-					$this->{$member} = (bool)$option;
+					$this->{$member} = (bool) $option;
 					break;
 			}
 		}
@@ -265,8 +259,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Gets all scripts for a given context concatenated together.
 	 *
-	 * @param ResourceLoaderContext $context Context in which to generate script
-	 * @return string: JavaScript code for $context
+	 * @param $context ResourceLoaderContext: Context in which to generate script
+	 * @return String: JavaScript code for $context
 	 */
 	public function getScript( ResourceLoaderContext $context ) {
 		$files = $this->getScriptFiles( $context );
@@ -274,7 +268,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	}
 
 	/**
-	 * @param ResourceLoaderContext $context
+	 * @param $context ResourceLoaderContext
 	 * @return array
 	 */
 	public function getScriptURLsForDebug( ResourceLoaderContext $context ) {
@@ -295,7 +289,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Gets loader script.
 	 *
-	 * @return string: JavaScript code to be added to startup module
+	 * @return String: JavaScript code to be added to startup module
 	 */
 	public function getLoaderScript() {
 		if ( count( $this->loaderScripts ) == 0 ) {
@@ -307,8 +301,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Gets all styles for a given context concatenated together.
 	 *
-	 * @param ResourceLoaderContext $context Context in which to generate styles
-	 * @return string: CSS code for $context
+	 * @param $context ResourceLoaderContext: Context in which to generate styles
+	 * @return String: CSS code for $context
 	 */
 	public function getStyles( ResourceLoaderContext $context ) {
 		$styles = $this->readStyleFiles(
@@ -330,23 +324,16 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 				);
 			}
 		} catch ( Exception $e ) {
-			wfDebugLog( 'resourceloader', __METHOD__ . ": failed to update DB: $e" );
+			wfDebug( __METHOD__ . " failed to update DB: $e\n" );
 		}
 		return $styles;
 	}
 
 	/**
-	 * @param ResourceLoaderContext $context
+	 * @param $context ResourceLoaderContext
 	 * @return array
 	 */
 	public function getStyleURLsForDebug( ResourceLoaderContext $context ) {
-		if ( $this->hasGeneratedStyles ) {
-			// Do the default behaviour of returning a url back to load.php
-			// but with only=styles.
-			return parent::getStyleURLsForDebug( $context );
-		}
-		// Our module consists entirely of real css files,
-		// in debug mode we can load those directly.
 		$urls = array();
 		foreach ( $this->getStyleFiles( $context ) as $mediaType => $list ) {
 			$urls[$mediaType] = array();
@@ -360,7 +347,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Gets list of message keys used by this module.
 	 *
-	 * @return array: List of message keys
+	 * @return Array: List of message keys
 	 */
 	public function getMessages() {
 		return $this->messages;
@@ -369,7 +356,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Gets the name of the group this module should be loaded in.
 	 *
-	 * @return string: Group name
+	 * @return String: Group name
 	 */
 	public function getGroup() {
 		return $this->group;
@@ -385,7 +372,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Gets list of names of modules this module depends on.
 	 *
-	 * @return array: List of module names
+	 * @return Array: List of module names
 	 */
 	public function getDependencies() {
 		return $this->dependencies;
@@ -407,9 +394,9 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 * calculations on files relevant to the given language, skin and debug
 	 * mode.
 	 *
-	 * @param ResourceLoaderContext $context Context in which to calculate
+	 * @param $context ResourceLoaderContext: Context in which to calculate
 	 *     the modified time
-	 * @return int: UNIX timestamp
+	 * @return Integer: UNIX timestamp
 	 * @see ResourceLoaderModule::getFileDependencies
 	 */
 	public function getModifiedTime( ResourceLoaderContext $context ) {
@@ -468,7 +455,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/* Protected Methods */
 
 	/**
-	 * @param string $path
+	 * @param $path string
 	 * @return string
 	 */
 	protected function getLocalPath( $path ) {
@@ -476,22 +463,11 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	}
 
 	/**
-	 * @param string $path
+	 * @param $path string
 	 * @return string
 	 */
 	protected function getRemotePath( $path ) {
 		return "{$this->remoteBasePath}/$path";
-	}
-
-	/**
-	 * Infer the stylesheet language from a stylesheet file path.
-	 *
-	 * @since 1.22
-	 * @param string $path
-	 * @return string: the stylesheet language name
-	 */
-	public function getStyleSheetLang( $path ) {
-		return preg_match( '/\.less$/i', $path ) ? 'less' : 'css';
 	}
 
 	/**
@@ -500,12 +476,12 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 * @param array $list List of file paths in any combination of index/path
 	 *     or path/options pairs
 	 * @param string $option option name
-	 * @param mixed $default default value if the option isn't set
-	 * @return array: List of file paths, collated by $option
+	 * @param $default Mixed: default value if the option isn't set
+	 * @return Array: List of file paths, collated by $option
 	 */
 	protected static function collateFilePathListByOption( array $list, $option, $default ) {
 		$collatedFiles = array();
-		foreach ( (array)$list as $key => $value ) {
+		foreach ( (array) $list as $key => $value ) {
 			if ( is_int( $key ) ) {
 				// File name as the value
 				if ( !isset( $collatedFiles[$default] ) ) {
@@ -530,7 +506,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 * @param array $list List of lists to select from
 	 * @param string $key Key to look for in $map
 	 * @param string $fallback Key to look for in $list if $key doesn't exist
-	 * @return array: List of elements from $map which matched $key or $fallback,
+	 * @return Array: List of elements from $map which matched $key or $fallback,
 	 *     or an empty list in case of no match
 	 */
 	protected static function tryForKey( array $list, $key, $fallback = null ) {
@@ -548,8 +524,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Gets a list of file paths for all scripts in this module, in order of propper execution.
 	 *
-	 * @param ResourceLoaderContext $context
-	 * @return array: List of file paths
+	 * @param $context ResourceLoaderContext: Context
+	 * @return Array: List of file paths
 	 */
 	protected function getScriptFiles( ResourceLoaderContext $context ) {
 		$files = array_merge(
@@ -567,8 +543,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	/**
 	 * Gets a list of file paths for all styles in this module, in order of propper inclusion.
 	 *
-	 * @param ResourceLoaderContext $context
-	 * @return array: List of file paths
+	 * @param $context ResourceLoaderContext: Context
+	 * @return Array: List of file paths
 	 */
 	protected function getStyleFiles( ResourceLoaderContext $context ) {
 		return array_merge_recursive(
@@ -580,28 +556,11 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	}
 
 	/**
-	 * Returns all style files used by this module
-	 * @return array
-	 */
-	public function getAllStyleFiles() {
-		$files = array();
-		foreach( (array)$this->styles as $key => $value ) {
-			if ( is_array( $value ) ) {
-				$path = $key;
-			} else {
-				$path = $value;
-			}
-			$files[] = $this->getLocalPath( $path );
-		}
-		return $files;
-	}
-
-	/**
 	 * Gets the contents of a list of JavaScript files.
 	 *
 	 * @param array $scripts List of file paths to scripts to read, remap and concetenate
 	 * @throws MWException
-	 * @return string: Concatenated and remapped JavaScript data from $scripts
+	 * @return String: Concatenated and remapped JavaScript data from $scripts
 	 */
 	protected function readScriptFiles( array $scripts ) {
 		global $wgResourceLoaderValidateStaticJS;
@@ -632,9 +591,9 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 * @param array $styles List of media type/list of file paths pairs, to read, remap and
 	 * concetenate
 	 *
-	 * @param bool $flip
+	 * @param $flip bool
 	 *
-	 * @return array: List of concatenated and remapped CSS data from $styles,
+	 * @return Array: List of concatenated and remapped CSS data from $styles,
 	 *     keyed by media type
 	 */
 	protected function readStyleFiles( array $styles, $flip ) {
@@ -661,9 +620,9 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 * This method can be used as a callback for array_map()
 	 *
 	 * @param string $path File path of style file to read
-	 * @param bool $flip
+	 * @param $flip bool
 	 *
-	 * @return string: CSS data in script file
+	 * @return String: CSS data in script file
 	 * @throws MWException if the file doesn't exist
 	 */
 	protected function readStyleFile( $path, $flip ) {
@@ -673,14 +632,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 			wfDebugLog( 'resourceloader', $msg );
 			throw new MWException( $msg );
 		}
-
-		if ( $this->getStyleSheetLang( $path ) === 'less' ) {
-			$style = $this->compileLESSFile( $localPath );
-			$this->hasGeneratedStyles = true;
-		} else {
-			$style = file_get_contents( $localPath );
-		}
-
+		$style = file_get_contents( $localPath );
 		if ( $flip ) {
 			$style = CSSJanus::transform( $style, true, false );
 		}
@@ -703,7 +655,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 
 	/**
 	 * Get whether CSS for this module should be flipped
-	 * @param ResourceLoaderContext $context
+	 * @param $context ResourceLoaderContext
 	 * @return bool
 	 */
 	public function getFlip( $context ) {
@@ -719,58 +671,4 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		return $this->targets;
 	}
 
-	/**
-	 * Generate a cache key for a LESS file.
-	 *
-	 * The cache key varies on the file name and the names and values of global
-	 * LESS variables.
-	 *
-	 * @since 1.22
-	 * @param string $fileName File name of root LESS file.
-	 * @return string: Cache key
-	 */
-	protected static function getLESSCacheKey( $fileName ) {
-		$vars = json_encode( ResourceLoader::getLESSVars() );
-		$hash = md5( $fileName . $vars );
-		return wfMemcKey( 'resourceloader', 'less', $hash );
-	}
-
-	/**
-	 * Compile a LESS file into CSS.
-	 *
-	 * If invalid, returns replacement CSS source consisting of the compilation
-	 * error message encoded as a comment. To save work, we cache a result object
-	 * which comprises the compiled CSS and the names & mtimes of the files
-	 * that were processed. lessphp compares the cached & current mtimes and
-	 * recompiles as necessary.
-	 *
-	 * @since 1.22
-	 * @param string $fileName File path of LESS source
-	 * @return string: CSS source
-	 */
-	protected function compileLESSFile( $fileName ) {
-		$key = self::getLESSCacheKey( $fileName );
-		$cache = wfGetCache( CACHE_ANYTHING );
-
-		// The input to lessc. Either an associative array representing the
-		// cached results of a previous compilation, or the string file name if
-		// no cache result exists.
-		$source = $cache->get( $key );
-		if ( !is_array( $source ) || !isset( $source['root'] ) ) {
-			$source = $fileName;
-		}
-
-		$compiler = ResourceLoader::getLessCompiler();
-		$result = null;
-
-		$result = $compiler->cachedCompile( $source );
-
-		if ( !is_array( $result ) ) {
-			throw new MWException( 'LESS compiler result has type ' . gettype( $result ) . '; array expected.' );
-		}
-
-		$this->localFileRefs += array_keys( $result['files'] );
-		$cache->set( $key, $result );
-		return $result['compiled'];
-	}
 }

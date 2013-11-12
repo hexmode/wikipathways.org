@@ -28,7 +28,11 @@
 ini_set( 'zlib.output_compression', 'off' );
 
 $wgEnableProfileInfo = $wgProfileToDatabase = false;
-require __DIR__ . '/includes/WebStart.php';
+if ( isset( $_SERVER['MW_COMPILED'] ) ) {
+	require ( 'core/includes/WebStart.php' );
+} else {
+	require ( __DIR__ . '/includes/WebStart.php' );
+}
 
 header( 'Content-Type: text/html; charset=utf-8' );
 
@@ -386,9 +390,8 @@ if ( isset( $_REQUEST['filter'] ) ) {
 	}
 
 	$s = new profile_point( 'SQL Queries', 0, $sqltotal, 0, 0 );
-	foreach ( $queries as $q ) {
+	foreach ( $queries as $q )
 		$s->add_child( $q );
-	}
 	$points[] = $s;
 
 	usort( $points, 'compare_point' );

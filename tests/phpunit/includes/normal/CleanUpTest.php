@@ -30,20 +30,16 @@
  *
  * @ingroup UtfNormal
  * @group Large
- *
- * We ignore code coverage for this test suite until they are rewritten
- * to use data providers (bug 46561).
- * @codeCoverageIgnore
  */
 class CleanUpTest extends MediaWikiTestCase {
 	/** @todo document */
-	public function testAscii() {
+	function testAscii() {
 		$text = 'This is plain ASCII text.';
 		$this->assertEquals( $text, UtfNormal::cleanUp( $text ) );
 	}
 
 	/** @todo document */
-	public function testNull() {
+	function testNull() {
 		$text = "a \x00 null";
 		$expect = "a \xef\xbf\xbd null";
 		$this->assertEquals(
@@ -52,13 +48,13 @@ class CleanUpTest extends MediaWikiTestCase {
 	}
 
 	/** @todo document */
-	public function testLatin() {
+	function testLatin() {
 		$text = "L'\xc3\xa9cole";
 		$this->assertEquals( $text, UtfNormal::cleanUp( $text ) );
 	}
 
 	/** @todo document */
-	public function testLatinNormal() {
+	function testLatinNormal() {
 		$text = "L'e\xcc\x81cole";
 		$expect = "L'\xc3\xa9cole";
 		$this->assertEquals( $expect, UtfNormal::cleanUp( $text ) );
@@ -105,7 +101,7 @@ class CleanUpTest extends MediaWikiTestCase {
 	}
 
 	/** @todo document */
-	public function testAllBytes() {
+	function testAllBytes() {
 		$this->doTestBytes( '', '' );
 		$this->doTestBytes( 'x', '' );
 		$this->doTestBytes( '', 'x' );
@@ -145,7 +141,7 @@ class CleanUpTest extends MediaWikiTestCase {
 	}
 
 	/** @todo document */
-	public function testDoubleBytes() {
+	function testDoubleBytes() {
 		$this->doTestDoubleBytes( '', '' );
 		$this->doTestDoubleBytes( 'x', '' );
 		$this->doTestDoubleBytes( '', 'x' );
@@ -198,7 +194,7 @@ class CleanUpTest extends MediaWikiTestCase {
 	}
 
 	/** @todo document */
-	public function testTripleBytes() {
+	function testTripleBytes() {
 		$this->doTestTripleBytes( '', '' );
 		$this->doTestTripleBytes( 'x', '' );
 		$this->doTestTripleBytes( '', 'x' );
@@ -276,7 +272,7 @@ class CleanUpTest extends MediaWikiTestCase {
 	}
 
 	/** @todo document */
-	public function testChunkRegression() {
+	function testChunkRegression() {
 		# Check for regression against a chunking bug
 		$text = "\x46\x55\xb8" .
 			"\xdc\x96" .
@@ -299,7 +295,7 @@ class CleanUpTest extends MediaWikiTestCase {
 	}
 
 	/** @todo document */
-	public function testInterposeRegression() {
+	function testInterposeRegression() {
 		$text = "\x4e\x30" .
 			"\xb1" . # bad tail
 			"\x3a" .
@@ -334,7 +330,7 @@ class CleanUpTest extends MediaWikiTestCase {
 	}
 
 	/** @todo document */
-	public function testOverlongRegression() {
+	function testOverlongRegression() {
 		$text = "\x67" .
 			"\x1a" . # forbidden ascii
 			"\xea" . # bad head
@@ -359,7 +355,7 @@ class CleanUpTest extends MediaWikiTestCase {
 	}
 
 	/** @todo document */
-	public function testSurrogateRegression() {
+	function testSurrogateRegression() {
 		$text = "\xed\xb4\x96" . # surrogate 0xDD16
 			"\x83" . # bad tail
 			"\xb4" . # bad tail
@@ -374,7 +370,7 @@ class CleanUpTest extends MediaWikiTestCase {
 	}
 
 	/** @todo document */
-	public function testBomRegression() {
+	function testBomRegression() {
 		$text = "\xef\xbf\xbe" . # U+FFFE, illegal char
 			"\xb2" . # bad tail
 			"\xef" . # bad head
@@ -389,7 +385,7 @@ class CleanUpTest extends MediaWikiTestCase {
 	}
 
 	/** @todo document */
-	public function testForbiddenRegression() {
+	function testForbiddenRegression() {
 		$text = "\xef\xbf\xbf"; # U+FFFF, illegal char
 		$expect = "\xef\xbf\xbd";
 		$this->assertEquals(
@@ -398,7 +394,7 @@ class CleanUpTest extends MediaWikiTestCase {
 	}
 
 	/** @todo document */
-	public function testHangulRegression() {
+	function testHangulRegression() {
 		$text = "\xed\x9c\xaf" . # Hangul char
 			"\xe1\x87\x81"; # followed by another final jamo
 		$expect = $text; # Should *not* change.

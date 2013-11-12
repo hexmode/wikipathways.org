@@ -32,7 +32,7 @@ abstract class MediaTransformOutput {
 	 */
 	var $file;
 
-	var $width, $height, $url, $page, $path, $lang;
+	var $width, $height, $url, $page, $path;
 
 	/**
 	 * @var array Associative array mapping optional supplementary image files
@@ -151,12 +151,7 @@ abstract class MediaTransformOutput {
 		if ( $this->isError() ) {
 			return false;
 		} elseif ( $this->path === null ) {
-			return $this->file->getLocalRefPath(); // assume thumb was not scaled
-		} elseif ( FileBackend::isStoragePath( $this->path ) ) {
-			$be = $this->file->getRepo()->getBackend();
-			// The temp file will be process cached by FileBackend
-			$fsFile = $be->getLocalReference( array( 'src' => $this->path ) );
-			return $fsFile ? $fsFile->getPath() : false;
+			return $this->file->getLocalRefPath();
 		} else {
 			return $this->path; // may return false
 		}
@@ -197,26 +192,17 @@ abstract class MediaTransformOutput {
 
 	/**
 	 * @param $title string
-	 * @param $params string|array Query parameters to add
+	 * @param $params array
 	 * @return array
 	 */
-	public function getDescLinkAttribs( $title = null, $params = array() ) {
-		if ( is_array( $params ) ) {
-			$query = $params;
-		} else {
-			$query = array();
-		}
+	public function getDescLinkAttribs( $title = null, $params = '' ) {
+		$query = '';
 		if ( $this->page && $this->page !== 1 ) {
-			$query['page'] = $this->page;
+			$query = 'page=' . urlencode( $this->page );
 		}
-		if ( $this->lang ) {
-			$query['lang'] = $this->lang;
+		if( $params ) {
+			$query .= $query ? '&' . $params : $params;
 		}
-
-		if ( is_string( $params ) && $params !== '' ) {
-			$query = $params . '&' . wfArrayToCgi( $query );
-		}
-
 		$attribs = array(
 			'href' => $this->file->getTitle()->getLocalURL( $query ),
 			'class' => 'image',
@@ -251,12 +237,10 @@ class ThumbnailImage extends MediaTransformOutput {
 		# Previous parameters:
 		#   $file, $url, $width, $height, $path = false, $page = false
 
-		$defaults = array(
-			'page' => false,
-			'lang' => false
-		);
-
-		if ( is_array( $parameters ) ) {
+		if( is_array( $parameters ) ) {
+			$defaults = array(
+				'page' => false
+			);
 			$actualParams = $parameters + $defaults;
 		} else {
 			# Using old format, should convert. Later a warning could be added here.
@@ -265,7 +249,7 @@ class ThumbnailImage extends MediaTransformOutput {
 				'width' => $path,
 				'height' => $parameters,
 				'page' => ( $numArgs > 5 ) ? func_get_arg( 5 ) : false
-			) + $defaults;
+			);
 			$path = ( $numArgs > 4 ) ? func_get_arg( 4 ) : false;
 		}
 
@@ -280,7 +264,6 @@ class ThumbnailImage extends MediaTransformOutput {
 		$this->height = round( $actualParams['height'] );
 
 		$this->page = $actualParams['page'];
-		$this->lang = $actualParams['lang'];
 	}
 
 	/**
@@ -298,8 +281,6 @@ class ThumbnailImage extends MediaTransformOutput {
 	 *     valign       vertical-align property, if the output is an inline element
 	 *     img-class    Class applied to the \<img\> tag, if there is such a tag
 	 *     desc-query   String, description link query params
-	 *     override-width     Override width attribute. Should generally not set
-	 *     override-height    Override height attribute. Should generally not set
 	 *     custom-url-link    Custom URL to link to
 	 *     custom-title-link  Custom Title object to link to
 	 *     custom target-link Value of the target attribute, for custom-target-link
@@ -315,7 +296,7 @@ class ThumbnailImage extends MediaTransformOutput {
 	 */
 	function toHtml( $options = array() ) {
 		if ( count( func_get_args() ) == 2 ) {
-			throw new MWException( __METHOD__ . ' called in the old style' );
+			throw new MWException( __METHOD__ .' called in the old style' );
 		}
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
@@ -360,12 +341,6 @@ class ThumbnailImage extends MediaTransformOutput {
 		}
 		if ( !empty( $options['img-class'] ) ) {
 			$attribs['class'] = $options['img-class'];
-		}
-		if ( isset( $options['override-height'] ) ) {
-			$attribs['height'] = $options['override-height'];
-		}
-		if ( isset( $options['override-width'] ) ) {
-			$attribs['width'] = $options['override-width'];
 		}
 
 		// Additional densities for responsive images, if specified.

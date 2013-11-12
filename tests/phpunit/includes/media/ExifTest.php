@@ -1,18 +1,14 @@
 <?php
 class ExifTest extends MediaWikiTestCase {
 
-	/** @var string */
-	protected $mediaPath;
-
 	protected function setUp() {
 		parent::setUp();
-		if ( !extension_loaded( 'exif' ) ) {
-			$this->markTestSkipped( "This test needs the exif extension." );
-		}
 
 		$this->mediaPath = __DIR__ . '/../../data/media/';
 
-
+		if ( !wfDl( 'exif' ) ) {
+			$this->markTestSkipped( "This test needs the exif extension." );
+		}
 
 		$this->setMwGlobals( 'wgShowEXIF', true );
 	}
@@ -43,4 +39,6 @@ class ExifTest extends MediaWikiTestCase {
 		);
 		$this->assertEquals( $expected, $data );
 	}
+
+
 }

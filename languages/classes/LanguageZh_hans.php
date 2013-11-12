@@ -86,8 +86,6 @@ class LanguageZh_hans extends Language {
 		$segments = array();
 
 		foreach ( $intervals as $intervalName => $intervalValue ) {
-			// Messages: duration-seconds, duration-minutes, duration-hours, duration-days, duration-weeks,
-			// duration-years, duration-decades, duration-centuries, duration-millennia
 			$message = wfMessage( 'duration-' . $intervalName )->numParams( $intervalValue );
 			$segments[] = $message->inLanguage( $this )->escaped();
 		}

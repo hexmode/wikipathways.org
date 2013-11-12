@@ -79,17 +79,17 @@ class CreditsAction extends FormlessAction {
 
 	/**
 	 * Get the last author with the last modification time
-	 * @param Page $page
+	 * @param $article Article object
 	 * @return String HTML
 	 */
-	protected function getAuthor( Page $page ) {
-		$user = User::newFromName( $page->getUserText(), false );
+	protected function getAuthor( Page $article ) {
+		$user = User::newFromName( $article->getUserText(), false );
 
-		$timestamp = $page->getTimestamp();
+		$timestamp = $article->getTimestamp();
 		if ( $timestamp ) {
 			$lang = $this->getLanguage();
-			$d = $lang->date( $page->getTimestamp(), true );
-			$t = $lang->time( $page->getTimestamp(), true );
+			$d = $lang->date( $article->getTimestamp(), true );
+			$t = $lang->time( $article->getTimestamp(), true );
 		} else {
 			$d = '';
 			$t = '';
@@ -114,10 +114,9 @@ class CreditsAction extends FormlessAction {
 		# Hmm... too many to fit!
 		if ( $cnt > 0 && $contributors->count() > $cnt ) {
 			$others_link = $this->othersLink();
-			if ( !$showIfMax ) {
+			if ( !$showIfMax )
 				return $this->msg( 'othercontribs' )->rawParams(
 					$others_link )->params( $contributors->count() )->escaped();
-			}
 		}
 
 		$real_names = array();

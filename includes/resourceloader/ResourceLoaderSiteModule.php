@@ -37,19 +37,20 @@ class ResourceLoaderSiteModule extends ResourceLoaderWikiModule {
 	 * @return Array: List of pages
 	 */
 	protected function getPages( ResourceLoaderContext $context ) {
-		global $wgUseSiteJs, $wgUseSiteCss;
+		global $wgHandheldStyle;
 
-		$pages = array();
-		if ( $wgUseSiteJs ) {
-			$pages['MediaWiki:Common.js'] = array( 'type' => 'script' );
-			$pages['MediaWiki:' . ucfirst( $context->getSkin() ) . '.js'] = array( 'type' => 'script' );
+		$pages = array(
+			'MediaWiki:Common.js' => array( 'type' => 'script' ),
+			'MediaWiki:Common.css' => array( 'type' => 'style' ),
+			'MediaWiki:' . ucfirst( $context->getSkin() ) . '.js' => array( 'type' => 'script' ),
+			'MediaWiki:' . ucfirst( $context->getSkin() ) . '.css' => array( 'type' => 'style' ),
+			'MediaWiki:Print.css' => array( 'type' => 'style', 'media' => 'print' ),
+		);
+		if ( $wgHandheldStyle ) {
+			$pages['MediaWiki:Handheld.css'] = array(
+				'type' => 'style',
+				'media' => 'handheld' );
 		}
-		if ( $wgUseSiteCss ) {
-			$pages['MediaWiki:Common.css'] = array( 'type' => 'style' );
-			$pages['MediaWiki:' . ucfirst( $context->getSkin() ) . '.css'] = array( 'type' => 'style' );
-
-		}
-		$pages['MediaWiki:Print.css'] = array( 'type' => 'style', 'media' => 'print' );
 		return $pages;
 	}
 

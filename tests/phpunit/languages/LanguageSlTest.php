@@ -8,26 +8,16 @@
 
 /** Tests for MediaWiki languages/classes/LanguageSl.php */
 class LanguageSlTest extends LanguageClassesTestCase {
-	/**
-	 * @dataProvider providerPlural
-	 * @covers Language::convertPlural
-	 */
-	public function testPlural( $result, $value ) {
-		$forms = array( 'one', 'two', 'few', 'other' );
+
+	/** @dataProvider providerPlural */
+	function testPlural( $result, $value ) {
+		$forms = array( 'one', 'two', 'few', 'other', 'zero' );
 		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
-	/**
-	 * @dataProvider providerPlural
-	 * @covers Language::getPluralRuleType
-	 */
-	public function testGetPluralRuleType( $result, $value ) {
-		$this->assertEquals( $result, $this->getLang()->getPluralRuleType( $value ) );
-	}
-
-	public static function providerPlural() {
+	function providerPlural() {
 		return array(
-			array( 'other', 0 ),
+			array( 'zero', 0 ),
 			array( 'one', 1 ),
 			array( 'two', 2 ),
 			array( 'few', 3 ),

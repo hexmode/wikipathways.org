@@ -37,41 +37,16 @@ class LinkCache {
 	private $mForUpdate = false;
 
 	/**
-	 * @var LinkCache
-	 */
-	protected static $instance;
-
-	/**
-	 * Get an instance of this class.
+	 * Get an instance of this class
 	 *
 	 * @return LinkCache
 	 */
 	static function &singleton() {
-		if ( self::$instance ) {
-			return self::$instance;
+		static $instance;
+		if ( !isset( $instance ) ) {
+			$instance = new LinkCache;
 		}
-		self::$instance = new LinkCache;
-		return self::$instance;
-	}
-
-	/**
-	 * Destroy the singleton instance, a new one will be created next time
-	 * singleton() is called.
-	 * @since 1.22
-	 */
-	static function destroySingleton() {
-		self::$instance = null;
-	}
-
-	/**
-	 * Set the singleton instance to a given object.
-	 * Since we do not have an interface for LinkCache, you have to be sure the
-	 * given object implements all the LinkCache public methods.
-	 * @param LinkCache $instance
-	 * @since 1.22
-	 */
-	static function setSingleton( LinkCache $instance ) {
-		self::$instance = $instance;
+		return $instance;
 	}
 
 	/**
@@ -181,13 +156,8 @@ class LinkCache {
 		unset( $this->mGoodLinkFields[$dbkey] );
 	}
 
-	public function getGoodLinks() {
-		return $this->mGoodLinks;
-	}
-
-	public function getBadLinks() {
-		return array_keys( $this->mBadLinks );
-	}
+	public function getGoodLinks() { return $this->mGoodLinks; }
+	public function getBadLinks() { return array_keys( $this->mBadLinks ); }
 
 	/**
 	 * Add a title to the link cache, return the page_id or zero if non-existent
@@ -197,7 +167,7 @@ class LinkCache {
 	 */
 	public function addLink( $title ) {
 		$nt = Title::newFromDBkey( $title );
-		if ( $nt ) {
+		if( $nt ) {
 			return $this->addLinkObj( $nt );
 		} else {
 			return 0;
@@ -245,9 +215,7 @@ class LinkCache {
 		}
 
 		$f = array( 'page_id', 'page_len', 'page_is_redirect', 'page_latest' );
-		if ( $wgContentHandlerUseDB ) {
-			$f[] = 'page_content_model';
-		}
+		if ( $wgContentHandlerUseDB ) $f[] = 'page_content_model';
 
 		$s = $db->selectRow( 'page', $f,
 			array( 'page_namespace' => $nt->getNamespace(), 'page_title' => $nt->getDBkey() ),

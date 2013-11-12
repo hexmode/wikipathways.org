@@ -28,8 +28,7 @@
 /**
  * Helper class to keep track of options when mixing links and form elements.
  *
- * @todo This badly needs some examples and tests :) The usage in SpecialRecentchanges class is a
- *     good ersatz in the meantime.
+ * @todo This badly need some examples and tests :-)
  */
 class FormOptions implements ArrayAccess {
 	/** @name Type constants
@@ -51,26 +50,12 @@ class FormOptions implements ArrayAccess {
 	/* @} */
 
 	/**
-	 * Map of known option names to information about them.
-	 *
-	 * Each value is an array with the following keys:
-	 * - 'default' - the default value as passed to add()
-	 * - 'value' - current value, start with null, can be set by various functions
-	 * - 'consumed' - true/false, whether the option was consumed using
-	 *   consumeValue() or consumeValues()
-	 * - 'type' - one of the type constants (but never AUTO)
+	 * @todo Document!
 	 */
 	protected $options = array();
 
 	# Setting up
 
-	/**
-	 * Add an option to be handled by this FormOptions instance.
-	 *
-	 * @param string $name Request parameter name
-	 * @param mixed $default Default value when the request parameter is not present
-	 * @param int $type One of the type constants (optional, defaults to AUTO)
-	 */
 	public function add( $name, $default, $type = self::AUTO ) {
 		$option = array();
 		$option['default'] = $default;
@@ -86,25 +71,20 @@ class FormOptions implements ArrayAccess {
 		$this->options[$name] = $option;
 	}
 
-	/**
-	 * Remove an option being handled by this FormOptions instance. This is the inverse of add().
-	 *
-	 * @param string $name Request parameter name
-	 */
 	public function delete( $name ) {
 		$this->validateName( $name, true );
 		unset( $this->options[$name] );
 	}
 
 	/**
-	 * Used to find out which type the data is. All types are defined in the 'Type constants' section
-	 * of this class.
+	 * Used to find out which type the data is.
+	 * All types are defined in the 'Type constants' section of this class
+	 * Please note we do not support detection of INTNULL MediaWiki type
+	 * which will be assumed as INT if the data is an integer.
 	 *
-	 * Detection of the INTNULL type is not supported; INT will be assumed if the data is an integer,
-	 * MWException will be thrown if it's null.
-	 *
-	 * @param mixed $data Value to guess the type for
-	 * @throws MWException If unable to guess the type
+	 * @param $data Mixed: value to guess type for
+	 * @throws MWException
+	 * @exception MWException Unsupported datatype
 	 * @return int Type constant
 	 */
 	public static function guessType( $data ) {
@@ -122,12 +102,12 @@ class FormOptions implements ArrayAccess {
 	# Handling values
 
 	/**
-	 * Verify that the given option name exists.
+	 * Verify the given option name exist.
 	 *
-	 * @param string $name Option name
-	 * @param bool $strict Throw an exception when the option doesn't exist instead of returning false
+	 * @param string $name option name
+	 * @param $strict Boolean: throw an exception when the option does not exist (default false)
 	 * @throws MWException
-	 * @return bool True if the option exists, false otherwise
+	 * @return Boolean: true if option exist, false otherwise
 	 */
 	public function validateName( $name, $strict = false ) {
 		if ( !isset( $this->options[$name] ) ) {
@@ -137,17 +117,16 @@ class FormOptions implements ArrayAccess {
 				return false;
 			}
 		}
-
 		return true;
 	}
 
 	/**
 	 * Use to set the value of an option.
 	 *
-	 * @param string $name Option name
-	 * @param mixed $value Value for the option
-	 * @param bool $force Whether to set the value when it is equivalent to the default value for this
-	 *     option (default false).
+	 * @param string $name option name
+	 * @param $value Mixed: value for the option
+	 * @param $force Boolean: whether to set the value when it is equivalent to the default value for this option (default false).
+	 * @return null
 	 */
 	public function setValue( $name, $value, $force = false ) {
 		$this->validateName( $name, true );
@@ -161,10 +140,11 @@ class FormOptions implements ArrayAccess {
 	}
 
 	/**
-	 * Get the value for the given option name. Uses getValueReal() internally.
+	 * Get the value for the given option name.
+	 * Internally use getValueReal()
 	 *
-	 * @param string $name Option name
-	 * @return mixed
+	 * @param string $name option name
+	 * @return Mixed
 	 */
 	public function getValue( $name ) {
 		$this->validateName( $name, true );
@@ -173,10 +153,9 @@ class FormOptions implements ArrayAccess {
 	}
 
 	/**
-	 * Return current option value, based on a structure taken from $options.
-	 *
-	 * @param array $option Array structure describing the option
-	 * @return mixed Value, or the default value if it is null
+	 * @todo Document
+	 * @param array $option array structure describing the option
+	 * @return Mixed. Value or the default value if it is null
 	 */
 	protected function getValueReal( $option ) {
 		if ( $option['value'] !== null ) {
@@ -188,8 +167,9 @@ class FormOptions implements ArrayAccess {
 
 	/**
 	 * Delete the option value.
-	 * This will make future calls to getValue() return the default value.
-	 * @param string $name Option name
+	 * This will make future calls to getValue()  return the default value.
+	 * @param string $name option name
+	 * @return null
 	 */
 	public function reset( $name ) {
 		$this->validateName( $name, true );
@@ -197,13 +177,10 @@ class FormOptions implements ArrayAccess {
 	}
 
 	/**
-	 * Get the value of given option and mark it as 'consumed'. Consumed options are not returned
-	 * by getUnconsumedValues().
-	 *
-	 * @see consumeValues()
-	 * @throws MWException If the option does not exist
+	 * @todo Document
 	 * @param string $name Option name
-	 * @return mixed Value, or the default value if it is null
+	 * @throws MWException If option does not exist.
+	 * @return mixed Value or the default value if it is null.
 	 */
 	public function consumeValue( $name ) {
 		$this->validateName( $name, true );
@@ -213,15 +190,11 @@ class FormOptions implements ArrayAccess {
 	}
 
 	/**
-	 * Get the values of given options and mark them as 'consumed'. Consumed options are not returned
-	 * by getUnconsumedValues().
-	 *
-	 * @see consumeValue()
-	 * @throws MWException If any option does not exist
-	 * @param array $names Array of option names as strings
-	 * @return array Array of option values, or the default values if they are null
+	 * @todo Document
+	 * @param array $names array of option names
+	 * @return null
 	 */
-	public function consumeValues( $names ) {
+	public function consumeValues( /*Array*/ $names ) {
 		$out = array();
 
 		foreach ( $names as $name ) {
@@ -240,7 +213,9 @@ class FormOptions implements ArrayAccess {
 	 * @param string $name option name
 	 * @param int $min minimum value
 	 * @param int $max maximum value
-	 * @throws MWException If option is not of type INT
+	 * @throws MWException
+	 * @exception MWException Option is not of type int
+	 * @return null
 	 */
 	public function validateIntBounds( $name, $min, $max ) {
 		$this->validateName( $name, true );
@@ -256,10 +231,9 @@ class FormOptions implements ArrayAccess {
 	}
 
 	/**
-	 * Get all remaining values which have not been consumed by consumeValue() or consumeValues().
-	 *
-	 * @param bool $all Whether to include unchanged options (default: false)
-	 * @return array
+	 * Getting the data out for use
+	 * @param $all Boolean: whether to include unchanged options (default: false)
+	 * @return Array
 	 */
 	public function getUnconsumedValues( $all = false ) {
 		$values = array();
@@ -277,7 +251,7 @@ class FormOptions implements ArrayAccess {
 
 	/**
 	 * Return options modified as an array ( name => value )
-	 * @return array
+	 * @return Array
 	 */
 	public function getChangedValues() {
 		$values = array();
@@ -292,8 +266,8 @@ class FormOptions implements ArrayAccess {
 	}
 
 	/**
-	 * Format options to an array ( name => value )
-	 * @return array
+	 * Format options to an array ( name => value)
+	 * @return Array
 	 */
 	public function getAllValues() {
 		$values = array();
@@ -307,38 +281,24 @@ class FormOptions implements ArrayAccess {
 
 	# Reading values
 
-	/**
-	 * Fetch values for all options (or selected options) from the given WebRequest, making them
-	 * available for accessing with getValue() or consumeValue() etc.
-	 *
-	 * @param WebRequest $r The request to fetch values from
-	 * @param array $optionKeys Which options to fetch the values for (default:
-	 *     all of them). Note that passing an empty array will also result in
-	 *     values for all keys being fetched.
-	 * @throws MWException If the type of any option is invalid
-	 */
-	public function fetchValuesFromRequest( WebRequest $r, $optionKeys = null ) {
-		if ( !$optionKeys ) {
-			$optionKeys = array_keys( $this->options );
+	public function fetchValuesFromRequest( WebRequest $r, $values = false ) {
+		if ( !$values ) {
+			$values = array_keys( $this->options );
 		}
 
-		foreach ( $optionKeys as $name ) {
+		foreach ( $values as $name ) {
 			$default = $this->options[$name]['default'];
 			$type = $this->options[$name]['type'];
 
-			switch ( $type ) {
+			switch( $type ) {
 				case self::BOOL:
-					$value = $r->getBool( $name, $default );
-					break;
+					$value = $r->getBool( $name, $default ); break;
 				case self::INT:
-					$value = $r->getInt( $name, $default );
-					break;
+					$value = $r->getInt( $name, $default ); break;
 				case self::STRING:
-					$value = $r->getText( $name, $default );
-					break;
+					$value = $r->getText( $name, $default ); break;
 				case self::INTNULL:
-					$value = $r->getIntOrNull( $name );
-					break;
+					$value = $r->getIntOrNull( $name ); break;
 				default:
 					throw new MWException( 'Unsupported datatype' );
 			}
@@ -350,26 +310,29 @@ class FormOptions implements ArrayAccess {
 	}
 
 	/** @name ArrayAccess functions
-	 * These functions implement the ArrayAccess PHP interface.
+	 * Those function implements PHP ArrayAccess interface
 	 * @see http://php.net/manual/en/class.arrayaccess.php
 	 */
 	/* @{ */
-	/** Whether the option exists. */
+	/**
+	 * Whether option exist
+	 * @return bool
+	 */
 	public function offsetExists( $name ) {
 		return isset( $this->options[$name] );
 	}
-
-	/** Retrieve an option value. */
+	/**
+	 * Retrieve an option value
+	 * @return Mixed
+	 */
 	public function offsetGet( $name ) {
 		return $this->getValue( $name );
 	}
-
-	/** Set an option to given value. */
+	/**	Set an option to given value */
 	public function offsetSet( $name, $value ) {
 		$this->setValue( $name, $value );
 	}
-
-	/** Delete the option. */
+	/**	Delete the option */
 	public function offsetUnset( $name ) {
 		$this->delete( $name );
 	}

@@ -35,9 +35,10 @@ class ResourceLoaderUserTokensModule extends ResourceLoaderModule {
 	/**
 	 * Fetch the tokens for the current user.
 	 *
-	 * @return array: List of tokens keyed by token type
+	 * @param $context ResourceLoaderContext: Context object
+	 * @return Array: List of tokens keyed by token type
 	 */
-	protected function contextUserTokens() {
+	protected function contextUserTokens( ResourceLoaderContext $context ) {
 		global $wgUser;
 
 		return array(
@@ -53,9 +54,7 @@ class ResourceLoaderUserTokensModule extends ResourceLoaderModule {
 	 */
 	public function getScript( ResourceLoaderContext $context ) {
 		return Xml::encodeJsCall( 'mw.user.tokens.set',
-			array( $this->contextUserTokens() ),
-			ResourceLoader::inDebugMode()
-		);
+			array( $this->contextUserTokens( $context ) ) );
 	}
 
 	/**

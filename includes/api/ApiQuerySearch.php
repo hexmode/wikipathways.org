@@ -31,14 +31,6 @@
  */
 class ApiQuerySearch extends ApiQueryGeneratorBase {
 
-	/**
-	 * When $wgSearchType is null, $wgSearchAlternatives[0] is null. Null isn't
-	 * a valid option for an array for PARAM_TYPE, so we'll use a fake name
-	 * that can't possibly be a class name and describes what the null behavior
-	 * does
-	 */
-	const BACKEND_NULL_PARAM = 'database-backed';
-
 	public function __construct( $query, $moduleName ) {
 		parent::__construct( $query, $moduleName, 'sr' );
 	}
@@ -67,8 +59,7 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 		$prop = array_flip( $params['prop'] );
 
 		// Create search engine instance and set options
-		$search = isset( $params['backend'] ) && $params['backend'] != self::BACKEND_NULL_PARAM ?
-			SearchEngine::create( $params['backend'] ) : SearchEngine::create();
+		$search = SearchEngine::create();
 		$search->setLimitOffset( $limit + 1, $params['offset'] );
 		$search->setNamespaces( $params['namespace'] );
 		$search->showRedirects = $params['redirects'];
@@ -102,8 +93,6 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 		}
 		if ( is_null( $matches ) ) {
 			$this->dieUsage( "{$what} search is disabled", "search-{$what}-disabled" );
-		} elseif ( $matches instanceof Status && !$matches->isGood() ) {
-			$this->dieUsage( $matches->getWikiText(), 'search-error' );
 		}
 
 		$apiResult = $this->getResult();
@@ -210,9 +199,7 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 	}
 
 	public function getAllowedParams() {
-		global $wgSearchType;
-
-		$params = array(
+		return array(
 			'search' => array(
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true
@@ -265,23 +252,10 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 				ApiBase::PARAM_MAX2 => ApiBase::LIMIT_SML2
 			)
 		);
-
-		$alternatives = SearchEngine::getSearchTypes();
-		if ( count( $alternatives ) > 1 ) {
-			if ( $alternatives[0] === null ) {
-				$alternatives[0] = self::BACKEND_NULL_PARAM;
-			}
-			$params['backend'] = array(
-				ApiBase::PARAM_DFLT => $wgSearchType,
-				ApiBase::PARAM_TYPE => $alternatives,
-			);
-		}
-
-		return $params;
 	}
 
 	public function getParamDescription() {
-		$descriptions = array(
+		return array(
 			'search' => 'Search for all page titles (or content) that has this value',
 			'namespace' => 'The namespace(s) to enumerate',
 			'what' => 'Search inside the text or titles',
@@ -304,12 +278,6 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 			'offset' => 'Use this value to continue paging (return by query)',
 			'limit' => 'How many total pages to return'
 		);
-
-		if ( count( SearchEngine::getSearchTypes() ) > 1 ) {
-			$descriptions['backend'] = 'Which search backend to use, if not the default';
-		}
-
-		return $descriptions;
 	}
 
 	public function getResultProperties() {
@@ -377,7 +345,6 @@ class ApiQuerySearch extends ApiQueryGeneratorBase {
 		return array_merge( parent::getPossibleErrors(), array(
 			array( 'code' => 'search-text-disabled', 'info' => 'text search is disabled' ),
 			array( 'code' => 'search-title-disabled', 'info' => 'title search is disabled' ),
-			array( 'code' => 'search-error', 'info' => 'search error has occurred' ),
 		) );
 	}
 

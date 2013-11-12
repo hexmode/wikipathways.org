@@ -169,7 +169,7 @@ $messages = array(
 'jumptonavigation' => 'ʻai taumuʻa',
 'jumptosearch' => 'kumi',
 
-# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage).
+# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => 'Kau ki: {{SITENAME}}',
 'aboutpage' => 'Project:ʻo kau ki',
 'currentevents' => 'Ngaahi ongoongo',
@@ -254,6 +254,7 @@ Eke: $2",
 'editinginterface' => "'''Warning:''' You are editing a page which is used to provide interface text for the software.
 Changes to this page will affect the appearance of the user interface for other users.
 For translations, please consider using [//translatewiki.net/wiki/Main_Page?setlang=en translatewiki.net], the MediaWiki localisation project.",
+'sqlhidden' => '(ʻOku toi ʻa e fehuʻi SQL)',
 'namespaceprotected' => "ʻOku ʻikai ngofua ke ke fatu ʻa e ngaahi kupu ʻi he vā hingoa '''$1'''.",
 
 # Login and logout pages
@@ -627,6 +628,10 @@ Ko e ʻuhinga loka ko e $1 ia.",
 'statistics-header-users' => 'Sitesitesika ʻo e ʻetita',
 'statistics-mostpopular' => 'Ko e ngaahi peesi naʻe vakai ki ai lahi taha',
 
+'disambiguations' => 'Peesi fakaʻuhingakehe',
+'disambiguationspage' => 'Template:Fakaʻuhingakehe',
+'disambiguations-text' => "ʻOku ʻi ai haʻanau fehokotaki ki ha '''Peesi fakaʻuhingakehe''' maʻa e ngaahi kupu ʻoku ʻasi ʻi lalo. ʻE taau ʻo ʻenau fehokotaki ki he kupu totonu. ʻOku kau ʻa e kupu ki he peesi fakaʻuhingakehe kapau ʻoku ngāueʻaki ha sīpinga ʻoku ʻasi ʻi he  [[MediaWiki:Disambiguationspage]].",
+
 'doubleredirects' => 'Ngaahi leʻeleʻei',
 'doubleredirectstext' => 'ʻOku ʻasi ʻi he ʻotu kotoa pē ha ongo fehokotaki ki he leʻei, mo e leʻeleʻei, mo e kamataʻanga ʻo e leʻeleʻei, taimi ʻe niʻihi ko e peesi totonu ia, ʻoku taau ʻe tuhu ki ai ʻe he leʻei.',
 
@@ -756,6 +761,7 @@ Kapau ʻaho ʻe taha, te ke fietoʻo ʻa e pēsí mei hoʻo hokohoko leʻo, lomi
 'watchthispage' => 'Leʻo he pēsí ni',
 'unwatch' => 'Taʻeleʻo',
 'unwatchthispage' => 'Tuʻu he leʻo',
+'watchnochange' => 'ʻOku ʻikai ʻaupito ʻe fatuʻi hoʻo ngaahi kupu fakaleʻo lolotonga ha taimi ʻoku ʻasi mai.',
 'watchlist-details' => 'ʻOku leʻoʻi ʻa e peesi ʻe $1, ʻikai kau ki ai ʻa e ngaahi peesi alea.',
 'wlheader-enotif' => 'Kuo fakamafeiaʻi tala mei he tohila',
 'wlheader-showupdated' => '*Ko e ngaahi peesi kuo liliu talu he taimi hoʻo ʻaʻahi ki ai, ʻoku ʻasi mai fakasinolahi',
@@ -890,6 +896,7 @@ Vakai ki he [[Special:Log/delete|hokohoko tāmateʻi]] ki he lekooti ʻo e ngaah
 'ipb_already_blocked' => 'Kuo ʻosi taʻofi ʻa e "$1"',
 'ipb_cant_unblock' => 'Hala: naʻe ʻikai ʻilo ko e taʻofi fika $1. Mahalo pē kuo ʻosi ʻene taʻetaʻofi.',
 'ip_range_invalid' => 'ʻOku taʻeʻaonga ʻa e fakavā IP',
+'proxyblocksuccess' => 'Kuo fai.',
 
 # Developer tools
 'lockdb' => 'Lokaʻi ʻa e tānekingaʻilo',
@@ -1036,7 +1043,7 @@ Pea hoko ai pē hoʻo lava tānaki ha ʻuhinga ʻi he fakanounou',
 'metadata-expand' => 'Fano kiʻi meʻa',
 'metadata-collapse' => 'Holo kiʻi meʻa',
 
-# Exif tags
+# EXIF tags
 'exif-xresolution' => 'Auiiki fakalava',
 'exif-yresolution' => 'Auiiki tuʻutonu',
 'exif-jpeginterchangeformatlength' => 'ʻŪ valu meʻaʻilo JPEG',
@@ -1213,6 +1220,11 @@ Kātaki fakapapauʻi te ke fie toe fatu ʻa e kupu ni.",
 
 # Special:Version
 'version' => 'Paaki',
+
+# Special:FilePath
+'filepath' => 'Hala ki he faile',
+'filepath-page' => 'Faile:',
+'filepath-submit' => 'Ko e hala',
 
 # Special:SpecialPages
 'specialpages' => 'Ngaahi peesi makehe',

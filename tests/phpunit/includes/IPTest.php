@@ -1,12 +1,7 @@
 <?php
 /**
- * Tests for IP validity functions.
- *
- * Ported from /t/inc/IP.t by avar.
- *
+ * Tests for IP validity functions. Ported from /t/inc/IP.t by avar.
  * @group IP
- * @todo Test methods in this call should be split into a method and a
- * dataprovider.
  */
 
 class IPTest extends MediaWikiTestCase {
@@ -264,63 +259,14 @@ class IPTest extends MediaWikiTestCase {
 	}
 
 	/**
+	 * test wrapper around ip2long which might return -1 or false depending on PHP version
 	 * @covers IP::toUnsigned
-	 * @dataProvider provideToUnsigned
 	 */
-	public function testToUnsigned( $expected, $input ) {
-		$result = IP::toUnsigned( $input );
-		$this->assertTrue( $result === false || is_string( $result ) || is_int( $result ) );
-		$this->assertEquals( $expected, $result );
-	}
-
-	/**
-	 * Provider for IP::testToUnsigned()
-	 */
-	public static function provideToUnsigned() {
-		return array(
-			array( 1, '0.0.0.1' ),
-			array( 16909060, '1.2.3.4' ),
-			array( 2130706433, '127.0.0.1' ),
-			array( '2147483648', '128.0.0.0' ),
-			array( '3735931646', '222.173.202.254' ),
-			array( pow( 2, 32 ) - 1, '255.255.255.255' ),
-			array( false, 'IN.VA.LI.D' ),
-			array( 1, '::1' ),
-			array( '42540766452641154071740215577757643572', '2001:0db8:85a3:0000:0000:8a2e:0370:7334' ),
-			array( '42540766452641154071740215577757643572', '2001:db8:85a3::8a2e:0370:7334' ),
-			array( false, 'IN:VA::LI:D' ),
-			array( false, ':::1' )
-		);
-	}
-
-	/**
-	 * @covers IP::toHex
-	 * @dataProvider provideToHex
-	 */
-	public function testToHex( $expected, $input ) {
-		$result = IP::toHex( $input );
-		$this->assertTrue( $result === false || is_string( $result ) );
-		$this->assertEquals( $expected, $result );
-	}
-
-	/**
-	 * Provider for IP::testToHex()
-	 */
-	public static function provideToHex() {
-		return array(
-			array( '00000001', '0.0.0.1' ),
-			array( '01020304', '1.2.3.4' ),
-			array( '7F000001', '127.0.0.1' ),
-			array( '80000000', '128.0.0.0' ),
-			array( 'DEADCAFE', '222.173.202.254' ),
-			array( 'FFFFFFFF', '255.255.255.255' ),
-			array( false, 'IN.VA.LI.D' ),
-			array( 'v6-00000000000000000000000000000001', '::1' ),
-			array( 'v6-20010DB885A3000000008A2E03707334', '2001:0db8:85a3:0000:0000:8a2e:0370:7334' ),
-			array( 'v6-20010DB885A3000000008A2E03707334', '2001:db8:85a3::8a2e:0370:7334' ),
-			array( false, 'IN:VA::LI:D' ),
-			array( false, ':::1' )
-		);
+	public function testip2longWrapper() {
+		// @todo FIXME: Add more tests ?
+		$this->assertEquals( pow( 2, 32 ) - 1, IP::toUnsigned( '255.255.255.255' ) );
+		$i = 'IN.VA.LI.D';
+		$this->assertFalse( IP::toUnSigned( $i ) );
 	}
 
 	/**
@@ -392,7 +338,7 @@ class IPTest extends MediaWikiTestCase {
 	 * representing the network mask and the bit mask.
 	 * @covers IP::parseCIDR
 	 */
-	public function testCIDRParsing() {
+	function testCIDRParsing() {
 		$this->assertFalseCIDR( '192.0.2.0', "missing mask" );
 		$this->assertFalseCIDR( '192.0.2.0/', "missing bitmask" );
 
@@ -489,7 +435,7 @@ class IPTest extends MediaWikiTestCase {
 	 * Test for IP::splitHostAndPort().
 	 * @dataProvider provideSplitHostAndPort
 	 */
-	public function testSplitHostAndPort( $expected, $input, $description ) {
+	function testSplitHostAndPort( $expected, $input, $description ) {
 		$this->assertEquals( $expected, IP::splitHostAndPort( $input ), $description );
 	}
 
@@ -516,7 +462,7 @@ class IPTest extends MediaWikiTestCase {
 	 * Test for IP::combineHostAndPort()
 	 * @dataProvider provideCombineHostAndPort
 	 */
-	public function testCombineHostAndPort( $expected, $input, $description ) {
+	function testCombineHostAndPort( $expected, $input, $description ) {
 		list( $host, $port, $defaultPort ) = $input;
 		$this->assertEquals(
 			$expected,
@@ -540,7 +486,7 @@ class IPTest extends MediaWikiTestCase {
 	 * Test for IP::sanitizeRange()
 	 * @dataProvider provideIPCIDRs
 	 */
-	public function testSanitizeRange( $input, $expected, $description ) {
+	function testSanitizeRange( $input, $expected, $description ) {
 		$this->assertEquals( $expected, IP::sanitizeRange( $input ), $description );
 	}
 
@@ -564,7 +510,7 @@ class IPTest extends MediaWikiTestCase {
 	 * Test for IP::prettifyIP()
 	 * @dataProvider provideIPsToPrettify
 	 */
-	public function testPrettifyIP( $ip, $prettified ) {
+	function testPrettifyIP( $ip, $prettified ) {
 		$this->assertEquals( $prettified, IP::prettifyIP( $ip ), "Prettify of $ip" );
 	}
 

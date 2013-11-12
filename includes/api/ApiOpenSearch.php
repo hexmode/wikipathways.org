@@ -1,5 +1,7 @@
 <?php
 /**
+ *
+ *
  * Created on Oct 13, 2006
  *
  * Copyright © 2006 Yuri Astrakhan "<Firstname><Lastname>@gmail.com"
@@ -27,20 +29,8 @@
  */
 class ApiOpenSearch extends ApiBase {
 
-	/**
-	 * Override built-in handling of format parameter.
-	 * Only JSON is supported.
-	 *
-	 * @return ApiFormatBase
-	 */
 	public function getCustomPrinter() {
-		$params = $this->extractRequestParams();
-		$format = $params['format'];
-		$allowed = array( 'json', 'jsonfm' );
-		if ( in_array( $format, $allowed ) ) {
-			return $this->getMain()->createPrinterByName( $format );
-		}
-		return $this->getMain()->createPrinterByName( $allowed[0] );
+		return $this->getMain()->createPrinterByName( 'json' );
 	}
 
 	public function execute() {
@@ -104,10 +94,6 @@ class ApiOpenSearch extends ApiBase {
 				ApiBase::PARAM_ISMULTI => true
 			),
 			'suggest' => false,
-			'format' => array(
-				ApiBase::PARAM_DFLT => 'json',
-				ApiBase::PARAM_TYPE => array( 'json', 'jsonfm' ),
-			)
 		);
 	}
 
@@ -117,7 +103,6 @@ class ApiOpenSearch extends ApiBase {
 			'limit' => 'Maximum amount of results to return',
 			'namespace' => 'Namespaces to search',
 			'suggest' => 'Do nothing if $wgEnableOpenSearchSuggest is false',
-			'format' => 'The format of the output',
 		);
 	}
 

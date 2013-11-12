@@ -311,7 +311,7 @@ $messages = array(
 'protectedpage' => 'تحفظيل صفحو',
 'jumptosearch' => 'ڳولا',
 
-# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage).
+# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => '{{SITENAME}} بابت',
 'aboutpage' => 'Project:بابت',
 'copyright' => 'سمورو مواد $1 تحت ميسر ڪجي ٿو',
@@ -321,6 +321,7 @@ $messages = array(
 'disclaimers' => 'غيرجوابداريناما',
 'disclaimerpage' => 'Project:عام غيرجوابدارينامو',
 'edithelp' => 'مدد براءِ ترميم',
+'edithelppage' => 'Help:سنوارڻ',
 'helppage' => 'Help:فهرست',
 'mainpage' => 'مُک صفحو',
 'mainpage-description' => 'مُک صفحو',
@@ -523,6 +524,7 @@ You cannot use the 'e-mail this user' feature unless a valid e-mail address is s
 'prevn' => 'پويان {{PLURAL:$1|$1}}',
 'nextn' => 'اڳيان {{PLURAL:$1|$1}}',
 'viewprevnext' => 'ڏسو ($1 {{int:pipe-separator}} $2) ($3)',
+'searchhelp-url' => 'Help:فهرست',
 'powersearch' => 'نفيس ڳولا',
 'powersearch-redir' => 'چورڻن جي فهرست ڏيکاريو',
 
@@ -582,6 +584,7 @@ $1 {{PLURAL:$1|اکر|اکرن}} کان ننڍي هوڻ گھرجي.',
 'recentchangeslinked-feed' => 'لاڳاپيل تبديليون',
 'recentchangeslinked-toolbox' => 'لاڳاپيل تبديليون',
 'recentchangeslinked-title' => '"$1" سان لاڳاپيل تبديليون',
+'recentchangeslinked-noresult' => 'ڄاڻايل مدي دوران ڳنڍيل صفحن ۾ ڪا به تبديلي ناهي ٿي.',
 
 # Upload
 'upload' => 'فائيل چاڙهيو',
@@ -625,6 +628,8 @@ $1 {{PLURAL:$1|اکر|اکرن}} کان ننڍي هوڻ گھرجي.',
 
 # Statistics
 'statistics' => 'انگ اکر',
+
+'disambiguations' => 'سلجھائپ صفحا',
 
 'doubleredirects' => 'ٻٽا چورڻا',
 
@@ -907,7 +912,7 @@ $1 {{PLURAL:$1|اکر|اکرن}} کان ننڍي هوڻ گھرجي.',
 'metadata-expand' => 'توسيعي تفصيل ڏيکاريو',
 'metadata-collapse' => 'توسيعي تفصيل لڪايو',
 
-# Exif tags
+# EXIF tags
 'exif-imagewidth' => 'ويڪر',
 'exif-imagelength' => 'اوچائي',
 'exif-bitspersample' => 'ٻٽڻيون في جُز',

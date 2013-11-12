@@ -228,7 +228,7 @@ $messages = array(
 'jumptonavigation' => 'hatudu-dalan',
 'jumptosearch' => 'buka',
 
-# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage).
+# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => 'Kona-ba {{SITENAME}}',
 'aboutpage' => 'Project:Kona-ba',
 'copyright' => 'Testu pájina nian iha $1 okos.',
@@ -238,6 +238,7 @@ $messages = array(
 'disclaimers' => 'Avisu legál',
 'disclaimerpage' => 'Project:Avisu legál',
 'edithelp' => 'Ajuda kona-ba edita',
+'edithelppage' => 'Help:Edita',
 'helppage' => 'Help:Konteúdu',
 'mainpage' => 'Pájina Mahuluk',
 'mainpage-description' => 'Pájina Mahuluk',
@@ -592,7 +593,6 @@ Ita-nia mudansa la armazenadu seidauk!",
 'shortpages' => 'Pájina badak',
 'longpages' => 'Pájina naruk',
 'listusers' => "Lista uza-na'in",
-'usercreated' => '{{GENDER:$3|registradu}} loron $1, oras $2',
 'newpages' => 'Pájina foun',
 'newpages-username' => "Naran uza-na'in:",
 'ancientpages' => 'Pájina tuan liu hotu sira',
@@ -769,7 +769,6 @@ Ita-nia mudansa la armazenadu seidauk!",
 'blocklink' => 'blokeiu',
 'unblocklink' => 'la blokeiu',
 'contribslink' => 'kontribuisaun',
-'blocklogentry' => 'blokeiu [[$1]] ba tempu $2 $3',
 'block-log-flags-nocreate' => 'la bele kria konta foun',
 'block-log-flags-noemail' => 'korreiu eletróniku blokeiu',
 'block-log-flags-nousertalk' => 'la bele edita pájina diskusaun rasik',
@@ -822,7 +821,6 @@ Ita-nia mudansa la armazenadu seidauk!",
 'tooltip-ca-addsection' => 'Tau tan seksaun foun ida.',
 'tooltip-ca-viewsource' => "Ema ruma proteje tiha pájina ne'e.
 Ó bele lee testu.",
-'tooltip-ca-history' => 'Versaun tuan pájina nian',
 'tooltip-ca-protect' => "Proteje pájina ne'e",
 'tooltip-ca-delete' => "Halakon pájina ne'e",
 'tooltip-ca-move' => "Book pájina ne'e",
@@ -858,7 +856,10 @@ Ita-nia mudansa la armazenadu seidauk!",
 'siteusers' => "{{PLURAL:$2|uza-na'in|uza-na'in}} {{SITENAME}} nian $1",
 
 # Skin names
+'skinname-standard' => 'Klásiku',
 'skinname-cologneblue' => 'Kolónia azúl',
+'skinname-myskin' => 'MySkin',
+'skinname-chick' => 'Manu',
 
 # Browsing diffs
 'previousdiff' => '←Versaun molok',
@@ -878,7 +879,7 @@ Liña hotu tenke komesa ho *
 Ligasaun uluk iha liña tenke ligasaun bá imajen aat.
 Ligasaun seluk iha liña - ne'e pájina sira iha ne'ebé bele inklui imajen aat.",
 
-# Exif tags
+# EXIF tags
 'exif-make' => 'Fabrikante kámara nian',
 'exif-model' => 'Kámara',
 'exif-artist' => 'Autór',
@@ -959,6 +960,10 @@ Ligasaun seluk iha liña - ne'e pájina sira iha ne'ebé bele inklui imajen aat.
 'version-software-product' => 'Produtu',
 'version-software-version' => 'Versaun',
 
+# Special:FilePath
+'filepath-page' => 'Fail:',
+'filepath-submit' => 'Bá',
+
 # Special:FileDuplicateSearch
 'fileduplicatesearch-submit' => 'Buka',
 
@@ -988,8 +993,5 @@ Ligasaun seluk iha liña - ne'e pájina sira iha ne'ebé bele inklui imajen aat.
 
 # New logging system
 'rightsnone' => '(mamuk)',
-
-# Search suggestions
-'searchsuggest-search' => 'Buka',
 
 );

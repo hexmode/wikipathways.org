@@ -24,7 +24,7 @@
  */
 
 /**
- * @brief Class for an OpenStack Swift (or Ceph RGW) based file backend.
+ * @brief Class for an OpenStack Swift based file backend.
  *
  * This requires the SwiftCloudFiles MediaWiki extension, which includes
  * the php-cloudfiles library (https://github.com/rackspace/php-cloudfiles).
@@ -104,7 +104,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 */
 	public function __construct( array $config ) {
 		parent::__construct( $config );
-		if ( !class_exists( 'CF_Constants' ) ) {
+		if ( !MWInit::classExists( 'CF_Constants' ) ) {
 			throw new MWException( 'SwiftCloudFiles extension not installed.' );
 		}
 		// Required settings
@@ -132,7 +132,7 @@ class SwiftFileBackend extends FileBackendStore {
 			: false;
 		$this->swiftCDNExpiry = isset( $config['swiftCDNExpiry'] )
 			? $config['swiftCDNExpiry']
-			: 12 * 3600; // 12 hours is safe (tokens last 24 hours per http://docs.openstack.org)
+			: 12*3600; // 12 hours is safe (tokens last 24 hours per http://docs.openstack.org)
 		$this->swiftCDNPurgable = isset( $config['swiftCDNPurgable'] )
 			? $config['swiftCDNPurgable']
 			: true;
@@ -172,6 +172,10 @@ class SwiftFileBackend extends FileBackendStore {
 		return $relStoragePath;
 	}
 
+	/**
+	 * @see FileBackendStore::isPathUsableInternal()
+	 * @return bool
+	 */
 	public function isPathUsableInternal( $storagePath ) {
 		list( $container, $rel ) = $this->resolveStoragePathReal( $storagePath );
 		if ( $rel === null ) {
@@ -187,18 +191,6 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 
 		return false;
-	}
-
-	/**
-	 * @param array $headers
-	 * @return array
-	 */
-	protected function sanitizeHdrs( array $headers ) {
-		// By default, Swift has annoyingly low maximum header value limits
-		if ( isset( $headers['Content-Disposition'] ) ) {
-			$headers['Content-Disposition'] = $this->truncDisp( $headers['Content-Disposition'] );
-		}
-		return $headers;
 	}
 
 	/**
@@ -219,6 +211,10 @@ class SwiftFileBackend extends FileBackendStore {
 		return $res;
 	}
 
+	/**
+	 * @see FileBackendStore::doCreateInternal()
+	 * @return Status
+	 */
 	protected function doCreateInternal( array $params ) {
 		$status = Status::newGood();
 
@@ -252,10 +248,17 @@ class SwiftFileBackend extends FileBackendStore {
 			// The MD5 here will be checked within Swift against its own MD5.
 			$obj->set_etag( md5( $params['content'] ) );
 			// Use the same content type as StreamFile for security
-			$obj->content_type = $this->getContentType( $params['dst'], $params['content'], null );
+			$obj->content_type = StreamFile::contentTypeFromPath( $params['dst'] );
+			if ( !strlen( $obj->content_type ) ) { // special case
+				$obj->content_type = 'unknown/unknown';
+			}
+			// Set the Content-Disposition header if requested
+			if ( isset( $params['disposition'] ) ) {
+				$obj->headers['Content-Disposition'] = $this->truncDisp( $params['disposition'] );
+			}
 			// Set any other custom headers if requested
 			if ( isset( $params['headers'] ) ) {
-				$obj->headers += $this->sanitizeHdrs( $params['headers'] );
+				$obj->headers += $params['headers'];
 			}
 			if ( !empty( $params['async'] ) ) { // deferred
 				$op = $obj->write_async( $params['content'] );
@@ -287,6 +290,10 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 	}
 
+	/**
+	 * @see FileBackendStore::doStoreInternal()
+	 * @return Status
+	 */
 	protected function doStoreInternal( array $params ) {
 		$status = Status::newGood();
 
@@ -326,10 +333,17 @@ class SwiftFileBackend extends FileBackendStore {
 			// The MD5 here will be checked within Swift against its own MD5.
 			$obj->set_etag( md5_file( $params['src'] ) );
 			// Use the same content type as StreamFile for security
-			$obj->content_type = $this->getContentType( $params['dst'], null, $params['src'] );
+			$obj->content_type = StreamFile::contentTypeFromPath( $params['dst'] );
+			if ( !strlen( $obj->content_type ) ) { // special case
+				$obj->content_type = 'unknown/unknown';
+			}
+			// Set the Content-Disposition header if requested
+			if ( isset( $params['disposition'] ) ) {
+				$obj->headers['Content-Disposition'] = $this->truncDisp( $params['disposition'] );
+			}
 			// Set any other custom headers if requested
 			if ( isset( $params['headers'] ) ) {
-				$obj->headers += $this->sanitizeHdrs( $params['headers'] );
+				$obj->headers += $params['headers'];
 			}
 			if ( !empty( $params['async'] ) ) { // deferred
 				wfSuppressWarnings();
@@ -373,6 +387,10 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 	}
 
+	/**
+	 * @see FileBackendStore::doCopyInternal()
+	 * @return Status
+	 */
 	protected function doCopyInternal( array $params ) {
 		$status = Status::newGood();
 
@@ -406,9 +424,8 @@ class SwiftFileBackend extends FileBackendStore {
 		try {
 			$dstObj = new CF_Object( $dContObj, $dstRel, false, false ); // skip HEAD
 			$hdrs = array(); // source file headers to override with new values
-			// Set any other custom headers if requested
-			if ( isset( $params['headers'] ) ) {
-				$hdrs += $this->sanitizeHdrs( $params['headers'] );
+			if ( isset( $params['disposition'] ) ) {
+				$hdrs['Content-Disposition'] = $this->truncDisp( $params['disposition'] );
 			}
 			if ( !empty( $params['async'] ) ) { // deferred
 				$op = $sContObj->copy_object_to_async( $srcRel, $dContObj, $dstRel, null, $hdrs );
@@ -442,6 +459,10 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 	}
 
+	/**
+	 * @see FileBackendStore::doMoveInternal()
+	 * @return Status
+	 */
 	protected function doMoveInternal( array $params ) {
 		$status = Status::newGood();
 
@@ -476,9 +497,8 @@ class SwiftFileBackend extends FileBackendStore {
 			$srcObj = new CF_Object( $sContObj, $srcRel, false, false ); // skip HEAD
 			$dstObj = new CF_Object( $dContObj, $dstRel, false, false ); // skip HEAD
 			$hdrs = array(); // source file headers to override with new values
-			// Set any other custom headers if requested
-			if ( isset( $params['headers'] ) ) {
-				$hdrs += $this->sanitizeHdrs( $params['headers'] );
+			if ( isset( $params['disposition'] ) ) {
+				$hdrs['Content-Disposition'] = $this->truncDisp( $params['disposition'] );
 			}
 			if ( !empty( $params['async'] ) ) { // deferred
 				$op = $sContObj->move_object_to_async( $srcRel, $dContObj, $dstRel, null, $hdrs );
@@ -514,6 +534,10 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 	}
 
+	/**
+	 * @see FileBackendStore::doDeleteInternal()
+	 * @return Status
+	 */
 	protected function doDeleteInternal( array $params ) {
 		$status = Status::newGood();
 
@@ -566,6 +590,10 @@ class SwiftFileBackend extends FileBackendStore {
 		}
 	}
 
+	/**
+	 * @see FileBackendStore::doDescribeInternal()
+	 * @return Status
+	 */
 	protected function doDescribeInternal( array $params ) {
 		$status = Status::newGood();
 
@@ -575,15 +603,19 @@ class SwiftFileBackend extends FileBackendStore {
 			return $status;
 		}
 
+		$hdrs = isset( $params['headers'] ) ? $params['headers'] : array();
+		// Set the Content-Disposition header if requested
+		if ( isset( $params['disposition'] ) ) {
+			$hdrs['Content-Disposition'] = $this->truncDisp( $params['disposition'] );
+		}
+
 		try {
 			$sContObj = $this->getContainer( $srcCont );
 			// Get the latest version of the current metadata
 			$srcObj = $sContObj->get_object( $srcRel,
 				$this->headersFromParams( array( 'latest' => true ) ) );
 			// Merge in the metadata updates...
-			if ( isset( $params['headers'] ) ) {
-				$srcObj->headers = $this->sanitizeHdrs( $params['headers'] ) + $srcObj->headers;
-			}
+			$srcObj->headers = $hdrs + $srcObj->headers;
 			$srcObj->sync_metadata(); // save to Swift
 			$this->purgeCDNCache( array( $srcObj ) );
 		} catch ( CDNNotEnabledException $e ) {
@@ -599,6 +631,10 @@ class SwiftFileBackend extends FileBackendStore {
 		return $status;
 	}
 
+	/**
+	 * @see FileBackendStore::doPrepareInternal()
+	 * @return Status
+	 */
 	protected function doPrepareInternal( $fullCont, $dir, array $params ) {
 		$status = Status::newGood();
 
@@ -712,6 +748,10 @@ class SwiftFileBackend extends FileBackendStore {
 		return $status;
 	}
 
+	/**
+	 * @see FileBackendStore::doCleanInternal()
+	 * @return Status
+	 */
 	protected function doCleanInternal( $fullCont, $dir, array $params ) {
 		$status = Status::newGood();
 
@@ -747,6 +787,10 @@ class SwiftFileBackend extends FileBackendStore {
 		return $status;
 	}
 
+	/**
+	 * @see FileBackendStore::doFileExists()
+	 * @return array|bool|null
+	 */
 	protected function doGetFileStat( array $params ) {
 		list( $srcCont, $srcRel ) = $this->resolveStoragePathReal( $params['src'] );
 		if ( $srcRel === null ) {
@@ -761,8 +805,8 @@ class SwiftFileBackend extends FileBackendStore {
 			$stat = array(
 				// Convert dates like "Tue, 03 Jan 2012 22:01:04 GMT" to TS_MW
 				'mtime' => wfTimestamp( TS_MW, $srcObj->last_modified ),
-				'size' => (int)$srcObj->content_length,
-				'sha1' => $srcObj->getMetadataValue( 'Sha1base36' )
+				'size'  => (int)$srcObj->content_length,
+				'sha1'  => $srcObj->getMetadataValue( 'Sha1base36' )
 			);
 		} catch ( NoSuchContainerException $e ) {
 		} catch ( NoSuchObjectException $e ) {
@@ -777,7 +821,7 @@ class SwiftFileBackend extends FileBackendStore {
 	/**
 	 * Fill in any missing object metadata and save it to Swift
 	 *
-	 * @param CF_Object $obj
+	 * @param $obj CF_Object
 	 * @param string $path Storage path to object
 	 * @return bool Success
 	 * @throws Exception cloudfiles exceptions
@@ -808,6 +852,10 @@ class SwiftFileBackend extends FileBackendStore {
 		return false; // failed
 	}
 
+	/**
+	 * @see FileBackendStore::doGetFileContentsMulti()
+	 * @return Array
+	 */
 	protected function doGetFileContentsMulti( array $params ) {
 		$contents = array();
 
@@ -917,25 +965,24 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @param string $fullCont Resolved container name
 	 * @param string $dir Resolved storage directory with no trailing slash
 	 * @param string|null $after Storage path of file to list items after
-	 * @param integer $limit Max number of items to list
-	 * @param array $params Parameters for getDirectoryList()
-	 * @return Array List of resolved paths of directories directly under $dir
-	 * @throws FileBackendError
+	 * @param $limit integer Max number of items to list
+	 * @param array $params Includes flag for 'topOnly'
+	 * @return Array List of relative paths of dirs directly under $dir
 	 */
 	public function getDirListPageInternal( $fullCont, $dir, &$after, $limit, array $params ) {
 		$dirs = array();
 		if ( $after === INF ) {
 			return $dirs; // nothing more
 		}
+		wfProfileIn( __METHOD__ . '-' . $this->name );
 
-		$section = new ProfileSection( __METHOD__ . '-' . $this->name );
 		try {
 			$container = $this->getContainer( $fullCont );
 			$prefix = ( $dir == '' ) ? null : "{$dir}/";
 			// Non-recursive: only list dirs right under $dir
 			if ( !empty( $params['topOnly'] ) ) {
 				$objects = $container->list_objects( $limit, $after, $prefix, null, '/' );
-				foreach ( $objects as $object ) { // files and directories
+				foreach ( $objects as $object ) { // files and dirs
 					if ( substr( $object, -1 ) === '/' ) {
 						$dirs[] = $object; // directories end in '/'
 					}
@@ -966,7 +1013,6 @@ class SwiftFileBackend extends FileBackendStore {
 					}
 				}
 			}
-			// Page on the unfiltered directory listing (what is returned may be filtered)
 			if ( count( $objects ) < $limit ) {
 				$after = INF; // avoid a second RTT
 			} else {
@@ -976,9 +1022,9 @@ class SwiftFileBackend extends FileBackendStore {
 		} catch ( CloudFilesException $e ) { // some other exception?
 			$this->handleException( $e, null, __METHOD__,
 				array( 'cont' => $fullCont, 'dir' => $dir ) );
-			throw new FileBackendError( "Got " . get_class( $e ) . " exception." );
 		}
 
+		wfProfileOut( __METHOD__ . '-' . $this->name );
 		return $dirs;
 	}
 
@@ -992,49 +1038,33 @@ class SwiftFileBackend extends FileBackendStore {
 	 * @param string $fullCont Resolved container name
 	 * @param string $dir Resolved storage directory with no trailing slash
 	 * @param string|null $after Storage path of file to list items after
-	 * @param integer $limit Max number of items to list
-	 * @param array $params Parameters for getDirectoryList()
-	 * @return Array List of resolved paths of files under $dir
-	 * @throws FileBackendError
+	 * @param $limit integer Max number of items to list
+	 * @param array $params Includes flag for 'topOnly'
+	 * @return Array List of relative paths of files under $dir
 	 */
 	public function getFileListPageInternal( $fullCont, $dir, &$after, $limit, array $params ) {
 		$files = array();
 		if ( $after === INF ) {
 			return $files; // nothing more
 		}
+		wfProfileIn( __METHOD__ . '-' . $this->name );
 
-		$section = new ProfileSection( __METHOD__ . '-' . $this->name );
 		try {
 			$container = $this->getContainer( $fullCont );
 			$prefix = ( $dir == '' ) ? null : "{$dir}/";
 			// Non-recursive: only list files right under $dir
 			if ( !empty( $params['topOnly'] ) ) { // files and dirs
-				if ( !empty( $params['adviseStat'] ) ) {
-					$limit = min( $limit, self::CACHE_CHEAP_SIZE );
-					// Note: get_objects() does not include directories
-					$objects = $this->loadObjectListing( $params, $dir,
-						$container->get_objects( $limit, $after, $prefix, null, '/' ) );
-					$files = $objects;
-				} else {
-					$objects = $container->list_objects( $limit, $after, $prefix, null, '/' );
-					foreach ( $objects as $object ) { // files and directories
-						if ( substr( $object, -1 ) !== '/' ) {
-							$files[] = $object; // directories end in '/'
-						}
+				$objects = $container->list_objects( $limit, $after, $prefix, null, '/' );
+				foreach ( $objects as $object ) {
+					if ( substr( $object, -1 ) !== '/' ) {
+						$files[] = $object; // directories end in '/'
 					}
 				}
 			// Recursive: list all files under $dir and its subdirs
 			} else { // files
-				if ( !empty( $params['adviseStat'] ) ) {
-					$limit = min( $limit, self::CACHE_CHEAP_SIZE );
-					$objects = $this->loadObjectListing( $params, $dir,
-						$container->get_objects( $limit, $after, $prefix ) );
-				} else {
-					$objects = $container->list_objects( $limit, $after, $prefix );
-				}
+				$objects = $container->list_objects( $limit, $after, $prefix );
 				$files = $objects;
 			}
-			// Page on the unfiltered object listing (what is returned may be filtered)
 			if ( count( $objects ) < $limit ) {
 				$after = INF; // avoid a second RTT
 			} else {
@@ -1044,57 +1074,29 @@ class SwiftFileBackend extends FileBackendStore {
 		} catch ( CloudFilesException $e ) { // some other exception?
 			$this->handleException( $e, null, __METHOD__,
 				array( 'cont' => $fullCont, 'dir' => $dir ) );
-			throw new FileBackendError( "Got " . get_class( $e ) . " exception." );
 		}
 
+		wfProfileOut( __METHOD__ . '-' . $this->name );
 		return $files;
 	}
 
 	/**
-	 * Load a list of objects that belong under $dir into stat cache
-	 * and return a list of the names of the objects in the same order.
-	 *
-	 * @param array $params Parameters for getDirectoryList()
-	 * @param string $dir Resolved container directory path
-	 * @param array $cfObjects List of CF_Object items
-	 * @return array List of object names
+	 * @see FileBackendStore::doGetFileSha1base36()
+	 * @return bool
 	 */
-	private function loadObjectListing( array $params, $dir, array $cfObjects ) {
-		$names = array();
-		$storageDir = rtrim( $params['dir'], '/' );
-		$suffixStart = ( $dir === '' ) ? 0 : strlen( $dir ) + 1; // size of "path/to/dir/"
-		// Iterate over the list *backwards* as this primes the stat cache, which is LRU.
-		// If this fills the cache and the caller stats an uncached file before stating
-		// the ones on the listing, there would be zero cache hits if this went forwards.
-		for ( end( $cfObjects ); key( $cfObjects ) !== null; prev( $cfObjects ) ) {
-			$object = current( $cfObjects );
-			$path = "{$storageDir}/" . substr( $object->name, $suffixStart );
-			$val = array(
-				// Convert dates like "Tue, 03 Jan 2012 22:01:04 GMT" to TS_MW
-				'mtime'  => wfTimestamp( TS_MW, $object->last_modified ),
-				'size'   => (int)$object->content_length,
-				'latest' => false // eventually consistent
-			);
-			$this->cheapCache->set( $path, 'stat', $val );
-			$names[] = $object->name;
-		}
-		return array_reverse( $names ); // keep the paths in original order
-	}
-
 	protected function doGetFileSha1base36( array $params ) {
 		$stat = $this->getFileStat( $params );
 		if ( $stat ) {
-			if ( !isset( $stat['sha1'] ) ) {
-				// Stat entries filled by file listings don't include SHA1
-				$this->clearCache( array( $params['src'] ) );
-				$stat = $this->getFileStat( $params );
-			}
 			return $stat['sha1'];
 		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * @see FileBackendStore::doStreamFile()
+	 * @return Status
+	 */
 	protected function doStreamFile( array $params ) {
 		$status = Status::newGood();
 
@@ -1126,6 +1128,10 @@ class SwiftFileBackend extends FileBackendStore {
 		return $status;
 	}
 
+	/**
+	 * @see FileBackendStore::doGetLocalCopyMulti()
+	 * @return null|TempFSFile
+	 */
 	protected function doGetLocalCopyMulti( array $params ) {
 		$tmpFiles = array();
 
@@ -1195,6 +1201,10 @@ class SwiftFileBackend extends FileBackendStore {
 		return $tmpFiles;
 	}
 
+	/**
+	 * @see FileBackendStore::getFileHttpUrl()
+	 * @return string|null
+	 */
 	public function getFileHttpUrl( array $params ) {
 		if ( $this->swiftTempUrlKey != '' ||
 			( $this->rgwS3AccessKey != '' && $this->rgwS3SecretKey != '' ) )
@@ -1227,8 +1237,8 @@ class SwiftFileBackend extends FileBackendStore {
 						str_replace( '/swift/v1', '', // S3 API is the rgw default
 							$sContObj->cfs_http->getStorageUrl() . $spath ),
 						array(
-							'Signature' => $signature,
-							'Expires' => $expires,
+							'Signature'      => $signature,
+							'Expires'        => $expires,
 							'AWSAccessKeyId' => $this->rgwS3AccessKey )
 					);
 				}
@@ -1240,6 +1250,10 @@ class SwiftFileBackend extends FileBackendStore {
 		return null;
 	}
 
+	/**
+	 * @see FileBackendStore::directoriesAreVirtual()
+	 * @return bool
+	 */
 	protected function directoriesAreVirtual() {
 		return true;
 	}
@@ -1260,6 +1274,10 @@ class SwiftFileBackend extends FileBackendStore {
 		return $hdrs;
 	}
 
+	/**
+	 * @see FileBackendStore::doExecuteOpHandlesInternal()
+	 * @return Array List of corresponding Status objects
+	 */
 	protected function doExecuteOpHandlesInternal( array $fileOpHandles ) {
 		$statuses = array();
 
@@ -1296,7 +1314,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 *                           matches the expression and the request is not for a listing.
 	 *                           Setting this to '*' effectively makes a container public.
 	 *   -".rlistings:<regex>" : Grants access if the request is from a referrer host that
-	 *                           matches the expression and the request is for a listing.
+	 *                           matches the expression and the request for a listing.
 	 *
 	 * $writeGrps is a list of the possible criteria for a request to have
 	 * access to write to a container. Each item is of the following format:
@@ -1307,7 +1325,7 @@ class SwiftFileBackend extends FileBackendStore {
 	 * In general, we don't allow listings to end-users. It's not useful, isn't well-defined
 	 * (lists are truncated to 10000 item with no way to page), and is just a performance risk.
 	 *
-	 * @param CF_Container $contObj Swift container
+	 * @param $contObj CF_Container Swift container
 	 * @param array $readGrps List of read access routes
 	 * @param array $writeGrps List of write access routes
 	 * @return Status
@@ -1377,12 +1395,12 @@ class SwiftFileBackend extends FileBackendStore {
 			if ( is_array( $creds ) ) { // cache hit
 				$this->auth->load_cached_credentials(
 					$creds['auth_token'], $creds['storage_url'], $creds['cdnm_url'] );
-				$this->sessionStarted = time() - ceil( $this->authTTL / 2 ); // skew for worst case
+				$this->sessionStarted = time() - ceil( $this->authTTL/2 ); // skew for worst case
 			} else { // cache miss
 				try {
 					$this->auth->authenticate();
 					$creds = $this->auth->export_credentials();
-					$this->srvCache->add( $cacheKey, $creds, ceil( $this->authTTL / 2 ) ); // cache
+					$this->srvCache->add( $cacheKey, $creds, ceil( $this->authTTL/2 ) ); // cache
 					$this->sessionStarted = time();
 				} catch ( CloudFilesException $e ) {
 					$this->connException = $e; // don't keep re-trying
@@ -1415,7 +1433,7 @@ class SwiftFileBackend extends FileBackendStore {
 	/**
 	 * Get the cache key for a container
 	 *
-	 * @param string $username
+	 * @param $username string
 	 * @return string
 	 */
 	private function getCredsCacheKey( $username ) {
@@ -1478,6 +1496,10 @@ class SwiftFileBackend extends FileBackendStore {
 		$conn->delete_container( $container );
 	}
 
+	/**
+	 * @see FileBackendStore::doPrimeContainerCache()
+	 * @return void
+	 */
 	protected function doPrimeContainerCache( array $containerInfo ) {
 		try {
 			$conn = $this->getConnection(); // Swift proxy connection
@@ -1495,9 +1517,9 @@ class SwiftFileBackend extends FileBackendStore {
 	 * Log an unexpected exception for this backend.
 	 * This also sets the Status object to have a fatal error.
 	 *
-	 * @param Exception $e
-	 * @param Status $status|null
-	 * @param string $func
+	 * @param $e Exception
+	 * @param $status Status|null
+	 * @param $func string
 	 * @param array $params
 	 * @return void
 	 */
@@ -1532,15 +1554,7 @@ class SwiftFileOpHandle extends FileBackendStoreOpHandle {
 	/** @var Array */
 	public $affectedObjects = array();
 
-	/**
-	 * @param SwiftFileBackend $backend
-	 * @param array $params
-	 * @param string $call
-	 * @param CF_Async_Op $cfOp
-	 */
-	public function __construct(
-		SwiftFileBackend $backend, array $params, $call, CF_Async_Op $cfOp
-	) {
+	public function __construct( $backend, array $params, $call, CF_Async_Op $cfOp ) {
 		$this->backend = $backend;
 		$this->params = $params;
 		$this->call = $call;
@@ -1572,7 +1586,7 @@ abstract class SwiftFileBackendList implements Iterator {
 	const PAGE_SIZE = 9000; // file listing buffer size
 
 	/**
-	 * @param SwiftFileBackend $backend
+	 * @param $backend SwiftFileBackend
 	 * @param string $fullCont Resolved container name
 	 * @param string $dir Resolved directory relative to container
 	 * @param array $params
@@ -1646,10 +1660,10 @@ abstract class SwiftFileBackendList implements Iterator {
 	 *
 	 * @param string $container Resolved container name
 	 * @param string $dir Resolved path relative to container
-	 * @param string $after|null
-	 * @param integer $limit
+	 * @param $after string|null
+	 * @param $limit integer
 	 * @param array $params
-	 * @return Traversable|Array
+	 * @return Traversable|Array|null Returns null on failure
 	 */
 	abstract protected function pageFromList( $container, $dir, &$after, $limit, array $params );
 }
@@ -1668,7 +1682,7 @@ class SwiftFileBackendDirList extends SwiftFileBackendList {
 
 	/**
 	 * @see SwiftFileBackendList::pageFromList()
-	 * @return Array
+	 * @return Array|null
 	 */
 	protected function pageFromList( $container, $dir, &$after, $limit, array $params ) {
 		return $this->backend->getDirListPageInternal( $container, $dir, $after, $limit, $params );
@@ -1689,7 +1703,7 @@ class SwiftFileBackendFileList extends SwiftFileBackendList {
 
 	/**
 	 * @see SwiftFileBackendList::pageFromList()
-	 * @return Array
+	 * @return Array|null
 	 */
 	protected function pageFromList( $container, $dir, &$after, $limit, array $params ) {
 		return $this->backend->getFileListPageInternal( $container, $dir, $after, $limit, $params );

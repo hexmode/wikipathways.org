@@ -8,9 +8,8 @@
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl.html
  *
- * Depends on mw.config (wgDigitTransformTable, wgDefaultDateFormat, wgContentLanguage)
- * and mw.language.months.
- *
+ * Depends on mw.config (wgDigitTransformTable, wgMonthNames, wgMonthNamesShort,
+ * wgDefaultDateFormat, wgContentLanguage)
  * Uses 'tableSorterCollation' in mw.config (if available)
  */
 /**
@@ -288,111 +287,42 @@
 
 	function buildHeaders( table, msg ) {
 		var maxSeen = 0,
-			colspanOffset = 0,
 			longest,
-			columns,
-			i,
-			$tableHeaders = $( [] ),
-			$tableRows = $( 'thead:eq(0) > tr', table );
-		if ( $tableRows.length <= 1 ) {
-			$tableHeaders = $tableRows.children( 'th' );
-		} else {
-			// We need to find the cells of the row containing the most columns
-			var rowspan,
-				headersIndex = [];
-			$tableRows.each( function ( rowIndex ) {
-				$.each( this.cells, function( index2, cell ) {
-					rowspan = Number( cell.rowSpan );
-					for ( i = 0; i < rowspan; i++ ) {
-						if ( headersIndex[rowIndex+i] === undefined ) {
-							headersIndex[rowIndex+i] = $( [] );
-						}
-						headersIndex[rowIndex+i].push( cell );
-					}
-				} );
-			} );
-			$.each( headersIndex, function ( index, cellArray ) {
-				if ( cellArray.length >= maxSeen ) {
-					maxSeen = cellArray.length;
-					longest = index;
+			realCellIndex = 0,
+			$tableHeaders = $( 'thead:eq(0) > tr', table );
+		if ( $tableHeaders.length > 1 ) {
+			$tableHeaders.each( function () {
+				if ( this.cells.length > maxSeen ) {
+					maxSeen = this.cells.length;
+					longest = this;
 				}
-			} );
-			$tableHeaders = headersIndex[longest];
+			});
+			$tableHeaders = $( longest );
 		}
+		$tableHeaders = $tableHeaders.children( 'th' ).each( function ( index ) {
+			this.column = realCellIndex;
 
-		// as each header can span over multiple columns (using colspan=N),
-		// we have to bidirectionally map headers to their columns and columns to their headers
-		table.headerToColumns = [];
-		table.columnToHeader = [];
+			var colspan = this.colspan;
+			colspan = colspan ? parseInt( colspan, 10 ) : 1;
+			realCellIndex += colspan;
 
-		$tableHeaders.each( function ( headerIndex ) {
-			columns = [];
-			for ( i = 0; i < this.colSpan; i++ ) {
-				table.columnToHeader[ colspanOffset + i ] = headerIndex;
-				columns.push( colspanOffset + i );
-			}
-
-			table.headerToColumns[ headerIndex ] = columns;
-			colspanOffset += this.colSpan;
-
-			this.headerIndex = headerIndex;
 			this.order = 0;
 			this.count = 0;
 
-			if ( $( this ).hasClass( table.config.unsortableClass ) ) {
+			if ( $( this ).is( '.unsortable' ) ) {
 				this.sortDisabled = true;
 			}
 
 			if ( !this.sortDisabled ) {
-				$( this )
-					.addClass( table.config.cssHeader )
-					.prop( 'tabIndex', 0 )
-					.attr( {
-						role: 'columnheader button',
-						title: msg[1]
-					} );
+				$( this ).addClass( table.config.cssHeader ).attr( 'title', msg[1] );
 			}
 
 			// add cell to headerList
-			table.config.headerList[headerIndex] = this;
+			table.config.headerList[index] = this;
 		} );
 
 		return $tableHeaders;
 
-	}
-
-	/**
-	 * Sets the sort count of the columns that are not affected by the sorting to have them sorted
-	 * in default (ascending) order when their header cell is clicked the next time.
-	 *
-	 * @param {jQuery} $headers
-	 * @param {Number[][]} sortList
-	 * @param {Number[][]} headerToColumns
-	 */
-	function setHeadersOrder( $headers, sortList, headerToColumns ) {
-		// Loop through all headers to retrieve the indices of the columns the header spans across:
-		$.each( headerToColumns, function( headerIndex, columns ) {
-
-			$.each( columns, function( i, columnIndex ) {
-				var header = $headers[headerIndex];
-
-				if ( !isValueInArray( columnIndex, sortList ) ) {
-					// Column shall not be sorted: Reset header count and order.
-					header.order = 0;
-					header.count = 0;
-				} else {
-					// Column shall be sorted: Apply designated count and order.
-					$.each( sortList, function( j, sortColumn ) {
-						if ( sortColumn[0] === i ) {
-							header.order = sortColumn[1];
-							header.count = sortColumn[1] + 1;
-							return false;
-						}
-					} );
-				}
-			} );
-
-		} );
 	}
 
 	function isValueInArray( v, a ) {
@@ -477,15 +407,12 @@
 		var regex = [];
 		ts.monthNames = {};
 
-		for ( var i = 0; i < 12; i++ ) {
-			var name = mw.language.months.names[i].toLowerCase();
-			ts.monthNames[name] = i + 1;
+		for ( var i = 1; i < 13; i++ ) {
+			var name = mw.config.get( 'wgMonthNames' )[i].toLowerCase();
+			ts.monthNames[name] = i;
 			regex.push( $.escapeRE( name ) );
-			name = mw.language.months.genitive[i].toLowerCase();
-			ts.monthNames[name] = i + 1;
-			regex.push( $.escapeRE( name ) );
-			name = mw.language.months.abbrev[i].toLowerCase().replace( '.', '' );
-			ts.monthNames[name] = i + 1;
+			name = mw.config.get( 'wgMonthNamesShort' )[i].toLowerCase().replace( '.', '' );
+			ts.monthNames[name] = i;
 			regex.push( $.escapeRE( name ) );
 		}
 
@@ -497,10 +424,10 @@
 		ts.dateRegex[0] = new RegExp( /^\s*(\d{1,2})[\,\.\-\/'\s]{1,2}(\d{1,2})[\,\.\-\/'\s]{1,2}(\d{2,4})\s*?/i);
 
 		// Written Month name, dmy
-		ts.dateRegex[1] = new RegExp( '^\\s*(\\d{1,2})[\\,\\.\\-\\/\'\\s]+(' + regex + ')' + '[\\,\\.\\-\\/\'\\s]+(\\d{2,4})\\s*$', 'i' );
+		ts.dateRegex[1] = new RegExp( '^\\s*(\\d{1,2})[\\,\\.\\-\\/\'\\s]*(' + regex + ')' + '[\\,\\.\\-\\/\'\\s]*(\\d{2,4})\\s*$', 'i' );
 
 		// Written Month name, mdy
-		ts.dateRegex[2] = new RegExp( '^\\s*(' + regex + ')' + '[\\,\\.\\-\\/\'\\s]+(\\d{1,2})[\\,\\.\\-\\/\'\\s]+(\\d{2,4})\\s*$', 'i' );
+		ts.dateRegex[2] = new RegExp( '^\\s*(' + regex + ')' + '[\\,\\.\\-\\/\'\\s]*(\\d{1,2})[\\,\\.\\-\\/\'\\s]*(\\d{2,4})\\s*$', 'i' );
 
 	}
 
@@ -645,7 +572,7 @@
 		$.each( sortObjects, function( i, sortObject ) {
 			$.each ( sortObject, function( columnIndex, order ) {
 				var orderIndex = ( order === 'desc' ) ? 1 : 0;
-				sortList.push( [parseInt( columnIndex, 10 ), orderIndex] );
+				sortList.push( [columnIndex, orderIndex] );
 			} );
 		} );
 		return sortList;
@@ -663,7 +590,6 @@
 				sortInitialOrder: 'asc',
 				sortMultiSortKey: 'shiftKey',
 				sortLocaleCompare: false,
-				unsortableClass: 'unsortable',
 				parsers: {},
 				widgets: [],
 				headers: {},
@@ -685,6 +611,7 @@
 				return $tables.each( function ( i, table ) {
 					// Declare and cache.
 					var $headers, cache, config,
+						headerToColumns, columnToHeader, colspanOffset,
 						$table = $( table ),
 						firstTime = true;
 
@@ -721,9 +648,10 @@
 					// Build headers
 					$headers = buildHeaders( table, sortMsg );
 
-					// Grab and process locale settings.
+					// Grab and process locale settings
 					buildTransformTable();
 					buildDateTable();
+					buildCollationTable();
 
 					// Precaching regexps can bring 10 fold
 					// performance improvements in some browsers.
@@ -731,12 +659,6 @@
 
 					function setupForFirstSort() {
 						firstTime = false;
-
-						// Defer buildCollationTable to first sort. As user and site scripts
-						// may customize tableSorterCollation but load after $.ready(), other
-						// scripts may call .tablesorter() before they have done the
-						// tableSorterCollation customizations.
-						buildCollationTable();
 
 						// Legacy fix of .sortbottoms
 						// Wrap them inside inside a tfoot (because that's what they actually want to be) &
@@ -757,17 +679,28 @@
 						table.config.parsers = buildParserCache( table, $headers );
 					}
 
-					// Apply event handling to headers
-					// this is too big, perhaps break it out?
-					$headers.not( '.' + table.config.unsortableClass ).on( 'keypress click', function ( e ) {
-						if ( e.type === 'click' && e.target.nodeName.toLowerCase() === 'a' ) {
-							// The user clicked on a link inside a table header.
-							// Do nothing and let the default link click action continue.
-							return true;
+					// as each header can span over multiple columns (using colspan=N),
+					// we have to bidirectionally map headers to their columns and columns to their headers
+					headerToColumns = [];
+					columnToHeader = [];
+					colspanOffset = 0;
+					$headers.each( function ( headerIndex ) {
+						var columns = [];
+						for ( var i = 0; i < this.colSpan; i++ ) {
+							columnToHeader[ colspanOffset + i ] = headerIndex;
+							columns.push( colspanOffset + i );
 						}
 
-						if ( e.type === 'keypress' && e.which !== 13 ) {
-							// Only handle keypresses on the "Enter" key.
+						headerToColumns[ headerIndex ] = columns;
+						colspanOffset += this.colSpan;
+					} );
+
+					// Apply event handling to headers
+					// this is too big, perhaps break it out?
+					$headers.filter( ':not(.unsortable)' ).click( function ( e ) {
+						if ( e.target.nodeName.toLowerCase() === 'a' ) {
+							// The user clicked on a link inside a table header
+							// Do nothing and let the default link click action continue
 							return true;
 						}
 
@@ -791,7 +724,7 @@
 
 							var cell = this;
 							// Get current column index
-							var columns = table.headerToColumns[ this.headerIndex ];
+							var columns = headerToColumns[this.column];
 							var newSortList = $.map( columns, function (c) {
 								// jQuery "helpfully" flattens the arrays...
 								return [[c, cell.order]];
@@ -825,11 +758,8 @@
 								}
 							}
 
-							// Reset order/counts of cells not affected by sorting
-							setHeadersOrder( $headers, config.sortList, table.headerToColumns );
-
 							// Set CSS for headers
-							setHeadersCss( $table[0], $headers, config.sortList, sortCSS, sortMsg, table.columnToHeader );
+							setHeadersCss( $table[0], $headers, config.sortList, sortCSS, sortMsg, columnToHeader );
 							appendToTable(
 								$table[0], multisort( $table[0], config.sortList, cache )
 							);
@@ -868,15 +798,11 @@
 							sortList = convertSortList( sortList );
 						}
 
-						// Set each column's sort count to be able to determine the correct sort
-						// order when clicking on a header cell the next time
-						setHeadersOrder( $headers, sortList, table.headerToColumns );
-
 						// re-build the cache for the tbody cells
 						cache = buildCache( table );
 
 						// set css for headers
-						setHeadersCss( table, $headers, sortList, sortCSS, sortMsg, table.columnToHeader );
+						setHeadersCss( table, $headers, sortList, sortCSS, sortMsg, columnToHeader );
 
 						// sort the table and append it to the dom
 						appendToTable( table, multisort( table, sortList, cache ) );

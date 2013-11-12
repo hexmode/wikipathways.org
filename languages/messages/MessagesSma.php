@@ -788,7 +788,7 @@ Jeatjebh dajveh lea gaptjedh goh sïejhme, bine vuesehte gåessie taabelle stoer
 * gpslongitude
 * gpsaltitude',
 
-# Exif tags
+# EXIF tags
 'exif-imagewidth' => 'Gamte',
 'exif-imagelength' => 'Gåhkoe',
 'exif-model' => 'Guvviedahke hammohke',

@@ -3,7 +3,16 @@
  * Helping class to run tests using a clean language instance.
  *
  * This is intended for the MediaWiki language class tests under
- * tests/phpunit/languages.
+ * tests/phpunit/languages. You simply need to extends this test
+ * and set it up with a language code using setUpBeforeClass:
+ *
+ * @par Setting up a language:
+ * @code
+ * class LanguageFooTest extends LanguageClassesTestCase {
+ *   public static function setUpBeforeClass() {
+ *     self::setLang( 'Foo' );
+ *   }
+ * @endcode
  *
  * Before each tests, a new language object is build which you
  * can retrieve in your test using the $this->getLang() method:
@@ -19,6 +28,19 @@
  * @endcode
  */
 abstract class LanguageClassesTestCase extends MediaWikiTestCase {
+
+	/**
+	 * Regex used to find out the language code out of the class name
+	 * used by setUpBeforeClass
+	 */
+	private static $reExtractLangFromClass = '/Language(.*)Test/';
+
+	/**
+	 * Hold the language code we are going to use. This is extracted
+	 * directly from the extending class.
+	 */
+	private static $LanguageClassCode;
+
 	/**
 	 * Internal language object
 	 *
@@ -35,19 +57,9 @@ abstract class LanguageClassesTestCase extends MediaWikiTestCase {
 	 */
 	private $languageObject;
 
-	/**
-	 * @return Language
-	 */
-	protected function getLang() {
-		return $this->languageObject;
-	}
-
-	/**
-	 * Create a new language object before each test.
-	 */
-	protected function setUp() {
-		parent::setUp();
-		$found = preg_match( '/Language(.+)Test/', get_called_class(), $m );
+	public static function setUpBeforeClass() {
+		$found = preg_match( self::$reExtractLangFromClass,
+			get_called_class(), $m );
 		if ( $found ) {
 			# Normalize language code since classes uses underscores
 			$m[1] = str_replace( '_', '-', $m[1] );
@@ -59,8 +71,21 @@ abstract class LanguageClassesTestCase extends MediaWikiTestCase {
 					. "out of " . get_called_class() . " failling back to 'en'\n"
 			);
 		}
-		// @todo validate $m[1] which should be a valid language code
-		$this->languageObject = Language::factory( $m[1] );
+		// TODO: validate $m[1] which should be a valid language code
+		self::$LanguageClassCode = $m[1];
+	}
+
+	protected function getLang() {
+		return $this->languageObject;
+	}
+
+	/**
+	 * Create a new language object before each test.
+	 */
+	protected function setUp() {
+		parent::setUp();
+		$this->languageObject = Language::factory(
+			self::$LanguageClassCode );
 	}
 
 	/**
@@ -71,4 +96,5 @@ abstract class LanguageClassesTestCase extends MediaWikiTestCase {
 		unset( $this->languageObject );
 		parent::tearDown();
 	}
+
 }

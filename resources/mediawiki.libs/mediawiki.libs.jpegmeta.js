@@ -274,7 +274,7 @@
 	this.JpegMeta.JpegFile.prototype._JFIF_IDENT = "JFIF\x00";
 	this.JpegMeta.JpegFile.prototype._JFXX_IDENT = "JFXX\x00";
 	
-	/* Exif idents */
+	/* EXIF idents */
 	this.JpegMeta.JpegFile.prototype._EXIF_IDENT = "Exif\x00";
 	
 	/* TIFF types */

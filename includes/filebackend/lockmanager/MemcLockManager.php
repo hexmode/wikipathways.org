@@ -88,44 +88,11 @@ class MemcLockManager extends QuorumLockManager {
 		$this->session = wfRandomString( 32 );
 	}
 
-	// @TODO: change this code to work in one batch
-	protected function getLocksOnServer( $lockSrv, array $pathsByType ) {
-		$status = Status::newGood();
-
-		$lockedPaths = array();
-		foreach ( $pathsByType as $type => $paths ) {
-			$status->merge( $this->doGetLocksOnServer( $lockSrv, $paths, $type ) );
-			if ( $status->isOK() ) {
-				$lockedPaths[$type] = isset( $lockedPaths[$type] )
-					? array_merge( $lockedPaths[$type], $paths )
-					: $paths;
-			} else {
-				foreach ( $lockedPaths as $type => $paths ) {
-					$status->merge( $this->doFreeLocksOnServer( $lockSrv, $paths, $type ) );
-				}
-				break;
-			}
-		}
-
-		return $status;
-	}
-
-	// @TODO: change this code to work in one batch
-	protected function freeLocksOnServer( $lockSrv, array $pathsByType ) {
-		$status = Status::newGood();
-
-		foreach ( $pathsByType as $type => $paths ) {
-			$status->merge( $this->doFreeLocksOnServer( $lockSrv, $paths, $type ) );
-		}
-
-		return $status;
-	}
-
 	/**
 	 * @see QuorumLockManager::getLocksOnServer()
 	 * @return Status
 	 */
-	protected function doGetLocksOnServer( $lockSrv, array $paths, $type ) {
+	protected function getLocksOnServer( $lockSrv, array $paths, $type ) {
 		$status = Status::newGood();
 
 		$memc = $this->getCache( $lockSrv );
@@ -178,7 +145,7 @@ class MemcLockManager extends QuorumLockManager {
 			foreach ( $paths as $path ) {
 				$locksKey = $this->recordKeyForPath( $path );
 				$locksHeld = $lockRecords[$locksKey];
-				$ok = $memc->set( $locksKey, $locksHeld, 7 * 86400 );
+				$ok = $memc->set( $locksKey, $locksHeld, 7*86400 );
 				if ( !$ok ) {
 					$status->fatal( 'lockmanager-fail-acquirelock', $path );
 				} else {
@@ -197,7 +164,7 @@ class MemcLockManager extends QuorumLockManager {
 	 * @see QuorumLockManager::freeLocksOnServer()
 	 * @return Status
 	 */
-	protected function doFreeLocksOnServer( $lockSrv, array $paths, $type ) {
+	protected function freeLocksOnServer( $lockSrv, array $paths, $type ) {
 		$status = Status::newGood();
 
 		$memc = $this->getCache( $lockSrv );
@@ -330,7 +297,7 @@ class MemcLockManager extends QuorumLockManager {
 		$start = microtime( true );
 		do {
 			if ( ( ++$rounds % 4 ) == 0 ) {
-				usleep( 1000 * 50 ); // 50 ms
+				usleep( 1000*50 ); // 50 ms
 			}
 			foreach ( array_diff( $keys, $lockedKeys ) as $key ) {
 				if ( $memc->add( "$key:mutex", 1, 180 ) ) { // lock record

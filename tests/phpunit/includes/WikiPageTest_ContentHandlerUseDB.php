@@ -6,10 +6,16 @@
  * ^--- important, causes temporary tables to be used instead of the real database
  */
 class WikiPageTest_ContentHandlerUseDB extends WikiPageTest {
+	var $saveContentHandlerNoDB = null;
 
-	protected function setUp() {
+	function setUp() {
+		global $wgContentHandlerUseDB;
+
 		parent::setUp();
-		$this->setMwGlobals( 'wgContentHandlerUseDB', false );
+
+		$this->saveContentHandlerNoDB = $wgContentHandlerUseDB;
+
+		$wgContentHandlerUseDB = false;
 
 		$dbw = wfGetDB( DB_MASTER );
 
@@ -26,9 +32,14 @@ class WikiPageTest_ContentHandlerUseDB extends WikiPageTest {
 		}
 	}
 
-	/**
-	 * @covers WikiPage::getContentModel
-	 */
+	function tearDown() {
+		global $wgContentHandlerUseDB;
+
+		$wgContentHandlerUseDB = $this->saveContentHandlerNoDB;
+
+		parent::tearDown();
+	}
+
 	public function testGetContentModel() {
 		$page = $this->createPage( "WikiPageTest_testGetContentModel", "some text", CONTENT_MODEL_JAVASCRIPT );
 
@@ -39,9 +50,6 @@ class WikiPageTest_ContentHandlerUseDB extends WikiPageTest {
 		$this->assertEquals( CONTENT_MODEL_WIKITEXT, $page->getContentModel() );
 	}
 
-	/**
-	 * @covers WikiPage::getContentHandler
-	 */
 	public function testGetContentHandler() {
 		$page = $this->createPage( "WikiPageTest_testGetContentHandler", "some text", CONTENT_MODEL_JAVASCRIPT );
 
@@ -50,4 +58,5 @@ class WikiPageTest_ContentHandlerUseDB extends WikiPageTest {
 		$page = new WikiPage( $page->getTitle() );
 		$this->assertEquals( 'WikitextContentHandler', get_class( $page->getContentHandler() ) );
 	}
+
 }

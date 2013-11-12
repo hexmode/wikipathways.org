@@ -21,7 +21,7 @@ class TagHookTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider provideValidNames
 	 */
-	public function testTagHooks( $tag ) {
+	function testTagHooks( $tag ) {
 		global $wgParserConf, $wgContLang;
 		$parser = new Parser( $wgParserConf );
 
@@ -36,7 +36,7 @@ class TagHookTest extends MediaWikiTestCase {
 	 * @dataProvider provideBadNames
 	 * @expectedException MWException
 	 */
-	public function testBadTagHooks( $tag ) {
+	function testBadTagHooks( $tag ) {
 		global $wgParserConf, $wgContLang;
 		$parser = new Parser( $wgParserConf );
 
@@ -48,7 +48,7 @@ class TagHookTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider provideValidNames
 	 */
-	public function testFunctionTagHooks( $tag ) {
+	function testFunctionTagHooks( $tag ) {
 		global $wgParserConf, $wgContLang;
 		$parser = new Parser( $wgParserConf );
 
@@ -63,7 +63,7 @@ class TagHookTest extends MediaWikiTestCase {
 	 * @dataProvider provideBadNames
 	 * @expectedException MWException
 	 */
-	public function testBadFunctionTagHooks( $tag ) {
+	function testBadFunctionTagHooks( $tag ) {
 		global $wgParserConf, $wgContLang;
 		$parser = new Parser( $wgParserConf );
 

@@ -183,10 +183,6 @@ class WikiFilePage extends WikiPage {
 			// to be updated (in case the cached information is wrong)
 			$this->mFile->purgeCache( array( 'forThumbRefresh' => true ) );
 		}
-		if ( $this->mRepo ) {
-			// Purge redirect cache
-			$this->mRepo->invalidateImageRedirect( $this->mTitle );
-		}
 		return parent::doPurge();
 	}
 }

@@ -8,11 +8,7 @@
 /** Tests for MediaWiki languages/LanguageNl.php */
 class LanguageNlTest extends LanguageClassesTestCase {
 
-	/**
-	 * @covers Language::formatNum
-	 * @todo split into a test and a dataprovider
-	 */
-	public function testFormatNum() {
+	function testFormatNum() {
 		$this->assertEquals( '1.234.567', $this->getLang()->formatNum( '1234567' ) );
 		$this->assertEquals( '12.345', $this->getLang()->formatNum( '12345' ) );
 		$this->assertEquals( '1', $this->getLang()->formatNum( '1' ) );

@@ -40,8 +40,7 @@ class Category {
 	/** Counts of membership (cat_pages, cat_subcats, cat_files) */
 	private $mPages = null, $mSubcats = null, $mFiles = null;
 
-	private function __construct() {
-	}
+	private function __construct() { }
 
 	/**
 	 * Set up all member variables using a database query.

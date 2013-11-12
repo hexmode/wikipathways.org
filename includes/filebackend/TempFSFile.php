@@ -37,8 +37,8 @@ class TempFSFile extends FSFile {
 	 * Make a new temporary file on the file system.
 	 * Temporary files may be purged when the file object falls out of scope.
 	 *
-	 * @param string $prefix
-	 * @param string $extension
+	 * @param $prefix string
+	 * @param $extension string
 	 * @return TempFSFile|null
 	 */
 	public static function factory( $prefix, $extension = '' ) {
@@ -81,7 +81,7 @@ class TempFSFile extends FSFile {
 	/**
 	 * Clean up the temporary file only after an object goes out of scope
 	 *
-	 * @param Object $object
+	 * @param $object Object
 	 * @return TempFSFile This object
 	 */
 	public function bind( $object ) {

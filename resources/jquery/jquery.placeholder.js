@@ -10,22 +10,17 @@
  */
 ( function ( $ ) {
 
-	$.fn.placeholder = function ( text ) {
-		var hasArg = arguments.length;
+	$.fn.placeholder = function () {
 
 		return this.each( function () {
 			var placeholder, $input;
-
-			if ( hasArg ) {
-				this.setAttribute( 'placeholder', text );
-			}
 
 			// If the HTML5 placeholder attribute is supported, use it
 			if ( this.placeholder && 'placeholder' in document.createElement( this.tagName ) ) {
 				return;
 			}
 
-			placeholder = hasArg ? text : this.getAttribute( 'placeholder' );
+			placeholder = this.getAttribute( 'placeholder' );
 			$input = $(this);
 
 			// Show initially, if empty

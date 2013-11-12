@@ -7,24 +7,14 @@
 
 /** Tests for MediaWiki languages/LanguageBs.php */
 class LanguageBsTest extends LanguageClassesTestCase {
-	/**
-	 * @dataProvider providePlural
-	 * @covers Language::convertPlural
-	 */
-	public function testPlural( $result, $value ) {
+
+	/** @dataProvider providePlural */
+	function testPlural( $result, $value ) {
 		$forms = array( 'one', 'few', 'many', 'other' );
 		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
-	/**
-	 * @dataProvider providePlural
-	 * @covers Language::getPluralRuleType
-	 */
-	public function testGetPluralRuleType( $result, $value ) {
-		$this->assertEquals( $result, $this->getLang()->getPluralRuleType( $value ) );
-	}
-
-	public static function providePlural() {
+	function providePlural() {
 		return array(
 			array( 'many', 0 ),
 			array( 'one', 1 ),
@@ -39,4 +29,5 @@ class LanguageBsTest extends LanguageClassesTestCase {
 			array( 'many', 200 ),
 		);
 	}
+
 }

@@ -1,8 +1,6 @@
 <?php
 /**
- * Helper code for the MediaWiki parser test suite. Some code is duplicated
- * in PHPUnit's NewParserTests.php, so you'll probably want to update both
- * at the same time.
+ * Helper code for the MediaWiki parser test suite.
  *
  * Copyright © 2004, 2010 Brion Vibber <brion@pobox.com>
  * http://www.mediawiki.org/
@@ -33,22 +31,22 @@
  */
 class ParserTest {
 	/**
-	 * @var bool $color whereas output should be colorized
+	 * boolean $color whereas output should be colorized
 	 */
 	private $color;
 
 	/**
-	 * @var bool $showOutput Show test output
+	 * boolean $showOutput Show test output
 	 */
 	private $showOutput;
 
 	/**
-	 * @var bool $useTemporaryTables Use temporary tables for the temporary database
+	 * boolean $useTemporaryTables Use temporary tables for the temporary database
 	 */
 	private $useTemporaryTables = true;
 
 	/**
-	 * @var bool $databaseSetupDone True if the database has been set up
+	 * boolean $databaseSetupDone True if the database has been set up
 	 */
 	private $databaseSetupDone = false;
 
@@ -65,7 +63,7 @@ class ParserTest {
 	private $dbClone;
 
 	/**
-	 * @var string $oldTablePrefix Original table prefix
+	 * string $oldTablePrefix Original table prefix
 	 */
 	private $oldTablePrefix;
 
@@ -143,14 +141,15 @@ class ParserTest {
 	static function setUp() {
 		global $wgParser, $wgParserConf, $IP, $messageMemc, $wgMemc,
 			$wgUser, $wgLang, $wgOut, $wgRequest, $wgStyleDirectory, $wgEnableParserCache,
-			$wgExtraNamespaces, $wgNamespaceAliases, $wgNamespaceProtection, $wgLocalFileRepo,
+			$wgNamespaceAliases, $wgNamespaceProtection, $wgLocalFileRepo,
 			$parserMemc, $wgThumbnailScriptPath, $wgScriptPath,
-			$wgArticlePath, $wgScript, $wgStylePath, $wgExtensionAssetsPath,
+			$wgArticlePath, $wgStyleSheetPath, $wgScript, $wgStylePath, $wgExtensionAssetsPath,
 			$wgMainCacheType, $wgMessageCacheType, $wgParserCacheType, $wgLockManagers;
 
 		$wgScript = '/index.php';
 		$wgScriptPath = '/';
 		$wgArticlePath = '/wiki/$1';
+		$wgStyleSheetPath = '/skins';
 		$wgStylePath = '/skins';
 		$wgExtensionAssetsPath = '/extensions';
 		$wgThumbnailScriptPath = false;
@@ -182,9 +181,6 @@ class ParserTest {
 		$wgNamespaceProtection[NS_MEDIAWIKI] = 'editinterface';
 		$wgNamespaceAliases['Image'] = NS_FILE;
 		$wgNamespaceAliases['Image_talk'] = NS_FILE_TALK;
-		# add a namespace shadowing a interwiki link, to test
-		# proper precedence when resolving links. (bug 51680)
-		$wgExtraNamespaces[100] = 'MemoryAlpha';
 
 		// XXX: tests won't run without this (for CACHE_DB)
 		if ( $wgMainCacheType === CACHE_DB ) {
@@ -215,73 +211,6 @@ class ParserTest {
 			$wgStyleDirectory = "$IP/skins";
 		}
 
-		self::setupInterwikis();
-	}
-
-	/**
-	 * Insert hardcoded interwiki in the lookup table.
-	 *
-	 * This function insert a set of well known interwikis that are used in
-	 * the parser tests. They can be considered has fixtures are injected in
-	 * the interwiki cache by using the 'InterwikiLoadPrefix' hook.
-	 * Since we are not interested in looking up interwikis in the database,
-	 * the hook completely replace the existing mechanism (hook returns false).
-	 */
-	public static function setupInterwikis() {
-		# Hack: insert a few Wikipedia in-project interwiki prefixes,
-		# for testing inter-language links
-		Hooks::register( 'InterwikiLoadPrefix', function ( $prefix, &$iwData ) {
-			static $testInterwikis = array(
-				'wikipedia' => array(
-					'iw_url' => 'http://en.wikipedia.org/wiki/$1',
-					'iw_api' => '',
-					'iw_wikiid' => '',
-					'iw_local' => 0 ),
-				'meatball' => array(
-					'iw_url' => 'http://www.usemod.com/cgi-bin/mb.pl?$1',
-					'iw_api' => '',
-					'iw_wikiid' => '',
-					'iw_local' => 0 ),
-				'memoryalpha' => array(
-					'iw_url' => 'http://www.memory-alpha.org/en/index.php/$1',
-					'iw_api' => '',
-					'iw_wikiid' => '',
-					'iw_local' => 0 ),
-				'zh' => array(
-					'iw_url' => 'http://zh.wikipedia.org/wiki/$1',
-					'iw_api' => '',
-					'iw_wikiid' => '',
-					'iw_local' => 1 ),
-				'es' => array(
-					'iw_url' => 'http://es.wikipedia.org/wiki/$1',
-					'iw_api' => '',
-					'iw_wikiid' => '',
-					'iw_local' => 1 ),
-				'fr' => array(
-					'iw_url' => 'http://fr.wikipedia.org/wiki/$1',
-					'iw_api' => '',
-					'iw_wikiid' => '',
-					'iw_local' => 1 ),
-				'ru' => array(
-					'iw_url' => 'http://ru.wikipedia.org/wiki/$1',
-					'iw_api' => '',
-					'iw_wikiid' => '',
-					'iw_local' => 1 ),
-			);
-			if ( array_key_exists( $prefix, $testInterwikis ) ) {
-				$iwData = $testInterwikis[$prefix];
-			}
-
-			// We only want to rely on the above fixtures
-			return false;
-		} );// hooks::register
-	}
-
-	/**
-	 * Remove the hardcoded interwiki lookup table.
-	 */
-	public static function tearDownInterwikis() {
-		Hooks::clear( 'InterwikiLoadPrefix' );
 	}
 
 	public function setupRecorder( $options ) {
@@ -449,12 +378,7 @@ class ParserTest {
 	 */
 	public function runTestsFromFiles( $filenames ) {
 		$ok = false;
-
-		// be sure, ParserTest::addArticle has correct language set,
-		// so that system messages gets into the right language cache
-		$GLOBALS['wgLanguageCode'] = 'en';
 		$GLOBALS['wgContLang'] = Language::factory( 'en' );
-
 		$this->recorder->start();
 		try {
 			$this->setupDatabase();
@@ -494,9 +418,6 @@ class ParserTest {
 
 	/**
 	 * Get a Parser object
-	 *
-	 * @param string $preprocessor
-	 * @return Parser
 	 */
 	function getParser( $preprocessor = null ) {
 		global $wgParserConf;
@@ -566,10 +487,9 @@ class ParserTest {
 		} elseif ( isset( $opts['comment'] ) ) {
 			$out = Linker::formatComment( $input, $title, $local );
 		} elseif ( isset( $opts['preload'] ) ) {
-			$out = $parser->getPreloadText( $input, $title, $options );
+			$out = $parser->getpreloadText( $input, $title, $options );
 		} else {
 			$output = $parser->parse( $input, $title, $options, true, true, 1337 );
-			$output->setTOCEnabled( !isset( $opts['notoc'] ) );
 			$out = $output->getText();
 
 			if ( isset( $opts['showtitle'] ) ) {
@@ -598,23 +518,18 @@ class ParserTest {
 		}
 
 		$this->teardownGlobals();
-
-		$testResult = new ParserTestResult( $desc );
-		$testResult->expected = $result;
-		$testResult->actual = $out;
-
-		return $this->showTestResult( $testResult );
+		return $this->showTestResult( $desc, $result, $out );
 	}
 
 	/**
-	 * Refactored in 1.22 to use ParserTestResult
+	 *
 	 */
-	function showTestResult( ParserTestResult $testResult ) {
-		if ( $testResult->isSuccess() ) {
-			$this->showSuccess( $testResult );
+	function showTestResult( $desc, $result, $out ) {
+		if ( $result === $out ) {
+			$this->showSuccess( $desc );
 			return true;
 		} else {
-			$this->showFailure( $testResult );
+			$this->showFailure( $desc, $result, $out );
 			return false;
 		}
 	}
@@ -622,7 +537,7 @@ class ParserTest {
 	/**
 	 * Use a regex to find out the value of an option
 	 * @param $key String: name of option val to retrieve
-	 * @param $opts array: Options array to look in
+	 * @param $opts Options array to look in
 	 * @param $default Mixed: default value returned if not found
 	 */
 	private static function getOptionValue( $key, $opts, $default ) {
@@ -749,10 +664,11 @@ class ParserTest {
 			),
 			'wgEnableUploads' => self::getOptionValue( 'wgEnableUploads', $opts, true ),
 			'wgStylePath' => '/skins',
+			'wgStyleSheetPath' => '/skins',
 			'wgSitename' => 'MediaWiki',
 			'wgLanguageCode' => $lang,
 			'wgDBprefix' => $this->db->getType() != 'oracle' ? 'parsertest_' : 'pt_',
-			'wgRawHtml' => self::getOptionValue( 'wgRawHtml', $opts, false ),
+			'wgRawHtml' => isset( $opts['rawhtml'] ),
 			'wgLang' => null,
 			'wgContLang' => null,
 			'wgNamespacesWithSubpages' => array( 0 => isset( $opts['subpage'] ) ),
@@ -762,10 +678,8 @@ class ParserTest {
 			'wgNoFollowDomainExceptions' => array(),
 			'wgThumbnailScriptPath' => false,
 			'wgUseImageResize' => true,
-			'wgSVGConverter' => 'null',
-			'wgSVGConverters' => array( 'null' => 'echo "1">$output' ),
 			'wgLocaltimezone' => 'UTC',
-			'wgAllowExternalImages' => self::getOptionValue( 'wgAllowExternalImages', $opts, true ),
+			'wgAllowExternalImages' => true,
 			'wgUseTidy' => false,
 			'wgDefaultLanguageVariant' => $variant,
 			'wgVariantArticlePath' => false,
@@ -908,9 +822,43 @@ class ParserTest {
 				'user_name' => 'Anonymous' ) );
 		}
 
+		# Hack: insert a few Wikipedia in-project interwiki prefixes,
+		# for testing inter-language links
+		$this->db->insert( 'interwiki', array(
+			array( 'iw_prefix' => 'wikipedia',
+				'iw_url' => 'http://en.wikipedia.org/wiki/$1',
+				'iw_api' => '',
+				'iw_wikiid' => '',
+				'iw_local' => 0 ),
+			array( 'iw_prefix' => 'meatball',
+				'iw_url' => 'http://www.usemod.com/cgi-bin/mb.pl?$1',
+				'iw_api' => '',
+				'iw_wikiid' => '',
+				'iw_local' => 0 ),
+			array( 'iw_prefix' => 'zh',
+				'iw_url' => 'http://zh.wikipedia.org/wiki/$1',
+				'iw_api' => '',
+				'iw_wikiid' => '',
+				'iw_local' => 1 ),
+			array( 'iw_prefix' => 'es',
+				'iw_url' => 'http://es.wikipedia.org/wiki/$1',
+				'iw_api' => '',
+				'iw_wikiid' => '',
+				'iw_local' => 1 ),
+			array( 'iw_prefix' => 'fr',
+				'iw_url' => 'http://fr.wikipedia.org/wiki/$1',
+				'iw_api' => '',
+				'iw_wikiid' => '',
+				'iw_local' => 1 ),
+			array( 'iw_prefix' => 'ru',
+				'iw_url' => 'http://ru.wikipedia.org/wiki/$1',
+				'iw_api' => '',
+				'iw_wikiid' => '',
+				'iw_local' => 1 ),
+		) );
+
 		# Update certain things in site_stats
-		$this->db->insert( 'site_stats',
-			array( 'ss_row_id' => 1, 'ss_images' => 2, 'ss_good_articles' => 1 ) );
+		$this->db->insert( 'site_stats', array( 'ss_row_id' => 1, 'ss_images' => 2, 'ss_good_articles' => 1 ) );
 
 		# Reinitialise the LocalisationCache to match the database state
 		Language::getLocalisationCache()->unloadAll();
@@ -918,52 +866,19 @@ class ParserTest {
 		# Clear the message cache
 		MessageCache::singleton()->clear();
 
-		// Remember to update newParserTests.php after changing the below
-		// (and it uses a slightly different syntax just for teh lulz)
 		$this->uploadDir = $this->setupUploadDir();
 		$user = User::createNew( 'WikiSysop' );
 		$image = wfLocalFile( Title::makeTitle( NS_FILE, 'Foobar.jpg' ) );
-		# note that the size/width/height/bits/etc of the file
-		# are actually set by inspecting the file itself; the arguments
-		# to recordUpload2 have no effect.  That said, we try to make things
-		# match up so it is less confusing to readers of the code & tests.
 		$image->recordUpload2( '', 'Upload of some lame file', 'Some lame file', array(
-			'size' => 7881,
+			'size' => 12345,
 			'width' => 1941,
 			'height' => 220,
-			'bits' => 8,
+			'bits' => 24,
 			'media_type' => MEDIATYPE_BITMAP,
 			'mime' => 'image/jpeg',
 			'metadata' => serialize( array() ),
-			'sha1' => wfBaseConvert( '1', 16, 36, 31 ),
+			'sha1' => wfBaseConvert( '', 16, 36, 31 ),
 			'fileExists' => true
-		), $this->db->timestamp( '20010115123500' ), $user );
-
-		$image = wfLocalFile( Title::makeTitle( NS_FILE, 'Thumb.png' ) );
-		# again, note that size/width/height below are ignored; see above.
-		$image->recordUpload2( '', 'Upload of some lame thumbnail', 'Some lame thumbnail', array(
-			'size' => 22589,
-			'width' => 135,
-			'height' => 135,
-			'bits' => 8,
-			'media_type' => MEDIATYPE_BITMAP,
-			'mime' => 'image/png',
-			'metadata' => serialize( array() ),
-			'sha1' => wfBaseConvert( '2', 16, 36, 31 ),
-			'fileExists' => true
-		), $this->db->timestamp( '20130225203040' ), $user );
-
-		$image = wfLocalFile( Title::makeTitle( NS_FILE, 'Foobar.svg' ) );
-		$image->recordUpload2( '', 'Upload of some lame SVG', 'Some lame SVG', array(
-				'size'        => 12345,
-				'width'       => 240,
-				'height'      => 180,
-				'bits'        => 24,
-				'media_type'  => MEDIATYPE_DRAWING,
-				'mime'        => 'image/svg+xml',
-				'metadata'    => serialize( array() ),
-				'sha1'        => wfBaseConvert( '', 16, 36, 31 ),
-				'fileExists'  => true
 		), $this->db->timestamp( '20010115123500' ), $user );
 
 		# This image will be blacklisted in [[MediaWiki:Bad image list]]
@@ -976,7 +891,7 @@ class ParserTest {
 			'media_type' => MEDIATYPE_BITMAP,
 			'mime' => 'image/jpeg',
 			'metadata' => serialize( array() ),
-			'sha1' => wfBaseConvert( '3', 16, 36, 31 ),
+			'sha1' => wfBaseConvert( '', 16, 36, 31 ),
 			'fileExists' => true
 		), $this->db->timestamp( '20010115123500' ), $user );
 	}
@@ -1007,11 +922,8 @@ class ParserTest {
 		$tables = $this->listTables();
 
 		foreach ( $tables as $table ) {
-			if ( $this->db->getType() == 'oracle' ) {
-				$this->db->query( "DROP TABLE pt_$table DROP CONSTRAINTS" );
-			} else {
-				$this->db->query( "DROP TABLE `parsertest_$table`" );
-			}
+			$sql = $this->db->getType() == 'oracle' ? "DROP TABLE pt_$table DROP CONSTRAINTS" : "DROP TABLE `parsertest_$table`";
+			$this->db->query( $sql );
 		}
 
 		if ( $this->db->getType() == 'oracle' ) {
@@ -1048,15 +960,9 @@ class ParserTest {
 
 		wfMkdirParents( $dir . '/3/3a', null, __METHOD__ );
 		copy( "$IP/skins/monobook/headbg.jpg", "$dir/3/3a/Foobar.jpg" );
-		wfMkdirParents( $dir . '/e/ea', null, __METHOD__ );
-		copy( "$IP/skins/monobook/wiki.png", "$dir/e/ea/Thumb.png" );
 		wfMkdirParents( $dir . '/0/09', null, __METHOD__ );
 		copy( "$IP/skins/monobook/headbg.jpg", "$dir/0/09/Bad.jpg" );
-		wfMkdirParents( $dir . '/f/ff', null, __METHOD__ );
-		copy( "$IP/skins/monobook/headbg.jpg", "$dir/f/ff/Foobar.svg" );
-		file_put_contents( "$dir/f/ff/Foobar.svg",
-			'<?xml version="1.0" encoding="utf-8"?>' .
-			'<svg xmlns="http://www.w3.org/2000/svg" />' );
+
 		return $dir;
 	}
 
@@ -1102,17 +1008,7 @@ class ParserTest {
 				"$dir/thumb/3/3a/Foobar.jpg/70px-Foobar.jpg",
 				"$dir/thumb/3/3a/Foobar.jpg/960px-Foobar.jpg",
 
-				"$dir/e/ea/Thumb.png",
-
 				"$dir/0/09/Bad.jpg",
-
-				"$dir/f/ff/Foobar.svg",
-				"$dir/thumb/f/ff/Foobar.svg/180px-Foobar.svg.png",
-				"$dir/thumb/f/ff/Foobar.svg/360px-Foobar.svg.png",
-				"$dir/thumb/f/ff/Foobar.svg/langde-270px-Foobar.svg.png",
-				"$dir/thumb/f/ff/Foobar.svg/270px-Foobar.svg.png",
-				"$dir/thumb/f/ff/Foobar.svg/langde-180px-Foobar.svg.png",
-				"$dir/thumb/f/ff/Foobar.svg/langde-360px-Foobar.svg.png",
 
 				"$dir/math/f/a/5/fa50b8b616463173474302ca3e63586b.png",
 			)
@@ -1127,13 +1023,7 @@ class ParserTest {
 				"$dir/thumb/3/3a/Foobar.jpg",
 				"$dir/thumb/3/3a",
 				"$dir/thumb/3",
-				"$dir/e/ea",
-				"$dir/e",
-				"$dir/f/ff/",
-				"$dir/f/",
-				"$dir/thumb/f/ff/Foobar.svg",
-				"$dir/thumb/f/ff/",
-				"$dir/thumb/f/",
+
 				"$dir/0/09/",
 				"$dir/0/",
 				"$dir/thumb",
@@ -1180,12 +1070,10 @@ class ParserTest {
 	/**
 	 * Print a happy success message.
 	 *
-	 * Refactored in 1.22 to use ParserTestResult
-	 *
-	 * @param $testResult ParserTestResult
+	 * @param $desc String: the test name
 	 * @return Boolean
 	 */
-	protected function showSuccess( ParserTestResult $testResult ) {
+	protected function showSuccess( $desc ) {
 		if ( $this->showProgress ) {
 			print $this->term->color( '1;32' ) . 'PASSED' . $this->term->reset() . "\n";
 		}
@@ -1197,29 +1085,28 @@ class ParserTest {
 	 * Print a failure message and provide some explanatory output
 	 * about what went wrong if so configured.
 	 *
-	 * Refactored in 1.22 to use ParserTestResult
-	 *
-	 * @param $testResult ParserTestResult
+	 * @param $desc String: the test name
+	 * @param $result String: expected HTML output
+	 * @param $html String: actual HTML output
 	 * @return Boolean
 	 */
-	protected function showFailure( ParserTestResult $testResult ) {
+	protected function showFailure( $desc, $result, $html ) {
 		if ( $this->showFailure ) {
 			if ( !$this->showProgress ) {
 				# In quiet mode we didn't show the 'Testing' message before the
 				# test, in case it succeeded. Show it now:
-				$this->showTesting( $testResult->description );
+				$this->showTesting( $desc );
 			}
 
 			print $this->term->color( '31' ) . 'FAILED!' . $this->term->reset() . "\n";
 
 			if ( $this->showOutput ) {
-				print "--- Expected ---\n{$testResult->expected}\n";
-				print "--- Actual ---\n{$testResult->actual}\n";
+				print "--- Expected ---\n$result\n--- Actual ---\n$html\n";
 			}
 
 			if ( $this->showDiffs ) {
-				print $this->quickDiff( $testResult->expected, $testResult->actual );
-				if ( !$this->wellFormed( $testResult->actual ) ) {
+				print $this->quickDiff( $result, $html );
+				if ( !$this->wellFormed( $html ) ) {
 					print "XML error: $this->mXmlError\n";
 				}
 			}
@@ -1238,9 +1125,7 @@ class ParserTest {
 	 * @param $outFileTail String: tailing for the output file name
 	 * @return String
 	 */
-	protected function quickDiff( $input, $output,
-		$inFileTail = 'expected', $outFileTail = 'actual'
-	) {
+	protected function quickDiff( $input, $output, $inFileTail = 'expected', $outFileTail = 'actual' ) {
 		# Windows, or at least the fc utility, is retarded
 		$slash = wfIsWindows() ? '\\' : '/';
 		$prefix = wfTempDir() . "{$slash}mwParser-" . mt_rand();
@@ -1256,10 +1141,9 @@ class ParserTest {
 
 		global $wgDiff3;
 		// we assume that people with diff3 also have usual diff
-		$shellCommand = ( wfIsWindows() && !$wgDiff3 ) ? 'fc' : 'diff -au';
-
-		$diff = wfShellExec( "$shellCommand $shellInfile $shellOutfile" );
-
+		$diff = ( wfIsWindows() && !$wgDiff3 )
+			? `fc $shellInfile $shellOutfile`
+			: `diff -au $shellInfile $shellOutfile`;
 		unlink( $infile );
 		unlink( $outfile );
 
@@ -1459,7 +1343,7 @@ class ParserTest {
 	}
 
 	static function getFakeTimestamp( &$parser, &$ts ) {
-		$ts = 123; //parsed as '1970-01-01T00:02:03Z'
+		$ts = 123;
 		return true;
 	}
 }

@@ -60,10 +60,9 @@ class SqliteInstaller extends DatabaseInstaller {
 			$result->fatal( 'config-outdated-sqlite', $db->getServerVersion(), self::MINIMUM_VERSION );
 		}
 		// Check for FTS3 full-text search module
-		if ( DatabaseSqlite::getFulltextSearchModule() != 'FTS3' ) {
+		if( DatabaseSqlite::getFulltextSearchModule() != 'FTS3' ) {
 			$result->warning( 'config-no-fts3' );
 		}
-
 		return $result;
 	}
 
@@ -74,7 +73,6 @@ class SqliteInstaller extends DatabaseInstaller {
 				DIRECTORY_SEPARATOR,
 				dirname( $_SERVER['DOCUMENT_ROOT'] ) . '/data'
 			);
-
 			return array( 'wgSQLiteDataDir' => $path );
 		} else {
 			return array();
@@ -82,17 +80,8 @@ class SqliteInstaller extends DatabaseInstaller {
 	}
 
 	public function getConnectForm() {
-		return $this->getTextBox(
-			'wgSQLiteDataDir',
-			'config-sqlite-dir', array(),
-			$this->parent->getHelpBox( 'config-sqlite-dir-help' )
-		) .
-		$this->getTextBox(
-			'wgDBname',
-			'config-db-name',
-			array(),
-			$this->parent->getHelpBox( 'config-sqlite-name-help' )
-		);
+		return $this->getTextBox( 'wgSQLiteDataDir', 'config-sqlite-dir', array(), $this->parent->getHelpBox( 'config-sqlite-dir-help' ) ) .
+			$this->getTextBox( 'wgDBname', 'config-db-name', array(), $this->parent->getHelpBox( 'config-sqlite-name-help' ) );
 	}
 
 	/**
@@ -107,7 +96,6 @@ class SqliteInstaller extends DatabaseInstaller {
 		if ( !$result ) {
 			return $path;
 		}
-
 		return $result;
 	}
 
@@ -127,7 +115,6 @@ class SqliteInstaller extends DatabaseInstaller {
 		}
 		# Table prefix is not used on SQLite, keep it empty
 		$this->setVar( 'wgDBprefix', '' );
-
 		return $result;
 	}
 
@@ -141,16 +128,9 @@ class SqliteInstaller extends DatabaseInstaller {
 			if ( !is_writable( dirname( $dir ) ) ) {
 				$webserverGroup = Installer::maybeGetWebserverPrimaryGroup();
 				if ( $webserverGroup !== null ) {
-					return Status::newFatal(
-						'config-sqlite-parent-unwritable-group',
-						$dir, dirname( $dir ), basename( $dir ),
-						$webserverGroup
-					);
+					return Status::newFatal( 'config-sqlite-parent-unwritable-group', $dir, dirname( $dir ), basename( $dir ), $webserverGroup );
 				} else {
-					return Status::newFatal(
-						'config-sqlite-parent-unwritable-nogroup',
-						$dir, dirname( $dir ), basename( $dir )
-					);
+					return Status::newFatal( 'config-sqlite-parent-unwritable-nogroup', $dir, dirname( $dir ), basename( $dir ) );
 				}
 			}
 
@@ -193,7 +173,6 @@ class SqliteInstaller extends DatabaseInstaller {
 		} catch ( DBConnectionError $e ) {
 			$status->fatal( 'config-sqlite-connection-error', $e->getMessage() );
 		}
-
 		return $status;
 	}
 
@@ -241,7 +220,6 @@ class SqliteInstaller extends DatabaseInstaller {
 		$this->setVar( 'wgDBuser', '' );
 		$this->setVar( 'wgDBpassword', '' );
 		$this->setupSchemaVars();
-
 		return $this->getConnection();
 	}
 
@@ -250,7 +228,6 @@ class SqliteInstaller extends DatabaseInstaller {
 	 */
 	public function createTables() {
 		$status = parent::createTables();
-
 		return $this->setupSearchIndex( $status );
 	}
 
@@ -269,7 +246,6 @@ class SqliteInstaller extends DatabaseInstaller {
 		} elseif ( !$fts3tTable && $module == 'FTS3' ) {
 			$this->db->sourceFile( "$IP/maintenance/sqlite/archives/searchindex-fts3.sql" );
 		}
-
 		return $status;
 	}
 
@@ -278,8 +254,8 @@ class SqliteInstaller extends DatabaseInstaller {
 	 */
 	public function getLocalSettings() {
 		$dir = LocalSettingsGenerator::escapePhpString( $this->getVar( 'wgSQLiteDataDir' ) );
-
-		return "# SQLite-specific settings
+		return
+"# SQLite-specific settings
 \$wgSQLiteDataDir = \"{$dir}\";";
 	}
 }

@@ -78,6 +78,7 @@ class SpecialPageFactory {
 		'Allpages'                  => 'SpecialAllpages',
 		'Prefixindex'               => 'SpecialPrefixindex',
 		'Categories'                => 'SpecialCategories',
+		'Disambiguations'           => 'DisambiguationsPage',
 		'Listredirects'             => 'ListredirectsPage',
 		'PagesWithProp'             => 'SpecialPagesWithProp',
 
@@ -93,7 +94,6 @@ class SpecialPageFactory {
 		'PasswordReset'             => 'SpecialPasswordReset',
 		'DeletedContributions'      => 'DeletedContributionsPage',
 		'Preferences'               => 'SpecialPreferences',
-		'ResetTokens'               => 'SpecialResetTokens',
 		'Contributions'             => 'SpecialContributions',
 		'Listgrouprights'           => 'SpecialListGroupRights',
 		'Listusers'                 => 'SpecialListUsers',
@@ -130,7 +130,6 @@ class SpecialPageFactory {
 		// Redirecting special pages
 		'LinkSearch'                => 'LinkSearchPage',
 		'Randompage'                => 'Randompage',
-		'RandomInCategory'          => 'SpecialRandomInCategory',
 		'Randomredirect'            => 'SpecialRandomredirect',
 
 		// High use pages
@@ -155,15 +154,14 @@ class SpecialPageFactory {
 
 		// Unlisted / redirects
 		'Blankpage'                 => 'SpecialBlankpage',
+		'Blockme'                   => 'SpecialBlockme',
 		'Emailuser'                 => 'SpecialEmailUser',
 		'Movepage'                  => 'MovePageForm',
 		'Mycontributions'           => 'SpecialMycontributions',
 		'Mypage'                    => 'SpecialMypage',
 		'Mytalk'                    => 'SpecialMytalk',
 		'Myuploads'                 => 'SpecialMyuploads',
-		'AllMyUploads'              => 'SpecialAllMyUploads',
 		'PermanentLink'             => 'SpecialPermanentLink',
-		'Redirect'                  => 'SpecialRedirect',
 		'Revisiondelete'            => 'SpecialRevisionDelete',
 		'Specialpages'              => 'SpecialSpecialpages',
 		'Userlogout'                => 'SpecialUserlogout',
@@ -202,7 +200,7 @@ class SpecialPageFactory {
 				self::$mList['ChangeEmail'] = 'SpecialChangeEmail';
 			}
 
-			if ( $wgEnableJavaScriptTest ) {
+			if( $wgEnableJavaScriptTest ) {
 				self::$mList['JavaScriptTest'] = 'SpecialJavaScriptTest';
 			}
 
@@ -288,7 +286,7 @@ class SpecialPageFactory {
 	 *
 	 * @param $page Mixed: SpecialPage or string
 	 * @param $group String
-	 * @deprecated since 1.21 Override SpecialPage::getGroupName
+	 * @deprecated 1.21 Override SpecialPage::getGroupName
 	 */
 	public static function setGroup( $page, $group ) {
 		wfDeprecated( __METHOD__, '1.21' );
@@ -303,7 +301,7 @@ class SpecialPageFactory {
 	 *
 	 * @param $page SpecialPage
 	 * @return String
-	 * @deprecated since 1.21 Use SpecialPage::getFinalGroupName
+	 * @deprecated 1.21 Use SpecialPage::getFinalGroupName
 	 */
 	public static function getGroup( &$page ) {
 		wfDeprecated( __METHOD__, '1.21' );
@@ -466,8 +464,9 @@ class SpecialPageFactory {
 			if ( $name != $page->getLocalName() && !$context->getRequest()->wasPosted() ) {
 				$query = $context->getRequest()->getQueryValues();
 				unset( $query['title'] );
+				$query = wfArrayToCgi( $query );
 				$title = $page->getTitle( $par );
-				$url = $title->getFullURL( $query );
+				$url = $title->getFullUrl( $query );
 				$context->getOutput()->redirect( $url );
 				wfProfileOut( __METHOD__ );
 				return $title;

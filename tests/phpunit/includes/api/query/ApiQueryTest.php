@@ -12,13 +12,14 @@ class ApiQueryTest extends ApiTestCase {
 		$this->doLogin();
 	}
 
-	public function testTitlesGetNormalized() {
+	function testTitlesGetNormalized() {
 
 		global $wgMetaNamespace;
 
 		$data = $this->doApiRequest( array(
 			'action' => 'query',
 			'titles' => 'Project:articleA|article_B' ) );
+
 
 		$this->assertArrayHasKey( 'query', $data[0] );
 		$this->assertArrayHasKey( 'normalized', $data[0]['query'] );
@@ -41,9 +42,10 @@ class ApiQueryTest extends ApiTestCase {
 			),
 			$data[0]['query']['normalized'][1]
 		);
+
 	}
 
-	public function testTitlesAreRejectedIfInvalid() {
+	function testTitlesAreRejectedIfInvalid() {
 		$title = false;
 		while ( !$title || Title::newFromText( $title )->exists() ) {
 			$title = md5( mt_rand( 0, 10000 ) + rand( 0, 999000 ) );
@@ -63,4 +65,5 @@ class ApiQueryTest extends ApiTestCase {
 		$this->assertArrayHasKey( 'missing', $data[0]['query']['pages'][-2] );
 		$this->assertArrayHasKey( 'invalid', $data[0]['query']['pages'][-1] );
 	}
+
 }

@@ -49,6 +49,7 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 
 	/**
 	 * @param $resultPageSet ApiPageSet
+	 * @return
 	 */
 	private function run( $resultPageSet = null ) {
 		if ( $this->getPageSet()->getGoodTitleCount() == 0 ) {
@@ -173,7 +174,7 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 					break;
 				}
 
-				$titles[] = Title::makeTitle( NS_CATEGORY, $row->cl_to );
+				$titles[] = Title :: makeTitle( NS_CATEGORY, $row->cl_to );
 			}
 			$resultPageSet->populateFromTitles( $titles );
 		}
@@ -183,7 +184,7 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 		return array(
 			'prop' => array(
 				ApiBase::PARAM_ISMULTI => true,
-				ApiBase::PARAM_TYPE => array(
+				ApiBase::PARAM_TYPE => array (
 					'sortkey',
 					'timestamp',
 					'hidden',

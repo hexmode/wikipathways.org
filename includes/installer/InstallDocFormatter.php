@@ -23,7 +23,6 @@
 class InstallDocFormatter {
 	static function format( $text ) {
 		$obj = new self( $text );
-
 		return $obj->execute();
 	}
 
@@ -34,8 +33,8 @@ class InstallDocFormatter {
 	protected function execute() {
 		$text = $this->text;
 		// Use Unix line endings, escape some wikitext stuff
-		$text = str_replace( array( '<', '{{', '[[', '__', "\r" ),
-			array( '&lt;', '&#123;&#123;', '&#91;&#91;', '&#95;&#95;', '' ), $text );
+		$text = str_replace( array( '<', '{{', '[[', "\r" ),
+			array( '&lt;', '&#123;&#123;', '&#91;&#91;', '' ), $text );
 		// join word-wrapped lines into one
 		do {
 			$prev = $text;
@@ -47,12 +46,7 @@ class InstallDocFormatter {
 		// turn (bug nnnn) into links
 		$text = preg_replace_callback( '/bug (\d+)/', array( $this, 'replaceBugLinks' ), $text );
 		// add links to manual to every global variable mentioned
-		$text = preg_replace_callback(
-			'/(\$wg[a-z0-9_]+)/i',
-			array( $this, 'replaceConfigLinks' ),
-			$text
-		);
-
+		$text = preg_replace_callback( '/(\$wg[a-z0-9_]+)/i', array( $this, 'replaceConfigLinks' ), $text );
 		return $text;
 	}
 

@@ -6,7 +6,6 @@ return array(
 
 	'mediawiki.tests.qunit.suites' => array(
 		'scripts' => array(
-			'tests/qunit/suites/resources/startup.test.js',
 			'tests/qunit/suites/resources/jquery/jquery.autoEllipsis.test.js',
 			'tests/qunit/suites/resources/jquery/jquery.byteLength.test.js',
 			'tests/qunit/suites/resources/jquery/jquery.byteLimit.test.js',
@@ -17,7 +16,6 @@ return array(
 			'tests/qunit/suites/resources/jquery/jquery.hidpi.test.js',
 			'tests/qunit/suites/resources/jquery/jquery.highlightText.test.js',
 			'tests/qunit/suites/resources/jquery/jquery.localize.test.js',
-			'tests/qunit/suites/resources/jquery/jquery.makeCollapsible.test.js',
 			'tests/qunit/suites/resources/jquery/jquery.mwExtension.test.js',
 			'tests/qunit/suites/resources/jquery/jquery.tabIndex.test.js',
 			'tests/qunit/suites/resources/jquery/jquery.tablesorter.test.js',
@@ -47,7 +45,6 @@ return array(
 			'jquery.hidpi',
 			'jquery.highlightText',
 			'jquery.localize',
-			'jquery.makeCollapsible',
 			'jquery.mwExtension',
 			'jquery.tabIndex',
 			'jquery.tablesorter',
@@ -64,5 +61,6 @@ return array(
 			'mediawiki.language',
 			'mediawiki.cldr',
 		),
+		'position' => 'top',
 	)
 );

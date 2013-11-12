@@ -1,5 +1,7 @@
 <?php
 /**
+ * Tests for wfParseUrl()
+ *
  * Copyright © 2013 Alexandre Emsenhuber
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,9 +22,6 @@
  * @file
  */
 
-/**
- * @covers ::wfParseUrl
- */
 class WfParseUrlTest extends MediaWikiTestCase {
 	protected function setUp() {
 		parent::setUp();
@@ -32,9 +31,7 @@ class WfParseUrlTest extends MediaWikiTestCase {
 		) );
 	}
 
-	/**
-	 * @dataProvider provideURLs
-	 */
+	/** @dataProvider provideURLs */
 	public function testWfParseUrl( $url, $parts ) {
 		$partsDump = var_export( $parts, true );
 		$this->assertEquals(

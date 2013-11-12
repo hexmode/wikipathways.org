@@ -46,9 +46,8 @@ class GenderCacheTest extends MediaWikiLangTestCase {
 	 * test usernames
 	 *
 	 * @dataProvider provideUserGenders
-	 * @covers GenderCache::getGenderOf
 	 */
-	public function testUserName( $username, $expectedGender ) {
+	function testUserName( $username, $expectedGender ) {
 		$genderCache = GenderCache::singleton();
 		$gender = $genderCache->getGenderOf( $username );
 		$this->assertEquals( $gender, $expectedGender, "GenderCache normal" );
@@ -58,9 +57,8 @@ class GenderCacheTest extends MediaWikiLangTestCase {
 	 * genderCache should work with user objects, too
 	 *
 	 * @dataProvider provideUserGenders
-	 * @covers GenderCache::getGenderOf
 	 */
-	public function testUserObjects( $username, $expectedGender ) {
+	function testUserObjects( $username, $expectedGender ) {
 		$genderCache = GenderCache::singleton();
 		$user = User::newFromName( $username );
 		$gender = $genderCache->getGenderOf( $user );
@@ -84,9 +82,8 @@ class GenderCacheTest extends MediaWikiLangTestCase {
 	 * against the never existing username
 	 *
 	 * @dataProvider provideStripSubpages
-	 * @covers GenderCache::getGenderOf
 	 */
-	public function testStripSubpages( $pageWithSubpage, $expectedGender ) {
+	function testStripSubpages( $pageWithSubpage, $expectedGender ) {
 		$genderCache = GenderCache::singleton();
 		$gender = $genderCache->getGenderOf( $pageWithSubpage );
 		$this->assertEquals( $gender, $expectedGender, "GenderCache must strip of subpages" );

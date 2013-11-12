@@ -9,12 +9,12 @@
  * @group medium
  *        ^--- tell phpunit that these test cases may take longer than 2 seconds.
  */
-class EditPageTest extends MediaWikiLangTestCase {
+class EditPageTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideExtractSectionTitle
 	 */
-	public function testExtractSectionTitle( $section, $title ) {
+	function testExtractSectionTitle( $section, $title ) {
 		$extracted = EditPage::extractSectionTitle( $section );
 		$this->assertEquals( $title, $extracted );
 	}
@@ -173,90 +173,15 @@ class EditPageTest extends MediaWikiLangTestCase {
 	}
 
 	public function testCreatePage() {
-		$this->assertEdit(
-			'EditPageTest_testCreatePage',
-			null,
-			null,
-			array(
-				'wpTextbox1' => "Hello World!",
-			),
-			EditPage::AS_SUCCESS_NEW_ARTICLE,
-			"Hello World!",
-			"expected article being created"
-		)->doDeleteArticleReal( 'EditPageTest_testCreatePage' );
-
-		$this->assertEdit(
-			'EditPageTest_testCreatePage',
-			null,
-			null,
-			array(
-				'wpTextbox1' => "",
-			),
-			EditPage::AS_BLANK_ARTICLE,
-			null,
-			"expected article not being created if empty"
+		$text = "Hello World!";
+		$edit = array(
+			'wpTextbox1' => $text,
+			'wpSummary' => 'just testing',
 		);
 
-
-		$this->assertEdit(
-			'MediaWiki:January',
-			null,
-			'UTSysop',
-			array(
-				'wpTextbox1' => "Not January",
-			),
-			EditPage::AS_SUCCESS_NEW_ARTICLE,
-			"Not January",
-			"expected MediaWiki: page being created"
-		)->doDeleteArticleReal( 'EditPageTest_testCreatePage' );
-
-		$this->assertEdit(
-			'MediaWiki:EditPageTest_testCreatePage',
-			null,
-			'UTSysop',
-			array(
-				'wpTextbox1' => "",
-			),
-			EditPage::AS_BLANK_ARTICLE,
-			null,
-			"expected not-registered MediaWiki: page not being created if empty"
-		);
-
-		$this->assertEdit(
-			'MediaWiki:January',
-			null,
-			'UTSysop',
-			array(
-				'wpTextbox1' => "",
-			),
-			EditPage::AS_SUCCESS_NEW_ARTICLE,
-			"",
-			"expected registered MediaWiki: page being created even if empty"
-		)->doDeleteArticleReal( 'EditPageTest_testCreatePage' );
-
-		$this->assertEdit(
-			'MediaWiki:Ipb-default-expiry',
-			null,
-			'UTSysop',
-			array(
-				'wpTextbox1' => "",
-			),
-			EditPage::AS_BLANK_ARTICLE,
-			"",
-			"expected registered MediaWiki: page whose default content is empty not being created if empty"
-		);
-
-		$this->assertEdit(
-			'MediaWiki:January',
-			null,
-			'UTSysop',
-			array(
-				'wpTextbox1' => "January",
-			),
-			EditPage::AS_BLANK_ARTICLE,
-			null,
-			"expected MediaWiki: page not being created if text equals default message"
-		);
+		$this->assertEdit( 'EditPageTest_testCreatePafe', null, null, $edit,
+			EditPage::AS_SUCCESS_NEW_ARTICLE, $text,
+			"expected successfull creation with given text" );
 	}
 
 	public function testUpdatePage() {

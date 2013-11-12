@@ -1,17 +1,10 @@
-// IE fixes javascript loaded by wikibits.js for IE <= 6.0
-( function ( mw, $ ) {
+// IE fixes javascript
 
-var doneIEAlphaFix, doneIETransform, expandedURLs, fixalpha, isMSIE55,
-	relativeforfloats, setrelative, hasClass;
+window.isMSIE55 = ( window.showModalDialog && window.clipboardData && window.createPopup );
+window.doneIETransform = undefined;
+window.doneIEAlphaFix = undefined;
 
-// Also returns true for IE6, 7, 8, 9 and 10. createPopup is removed in IE11.
-// Good thing this is only loaded for IE <= 6 by wikibits.
-// Might as well set it to true.
-isMSIE55 = window.isMSIE55 = ( window.showModalDialog && window.clipboardData && window.createPopup );
-doneIETransform = window.doneIETransform = undefined;
-doneIEAlphaFix = window.doneIEAlphaFix = undefined;
-
-window.hookit = function () {
+window.hookit = function() {
 	if ( !doneIETransform && document.getElementById && document.getElementById( 'bodyContent' ) ) {
 		doneIETransform = true;
 		relativeforfloats();
@@ -24,27 +17,26 @@ if ( document.attachEvent ) {
 }
 
 // png alpha transparency fixes
-fixalpha = window.fixalpha = function ( logoId ) {
+window.fixalpha = function( logoId ) {
 	// bg
 	if ( isMSIE55 && !doneIEAlphaFix ) {
-		var bg, imageUrl, linkFix, logoa, logospan, plogo;
-		plogo = document.getElementById( logoId || 'p-logo' );
+		var plogo = document.getElementById( logoId || 'p-logo' );
 		if ( !plogo ) {
 			return;
 		}
 
-		logoa = plogo.getElementsByTagName('a')[0];
+		var logoa = plogo.getElementsByTagName('a')[0];
 		if ( !logoa ) {
 			return;
 		}
 
-		bg = logoa.currentStyle.backgroundImage;
-		imageUrl = bg.substring( 5, bg.length - 2 );
+		var bg = logoa.currentStyle.backgroundImage;
+		var imageUrl = bg.substring( 5, bg.length - 2 );
 
 		doneIEAlphaFix = true;
 
-		if ( imageUrl.substr( imageUrl.length - 4 ).toLowerCase() === '.png' ) {
-			logospan = logoa.appendChild( document.createElement( 'span' ) );
+		if ( imageUrl.substr( imageUrl.length - 4 ).toLowerCase() == '.png' ) {
+			var logospan = logoa.appendChild( document.createElement( 'span' ) );
 
 			logoa.style.backgroundImage = 'none';
 			logospan.style.filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src=' + imageUrl + ')';
@@ -53,7 +45,7 @@ fixalpha = window.fixalpha = function ( logoId ) {
 			logospan.style.width = logoa.currentStyle.width;
 			logospan.style.cursor = 'hand';
 			// Center image with hack for IE5.5
-			if ( document.documentElement.dir === 'rtl' ) {
+			if ( document.documentElement.dir == 'rtl' ) {
 				logospan.style.right = '50%';
 				logospan.style.setExpression( 'marginRight', '"-" + (this.offsetWidth / 2) + "px"' );
 			} else {
@@ -63,7 +55,7 @@ fixalpha = window.fixalpha = function ( logoId ) {
 			logospan.style.top = '50%';
 			logospan.style.setExpression( 'marginTop', '"-" + (this.offsetHeight / 2) + "px"' );
 
-			linkFix = logoa.appendChild( logoa.cloneNode() );
+			var linkFix = logoa.appendChild( logoa.cloneNode() );
 			linkFix.style.position = 'absolute';
 			linkFix.style.height = '100%';
 			linkFix.style.width = '100%';
@@ -77,23 +69,22 @@ if ( isMSIE55 ) {
 }
 
 // fix ie6 disappering float bug
-relativeforfloats = window.relativeforfloats = function () {
-	var bc, tables, divs;
-	bc = document.getElementById( 'bodyContent' );
+window.relativeforfloats = function() {
+	var bc = document.getElementById( 'bodyContent' );
 	if ( bc ) {
-		tables = bc.getElementsByTagName( 'table' );
-		divs = bc.getElementsByTagName( 'div' );
+		var tables = bc.getElementsByTagName( 'table' );
+		var divs = bc.getElementsByTagName( 'div' );
 		setrelative( tables );
 		setrelative( divs );
 	}
 };
 
-setrelative = window.setrelative = function ( nodes ) {
+window.setrelative = function( nodes ) {
 	var i = 0;
 	while ( i < nodes.length ) {
-		if( ( ( nodes[i].style.float && nodes[i].style.float !== ( 'none' ) ||
-			( nodes[i].align && nodes[i].align !== ( 'none' ) ) ) &&
-			( !nodes[i].style.position || nodes[i].style.position !== 'relative' ) ) )
+		if( ( ( nodes[i].style.float && nodes[i].style.float != ( 'none' ) ||
+			( nodes[i].align && nodes[i].align != ( 'none' ) ) ) &&
+			( !nodes[i].style.position || nodes[i].style.position != 'relative' ) ) )
 		{
 			nodes[i].style.position = 'relative';
 		}
@@ -102,31 +93,30 @@ setrelative = window.setrelative = function ( nodes ) {
 };
 
 // Expand links for printing
-hasClass = function ( classText, classWanted ) {
-	var i = 0, classArr = classText.split(/\s/);
-	for ( i = 0; i < classArr.length; i++ ) {
-		if ( classArr[i].toLowerCase() === classWanted.toLowerCase() ) {
+String.prototype.hasClass = function( classWanted ) {
+	var classArr = this.split(/\s/);
+	for ( var i = 0; i < classArr.length; i++ ) {
+		if ( classArr[i].toLowerCase() == classWanted.toLowerCase() ) {
 			return true;
 		}
 	}
 	return false;
 };
 
-expandedURLs = window.expandedURLs = undefined;
+window.expandedURLs = undefined;
 
-window.onbeforeprint = function () {
-	var allLinks, contentEl, expandedLink, expandedText, i;
-
+window.onbeforeprint = function() {
 	expandedURLs = [];
-	contentEl = document.getElementById( 'content' );
+
+	var contentEl = document.getElementById( 'content' );
 
 	if ( contentEl ) {
-		allLinks = contentEl.getElementsByTagName( 'a' );
+		var allLinks = contentEl.getElementsByTagName( 'a' );
 
-		for ( i = 0; i < allLinks.length; i++ ) {
-			if ( hasClass( allLinks[i].className, 'external' ) && !hasClass( allLinks[i].className, 'free' ) ) {
-				expandedLink = document.createElement( 'span' );
-				expandedText = document.createTextNode( ' (' + allLinks[i].href + ')' );
+		for ( var i = 0; i < allLinks.length; i++ ) {
+			if ( allLinks[i].className.hasClass( 'external' ) && !allLinks[i].className.hasClass( 'free' ) ) {
+				var expandedLink = document.createElement( 'span' );
+				var expandedText = document.createTextNode( ' (' + allLinks[i].href + ')' );
 				expandedLink.appendChild( expandedText );
 				allLinks[i].parentNode.insertBefore( expandedLink, allLinks[i].nextSibling );
 				expandedURLs[i] = expandedLink;
@@ -142,5 +132,3 @@ window.onafterprint = function() {
 		}
 	}
 };
-
-}( mediaWiki, jQuery ) );

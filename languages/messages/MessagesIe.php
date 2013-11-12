@@ -161,6 +161,9 @@ $messages = array(
 'tog-shownumberswatching' => 'Monstrar li númere de usatores vigilant',
 'tog-oldsig' => 'Prevision de signature in existentie:',
 'tog-fancysig' => 'Tractar signature quam textu wiki (sin un catenun auto-crate)',
+'tog-externaleditor' => 'Usar redactor extern per contumacie (solmen por usatores expert, besona de colocationes special in tui computator. [//www.mediawiki.org/wiki/Manual:External_editors Plu information.])',
+'tog-externaldiff' => 'Usar diferentie extern per contumacie (solmen por usatores expert, besona de colocationes special in tui computator. [//www.mediawiki.org/wiki/Manual:External_editors Plu information.])',
+'tog-showjumplinks' => 'Permisser catenunes de accessebilitá "saltar a"',
 'tog-uselivepreview' => 'Usar prevision in vivi (exige JavaScript) (experimental)',
 'tog-forceeditsummary' => 'Suggester me quande intrar un redaction che summarium in blanc',
 'tog-watchlisthideown' => 'Ocultar mi redactiones del liste de págines vigilat',
@@ -335,7 +338,7 @@ Pleser atende un témpor quelc ante que vu prova accesser ti págine denov.
 
 $1',
 
-# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage).
+# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => 'Concernent {{SITENAME}}',
 'aboutpage' => 'Project:Concernent',
 'copyright' => 'Contenete disponibil sub $1.',
@@ -345,6 +348,7 @@ $1',
 'disclaimers' => 'Advertimentes',
 'disclaimerpage' => 'Project:Advertimentes comun',
 'edithelp' => 'Redacter auxilie',
+'edithelppage' => 'Help:Redactant',
 'helppage' => 'Help:Contenete',
 'mainpage' => 'Págine principal',
 'mainpage-description' => 'Págine principal',
@@ -622,6 +626,7 @@ Vider li [[Special:IPBlockList|liste de bloc de IP]] por li liste de bloces e ba
 'viewprevnext' => 'Vider ($1 {{int:pipe-separator}} $2) ($3)',
 'searchmenu-exists' => "'''Vi un págine nominat \"[[:\$1]]\" in ti wiki.'''",
 'searchmenu-new' => "'''Crear li págine \"[[:\$1]]\" in ti wiki!'''",
+'searchhelp-url' => 'Help:Contenete',
 'searchprofile-articles' => 'Págines de contenete',
 'searchprofile-project' => 'Auxilie e Págines de projecte',
 'searchprofile-images' => 'Multimedia',
@@ -642,6 +647,9 @@ Vider li [[Special:IPBlockList|liste de bloc de IP]] por li liste de bloces e ba
 'showingresultsheader' => "{{PLURAL:$5|Resultate '''$1''' de '''$3'''|Resultates '''$1 - $2''' de '''$3'''}} por '''$4'''",
 'search-nonefound' => 'Ne esset constatat resultates por li question.',
 'powersearch' => 'Serchar avansat',
+
+# Quickbar
+'qbsettings' => 'Personalisation del barre de utensiles',
 
 # Preferences page
 'preferences' => 'Preferenties',
@@ -751,6 +759,7 @@ Tui adresse de e-mail ne es revelat quande altri usatores contacter vu.',
 'recentchangeslinked-feed' => 'Relatet modificationes',
 'recentchangeslinked-toolbox' => 'Changes referet',
 'recentchangeslinked-title' => 'Changes relatet por "$1"',
+'recentchangeslinked-noresult' => 'Nequant change in págines ligat durante li periode anunciat.',
 'recentchangeslinked-summary' => "Ti es un liste de changes fat recentmen por págines ligat de un págine specificat (o por membres de un categorie specificat).
 Págines in [[Special:Watchlist|tui liste de págines vigilat]] es '''nigri'''.",
 'recentchangeslinked-page' => 'Nómine de págine:',
@@ -884,6 +893,8 @@ Li descrition es in li [$2 págine de descrition del file] ta e es monstrat in i
 'statistics-users-active-desc' => 'Usatores qui have efectuat un action in li ultim {{PLURAL:$1|die|dies}}',
 'statistics-mostpopular' => 'Págines max visitat',
 
+'disambiguationspage' => 'Template:disambig',
+
 'brokenredirects-edit' => 'redacter',
 'brokenredirects-delete' => 'deleter',
 
@@ -983,9 +994,10 @@ Li descrition es in li [$2 págine de descrition del file] ta e es monstrat in i
 'watch' => 'Vigilar',
 'watchthispage' => 'Vigilar ti págine',
 'unwatch' => 'Desvigilar',
+'watchnochange' => 'Nequant de tui tui partes vigilat esset redactet in li periode de témpor monstrat.',
 'watchlist-details' => '{{PLURAL:$1|$1 págine|$1 págines}} in tui liste de págines vigilat, sin págines de discussion.',
-'wlheader-enotif' => 'Li notification de e-mail es permisset.',
-'wlheader-showupdated' => "Págines quel hat esset mutat desde tui ultim visitation es monstrat in '''nigri'''",
+'wlheader-enotif' => '* Li notification de e-mail es permisset.',
+'wlheader-showupdated' => "* Págines quel hat esset mutat desde tui ultim visitation es monstrat in '''nigri'''",
 'watchmethod-recent' => 'controlant nov redactiones por págines vigilat',
 'watchmethod-list' => 'controlant págines vigilat por nov redactiones',
 'watchlistcontains' => 'Tui liste de págines vigilat contene $1 {{PLURAL:$1|págine|págines}}.',
@@ -1348,6 +1360,7 @@ Vu posse anc [[Special:EditWatchlist|usar li redactor uniform]].',
 'version-other' => 'Altri',
 'version-mediahandlers' => 'Manuettes de media',
 'version-hooks' => 'Croces',
+'version-extension-functions' => 'Functiones de extension',
 'version-parser-extensiontags' => 'Puntales de extension analisatores',
 'version-parser-function-hooks' => 'Croces de functiones analisatores',
 'version-hook-name' => 'Nómine de croc',
@@ -1358,6 +1371,9 @@ Vu posse anc [[Special:EditWatchlist|usar li redactor uniform]].',
 'version-software' => 'Software installat',
 'version-software-product' => 'Producte',
 'version-software-version' => 'Version',
+
+# Special:FilePath
+'filepath-page' => 'Figura:',
 
 # Special:SpecialPages
 'specialpages' => 'Págines special',

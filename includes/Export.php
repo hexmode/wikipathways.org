@@ -249,13 +249,9 @@ class WikiExporter {
 			$where = array( 'user_id = log_user' );
 			# Hide private logs
 			$hideLogs = LogEventsList::getExcludeClause( $this->db );
-			if ( $hideLogs ) {
-				$where[] = $hideLogs;
-			}
+			if ( $hideLogs ) $where[] = $hideLogs;
 			# Add on any caller specified conditions
-			if ( $cond ) {
-				$where[] = $cond;
-			}
+			if ( $cond ) $where[] = $cond;
 			# Get logging table name for logging.* clause
 			$logging = $this->db->tableName( 'logging' );
 
@@ -300,7 +296,6 @@ class WikiExporter {
 				}
 
 				// Inform caller about problem
-				wfProfileOut( __METHOD__ );
 				throw $e;
 			}
 		# For page dumps...
@@ -546,7 +541,7 @@ class XmlDumpWriter {
 	 * @return string
 	 */
 	function homelink() {
-		return Xml::element( 'base', array(), Title::newMainPage()->getCanonicalURL() );
+		return Xml::element( 'base', array(), Title::newMainPage()->getCanonicalUrl() );
 	}
 
 	/**
@@ -568,9 +563,8 @@ class XmlDumpWriter {
 		foreach ( $wgContLang->getFormattedNamespaces() as $ns => $title ) {
 			$spaces .= '      ' .
 				Xml::element( 'namespace',
-					array(
-						'key' => $ns,
-						'case' => MWNamespace::isCapitalized( $ns ) ? 'first-letter' : 'case-sensitive',
+					array(	'key' => $ns,
+							'case' => MWNamespace::isCapitalized( $ns ) ? 'first-letter' : 'case-sensitive',
 					), $title ) . "\n";
 		}
 		$spaces .= "    </namespaces>";
@@ -599,7 +593,7 @@ class XmlDumpWriter {
 		$out = "  <page>\n";
 		$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 		$out .= '    ' . Xml::elementClean( 'title', array(), self::canonicalTitle( $title ) ) . "\n";
-		$out .= '    ' . Xml::element( 'ns', array(), strval( $row->page_namespace ) ) . "\n";
+		$out .= '    ' . Xml::element( 'ns', array(), strval( $row->page_namespace) ) . "\n";
 		$out .= '    ' . Xml::element( 'id', array(), strval( $row->page_id ) ) . "\n";
 		if ( $row->page_is_redirect ) {
 			$page = WikiPage::factory( $title );
@@ -642,7 +636,7 @@ class XmlDumpWriter {
 
 		$out = "    <revision>\n";
 		$out .= "      " . Xml::element( 'id', null, strval( $row->rev_id ) ) . "\n";
-		if ( isset( $row->rev_parent_id ) && $row->rev_parent_id ) {
+		if( isset( $row->rev_parent_id ) && $row->rev_parent_id ) {
 			$out .= "      " . Xml::element( 'parentid', null, strval( $row->rev_parent_id ) ) . "\n";
 		}
 
@@ -689,7 +683,7 @@ class XmlDumpWriter {
 			$content_model = strval( $row->rev_content_model );
 		} else {
 			// probably using $wgContentHandlerUseDB = false;
-			// @todo test!
+			// @todo: test!
 			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 			$content_model = ContentHandler::getDefaultModelFor( $title );
 		}
@@ -700,7 +694,7 @@ class XmlDumpWriter {
 			$content_format = strval( $row->rev_content_format );
 		} else {
 			// probably using $wgContentHandlerUseDB = false;
-			// @todo test!
+			// @todo: test!
 			$content_handler = ContentHandler::getForModelID( $content_model );
 			$content_format = $content_handler->getDefaultFormat();
 		}
@@ -824,13 +818,10 @@ class XmlDumpWriter {
 			$archiveName = '';
 		}
 		if ( $dumpContents ) {
-			$be = $file->getRepo()->getBackend();
 			# Dump file as base64
 			# Uses only XML-safe characters, so does not need escaping
-			# @TODO: too bad this loads the contents into memory (script might swap)
 			$contents = '      <contents encoding="base64">' .
-				chunk_split( base64_encode(
-					$be->getFileContents( array( 'src' => $file->getPath() ) ) ) ) .
+				chunk_split( base64_encode( file_get_contents( $file->getPath() ) ) ) .
 				"      </contents>\n";
 		} else {
 			$contents = '';
@@ -846,7 +837,7 @@ class XmlDumpWriter {
 			"      " . $comment . "\n" .
 			"      " . Xml::element( 'filename', null, $file->getName() ) . "\n" .
 			$archiveName .
-			"      " . Xml::element( 'src', null, $file->getCanonicalURL() ) . "\n" .
+			"      " . Xml::element( 'src', null, $file->getCanonicalUrl() ) . "\n" .
 			"      " . Xml::element( 'size', null, $file->getSize() ) . "\n" .
 			"      " . Xml::element( 'sha1base36', null, $file->getSha1() ) . "\n" .
 			"      " . Xml::element( 'rel', null, $file->getRel() ) . "\n" .
@@ -1194,7 +1185,7 @@ class Dump7ZipOutput extends DumpPipeOutput {
 		// Suppress annoying useless crap from p7zip
 		// Unfortunately this could suppress real error messages too
 		$command .= ' >' . wfGetNull() . ' 2>&1';
-		return $command;
+		return( $command );
 	}
 
 	/**

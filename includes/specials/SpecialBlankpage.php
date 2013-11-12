@@ -31,7 +31,6 @@ class SpecialBlankpage extends UnlistedSpecialPage {
 	public function __construct() {
 		parent::__construct( 'Blankpage' );
 	}
-
 	public function execute( $par ) {
 		$this->setHeaders();
 		$this->getOutput()->addWikiMsg( 'intentionallyblankpage' );

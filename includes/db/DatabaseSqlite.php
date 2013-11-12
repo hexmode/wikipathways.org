@@ -52,9 +52,9 @@ class DatabaseSqlite extends DatabaseBase {
 		$this->mName = $dbName;
 		parent::__construct( $server, $user, $password, $dbName, $flags );
 		// parent doesn't open when $user is false, but we can work with $dbName
-		if ( $dbName && !$this->isOpen() ) {
+		if( $dbName ) {
 			global $wgSharedDB;
-			if ( $this->open( $server, $user, $password, $dbName ) && $wgSharedDB ) {
+			if( $this->open( $server, $user, $password, $dbName ) && $wgSharedDB ) {
 				$this->attachDatabase( $wgSharedDB );
 			}
 		}
@@ -68,7 +68,7 @@ class DatabaseSqlite extends DatabaseBase {
 	}
 
 	/**
-	 * @todo Check if it should be true like parent class
+	 * @todo: check if it should be true like parent class
 	 *
 	 * @return bool
 	 */
@@ -90,7 +90,6 @@ class DatabaseSqlite extends DatabaseBase {
 	function open( $server, $user, $pass, $dbName ) {
 		global $wgSQLiteDataDir;
 
-		$this->close();
 		$fileName = self::generateFileName( $wgSQLiteDataDir, $dbName );
 		if ( !is_readable( $fileName ) ) {
 			$this->mConn = false;
@@ -201,7 +200,7 @@ class DatabaseSqlite extends DatabaseBase {
 	 *
 	 * @return ResultWrapper
 	 */
-	function attachDatabase( $name, $file = false, $fname = __METHOD__ ) {
+	function attachDatabase( $name, $file = false, $fname = 'DatabaseSqlite::attachDatabase' ) {
 		global $wgSQLiteDataDir;
 		if ( !$file ) {
 			$file = self::generateFileName( $wgSQLiteDataDir, $name );
@@ -421,7 +420,7 @@ class DatabaseSqlite extends DatabaseBase {
 	 *
 	 * @return array
 	 */
-	function indexInfo( $table, $index, $fname = __METHOD__ ) {
+	function indexInfo( $table, $index, $fname = 'DatabaseSqlite::indexExists' ) {
 		$sql = 'PRAGMA index_info(' . $this->addQuotes( $this->indexName( $index ) ) . ')';
 		$res = $this->query( $sql, $fname );
 		if ( !$res ) {
@@ -443,7 +442,7 @@ class DatabaseSqlite extends DatabaseBase {
 	 * @param $fname string
 	 * @return bool|null
 	 */
-	function indexUnique( $table, $index, $fname = __METHOD__ ) {
+	function indexUnique( $table, $index, $fname = 'DatabaseSqlite::indexUnique' ) {
 		$row = $this->selectRow( 'sqlite_master', '*',
 			array(
 				'type' => 'index',
@@ -472,7 +471,7 @@ class DatabaseSqlite extends DatabaseBase {
 	 */
 	function makeSelectOptions( $options ) {
 		foreach ( $options as $k => $v ) {
-			if ( is_numeric( $k ) && ( $v == 'FOR UPDATE' || $v == 'LOCK IN SHARE MODE' ) ) {
+			if ( is_numeric( $k ) && ($v == 'FOR UPDATE' || $v == 'LOCK IN SHARE MODE') ) {
 				$options[$k] = '';
 			}
 		}
@@ -515,7 +514,7 @@ class DatabaseSqlite extends DatabaseBase {
 	 * Based on generic method (parent) with some prior SQLite-sepcific adjustments
 	 * @return bool
 	 */
-	function insert( $table, $a, $fname = __METHOD__, $options = array() ) {
+	function insert( $table, $a, $fname = 'DatabaseSqlite::insert', $options = array() ) {
 		if ( !count( $a ) ) {
 			return true;
 		}
@@ -542,10 +541,8 @@ class DatabaseSqlite extends DatabaseBase {
 	 * @param $fname string
 	 * @return bool|ResultWrapper
 	 */
-	function replace( $table, $uniqueIndexes, $rows, $fname = __METHOD__ ) {
-		if ( !count( $rows ) ) {
-			return true;
-		}
+	function replace( $table, $uniqueIndexes, $rows, $fname = 'DatabaseSqlite::replace' ) {
+		if ( !count( $rows ) ) return true;
 
 		# SQLite can't handle multi-row replaces, so divide up into multiple single-row queries
 		if ( isset( $rows[0] ) && is_array( $rows[0] ) ) {
@@ -613,7 +610,7 @@ class DatabaseSqlite extends DatabaseBase {
 	/**
 	 * @return string wikitext of a link to the server software's web site
 	 */
-	public function getSoftwareLink() {
+	public static function getSoftwareLink() {
 		return "[http://sqlite.org/ SQLite]";
 	}
 
@@ -656,11 +653,7 @@ class DatabaseSqlite extends DatabaseBase {
 		if ( $this->mTrxLevel == 1 ) {
 			$this->commit( __METHOD__ );
 		}
-		try {
-			$this->mConn->beginTransaction();
-		} catch ( PDOException $e ) {
-			throw new DBUnexpectedError( $this, 'Error in BEGIN query: ' . $e->getMessage() );
-		}
+		$this->mConn->beginTransaction();
 		$this->mTrxLevel = 1;
 	}
 
@@ -668,11 +661,7 @@ class DatabaseSqlite extends DatabaseBase {
 		if ( $this->mTrxLevel == 0 ) {
 			return;
 		}
-		try {
-			$this->mConn->commit();
-		} catch ( PDOException $e ) {
-			throw new DBUnexpectedError( $this, 'Error in COMMIT query: ' . $e->getMessage() );
-		}
+		$this->mConn->commit();
 		$this->mTrxLevel = 0;
 	}
 
@@ -718,9 +707,7 @@ class DatabaseSqlite extends DatabaseBase {
 	function addQuotes( $s ) {
 		if ( $s instanceof Blob ) {
 			return "x'" . bin2hex( $s->fetch() ) . "'";
-		} elseif ( is_bool( $s ) ) {
-			return (int)$s;
-		} elseif ( strpos( $s, "\0" ) !== false ) {
+		} else if ( strpos( $s, "\0" ) !== false ) {
 			// SQLite doesn't support \0 in strings, so use the hex representation as a workaround.
 			// This is a known limitation of SQLite's mprintf function which PDO should work around,
 			// but doesn't. I have reported this to php.net as bug #63419:
@@ -826,7 +813,7 @@ class DatabaseSqlite extends DatabaseBase {
 	 * @param $fname string
 	 * @return bool|ResultWrapper
 	 */
-	function duplicateTableStructure( $oldName, $newName, $temporary = false, $fname = __METHOD__ ) {
+	function duplicateTableStructure( $oldName, $newName, $temporary = false, $fname = 'DatabaseSqlite::duplicateTableStructure' ) {
 		$res = $this->query( "SELECT sql FROM sqlite_master WHERE tbl_name=" . $this->addQuotes( $oldName ) . " AND type='table'", $fname );
 		$obj = $this->fetchObject( $res );
 		if ( !$obj ) {
@@ -852,7 +839,7 @@ class DatabaseSqlite extends DatabaseBase {
 	 *
 	 * @return array
 	 */
-	function listTables( $prefix = null, $fname = __METHOD__ ) {
+	function listTables( $prefix = null, $fname = 'DatabaseSqlite::listTables' ) {
 		$result = $this->select(
 			'sqlite_master',
 			'name',
@@ -861,11 +848,11 @@ class DatabaseSqlite extends DatabaseBase {
 
 		$endArray = array();
 
-		foreach ( $result as $table ) {
+		foreach( $result as $table ) {
 			$vars = get_object_vars( $table );
 			$table = array_pop( $vars );
 
-			if ( !$prefix || strpos( $table, $prefix ) === 0 ) {
+			if( !$prefix || strpos( $table, $prefix ) === 0 ) {
 				if ( strpos( $table, 'sqlite_' ) !== 0 ) {
 					$endArray[] = $table;
 				}

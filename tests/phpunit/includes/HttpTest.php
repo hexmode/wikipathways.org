@@ -5,9 +5,8 @@
 class HttpTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider cookieDomains
-	 * @covers Cookie::validateCookieDomain
 	 */
-	public function testValidateCookieDomain( $expected, $domain, $origin = null ) {
+	function testValidateCookieDomain( $expected, $domain, $origin = null ) {
 		if ( $origin ) {
 			$ok = Cookie::validateCookieDomain( $domain, $origin );
 			$msg = "$domain against origin $origin";
@@ -51,9 +50,8 @@ class HttpTest extends MediaWikiTestCase {
 	 * Test Http::isValidURI()
 	 * @bug 27854 : Http::isValidURI is too lax
 	 * @dataProvider provideURI
-	 * @covers Http::isValidURI
 	 */
-	public function testIsValidUri( $expect, $URI, $message = '' ) {
+	function testIsValidUri( $expect, $URI, $message = '' ) {
 		$this->assertEquals(
 			$expect,
 			(bool)Http::isValidURI( $URI ),
@@ -134,7 +132,7 @@ class HttpTest extends MediaWikiTestCase {
 	 * rewritten when bug 29232 is taken care of (high-level handling of
 	 * HTTP redirects).
 	 */
-	public function testRelativeRedirections() {
+	function testRelativeRedirections() {
 		$h = MWHttpRequestTester::factory( 'http://oldsite/file.ext' );
 
 		# Forge a Location header
@@ -178,7 +176,7 @@ class HttpTest extends MediaWikiTestCase {
  */
 class MWHttpRequestTester extends MWHttpRequest {
 
-	// function derived from the MWHttpRequest factory function but
+	// function derived from the MWHttpRequest factory function but 
 	// returns appropriate tester class here
 	public static function factory( $url, $options = null ) {
 		if ( !Http::$httpEngine ) {
@@ -196,7 +194,6 @@ class MWHttpRequestTester extends MWHttpRequest {
 					throw new MWException( __METHOD__ . ': allow_url_fopen needs to be enabled for pure PHP' .
 						' http requests to work. If possible, curl should be used instead. See http://php.net/curl.' );
 				}
-
 				return new PhpHttpRequestTester( $url, $options );
 			default:
 		}

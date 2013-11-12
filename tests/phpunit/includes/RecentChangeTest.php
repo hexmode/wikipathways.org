@@ -9,7 +9,7 @@ class RecentChangeTest extends MediaWikiTestCase {
 	protected $user_comment;
 	protected $context;
 
-	public function __construct() {
+	function __construct() {
 		parent::__construct();
 
 		$this->title = Title::newFromText( 'SomeTitle' );
@@ -56,7 +56,7 @@ class RecentChangeTest extends MediaWikiTestCase {
 	/**
 	 * @covers LogFormatter::getIRCActionText
 	 */
-	public function testIrcMsgForLogTypeBlock() {
+	function testIrcMsgForLogTypeBlock() {
 		$sep = $this->context->msg( 'colon-separator' )->text();
 
 		# block/block
@@ -78,7 +78,7 @@ class RecentChangeTest extends MediaWikiTestCase {
 	/**
 	 * @covers LogFormatter::getIRCActionText
 	 */
-	public function testIrcMsgForLogTypeDelete() {
+	function testIrcMsgForLogTypeDelete() {
 		$sep = $this->context->msg( 'colon-separator' )->text();
 
 		# delete/delete
@@ -101,7 +101,7 @@ class RecentChangeTest extends MediaWikiTestCase {
 	/**
 	 * @covers LogFormatter::getIRCActionText
 	 */
-	public function testIrcMsgForLogTypeNewusers() {
+	function testIrcMsgForLogTypeNewusers() {
 		$this->assertIRCComment(
 			'New user account',
 			'newusers', 'newusers',
@@ -127,7 +127,7 @@ class RecentChangeTest extends MediaWikiTestCase {
 	/**
 	 * @covers LogFormatter::getIRCActionText
 	 */
-	public function testIrcMsgForLogTypeMove() {
+	function testIrcMsgForLogTypeMove() {
 		$move_params = array(
 			'4::target' => $this->target->getPrefixedText(),
 			'5::noredir' => 0,
@@ -154,7 +154,7 @@ class RecentChangeTest extends MediaWikiTestCase {
 	/**
 	 * @covers LogFormatter::getIRCActionText
 	 */
-	public function testIrcMsgForLogTypePatrol() {
+	function testIrcMsgForLogTypePatrol() {
 		# patrol/patrol
 		$this->assertIRCComment(
 			$this->context->msg( 'patrol-log-line', 'revision 777', '[[SomeTitle]]', '' )->plain(),
@@ -170,7 +170,7 @@ class RecentChangeTest extends MediaWikiTestCase {
 	/**
 	 * @covers LogFormatter::getIRCActionText
 	 */
-	public function testIrcMsgForLogTypeProtect() {
+	function testIrcMsgForLogTypeProtect() {
 		$protectParams = array(
 			'[edit=sysop] (indefinite) ‎[move=sysop] (indefinite)'
 		);
@@ -204,7 +204,7 @@ class RecentChangeTest extends MediaWikiTestCase {
 	/**
 	 * @covers LogFormatter::getIRCActionText
 	 */
-	public function testIrcMsgForLogTypeUpload() {
+	function testIrcMsgForLogTypeUpload() {
 		$sep = $this->context->msg( 'colon-separator' )->text();
 
 		# upload/upload
@@ -225,24 +225,24 @@ class RecentChangeTest extends MediaWikiTestCase {
 	}
 
 	/**
-	 * @todo Emulate these edits somehow and extract
+	 * @todo: Emulate these edits somehow and extract
 	 * raw edit summary from RecentChange object
 	 * --
 	 */
 	/*
-	public function testIrcMsgForBlankingAES() {
+	function testIrcMsgForBlankingAES() {
 		// $this->context->msg( 'autosumm-blank', .. );
 	}
 
-	public function testIrcMsgForReplaceAES() {
+	function testIrcMsgForReplaceAES() {
 		// $this->context->msg( 'autosumm-replace', .. );
 	}
 
-	public function testIrcMsgForRollbackAES() {
+	function testIrcMsgForRollbackAES() {
 		// $this->context->msg( 'revertpage', .. );
 	}
 
-	public function testIrcMsgForUndoAES() {
+	function testIrcMsgForUndoAES() {
 		// $this->context->msg( 'undo-summary', .. );
 	}
 	*/
@@ -251,11 +251,10 @@ class RecentChangeTest extends MediaWikiTestCase {
 	 * @param $expected String Expected IRC text without colors codes
 	 * @param $type String Log type (move, delete, suppress, patrol ...)
 	 * @param $action String A log type action
-	 * @param $params
 	 * @param $comment String (optional) A comment for the log action
 	 * @param $msg String (optional) A message for PHPUnit :-)
 	 */
-	protected function assertIRCComment( $expected, $type, $action, $params, $comment = null, $msg = '' ) {
+	function assertIRCComment( $expected, $type, $action, $params, $comment = null, $msg = '' ) {
 
 		$logEntry = new ManualLogEntry( $type, $action );
 		$logEntry->setPerformer( $this->user );
@@ -268,8 +267,8 @@ class RecentChangeTest extends MediaWikiTestCase {
 		$formatter = LogFormatter::newFromEntry( $logEntry );
 		$formatter->setContext( $this->context );
 
-		// Apply the same transformation as done in IRCColourfulRCFeedFormatter::getLine for rc_comment
-		$ircRcComment = IRCColourfulRCFeedFormatter::cleanupForIRC( $formatter->getIRCActionComment() );
+		// Apply the same transformation as done in RecentChange::getIRCLine for rc_comment
+		$ircRcComment = RecentChange::cleanupForIRC( $formatter->getIRCActionComment() );
 
 		$this->assertEquals(
 			$expected,
@@ -277,4 +276,5 @@ class RecentChangeTest extends MediaWikiTestCase {
 			$msg
 		);
 	}
+
 }

@@ -34,8 +34,6 @@ class UploadFromUrl extends UploadBase {
 
 	protected $mTempPath, $mTmpHandle;
 
-	protected static $allowedUrls = array();
-
 	/**
 	 * Checks if the user is allowed to use the upload-by-URL feature. If the
 	 * user is not allowed, return the name of the user right as a string. If
@@ -79,7 +77,7 @@ class UploadFromUrl extends UploadBase {
 			return false;
 		}
 		$valid = false;
-		foreach ( $wgCopyUploadsDomains as $domain ) {
+		foreach( $wgCopyUploadsDomains as $domain ) {
 			// See if the domain for the upload matches this whitelisted domain
 			$whitelistedDomainPieces = explode( '.', $domain );
 			$uploadDomainPieces = explode( '.', $parsedUrl['host'] );
@@ -104,21 +102,6 @@ class UploadFromUrl extends UploadBase {
 			*/
 		}
 		return $valid;
-	}
-
-	/**
-	 * Checks whether the URL is not allowed.
-	 *
-	 * @param $url string
-	 * @return bool
-	 */
-	public static function isAllowedUrl( $url ) {
-		if ( !isset( self::$allowedUrls[$url] ) ) {
-			$allowed = true;
-			wfRunHooks( 'IsUploadAllowedFromUrl', array( $url, &$allowed ) );
-			self::$allowedUrls[$url] = $allowed;
-		}
-		return self::$allowedUrls[$url];
 	}
 
 	/**
@@ -177,30 +160,21 @@ class UploadFromUrl extends UploadBase {
 	/**
 	 * @return string
 	 */
-	public function getSourceType() {
-		return 'url';
-	}
+	public function getSourceType() { return 'url'; }
 
 	/**
-	 * Download the file (if not async)
-	 *
-	 * @param Array $httpOptions Array of options for MWHttpRequest. Ignored if async.
-	 *   This could be used to override the timeout on the http request.
 	 * @return Status
 	 */
-	public function fetchFile( $httpOptions = array() ) {
+	public function fetchFile() {
 		if ( !Http::isValidURI( $this->mUrl ) ) {
 			return Status::newFatal( 'http-invalid-url' );
 		}
 
-		if ( !self::isAllowedHost( $this->mUrl ) ) {
+		if( !self::isAllowedHost( $this->mUrl ) ) {
 			return Status::newFatal( 'upload-copy-upload-invalid-domain' );
 		}
-		if ( !self::isAllowedUrl( $this->mUrl ) ) {
-			return Status::newFatal( 'upload-copy-upload-invalid-url' );
-		}
 		if ( !$this->mAsync ) {
-			return $this->reallyFetchFile( $httpOptions );
+			return $this->reallyFetchFile();
 		}
 		return Status::newGood();
 	}
@@ -237,12 +211,9 @@ class UploadFromUrl extends UploadBase {
 	/**
 	 * Download the file, save it to the temporary file and update the file
 	 * size and set $mRemoveTempFile to true.
-	 *
-	 * @param Array $httpOptions Array of options for MWHttpRequest
 	 * @return Status
 	 */
-	protected function reallyFetchFile( $httpOptions = array() ) {
-		global $wgCopyUploadProxy, $wgCopyUploadTimeout;
+	protected function reallyFetchFile() {
 		if ( $this->mTempPath === false ) {
 			return Status::newFatal( 'tmp-create-error' );
 		}
@@ -256,14 +227,12 @@ class UploadFromUrl extends UploadBase {
 		$this->mRemoveTempFile = true;
 		$this->mFileSize = 0;
 
-		$options = $httpOptions + array(
-			'followRedirects' => true,
+		$options = array(
+			'followRedirects' => true
 		);
+		global $wgCopyUploadProxy;
 		if ( $wgCopyUploadProxy !== false ) {
 			$options['proxy'] = $wgCopyUploadProxy;
-		}
-		if ( $wgCopyUploadTimeout && !isset( $options['timeout'] ) ) {
-			$options['timeout'] = $wgCopyUploadTimeout;
 		}
 		$req = MWHttpRequest::factory( $this->mUrl, $options );
 		$req->setCallback( array( $this, 'saveTempFileChunk' ) );

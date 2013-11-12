@@ -25,7 +25,7 @@
  * @ingroup Maintenance
  */
 
-require_once __DIR__ . '/Maintenance.php';
+require_once( __DIR__ . '/Maintenance.php' );
 
 /**
  * Maintenance script that generates a page name dump for SisterSites usage.
@@ -43,15 +43,14 @@ class DumpSisterSites extends Maintenance {
 		$dbr->bufferResults( false );
 		$result = $dbr->select( 'page',
 			array( 'page_namespace', 'page_title' ),
-			array(
-				'page_namespace' => NS_MAIN,
-				'page_is_redirect' => 0,
+			array( 'page_namespace'   => NS_MAIN,
+				   'page_is_redirect' => 0,
 			),
 			__METHOD__ );
 
 		foreach ( $result as $row ) {
 			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
-			$url = $title->getFullURL();
+			$url = $title->getFullUrl();
 			$text = $title->getPrefixedText();
 			$this->output( "$url $text\n" );
 		}
@@ -59,4 +58,4 @@ class DumpSisterSites extends Maintenance {
 }
 
 $maintClass = "DumpSisterSites";
-require_once RUN_MAINTENANCE_IF_MAIN;
+require_once( RUN_MAINTENANCE_IF_MAIN );

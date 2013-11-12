@@ -6,6 +6,7 @@
  * @group medium
  */
 class ApiBlockTest extends ApiTestCase {
+
 	protected function setUp() {
 		parent::setUp();
 		$this->doLogin();
@@ -34,8 +35,9 @@ class ApiBlockTest extends ApiTestCase {
 	 * Which made the Block/Unblock API to actually verify the token
 	 * previously always considered valid (bug 34212).
 	 */
-	public function testMakeNormalBlock() {
-		$tokens = $this->getTokens();
+	function testMakeNormalBlock() {
+
+		$data = $this->getTokens();
 
 		$user = User::newFromName( 'UTApiBlockee' );
 
@@ -43,15 +45,19 @@ class ApiBlockTest extends ApiTestCase {
 			$this->markTestIncomplete( "The user UTApiBlockee does not exist" );
 		}
 
-		if ( !array_key_exists( 'blocktoken', $tokens ) ) {
+		if ( !isset( $data[0]['query']['pages'] ) ) {
 			$this->markTestIncomplete( "No block token found" );
 		}
 
-		$this->doApiRequest( array(
+		$keys = array_keys( $data[0]['query']['pages'] );
+		$key = array_pop( $keys );
+		$pageinfo = $data[0]['query']['pages'][$key];
+
+		$data = $this->doApiRequest( array(
 			'action' => 'block',
 			'user' => 'UTApiBlockee',
 			'reason' => 'Some reason',
-			'token' => $tokens['blocktoken'] ), null, false, self::$users['sysop']->user );
+			'token' => $pageinfo['blocktoken'] ), null, false, self::$users['sysop']->user );
 
 		$block = Block::newFromTarget( 'UTApiBlockee' );
 
@@ -60,6 +66,23 @@ class ApiBlockTest extends ApiTestCase {
 		$this->assertEquals( 'UTApiBlockee', (string)$block->getTarget() );
 		$this->assertEquals( 'Some reason', $block->mReason );
 		$this->assertEquals( 'infinity', $block->mExpiry );
+
+	}
+
+	/**
+	 * @dataProvider provideBlockUnblockAction
+	 */
+	function testGetTokenUsingABlockingAction( $action ) {
+		$data = $this->doApiRequest(
+			array(
+				'action' => $action,
+				'user' => 'UTApiBlockee',
+				'gettoken' => '' ),
+			null,
+			false,
+			self::$users['sysop']->user
+		);
+		$this->assertEquals( 34, strlen( $data[0][$action]["{$action}token"] ) );
 	}
 
 	/**
@@ -70,7 +93,7 @@ class ApiBlockTest extends ApiTestCase {
 	 * @dataProvider provideBlockUnblockAction
 	 * @expectedException UsageException
 	 */
-	public function testBlockingActionWithNoToken( $action ) {
+	function testBlockingActionWithNoToken( $action ) {
 		$this->doApiRequest(
 			array(
 				'action' => $action,
@@ -86,7 +109,7 @@ class ApiBlockTest extends ApiTestCase {
 	/**
 	 * Just provide the 'block' and 'unblock' action to test both API calls
 	 */
-	public static function provideBlockUnblockAction() {
+	function provideBlockUnblockAction() {
 		return array(
 			array( 'block' ),
 			array( 'unblock' ),

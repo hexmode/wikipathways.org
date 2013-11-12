@@ -6,10 +6,11 @@
  *
  * @note: We don't make assumptions about the main namespace.
  *        But we do expect the Help namespace to contain Wikitext.
+ *
  */
 class TitleMethodsTest extends MediaWikiTestCase {
 
-	public function setUp() {
+	public function setup() {
 		global $wgContLang;
 
 		parent::setUp();
@@ -33,7 +34,7 @@ class TitleMethodsTest extends MediaWikiTestCase {
 		$wgContLang->resetNamespaces(); # reset namespace cache
 	}
 
-	public function tearDown() {
+	public function teardown() {
 		global $wgContLang;
 
 		parent::tearDown();
@@ -56,7 +57,6 @@ class TitleMethodsTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideEquals
-	 * @covers Title::equals
 	 */
 	public function testEquals( $titleA, $titleB, $expectedBool ) {
 		$titleA = Title::newFromText( $titleA );
@@ -81,16 +81,12 @@ class TitleMethodsTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideInNamespace
-	 * @covers Title::inNamespace
 	 */
 	public function testInNamespace( $title, $ns, $expectedBool ) {
 		$title = Title::newFromText( $title );
 		$this->assertEquals( $expectedBool, $title->inNamespace( $ns ) );
 	}
 
-	/**
-	 * @covers Title::inNamespaces
-	 */
 	public function testInNamespaces() {
 		$mainpage = Title::newFromText( 'Main Page' );
 		$this->assertTrue( $mainpage->inNamespaces( NS_MAIN, NS_USER ) );
@@ -114,7 +110,6 @@ class TitleMethodsTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideHasSubjectNamespace
-	 * @covers Title::hasSubjectNamespace
 	 */
 	public function testHasSubjectNamespace( $title, $ns, $expectedBool ) {
 		$title = Title::newFromText( $title );
@@ -148,7 +143,6 @@ class TitleMethodsTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider dataGetContentModel
-	 * @covers Title::getContentModel
 	 */
 	public function testGetContentModel( $title, $expectedModelId ) {
 		$title = Title::newFromText( $title );
@@ -157,7 +151,6 @@ class TitleMethodsTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider dataGetContentModel
-	 * @covers Title::hasContentModel
 	 */
 	public function testHasContentModel( $title, $expectedModelId ) {
 		$title = Title::newFromText( $title );
@@ -188,12 +181,12 @@ class TitleMethodsTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideIsCssOrJsPage
-	 * @covers Title::isCssOrJsPage
 	 */
 	public function testIsCssOrJsPage( $title, $expectedBool ) {
 		$title = Title::newFromText( $title );
 		$this->assertEquals( $expectedBool, $title->isCssOrJsPage() );
 	}
+
 
 	public static function provideIsCssJsSubpage() {
 		return array(
@@ -217,7 +210,6 @@ class TitleMethodsTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideIsCssJsSubpage
-	 * @covers Title::isCssJsSubpage
 	 */
 	public function testIsCssJsSubpage( $title, $expectedBool ) {
 		$title = Title::newFromText( $title );
@@ -238,7 +230,6 @@ class TitleMethodsTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideIsCssSubpage
-	 * @covers Title::isCssSubpage
 	 */
 	public function testIsCssSubpage( $title, $expectedBool ) {
 		$title = Title::newFromText( $title );
@@ -259,7 +250,6 @@ class TitleMethodsTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideIsJsSubpage
-	 * @covers Title::isJsSubpage
 	 */
 	public function testIsJsSubpage( $title, $expectedBool ) {
 		$title = Title::newFromText( $title );
@@ -291,10 +281,10 @@ class TitleMethodsTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideIsWikitextPage
-	 * @covers Title::isWikitextPage
 	 */
 	public function testIsWikitextPage( $title, $expectedBool ) {
 		$title = Title::newFromText( $title );
 		$this->assertEquals( $expectedBool, $title->isWikitextPage() );
 	}
+
 }

@@ -27,6 +27,7 @@
  * @ingroup SpecialPage
  */
 class PopularPagesPage extends QueryPage {
+
 	function __construct( $name = 'Popularpages' ) {
 		parent::__construct( $name );
 	}
@@ -41,37 +42,27 @@ class PopularPagesPage extends QueryPage {
 	}
 
 	function getQueryInfo() {
-		return array(
+		return array (
 			'tables' => array( 'page' ),
-			'fields' => array(
-				'namespace' => 'page_namespace',
-				'title' => 'page_title',
-				'value' => 'page_counter' ),
-			'conds' => array(
-				'page_is_redirect' => 0,
-				'page_namespace' => MWNamespace::getContentNamespaces()
-			)
-		);
+			'fields' => array( 'namespace' => 'page_namespace',
+					'title' => 'page_title',
+					'value' => 'page_counter' ),
+			'conds' => array( 'page_is_redirect' => 0,
+					'page_namespace' => MWNamespace::getContentNamespaces() ) );
 	}
 
 	/**
-	 * @param Skin $skin
-	 * @param object $result Result row
+	 * @param $skin Skin
+	 * @param $result
 	 * @return string
 	 */
 	function formatResult( $skin, $result ) {
 		global $wgContLang;
 
 		$title = Title::makeTitleSafe( $result->namespace, $result->title );
-		if ( !$title ) {
-			return Html::element(
-				'span',
-				array( 'class' => 'mw-invalidtitle' ),
-				Linker::getInvalidTitleDescription(
-					$this->getContext(),
-					$result->namespace,
-					$result->title )
-			);
+		if( !$title ) {
+			return Html::element( 'span', array( 'class' => 'mw-invalidtitle' ),
+				Linker::getInvalidTitleDescription( $this->getContext(), $result->namespace, $result->title ) );
 		}
 
 		$link = Linker::linkKnown(
@@ -79,7 +70,6 @@ class PopularPagesPage extends QueryPage {
 			htmlspecialchars( $wgContLang->convert( $title->getPrefixedText() ) )
 		);
 		$nv = $this->msg( 'nviews' )->numParams( $result->value )->escaped();
-
 		return $this->getLanguage()->specialList( $link, $nv );
 	}
 

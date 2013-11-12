@@ -30,6 +30,7 @@
  * @ingroup SpecialPage
  */
 class MostimagesPage extends ImageQueryPage {
+
 	function __construct( $name = 'Mostimages' ) {
 		parent::__construct( $name );
 	}
@@ -43,17 +44,13 @@ class MostimagesPage extends ImageQueryPage {
 	}
 
 	function getQueryInfo() {
-		return array(
-			'tables' => array( 'imagelinks' ),
-			'fields' => array(
-				'namespace' => NS_FILE,
-				'title' => 'il_to',
-				'value' => 'COUNT(*)'
-			),
-			'options' => array(
-				'GROUP BY' => 'il_to',
-				'HAVING' => 'COUNT(*) > 1'
-			)
+		return array (
+			'tables' => array ( 'imagelinks' ),
+			'fields' => array ( 'namespace' => NS_FILE,
+					'title' => 'il_to',
+					'value' => 'COUNT(*)' ),
+			'options' => array ( 'GROUP BY' => 'il_to',
+					'HAVING' => 'COUNT(*) > 1' )
 		);
 	}
 

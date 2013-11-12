@@ -30,16 +30,14 @@ $wgAutoloadClasses += array(
 	'DbTestPreviewer' => "$testDir/testHelpers.inc",
 	'DbTestRecorder' => "$testDir/testHelpers.inc",
 	'DelayedParserTest' => "$testDir/testHelpers.inc",
-	'ParserTestResult' => "$testDir/parser/ParserTestResult.php",
 	'TestFileIterator' => "$testDir/testHelpers.inc",
 	'TestRecorder' => "$testDir/testHelpers.inc",
-	'ITestRecorder' => "$testDir/testHelpers.inc",
 
 	# tests/phpunit
 	'MediaWikiTestCase' => "$testDir/phpunit/MediaWikiTestCase.php",
 	'MediaWikiPHPUnitCommand' => "$testDir/phpunit/MediaWikiPHPUnitCommand.php",
-	'MediaWikiPHPUnitTestListener' => "$testDir/phpunit/MediaWikiPHPUnitTestListener.php",
 	'MediaWikiLangTestCase' => "$testDir/phpunit/MediaWikiLangTestCase.php",
+	'MediaWikiProvide' => "$testDir/phpunit/includes/Providers.php",
 	'TestUser' => "$testDir/phpunit/includes/TestUser.php",
 
 	# tests/phpunit/includes
@@ -49,8 +47,9 @@ $wgAutoloadClasses += array(
 
 	//db
 	'ORMTableTest' => "$testDir/phpunit/includes/db/ORMTableTest.php",
-	'PageORMTableForTesting' => "$testDir/phpunit/includes/db/ORMTableTest.php",
-	'DatabaseTestHelper' => "$testDir/phpunit/includes/db/DatabaseTestHelper.php",
+
+	//Selenium
+	'SeleniumTestConstants' => "$testDir/selenium/SeleniumTestConstants.php",
 
 	# tests/phpunit/includes/api
 	'ApiFormatTestBase' => "$testDir/phpunit/includes/api/format/ApiFormatTestBase.php",
@@ -73,24 +72,13 @@ $wgAutoloadClasses += array(
 
 	# tests/phpunit/includes/parser
 	'NewParserTest' => "$testDir/phpunit/includes/parser/NewParserTest.php",
-	'MediaWikiParserTest' => "$testDir/phpunit/includes/parser/MediaWikiParserTest.php",
 
 	# tests/phpunit/includes/libs
 	'GenericArrayObjectTest' => "$testDir/phpunit/includes/libs/GenericArrayObjectTest.php",
 
-	# tests/phpunit/media
-	'FakeDimensionFile' => "$testDir/phpunit/includes/media/FakeDimensionFile.php",
-
 	# tests/phpunit/includes/site
 	'SiteTest' => "$testDir/phpunit/includes/site/SiteTest.php",
 	'TestSites' => "$testDir/phpunit/includes/site/TestSites.php",
-
-	# tests/phpunit/mocks
-	'MockFSFile' => "$testDir/phpunit/mocks/filebackend/MockFSFile.php",
-	'MockFileBackend' => "$testDir/phpunit/mocks/filebackend/MockFileBackend.php",
-	'MockBitmapHandler' => "$testDir/phpunit/mocks/media/MockBitmapHandler.php",
-	'MockImageHandler' => "$testDir/phpunit/mocks/media/MockBitmapHandler.php",
-	'MockSvgHandler' => "$testDir/phpunit/mocks/media/MockBitmapHandler.php",
 
 	# tests/phpunit/languages
 	'LanguageClassesTestCase' => "$testDir/phpunit/languages/LanguageClassesTestCase.php",
@@ -101,4 +89,15 @@ $wgAutoloadClasses += array(
 	# tests/parser
 	'ParserTest' => "$testDir/parser/parserTest.inc",
 	'ParserTestParserHook' => "$testDir/parser/parserTestsParserHook.php",
+
+	# tests/selenium
+	'Selenium' => "$testDir/selenium/Selenium.php",
+	'SeleniumLoader' => "$testDir/selenium/SeleniumLoader.php",
+	'SeleniumTestCase' => "$testDir/selenium/SeleniumTestCase.php",
+	'SeleniumTestConsoleLogger' => "$testDir/selenium/SeleniumTestConsoleLogger.php",
+	'SeleniumTestConstants' => "$testDir/selenium/SeleniumTestConstants.php",
+	'SeleniumTestHTMLLogger' => "$testDir/selenium/SeleniumTestHTMLLogger.php",
+	'SeleniumTestListener' => "$testDir/selenium/SeleniumTestListener.php",
+	'SeleniumTestSuite' => "$testDir/selenium/SeleniumTestSuite.php",
+	'SeleniumConfig' => "$testDir/selenium/SeleniumConfig.php",
 );

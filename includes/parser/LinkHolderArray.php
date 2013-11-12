@@ -322,7 +322,7 @@ class LinkHolderArray {
 		}
 		if ( $queries ) {
 			$where = array();
-			foreach ( $queries as $ns => $pages ) {
+			foreach( $queries as $ns => $pages ) {
 				$where[] = $dbr->makeList(
 					array(
 						'page_namespace' => $ns,
@@ -362,7 +362,7 @@ class LinkHolderArray {
 		wfProfileOut( __METHOD__ . '-check' );
 
 		# Do a second query for different language variants of links and categories
-		if ( $wgContLang->hasVariants() ) {
+		if( $wgContLang->hasVariants() ) {
 			$this->doVariants( $colours );
 		}
 
@@ -377,10 +377,6 @@ class LinkHolderArray {
 				$key = "$ns:$index";
 				$searchkey = "<!--LINK $key-->";
 				$displayText = $entry['text'];
-				if ( isset( $entry['selflink'] ) ) {
-					$replacePairs[$searchkey] = Linker::makeSelfLinkObj( $title, $displayText, $query );
-					continue;
-				}
 				if ( $displayText === '' ) {
 					$displayText = null;
 				}
@@ -410,8 +406,7 @@ class LinkHolderArray {
 		$text = preg_replace_callback(
 			'/(<!--LINK .*?-->)/',
 			$replacer->cb(),
-			$text
-		);
+			$text);
 
 		wfProfileOut( __METHOD__ . '-replace' );
 		wfProfileOut( __METHOD__ );
@@ -429,7 +424,7 @@ class LinkHolderArray {
 		# Make interwiki link HTML
 		$output = $this->parent->getOutput();
 		$replacePairs = array();
-		foreach ( $this->interwikis as $key => $link ) {
+		foreach( $this->interwikis as $key => $link ) {
 			$replacePairs[$key] = Linker::link( $link['title'], $link['text'] );
 			$output->addInterwikiLink( $link['title'] );
 		}
@@ -459,17 +454,20 @@ class LinkHolderArray {
 		// single string to all variants. This would improve parser's performance
 		// significantly.
 		foreach ( $this->internals as $ns => $entries ) {
-			if ( $ns == NS_SPECIAL ) {
-				continue;
-			}
 			foreach ( $entries as $index => $entry ) {
 				$pdbk = $entry['pdbk'];
 				// we only deal with new links (in its first query)
 				if ( !isset( $colours[$pdbk] ) || $colours[$pdbk] === 'new' ) {
-					$titlesAttrs[] = array( $index, $entry['title'] );
+					$title = $entry['title'];
+					$titleText = $title->getText();
+					$titlesAttrs[] = array(
+						'ns' => $ns,
+						'key' => "$ns:$index",
+						'titleText' => $titleText,
+					);
 					// separate titles with \0 because it would never appears
 					// in a valid title
-					$titlesToBeConverted .= $entry['title']->getText() . "\0";
+					$titlesToBeConverted .= $titleText . "\0";
 				}
 			}
 		}
@@ -480,35 +478,19 @@ class LinkHolderArray {
 		foreach ( $titlesAllVariants as &$titlesVariant ) {
 			$titlesVariant = explode( "\0", $titlesVariant );
 		}
-
+		$l = count( $titlesAttrs );
 		// Then add variants of links to link batch
-		$parentTitle = $this->parent->getTitle();
-		foreach ( $titlesAttrs as $i => $attrs ) {
-			list( $index, $title ) = $attrs;
-			$ns = $title->getNamespace();
-			$text = $title->getText();
-
+		for ( $i = 0; $i < $l; $i ++ ) {
 			foreach ( $allVariantsName as $variantName ) {
 				$textVariant = $titlesAllVariants[$variantName][$i];
-				if ( $textVariant === $text ) {
-					continue;
+				if ( $textVariant != $titlesAttrs[$i]['titleText'] ) {
+					$variantTitle = Title::makeTitle( $titlesAttrs[$i]['ns'], $textVariant );
+					if( is_null( $variantTitle ) ) {
+						continue;
+					}
+					$linkBatch->addObj( $variantTitle );
+					$variantMap[$variantTitle->getPrefixedDBkey()][] = $titlesAttrs[$i]['key'];
 				}
-
-				$variantTitle = Title::makeTitle( $ns, $textVariant );
-				if ( is_null( $variantTitle ) ) {
-					continue;
-				}
-
-				// Self-link checking for mixed/different variant titles. At this point, we
-				// already know the exact title does not exist, so the link cannot be to a
-				// variant of the current title that exists as a separate page.
-				if ( $variantTitle->equals( $parentTitle ) && $title->getFragment() === '' ) {
-					$this->internals[$ns][$index]['selflink'] = true;
-					continue 2;
-				}
-
-				$linkBatch->addObj( $variantTitle );
-				$variantMap[$variantTitle->getPrefixedDBkey()][] = "$ns:$index";
 			}
 		}
 
@@ -531,7 +513,7 @@ class LinkHolderArray {
 			}
 		}
 
-		if ( !$linkBatch->isEmpty() ) {
+		if( !$linkBatch->isEmpty() ) {
 			// construct query
 			$dbr = wfGetDB( DB_SLAVE );
 			$varRes = $dbr->select( 'page',
@@ -550,14 +532,14 @@ class LinkHolderArray {
 				$vardbk = $variantTitle->getDBkey();
 
 				$holderKeys = array();
-				if ( isset( $variantMap[$varPdbk] ) ) {
+				if( isset( $variantMap[$varPdbk] ) ) {
 					$holderKeys = $variantMap[$varPdbk];
 					$linkCache->addGoodLinkObjFromRow( $variantTitle, $s );
 					$output->addLink( $variantTitle, $s->page_id );
 				}
 
 				// loop over link holders
-				foreach ( $holderKeys as $key ) {
+				foreach( $holderKeys as $key ) {
 					list( $ns, $index ) = explode( ':', $key, 2 );
 					$entry =& $this->internals[$ns][$index];
 					$pdbk = $entry['pdbk'];
@@ -587,12 +569,12 @@ class LinkHolderArray {
 			wfRunHooks( 'GetLinkColours', array( $linkcolour_ids, &$colours ) );
 
 			// rebuild the categories in original order (if there are replacements)
-			if ( count( $varCategories ) > 0 ) {
+			if( count( $varCategories ) > 0 ) {
 				$newCats = array();
 				$originalCats = $output->getCategories();
-				foreach ( $originalCats as $cat => $sortkey ) {
+				foreach( $originalCats as $cat => $sortkey ) {
 					// make the replacement
-					if ( array_key_exists( $cat, $varCategories ) ) {
+					if( array_key_exists( $cat, $varCategories ) ) {
 						$newCats[$varCategories[$cat]] = $sortkey;
 					} else {
 						$newCats[$cat] = $sortkey;
@@ -632,13 +614,13 @@ class LinkHolderArray {
 	function replaceTextCallback( $matches ) {
 		$type = $matches[1];
 		$key = $matches[2];
-		if ( $type == 'LINK' ) {
+		if( $type == 'LINK' ) {
 			list( $ns, $index ) = explode( ':', $key, 2 );
-			if ( isset( $this->internals[$ns][$index]['text'] ) ) {
+			if( isset( $this->internals[$ns][$index]['text'] ) ) {
 				return $this->internals[$ns][$index]['text'];
 			}
-		} elseif ( $type == 'IWLINK' ) {
-			if ( isset( $this->interwikis[$key]['text'] ) ) {
+		} elseif( $type == 'IWLINK' ) {
+			if( isset( $this->interwikis[$key]['text'] ) ) {
 				return $this->interwikis[$key]['text'];
 			}
 		}

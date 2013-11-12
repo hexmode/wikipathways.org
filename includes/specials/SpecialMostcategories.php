@@ -30,6 +30,7 @@
  * @ingroup SpecialPage
  */
 class MostcategoriesPage extends QueryPage {
+
 	function __construct( $name = 'Mostcategories' ) {
 		parent::__construct( $name );
 	}
@@ -43,30 +44,22 @@ class MostcategoriesPage extends QueryPage {
 	}
 
 	function getQueryInfo() {
-		return array(
-			'tables' => array( 'categorylinks', 'page' ),
-			'fields' => array(
-				'namespace' => 'page_namespace',
-				'title' => 'page_title',
-				'value' => 'COUNT(*)'
-			),
-			'conds' => array( 'page_namespace' => MWNamespace::getContentNamespaces() ),
-			'options' => array(
-				'HAVING' => 'COUNT(*) > 1',
-				'GROUP BY' => array( 'page_namespace', 'page_title' )
-			),
-			'join_conds' => array(
-				'page' => array(
-					'LEFT JOIN',
-					'page_id = cl_from'
-				)
-			)
+		return array (
+			'tables' => array ( 'categorylinks', 'page' ),
+			'fields' => array ( 'namespace' => 'page_namespace',
+					'title' => 'page_title',
+					'value' => 'COUNT(*)' ),
+			'conds' => array ( 'page_namespace' => MWNamespace::getContentNamespaces() ),
+			'options' => array ( 'HAVING' => 'COUNT(*) > 1',
+				'GROUP BY' => array( 'page_namespace', 'page_title' ) ),
+			'join_conds' => array ( 'page' => array ( 'LEFT JOIN',
+					'page_id = cl_from' ) )
 		);
 	}
 
 	/**
-	 * @param DatabaseBase $db
-	 * @param ResultWrapper $res
+	 * @param $db DatabaseBase
+	 * @param $res
 	 */
 	function preprocessResults( $db, $res ) {
 		# There's no point doing a batch check if we aren't caching results;
@@ -85,22 +78,15 @@ class MostcategoriesPage extends QueryPage {
 	}
 
 	/**
-	 * @param Skin $skin
-	 * @param object $result Result row
+	 * @param $skin Skin
+	 * @param $result
 	 * @return string
 	 */
 	function formatResult( $skin, $result ) {
 		$title = Title::makeTitleSafe( $result->namespace, $result->title );
 		if ( !$title ) {
-			return Html::element(
-				'span',
-				array( 'class' => 'mw-invalidtitle' ),
-				Linker::getInvalidTitleDescription(
-					$this->getContext(),
-					$result->namespace,
-					$result->title
-				)
-			);
+			return Html::element( 'span', array( 'class' => 'mw-invalidtitle' ),
+				Linker::getInvalidTitleDescription( $this->getContext(), $result->namespace, $result->title ) );
 		}
 
 		if ( $this->isCached() ) {

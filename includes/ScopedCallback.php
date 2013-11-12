@@ -22,52 +22,19 @@
 
 /**
  * Class for asserting that a callback happens when an dummy object leaves scope
- *
- * @since 1.21
  */
 class ScopedCallback {
-	/** @var callable */
+	/** @var Closure */
 	protected $callback;
 
 	/**
-	 * @param callable $callback
-	 * @throws MWException
+	 * @param $callback Closure
 	 */
-	public function __construct( $callback ) {
-		if ( !is_callable( $callback ) ) {
-			throw new MWException( "Provided callback is not valid." );
-		}
+	public function __construct( Closure $callback ) {
 		$this->callback = $callback;
 	}
 
-	/**
-	 * Trigger a scoped callback and destroy it.
-	 * This is the same is just setting it to null.
-	 *
-	 * @param ScopedCallback $sc
-	 */
-	public static function consume( ScopedCallback &$sc = null ) {
-		$sc = null;
-	}
-
-	/**
-	 * Destroy a scoped callback without triggering it
-	 *
-	 * @param ScopedCallback $sc
-	 */
-	public static function cancel( ScopedCallback &$sc = null ) {
-		if ( $sc ) {
-			$sc->callback = null;
-		}
-		$sc = null;
-	}
-
-	/**
-	 * Trigger the callback when this leaves scope
-	 */
 	function __destruct() {
-		if ( $this->callback !== null ) {
-			call_user_func( $this->callback );
-		}
+		call_user_func( $this->callback );
 	}
 }

@@ -104,15 +104,12 @@ class ApiQueryUserInfo extends ApiQueryBase {
 		}
 
 		if ( isset( $this->prop['preferencestoken'] ) &&
-			is_null( $this->getMain()->getRequest()->getVal( 'callback' ) ) &&
-			$user->isAllowed( 'editmyoptions' )
+			is_null( $this->getMain()->getRequest()->getVal( 'callback' ) )
 		) {
 			$vals['preferencestoken'] = $user->getEditToken( '', $this->getMain()->getRequest() );
 		}
 
 		if ( isset( $this->prop['editcount'] ) ) {
-			// use intval to prevent null if a non-logged-in user calls
-			// api.php?format=jsonfm&action=query&meta=userinfo&uiprop=editcount
 			$vals['editcount'] = intval( $user->getEditCount() );
 		}
 
@@ -124,13 +121,11 @@ class ApiQueryUserInfo extends ApiQueryBase {
 			$vals['realname'] = $user->getRealName();
 		}
 
-		if ( $user->isAllowed( 'viewmyprivateinfo' ) ) {
-			if ( isset( $this->prop['email'] ) ) {
-				$vals['email'] = $user->getEmail();
-				$auth = $user->getEmailAuthenticationTimestamp();
-				if ( !is_null( $auth ) ) {
-					$vals['emailauthenticated'] = wfTimestamp( TS_ISO_8601, $auth );
-				}
+		if ( isset( $this->prop['email'] ) ) {
+			$vals['email'] = $user->getEmail();
+			$auth = $user->getEmailAuthenticationTimestamp();
+			if ( !is_null( $auth ) ) {
+				$vals['emailauthenticated'] = wfTimestamp( TS_ISO_8601, $auth );
 			}
 		}
 
@@ -172,9 +167,8 @@ class ApiQueryUserInfo extends ApiQueryBase {
 		if ( $user->isNewbie() ) {
 			$categories[] = 'ip';
 			$categories[] = 'subnet';
-			if ( !$user->isAnon() ) {
+			if ( !$user->isAnon() )
 				$categories[] = 'newbie';
-			}
 		}
 		$categories = array_merge( $categories, $user->getGroups() );
 

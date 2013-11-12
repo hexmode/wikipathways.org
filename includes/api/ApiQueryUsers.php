@@ -127,7 +127,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				$this->addFields( array( 'user_name', 'ug_group' ) );
 				$userGroupsRes = $this->select( __METHOD__ );
 
-				foreach ( $userGroupsRes as $row ) {
+				foreach( $userGroupsRes as $row ) {
 					$userGroups[$row->user_name][] = $row->ug_group;
 				}
 			}
@@ -149,7 +149,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				$data[$name]['name'] = $name;
 
 				if ( isset( $this->prop['editcount'] ) ) {
-					$data[$name]['editcount'] = $user->getEditCount();
+					$data[$name]['editcount'] = intval( $user->getEditCount() );
 				}
 
 				if ( isset( $this->prop['registration'] ) ) {
@@ -204,13 +204,11 @@ class ApiQueryUsers extends ApiQueryBase {
 			}
 		}
 
-		$context = $this->getContext();
 		// Second pass: add result data to $retval
 		foreach ( $goodNames as $u ) {
 			if ( !isset( $data[$u] ) ) {
 				$data[$u] = array( 'name' => $u );
 				$urPage = new UserrightsPage;
-				$urPage->setContext( $context );
 				$iwUser = $urPage->fetchUser( $u );
 
 				if ( $iwUser instanceof UserRightsProxy ) {

@@ -51,7 +51,6 @@ class BrokenRedirectsPage extends QueryPage {
 
 	function getQueryInfo() {
 		$dbr = wfGetDB( DB_SLAVE );
-
 		return array(
 			'tables' => array(
 				'redirect',
@@ -89,13 +88,13 @@ class BrokenRedirectsPage extends QueryPage {
 	 * @return array
 	 */
 	function getOrderFields() {
-		return array( 'rd_namespace', 'rd_title', 'rd_from' );
+		return array ( 'rd_namespace', 'rd_title', 'rd_from' );
 	}
 
 	/**
-	 * @param Skin $skin
-	 * @param object $result Result row
-	 * @return string
+	 * @param $skin Skin
+	 * @param $result
+	 * @return String
 	 */
 	function formatResult( $skin, $result ) {
 		$fromObj = Title::makeTitle( $result->namespace, $result->title );
@@ -139,7 +138,7 @@ class BrokenRedirectsPage extends QueryPage {
 
 		$out = $from . $this->msg( 'word-separator' )->escaped();
 
-		if ( $this->getUser()->isAllowed( 'delete' ) ) {
+		if( $this->getUser()->isAllowed( 'delete' ) ) {
 			$links[] = Linker::linkKnown(
 				$fromObj,
 				$this->msg( 'brokenredirects-delete' )->escaped(),
@@ -150,7 +149,6 @@ class BrokenRedirectsPage extends QueryPage {
 
 		$out .= $this->msg( 'parentheses' )->rawParams( $this->getLanguage()->pipeList( $links ) )->escaped();
 		$out .= " {$arr} {$to}";
-
 		return $out;
 	}
 

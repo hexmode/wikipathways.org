@@ -43,11 +43,21 @@ class EditAction extends FormlessAction {
 
 	public function show() {
 		$page = $this->page;
+		$request = $this->getRequest();
 		$user = $this->getUser();
+		$context = $this->getContext();
 
 		if ( wfRunHooks( 'CustomEditor', array( $page, $user ) ) ) {
-			$editor = new EditPage( $page );
-			$editor->edit();
+			if ( ExternalEdit::useExternalEngine( $context, 'edit' )
+				&& $this->getName() == 'edit' && !$request->getVal( 'section' )
+				&& !$request->getVal( 'oldid' ) )
+			{
+				$extedit = new ExternalEdit( $context );
+				$extedit->execute();
+			} else {
+				$editor = new EditPage( $page );
+				$editor->edit();
+			}
 		}
 
 	}

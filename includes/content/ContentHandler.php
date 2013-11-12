@@ -319,7 +319,7 @@ abstract class ContentHandler {
 			wfRunHooks( 'ContentHandlerForModelID', array( $modelId, &$handler ) );
 
 			if ( $handler === null ) {
-				throw new MWException( "No handler for model '$modelId' registered in \$wgContentHandlers" );
+				throw new MWException( "No handler for model '$modelId'' registered in \$wgContentHandlers" );
 			}
 
 			if ( !( $handler instanceof ContentHandler ) ) {
@@ -449,11 +449,10 @@ abstract class ContentHandler {
 	 * @since 1.21
 	 *
 	 * @param Title $destination the page to redirect to.
-	 * @param string $text text to include in the redirect, if possible.
 	 *
 	 * @return Content
 	 */
-	public function makeRedirectContent( Title $destination, $text = '' ) {
+	public function makeRedirectContent( Title $destination ) {
 		return null;
 	}
 
@@ -938,7 +937,7 @@ abstract class ContentHandler {
 	 * @return ParserOptions
 	 */
 	public function makeParserOptions( $context ) {
-		global $wgContLang, $wgEnableParserLimitReporting;
+		global $wgContLang;
 
 		if ( $context instanceof IContextSource ) {
 			$options = ParserOptions::newFromContext( $context );
@@ -950,7 +949,7 @@ abstract class ContentHandler {
 			throw new MWException( "Bad context for parser options: $context" );
 		}
 
-		$options->enableLimitReport( $wgEnableParserLimitReporting ); // show inclusion/loop reports
+		$options->enableLimitReport(); // show inclusion/loop reports
 		$options->setTidy( true ); // fix bad HTML
 
 		return $options;
@@ -1061,7 +1060,7 @@ abstract class ContentHandler {
 					if ( isset( $handler[1] ) ) {
 						$info .= '::' . $handler[1];
 					}
-				} elseif ( is_object( $handler ) ) {
+				} else if ( is_object( $handler ) ) {
 					$info = get_class( $handler[0] );
 					$info .= '::on' . $event;
 				} else {
@@ -1087,8 +1086,8 @@ abstract class ContentHandler {
 				$contentObjects[$k] = $v;
 
 				$v = $v->serialize();
-				$contentTexts[$k] = $v;
-				$args[$k] = $v;
+				$contentTexts[ $k ] = $v;
+				$args[ $k ] = $v;
 			}
 		}
 
@@ -1099,7 +1098,7 @@ abstract class ContentHandler {
 		foreach ( $contentTexts as $k => $orig ) {
 			/* @var Content $content */
 
-			$modified = $args[$k];
+			$modified = $args[ $k ];
 			$content = $contentObjects[$k];
 
 			if ( $modified !== $orig ) {
@@ -1107,7 +1106,7 @@ abstract class ContentHandler {
 				$content = $content->getContentHandler()->unserializeContent( $modified );
 			}
 
-			$args[$k] = $content;
+			$args[ $k ] = $content;
 		}
 
 		return $ok;

@@ -110,19 +110,6 @@ abstract class DBLockManager extends QuorumLockManager {
 		$this->session = wfRandomString( 31 );
 	}
 
-	// @TODO: change this code to work in one batch
-	protected function getLocksOnServer( $lockSrv, array $pathsByType ) {
-		$status = Status::newGood();
-		foreach ( $pathsByType as $type => $paths ) {
-			$status->merge( $this->doGetLocksOnServer( $lockSrv, $paths, $type ) );
-		}
-		return $status;
-	}
-
-	protected function freeLocksOnServer( $lockSrv, array $pathsByType ) {
-		return Status::newGood();
-	}
-
 	/**
 	 * @see QuorumLockManager::isServerUp()
 	 * @return bool
@@ -265,7 +252,7 @@ class MySqlLockManager extends DBLockManager {
 	 * @see DBLockManager::getLocksOnServer()
 	 * @return Status
 	 */
-	protected function doGetLocksOnServer( $lockSrv, array $paths, $type ) {
+	protected function getLocksOnServer( $lockSrv, array $paths, $type ) {
 		$status = Status::newGood();
 
 		$db = $this->getConnection( $lockSrv ); // checked in isServerUp()
@@ -332,6 +319,14 @@ class MySqlLockManager extends DBLockManager {
 	}
 
 	/**
+	 * @see QuorumLockManager::freeLocksOnServer()
+	 * @return Status
+	 */
+	protected function freeLocksOnServer( $lockSrv, array $paths, $type ) {
+		return Status::newGood(); // not supported
+	}
+
+	/**
 	 * @see QuorumLockManager::releaseAllLocks()
 	 * @return Status
 	 */
@@ -366,7 +361,7 @@ class PostgreSqlLockManager extends DBLockManager {
 		self::LOCK_EX => self::LOCK_EX
 	);
 
-	protected function doGetLocksOnServer( $lockSrv, array $paths, $type ) {
+	protected function getLocksOnServer( $lockSrv, array $paths, $type ) {
 		$status = Status::newGood();
 		if ( !count( $paths ) ) {
 			return $status; // nothing to lock
@@ -374,9 +369,7 @@ class PostgreSqlLockManager extends DBLockManager {
 
 		$db = $this->getConnection( $lockSrv ); // checked in isServerUp()
 		$bigints = array_unique( array_map(
-			function( $key ) {
-				return wfBaseConvert( substr( $key, 0, 15 ), 16, 10 );
-			},
+			function( $key ) { return wfBaseConvert( substr( $key, 0, 15 ), 16, 10 ); },
 			array_map( array( $this, 'sha1Base16Absolute' ), $paths )
 		) );
 
@@ -410,6 +403,14 @@ class PostgreSqlLockManager extends DBLockManager {
 		}
 
 		return $status;
+	}
+
+	/**
+	 * @see QuorumLockManager::freeLocksOnServer()
+	 * @return Status
+	 */
+	protected function freeLocksOnServer( $lockSrv, array $paths, $type ) {
+		return Status::newGood(); // not supported
 	}
 
 	/**

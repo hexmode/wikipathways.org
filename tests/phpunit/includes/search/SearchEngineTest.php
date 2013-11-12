@@ -45,7 +45,7 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 		}
 
 		if ( !$this->isWikitextNS( NS_MAIN ) ) {
-			// @todo cover the case of non-wikitext content in the main namespace
+			//@todo: cover the case of non-wikitext content in the main namespace
 			return;
 		}
 
@@ -87,7 +87,6 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 		# sort them numerically so we will compare simply that we received
 		# the expected matches.
 		sort( $matches );
-
 		return $matches;
 	}
 
@@ -115,7 +114,7 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 		return true;
 	}
 
-	public function testFullWidth() {
+	function testFullWidth() {
 		$this->assertEquals(
 			array( 'FullOneUp', 'FullTwoLow', 'HalfOneUp', 'HalfTwoLow' ),
 			$this->fetchIds( $this->search->searchText( 'AZ' ) ),
@@ -134,14 +133,14 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 			"Search for normalized from Full-width Lower" );
 	}
 
-	public function testTextSearch() {
+	function testTextSearch() {
 		$this->assertEquals(
 			array( 'Smithee' ),
 			$this->fetchIds( $this->search->searchText( 'smithee' ) ),
 			"Plain search failed" );
 	}
 
-	public function testTextPowerSearch() {
+	function testTextPowerSearch() {
 		$this->search->setNamespaces( array( 0, 1, 4 ) );
 		$this->assertEquals(
 			array(
@@ -152,7 +151,7 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 			"Power search failed" );
 	}
 
-	public function testTitleSearch() {
+	function testTitleSearch() {
 		$this->assertEquals(
 			array(
 				'Alan Smithee',
@@ -162,7 +161,7 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 			"Title search failed" );
 	}
 
-	public function testTextTitlePowerSearch() {
+	function testTextTitlePowerSearch() {
 		$this->search->setNamespaces( array( 0, 1, 4 ) );
 		$this->assertEquals(
 			array(
@@ -173,4 +172,5 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 			$this->fetchIds( $this->search->searchTitle( 'smithee' ) ),
 			"Title power search failed" );
 	}
+
 }

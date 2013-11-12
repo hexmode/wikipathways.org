@@ -27,37 +27,19 @@
  * @ingroup Watchlist
  */
 class WatchedItem {
-	/**
-	 * Constant to specify that user rights 'editmywatchlist' and
-	 * 'viewmywatchlist' should not be checked.
-	 * @since 1.22
-	 */
-	const IGNORE_USER_RIGHTS = 0;
-
-	/**
-	 * Constant to specify that user rights 'editmywatchlist' and
-	 * 'viewmywatchlist' should be checked.
-	 * @since 1.22
-	 */
-	const CHECK_USER_RIGHTS = 1;
-
-	var $mTitle, $mUser, $mCheckRights;
+	var $mTitle, $mUser;
 	private $loaded = false, $watched, $timestamp;
 
 	/**
 	 * Create a WatchedItem object with the given user and title
-	 * @since 1.22 $checkRights parameter added
 	 * @param $user User: the user to use for (un)watching
 	 * @param $title Title: the title we're going to (un)watch
-	 * @param $checkRights int: Whether to check the 'viewmywatchlist' and 'editmywatchlist' rights.
-	 *     Pass either WatchedItem::IGNORE_USER_RIGHTS or WatchedItem::CHECK_USER_RIGHTS.
 	 * @return WatchedItem object
 	 */
-	public static function fromUserTitle( $user, $title, $checkRights = WatchedItem::CHECK_USER_RIGHTS ) {
+	public static function fromUserTitle( $user, $title ) {
 		$wl = new WatchedItem;
 		$wl->mUser = $user;
 		$wl->mTitle = $title;
-		$wl->mCheckRights = $checkRights;
 
 		return $wl;
 	}
@@ -107,12 +89,6 @@ class WatchedItem {
 		}
 		$this->loaded = true;
 
-		// Only loggedin user can have a watchlist
-		if ( $this->mUser->isAnon() ) {
-			$this->watched = false;
-			return;
-		}
-
 		# Pages and their talk pages are considered equivalent for watching;
 		# remember that talk namespaces are numbered as page namespace+1.
 
@@ -129,22 +105,10 @@ class WatchedItem {
 	}
 
 	/**
-	 * Check permissions
-	 * @param $what string: 'viewmywatchlist' or 'editmywatchlist'
-	 */
-	private function isAllowed( $what ) {
-		return !$this->mCheckRights || $this->mUser->isAllowed( $what );
-	}
-
-	/**
 	 * Is mTitle being watched by mUser?
 	 * @return bool
 	 */
 	public function isWatched() {
-		if ( !$this->isAllowed( 'viewmywatchlist' ) ) {
-			return false;
-		}
-
 		$this->load();
 		return $this->watched;
 	}
@@ -156,10 +120,6 @@ class WatchedItem {
 	 *         the wl_notificationtimestamp field otherwise
 	 */
 	public function getNotificationTimestamp() {
-		if ( !$this->isAllowed( 'viewmywatchlist' ) ) {
-			return false;
-		}
-
 		$this->load();
 		if ( $this->watched ) {
 			return $this->timestamp;
@@ -175,11 +135,6 @@ class WatchedItem {
 	 *        page is not watched or the notification timestamp is already NULL.
 	 */
 	public function resetNotificationTimestamp( $force = '' ) {
-		// Only loggedin user can have a watchlist
-		if ( wfReadOnly() || $this->mUser->isAnon() || !$this->isAllowed( 'editmywatchlist' ) ) {
-			return;
-		}
-
 		if ( $force != 'force' ) {
 			$this->load();
 			if ( !$this->watched || $this->timestamp === null ) {
@@ -198,16 +153,10 @@ class WatchedItem {
 	/**
 	 * Given a title and user (assumes the object is setup), add the watch to the
 	 * database.
-	 * @return bool
+	 * @return bool (always true)
 	 */
 	public function addWatch() {
 		wfProfileIn( __METHOD__ );
-
-		// Only loggedin user can have a watchlist
-		if ( wfReadOnly() || $this->mUser->isAnon() || !$this->isAllowed( 'editmywatchlist' ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
 
 		// Use INSERT IGNORE to avoid overwriting the notification timestamp
 		// if there's already an entry for this page
@@ -242,12 +191,6 @@ class WatchedItem {
 	 */
 	public function removeWatch() {
 		wfProfileIn( __METHOD__ );
-
-		// Only loggedin user can have a watchlist
-		if ( wfReadOnly() || $this->mUser->isAnon() || !$this->isAllowed( 'editmywatchlist' ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
 
 		$success = false;
 		$dbw = wfGetDB( DB_MASTER );
@@ -325,7 +268,7 @@ class WatchedItem {
 			);
 		}
 
-		if ( empty( $values ) ) {
+		if( empty( $values ) ) {
 			// Nothing to do
 			return true;
 		}

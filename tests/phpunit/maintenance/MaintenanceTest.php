@@ -43,7 +43,7 @@ class MaintenanceFixup extends Maintenance {
 	private $testCase;
 
 	/**
-	 * shutdownSimulated === true if simulateShutdown has done it's work
+	 * shutdownSimulated === true iff simulateShutdown has done it's work
 	 *
 	 * @var bool
 	 */
@@ -128,6 +128,7 @@ class MaintenanceFixup extends Maintenance {
 	public function execute() {
 		$this->testCase->fail( __METHOD__ . " called unexpectedly" );
 	}
+
 }
 
 class MaintenanceTest extends MediaWikiTestCase {
@@ -184,6 +185,7 @@ class MaintenanceTest extends MediaWikiTestCase {
 	// example the newlines within the test.*StringString tests, or the
 	// test.*Intermittent.* tests), the objective of these tests is not to describe
 	// consistent behavior, but rather currently existing behavior.
+
 
 	function testOutputEmpty() {
 		$this->m->output( "" );
@@ -813,4 +815,6 @@ class MaintenanceTest extends MediaWikiTestCase {
 		$m2->simulateShutdown();
 		$this->assertOutputPrePostShutdown( "foobar\n\n", false );
 	}
+
+
 }

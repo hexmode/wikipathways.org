@@ -145,7 +145,7 @@ $messages = array(
 'jumptonavigation' => 'уялöм',
 'jumptosearch' => 'кошшан',
 
-# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage).
+# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => '{{SITENAME}} йылiсь',
 'aboutpage' => 'Project:сы йылiсь',
 'copyright' => 'Быдöс этiйö позьö копируйтны $1 сьöртi.',
@@ -155,6 +155,7 @@ $messages = array(
 'disclaimers' => 'Мийö сöстöмöсь йöз одзын',
 'disclaimerpage' => 'Project:Мийö сöстöмöсь йöз одзын',
 'edithelp' => 'Уджкерись понда отсöт',
+'edithelppage' => 'Help:Уджкерись понда отсöт',
 'helppage' => 'Help:Отсöт',
 'mainpage' => 'Пондöтчан листбок',
 'mainpage-description' => 'Пондöтчан листбок',
@@ -736,7 +737,7 @@ $messages = array(
 * gpslongitude
 * gpsaltitude',
 
-# Exif tags
+# EXIF tags
 'exif-imagewidth' => 'Пасьта',
 'exif-imagelength' => 'Вылына',
 

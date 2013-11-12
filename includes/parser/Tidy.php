@@ -61,10 +61,7 @@ class MWTidyWrapper {
 
 		// Replace <mw:editsection> elements with placeholders
 		$wrappedtext = preg_replace_callback( ParserOutput::EDITSECTION_REGEX,
-			array( &$this, 'replaceCallback' ), $text );
-		// ...and <mw:toc> markers
-		$wrappedtext = preg_replace_callback( '/\<\\/?mw:toc\>/',
-			array( &$this, 'replaceCallback' ), $wrappedtext );
+			array( &$this, 'replaceEditSectionLinksCallback' ), $text );
 
 		// Modify inline Microdata <link> and <meta> elements so they say <html-link> and <html-meta> so
 		// we can trick Tidy into not stripping them out by including them in tidy's new-empty-tags config
@@ -83,7 +80,7 @@ class MWTidyWrapper {
 	 *
 	 * @return string
 	 */
-	function replaceCallback( $m ) {
+	function replaceEditSectionLinksCallback( $m ) {
 		$marker = "{$this->mUniqPrefix}-item-{$this->mMarkerIndex}" . Parser::MARKER_SUFFIX;
 		$this->mMarkerIndex++;
 		$this->mTokens->setPair( $marker, $m[0] );
@@ -161,7 +158,7 @@ class MWTidy {
 		global $wgTidyInternal;
 
 		$retval = 0;
-		if ( $wgTidyInternal ) {
+		if( $wgTidyInternal ) {
 			$errorStr = self::execInternalTidy( $text, true, $retval );
 		} else {
 			$errorStr = self::execExternalTidy( $text, true, $retval );
@@ -247,7 +244,7 @@ class MWTidy {
 		global $wgTidyConf, $wgDebugTidy;
 		wfProfileIn( __METHOD__ );
 
-		if ( !class_exists( 'tidy' ) ) {
+		if ( !MWInit::classExists( 'tidy' ) ) {
 			wfWarn( "Unable to load internal tidy class." );
 			$retval = -1;
 

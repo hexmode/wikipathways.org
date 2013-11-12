@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @covers Sanitizer::validateEmail
- * @TODO all test methods in this class should be refactored and...
- *    use a single test method and a single data provider...
- */
 class SanitizerValidateEmailTest extends MediaWikiTestCase {
 
 	private function checkEmail( $addr, $expected = true, $msg = '' ) {
@@ -27,56 +22,54 @@ class SanitizerValidateEmailTest extends MediaWikiTestCase {
 		$this->checkEmail( $addr, false, $msg );
 	}
 
-	public function testEmailWellKnownUserAtHostDotTldAreValid() {
+	function testEmailWellKnownUserAtHostDotTldAreValid() {
 		$this->valid( 'user@example.com' );
 		$this->valid( 'user@example.museum' );
 	}
 
-	public function testEmailWithUpperCaseCharactersAreValid() {
+	function testEmailWithUpperCaseCharactersAreValid() {
 		$this->valid( 'USER@example.com' );
 		$this->valid( 'user@EXAMPLE.COM' );
 		$this->valid( 'user@Example.com' );
 		$this->valid( 'USER@eXAMPLE.com' );
 	}
 
-	public function testEmailWithAPlusInUserName() {
+	function testEmailWithAPlusInUserName() {
 		$this->valid( 'user+sub@example.com' );
 		$this->valid( 'user+@example.com' );
 	}
 
-	public function testEmailDoesNotNeedATopLevelDomain() {
+	function testEmailDoesNotNeedATopLevelDomain() {
 		$this->valid( "user@localhost" );
 		$this->valid( "FooBar@localdomain" );
 		$this->valid( "nobody@mycompany" );
 	}
 
-	public function testEmailWithWhiteSpacesBeforeOrAfterAreInvalids() {
+	function testEmailWithWhiteSpacesBeforeOrAfterAreInvalids() {
 		$this->invalid( " user@host.com" );
 		$this->invalid( "user@host.com " );
 		$this->invalid( "\tuser@host.com" );
 		$this->invalid( "user@host.com\t" );
 	}
 
-	public function testEmailWithWhiteSpacesAreInvalids() {
+	function testEmailWithWhiteSpacesAreInvalids() {
 		$this->invalid( "User user@host" );
 		$this->invalid( "first last@mycompany" );
 		$this->invalid( "firstlast@my company" );
 	}
 
-	/**
-	 * bug 26948 : comma were matched by an incorrect regexp range
-	 */
-	public function testEmailWithCommasAreInvalids() {
+	// bug 26948 : comma were matched by an incorrect regexp range
+	function testEmailWithCommasAreInvalids() {
 		$this->invalid( "user,foo@example.org" );
 		$this->invalid( "userfoo@ex,ample.org" );
 	}
 
-	public function testEmailWithHyphens() {
+	function testEmailWithHyphens() {
 		$this->valid( "user-foo@example.org" );
 		$this->valid( "userfoo@ex-ample.org" );
 	}
 
-	public function testEmailDomainCanNotBeginWithDot() {
+	function testEmailDomainCanNotBeginWithDot() {
 		$this->invalid( "user@." );
 		$this->invalid( "user@.localdomain" );
 		$this->invalid( "user@localdomain." );
@@ -85,19 +78,19 @@ class SanitizerValidateEmailTest extends MediaWikiTestCase {
 		$this->invalid( ".@a............" );
 	}
 
-	public function testEmailWithFunnyCharacters() {
+	function testEmailWithFunnyCharacters() {
 		$this->valid( "\$user!ex{this}@123.com" );
 	}
 
-	public function testEmailTopLevelDomainCanBeNumerical() {
+	function testEmailTopLevelDomainCanBeNumerical() {
 		$this->valid( "user@example.1234" );
 	}
 
-	public function testEmailWithoutAtSignIsInvalid() {
+	function testEmailWithoutAtSignIsInvalid() {
 		$this->invalid( 'useràexample.com' );
 	}
 
-	public function testEmailWithOneCharacterDomainIsValid() {
+	function testEmailWithOneCharacterDomainIsValid() {
 		$this->valid( 'user@a' );
 	}
 }

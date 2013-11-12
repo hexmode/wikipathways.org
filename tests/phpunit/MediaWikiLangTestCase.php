@@ -15,10 +15,6 @@ abstract class MediaWikiLangTestCase extends MediaWikiTestCase {
 				"\$wgContLang->getCode() (" . $wgContLang->getCode() . ")" );
 		}
 
-		// HACK: Call getLanguage() so the real $wgContLang is cached as the user language
-		// rather than our fake one. This is to avoid breaking other, unrelated tests.
-		RequestContext::getMain()->getLanguage();
-
 		$langCode = 'en'; # For mainpage to be 'Main Page'
 		$langObj = Language::factory( $langCode );
 

@@ -19,12 +19,10 @@
 	 * @return {string} return.done.watch.message Parsed HTML of the confirmational interface message
 	 */
 	function doWatchInternal( page, ok, err, addParams ) {
-		var params,
-			d = $.Deferred(),
-			apiPromise;
-
+		var params, d = $.Deferred();
 		// Backwards compatibility (< MW 1.20)
-		d.done( ok ).fail( err );
+		d.done( ok );
+		d.fail( err );
 
 		params = {
 			action: 'watch',
@@ -37,13 +35,13 @@
 			$.extend( params, addParams );
 		}
 
-		apiPromise = this.post( params )
+		this.post( params )
 			.done( function ( data ) {
 				d.resolve( data.watch );
 			} )
 			.fail( d.reject );
 
-		return d.promise( { abort: apiPromise.abort } );
+		return d.promise();
 	}
 
 	$.extend( mw.Api.prototype, {

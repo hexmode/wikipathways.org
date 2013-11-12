@@ -24,7 +24,7 @@
  * @ingroup Maintenance
  */
 
-require_once __DIR__ . '/backup.inc';
+require_once( __DIR__ . '/backup.inc' );
 
 /**
  * @ingroup Maintenance
@@ -141,9 +141,8 @@ class TextPassDumper extends BackupDumper {
 	function dump( $history, $text = WikiExporter::TEXT ) {
 		// Notice messages will foul up your XML output even if they're
 		// relatively harmless.
-		if ( ini_get( 'display_errors' ) ) {
+		if ( ini_get( 'display_errors' ) )
 			ini_set( 'display_errors', 'stderr' );
-		}
 
 		$this->initProgress( $this->history );
 
@@ -183,7 +182,7 @@ class TextPassDumper extends BackupDumper {
 		global $IP;
 		$url = $this->processFileOpt( $val, $param );
 
-		switch ( $opt ) {
+		switch( $opt ) {
 		case 'prefetch':
 			require_once "$IP/maintenance/backupPrefetch.inc";
 			$this->prefetch = new BaseDump( $url );
@@ -215,7 +214,7 @@ class TextPassDumper extends BackupDumper {
 	function processFileOpt( $val, $param ) {
 		$fileURIs = explode( ';', $param );
 		foreach ( $fileURIs as $URI ) {
-			switch ( $val ) {
+			switch( $val ) {
 				case "file":
 					$newURI = $URI;
 					break;
@@ -299,7 +298,7 @@ class TextPassDumper extends BackupDumper {
 	}
 
 	function checkIfTimeExceeded() {
-		if ( $this->maxTimeAllowed && ( $this->lastTime - $this->timeOfCheckpoint > $this->maxTimeAllowed ) ) {
+		if ( $this->maxTimeAllowed &&  ( $this->lastTime - $this->timeOfCheckpoint  > $this->maxTimeAllowed ) ) {
 			return true;
 		}
 		return false;
@@ -414,8 +413,6 @@ class TextPassDumper extends BackupDumper {
 	 * @throws MWException
 	 */
 	function getText( $id ) {
-		global $wgContentHandlerUseDB;
-
 		$prefetchNotTried = true; // Whether or not we already tried to get the text via prefetch.
 		$text = false; // The candidate for a good text. false if no proper value.
 		$failures = 0; // The number of times, this invocation of getText already failed.
@@ -481,28 +478,7 @@ class TextPassDumper extends BackupDumper {
 				if ( ! isset( $this->db ) ) {
 					throw new MWException( "No database available" );
 				}
-
-				$revLength = strlen( $text );
-				if ( $wgContentHandlerUseDB ) {
-					$row = $this->db->selectRow(
-						'revision',
-						array( 'rev_len', 'rev_content_model' ),
-						array( 'rev_id' => $revID ),
-						__METHOD__
-					);
-					if ( $row ) {
-						// only check the length for the wikitext content handler,
-						// it's a wasted (and failed) check otherwise
-						if ( $row->rev_content_model == CONTENT_MODEL_WIKITEXT ) {
-							$revLength = $row->rev_len;
-						}
-					}
-
-				}
-				else {
-					$revLength = $this->db->selectField( 'revision', 'rev_len', array( 'rev_id' => $revID ) );
-				}
-
+				$revLength = $this->db->selectField( 'revision', 'rev_len', array( 'rev_id' => $revID ) );
 				if ( strlen( $text ) == $revLength ) {
 					if ( $tryIsPrefetch ) {
 						$this->prefetchCount++;
@@ -635,21 +611,17 @@ class TextPassDumper extends BackupDumper {
 
 	private function closeSpawn() {
 		wfSuppressWarnings();
-		if ( $this->spawnRead ) {
+		if ( $this->spawnRead )
 			fclose( $this->spawnRead );
-		}
 		$this->spawnRead = false;
-		if ( $this->spawnWrite ) {
+		if ( $this->spawnWrite )
 			fclose( $this->spawnWrite );
-		}
 		$this->spawnWrite = false;
-		if ( $this->spawnErr ) {
+		if ( $this->spawnErr )
 			fclose( $this->spawnErr );
-		}
 		$this->spawnErr = false;
-		if ( $this->spawnProc ) {
+		if ( $this->spawnProc )
 			pclose( $this->spawnProc );
-		}
 		$this->spawnProc = false;
 		wfRestoreWarnings();
 	}
@@ -659,15 +631,11 @@ class TextPassDumper extends BackupDumper {
 
 		$ok = fwrite( $this->spawnWrite, "$id\n" );
 		// $this->progress( ">> $id" );
-		if ( !$ok ) {
-			return false;
-		}
+		if ( !$ok ) return false;
 
 		$ok = fflush( $this->spawnWrite );
 		// $this->progress( ">> [flush]" );
-		if ( !$ok ) {
-			return false;
-		}
+		if ( !$ok ) return false;
 
 		// check that the text id they are sending is the one we asked for
 		// this avoids out of sync revision text errors we have encountered in the past
@@ -681,24 +649,18 @@ class TextPassDumper extends BackupDumper {
 
 		$len = fgets( $this->spawnRead );
 		// $this->progress( "<< " . trim( $len ) );
-		if ( $len === false ) {
-			return false;
-		}
+		if ( $len === false ) return false;
 
 		$nbytes = intval( $len );
 		// actual error, not zero-length text
-		if ( $nbytes < 0 ) {
-			return false;
-		}
+		if ( $nbytes < 0 ) return false;
 
 		$text = "";
 
 		// Subprocess may not send everything at once, we have to loop.
 		while ( $nbytes > strlen( $text ) ) {
 			$buffer = fread( $this->spawnRead, $nbytes - strlen( $text ) );
-			if ( $buffer === false ) {
-				break;
-			}
+			if ( $buffer === false ) break;
 			$text .= $buffer;
 		}
 

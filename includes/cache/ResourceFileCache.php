@@ -29,7 +29,7 @@
 class ResourceFileCache extends FileCacheBase {
 	protected $mCacheWorthy;
 
-	/* @todo configurable? */
+	/* @TODO: configurable? */
 	const MISS_THRESHOLD = 360; // 6/min * 60 min
 
 	/**

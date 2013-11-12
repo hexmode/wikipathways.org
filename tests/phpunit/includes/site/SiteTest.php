@@ -38,7 +38,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::getInterwikiIds
 	 */
 	public function testGetInterwikiIds( Site $site ) {
 		$this->assertInternalType( 'array', $site->getInterwikiIds() );
@@ -47,7 +46,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::getNavigationIds
 	 */
 	public function testGetNavigationIds( Site $site ) {
 		$this->assertInternalType( 'array', $site->getNavigationIds() );
@@ -56,7 +54,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::addNavigationId
 	 */
 	public function testAddNavigationId( Site $site ) {
 		$site->addNavigationId( 'foobar' );
@@ -66,7 +63,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::addInterwikiId
 	 */
 	public function testAddInterwikiId( Site $site ) {
 		$site->addInterwikiId( 'foobar' );
@@ -76,7 +72,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::getLanguageCode
 	 */
 	public function testGetLanguageCode( Site $site ) {
 		$this->assertTypeOrValue( 'string', $site->getLanguageCode(), null );
@@ -85,7 +80,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::setLanguageCode
 	 */
 	public function testSetLanguageCode( Site $site ) {
 		$site->setLanguageCode( 'en' );
@@ -95,7 +89,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::normalizePageName
 	 */
 	public function testNormalizePageName( Site $site ) {
 		$this->assertInternalType( 'string', $site->normalizePageName( 'Foobar' ) );
@@ -104,7 +97,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::getGlobalId
 	 */
 	public function testGetGlobalId( Site $site ) {
 		$this->assertTypeOrValue( 'string', $site->getGlobalId(), null );
@@ -113,7 +105,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::setGlobalId
 	 */
 	public function testSetGlobalId( Site $site ) {
 		$site->setGlobalId( 'foobar' );
@@ -123,7 +114,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::getType
 	 */
 	public function testGetType( Site $site ) {
 		$this->assertInternalType( 'string', $site->getType() );
@@ -132,7 +122,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::getPath
 	 */
 	public function testGetPath( Site $site ) {
 		$this->assertTypeOrValue( 'string', $site->getPath( 'page_path' ), null );
@@ -143,7 +132,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::getAllPaths
 	 */
 	public function testGetAllPaths( Site $site ) {
 		$this->assertInternalType( 'array', $site->getAllPaths() );
@@ -152,8 +140,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::setPath
-	 * @covers Site::removePath
 	 */
 	public function testSetAndRemovePath( Site $site ) {
 		$count = count( $site->getAllPaths() );
@@ -176,9 +162,6 @@ class SiteTest extends MediaWikiTestCase {
 		$this->assertNull( $site->getPath( 'spam' ) );
 	}
 
-	/**
-	 * @covers Site::setLinkPath
-	 */
 	public function testSetLinkPath() {
 		$site = new Site();
 		$path = "TestPath/$1";
@@ -187,9 +170,6 @@ class SiteTest extends MediaWikiTestCase {
 		$this->assertEquals( $path, $site->getLinkPath() );
 	}
 
-	/**
-	 * @covers Site::getLinkPathType
-	 */
 	public function testGetLinkPathType() {
 		$site = new Site();
 
@@ -202,9 +182,6 @@ class SiteTest extends MediaWikiTestCase {
 		$this->assertEquals( $path, $site->getLinkPath() );
 	}
 
-	/**
-	 * @covers Site::setPath
-	 */
 	public function testSetPath() {
 		$site = new Site();
 
@@ -214,10 +191,6 @@ class SiteTest extends MediaWikiTestCase {
 		$this->assertEquals( $path, $site->getPath( 'foo' ) );
 	}
 
-	/**
-	 * @covers Site::setPath
-	 * @covers Site::getProtocol
-	 */
 	public function testProtocolRelativePath() {
 		$site = new Site();
 
@@ -228,7 +201,7 @@ class SiteTest extends MediaWikiTestCase {
 		$this->assertEquals( '', $site->getProtocol() );
 	}
 
-	public static function provideGetPageUrl() {
+	public function provideGetPageUrl() {
 		//NOTE: the assumption that the URL is built by replacing $1
 		//      with the urlencoded version of $page
 		//      is true for Site but not guaranteed for subclasses.
@@ -255,7 +228,6 @@ class SiteTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideGetPageUrl
-	 * @covers Site::getPageUrl
 	 */
 	public function testGetPageUrl( $path, $page, $expected ) {
 		$site = new Site();
@@ -280,8 +252,6 @@ class SiteTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider instanceProvider
 	 * @param Site $site
-	 * @covers Site::serialize
-	 * @covers Site::unserialize
 	 */
 	public function testSerialization( Site $site ) {
 		$this->assertInstanceOf( 'Serializable', $site );
@@ -293,4 +263,5 @@ class SiteTest extends MediaWikiTestCase {
 
 		$this->assertEquals( $serialization, serialize( $newInstance ) );
 	}
+
 }

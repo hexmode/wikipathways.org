@@ -20,7 +20,7 @@ class ApiCreateAccountTest extends ApiTestCase {
 	 * a bit slow. Raise the default timeout.
 	 * @group medium
 	 */
-	public function testValid() {
+	function testValid() {
 		global $wgServer;
 
 		if ( !isset( $wgServer ) ) {
@@ -47,16 +47,13 @@ class ApiCreateAccountTest extends ApiTestCase {
 		$token = $a['token'];
 
 		// Finally create the account
-		$ret = $this->doApiRequest(
-			array(
-				'action' => 'createaccount',
-				'name' => 'Apitestnew',
-				'password' => $password,
-				'token' => $token,
-				'email' => 'test@domain.test',
-				'realname' => 'Test Name'
-			),
-			$ret[2]
+		$ret = $this->doApiRequest( array(
+			'action' => 'createaccount',
+			'name' => 'Apitestnew',
+			'password' => $password,
+			'token' => $token,
+			'email' => 'test@domain.test',
+			'realname' => 'Test Name' ), $ret[2]
 		);
 
 		$result = $ret[0];
@@ -68,7 +65,8 @@ class ApiCreateAccountTest extends ApiTestCase {
 			'action' => 'login',
 			'lgname' => 'Apitestnew',
 			'lgpassword' => $password,
-		) );
+			)
+		);
 
 		$result = $ret[0];
 		$this->assertNotInternalType( 'bool', $result );
@@ -78,14 +76,12 @@ class ApiCreateAccountTest extends ApiTestCase {
 		$this->assertEquals( 'NeedToken', $a );
 		$token = $result['login']['token'];
 
-		$ret = $this->doApiRequest(
-			array(
-				'action' => 'login',
-				'lgtoken' => $token,
-				'lgname' => 'Apitestnew',
-				'lgpassword' => $password,
-			),
-			$ret[2]
+		$ret = $this->doApiRequest( array(
+			'action' => 'login',
+			'lgtoken' => $token,
+			'lgname' => 'Apitestnew',
+			'lgpassword' => $password,
+			), $ret[2]
 		);
 
 		$result = $ret[0];
@@ -96,11 +92,9 @@ class ApiCreateAccountTest extends ApiTestCase {
 		$this->assertEquals( 'Success', $a );
 
 		// log out to destroy the session
-		$ret = $this->doApiRequest(
-			array(
-				'action' => 'logout',
-			),
-			$ret[2]
+		$ret = $this->doApiRequest( array(
+			'action' => 'logout',
+			), $ret[2]
 		);
 		$this->assertEquals( array(), $ret[0] );
 	}
@@ -109,8 +103,8 @@ class ApiCreateAccountTest extends ApiTestCase {
 	 * Make sure requests with no names are invalid.
 	 * @expectedException UsageException
 	 */
-	public function testNoName() {
-		$this->doApiRequest( array(
+	function testNoName() {
+		$ret = $this->doApiRequest( array(
 			'action' => 'createaccount',
 			'token' => LoginForm::getCreateaccountToken(),
 			'password' => 'password',
@@ -121,8 +115,8 @@ class ApiCreateAccountTest extends ApiTestCase {
 	 * Make sure requests with no password are invalid.
 	 * @expectedException UsageException
 	 */
-	public function testNoPassword() {
-		$this->doApiRequest( array(
+	function testNoPassword() {
+		$ret = $this->doApiRequest( array(
 			'action' => 'createaccount',
 			'name' => 'testName',
 			'token' => LoginForm::getCreateaccountToken(),
@@ -133,7 +127,7 @@ class ApiCreateAccountTest extends ApiTestCase {
 	 * Make sure requests with existing users are invalid.
 	 * @expectedException UsageException
 	 */
-	public function testExistingUser() {
+	function testExistingUser() {
 		$this->doApiRequest( array(
 			'action' => 'createaccount',
 			'name' => 'Apitestsysop',
@@ -147,7 +141,7 @@ class ApiCreateAccountTest extends ApiTestCase {
 	 * Make sure requests with invalid emails are invalid.
 	 * @expectedException UsageException
 	 */
-	public function testInvalidEmail() {
+	function testInvalidEmail() {
 		$this->doApiRequest( array(
 			'action' => 'createaccount',
 			'name' => 'Test User',

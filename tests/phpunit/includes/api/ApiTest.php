@@ -7,7 +7,7 @@
  */
 class ApiTest extends ApiTestCase {
 
-	public function testRequireOnlyOneParameterDefault() {
+	function testRequireOnlyOneParameterDefault() {
 		$mock = new MockApi();
 
 		$this->assertEquals(
@@ -18,7 +18,7 @@ class ApiTest extends ApiTestCase {
 	/**
 	 * @expectedException UsageException
 	 */
-	public function testRequireOnlyOneParameterZero() {
+	function testRequireOnlyOneParameterZero() {
 		$mock = new MockApi();
 
 		$this->assertEquals(
@@ -29,7 +29,7 @@ class ApiTest extends ApiTestCase {
 	/**
 	 * @expectedException UsageException
 	 */
-	public function testRequireOnlyOneParameterTrue() {
+	function testRequireOnlyOneParameterTrue() {
 		$mock = new MockApi();
 
 		$this->assertEquals(
@@ -43,7 +43,7 @@ class ApiTest extends ApiTestCase {
 	 *
 	 * @expectedException UsageException
 	 */
-	public function testApi() {
+	function testApi() {
 		$api = new ApiMain(
 			new FauxRequest( array( 'action' => 'help', 'format' => 'xml' ) )
 		);
@@ -61,14 +61,14 @@ class ApiTest extends ApiTestCase {
 	/**
 	 * Test result of attempted login with an empty username
 	 */
-	public function testApiLoginNoName() {
+	function testApiLoginNoName() {
 		$data = $this->doApiRequest( array( 'action' => 'login',
 			'lgname' => '', 'lgpassword' => self::$users['sysop']->password,
 		) );
 		$this->assertEquals( 'NoName', $data[0]['login']['result'] );
 	}
 
-	public function testApiLoginBadPass() {
+	function testApiLoginBadPass() {
 		global $wgServer;
 
 		$user = self::$users['sysop'];
@@ -81,7 +81,8 @@ class ApiTest extends ApiTestCase {
 			"action" => "login",
 			"lgname" => $user->username,
 			"lgpassword" => "bad",
-		) );
+			)
+		);
 
 		$result = $ret[0];
 
@@ -109,7 +110,7 @@ class ApiTest extends ApiTestCase {
 		$this->assertEquals( "WrongPass", $a );
 	}
 
-	public function testApiLoginGoodPass() {
+	function testApiLoginGoodPass() {
 		global $wgServer;
 
 		if ( !isset( $wgServer ) ) {
@@ -135,7 +136,7 @@ class ApiTest extends ApiTestCase {
 		$token = $result["login"]["token"];
 
 		$ret = $this->doApiRequest(
-			array(
+	 		array(
 				"action" => "login",
 				"lgtoken" => $token,
 				"lgname" => $user->username,
@@ -155,7 +156,7 @@ class ApiTest extends ApiTestCase {
 	/**
 	 * @group Broken
 	 */
-	public function testApiGotCookie() {
+	function testApiGotCookie() {
 		$this->markTestIncomplete( "The server can't do external HTTP requests, and the internal one won't give cookies" );
 
 		global $wgServer, $wgScriptPath;
@@ -201,7 +202,7 @@ class ApiTest extends ApiTestCase {
 		return $cj;
 	}
 
-	public function testRunLogin() {
+	function testRunLogin() {
 		$sysopUser = self::$users['sysop'];
 		$data = $this->doApiRequest( array(
 			'action' => 'login',
@@ -227,33 +228,39 @@ class ApiTest extends ApiTestCase {
 		return $data;
 	}
 
-	public function testGettingToken() {
+	function testGettingToken() {
 		foreach ( self::$users as $user ) {
 			$this->runTokenTest( $user );
 		}
 	}
 
 	function runTokenTest( $user ) {
-		$tokens = $this->getTokenList( $user );
+		$data = $this->getTokenList( $user );
+
+		$this->assertArrayHasKey( 'query', $data[0] );
+		$this->assertArrayHasKey( 'pages', $data[0]['query'] );
+		$keys = array_keys( $data[0]['query']['pages'] );
+		$key = array_pop( $keys );
 
 		$rights = $user->user->getRights();
 
-		$this->assertArrayHasKey( 'edittoken', $tokens );
-		$this->assertArrayHasKey( 'movetoken', $tokens );
+		$this->assertArrayHasKey( $key, $data[0]['query']['pages'] );
+		$this->assertArrayHasKey( 'edittoken', $data[0]['query']['pages'][$key] );
+		$this->assertArrayHasKey( 'movetoken', $data[0]['query']['pages'][$key] );
 
 		if ( isset( $rights['delete'] ) ) {
-			$this->assertArrayHasKey( 'deletetoken', $tokens );
+			$this->assertArrayHasKey( 'deletetoken', $data[0]['query']['pages'][$key] );
 		}
 
 		if ( isset( $rights['block'] ) ) {
-			$this->assertArrayHasKey( 'blocktoken', $tokens );
-			$this->assertArrayHasKey( 'unblocktoken', $tokens );
+			$this->assertArrayHasKey( 'blocktoken', $data[0]['query']['pages'][$key] );
+			$this->assertArrayHasKey( 'unblocktoken', $data[0]['query']['pages'][$key] );
 		}
 
 		if ( isset( $rights['protect'] ) ) {
-			$this->assertArrayHasKey( 'protecttoken', $tokens );
+			$this->assertArrayHasKey( 'protecttoken', $data[0]['query']['pages'][$key] );
 		}
 
-		return $tokens;
+		return $data;
 	}
 }

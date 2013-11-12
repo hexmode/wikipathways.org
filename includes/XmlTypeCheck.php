@@ -40,52 +40,16 @@ class XmlTypeCheck {
 	public $rootElement = '';
 
 	/**
-	 * @param string $input a filename or string containing the XML element
-	 * @param callable $filterCallback (optional)
+	 * @param string $file filename
+	 * @param $filterCallback callable (optional)
 	 *        Function to call to do additional custom validity checks from the
 	 *        SAX element handler event. This gives you access to the element
 	 *        namespace, name, and attributes, but not to text contents.
 	 *        Filter should return 'true' to toggle on $this->filterMatch
-	 * @param boolean $isFile (optional) indicates if the first parameter is a
-	 *        filename (default, true) or if it is a string (false)
 	 */
-	function __construct( $input, $filterCallback = null, $isFile = true ) {
+	function __construct( $file, $filterCallback=null ) {
 		$this->filterCallback = $filterCallback;
-		if ( $isFile ) {
-			$this->validateFromFile( $input );
-		} else {
-			$this->validateFromString( $input );
-		}
-	}
-
-	/**
-	 * Alternative constructor: from filename
-	 *
-	 * @param string $fname the filename of an XML document
-	 * @param callable $filterCallback (optional)
-	 *        Function to call to do additional custom validity checks from the
-	 *        SAX element handler event. This gives you access to the element
-	 *        namespace, name, and attributes, but not to text contents.
-	 *        Filter should return 'true' to toggle on $this->filterMatch
-	 * @return XmlTypeCheck
-	 */
-	public static function newFromFilename( $fname, $filterCallback = null ) {
-		return new self( $fname, $filterCallback, true );
-	}
-
-	/**
-	 * Alternative constructor: from string
-	 *
-	 * @param string $string a string containing an XML element
-	 * @param callable $filterCallback (optional)
-	 *        Function to call to do additional custom validity checks from the
-	 *        SAX element handler event. This gives you access to the element
-	 *        namespace, name, and attributes, but not to text contents.
-	 *        Filter should return 'true' to toggle on $this->filterMatch
-	 * @return XmlTypeCheck
-	 */
-	public static function newFromString( $string, $filterCallback = null ) {
-		return new self( $string, $filterCallback, false );
+		$this->run( $file );
 	}
 
 	/**
@@ -98,23 +62,15 @@ class XmlTypeCheck {
 	}
 
 	/**
-	 * Get an XML parser with the root element handler.
-	 * @see XmlTypeCheck::rootElementOpen()
-	 * @return resource a resource handle for the XML parser
+	 * @param $fname
 	 */
-	private function getParser() {
+	private function run( $fname ) {
 		$parser = xml_parser_create_ns( 'UTF-8' );
+
 		// case folding violates XML standard, turn it off
 		xml_parser_set_option( $parser, XML_OPTION_CASE_FOLDING, false );
-		xml_set_element_handler( $parser, array( $this, 'rootElementOpen' ), false );
-		return $parser;
-	}
 
-	/**
-	 * @param string $fname the filename
-	 */
-	private function validateFromFile( $fname ) {
-		$parser = $this->getParser();
+		xml_set_element_handler( $parser, array( $this, 'rootElementOpen' ), false );
 
 		if ( file_exists( $fname ) ) {
 			$file = fopen( $fname, "rb" );
@@ -122,35 +78,21 @@ class XmlTypeCheck {
 				do {
 					$chunk = fread( $file, 32768 );
 					$ret = xml_parse( $parser, $chunk, feof( $file ) );
-					if ( $ret == 0 ) {
-						$this->wellFormed = false;
+					if( $ret == 0 ) {
+						// XML isn't well-formed!
 						fclose( $file );
 						xml_parser_free( $parser );
 						return;
 					}
-				} while ( !feof( $file ) );
+				} while( !feof( $file ) );
 
 				fclose( $file );
 			}
 		}
+
 		$this->wellFormed = true;
 
 		xml_parser_free( $parser );
-	}
-
-	/**
-	 *
-	 * @param string $string the XML-input-string to be checked.
-	 */
-	private function validateFromString( $string ) {
-		$parser = $this->getParser();
-		$ret = xml_parse( $parser, $string, true );
-		xml_parser_free( $parser );
-		if ( $ret == 0 ) {
-			$this->wellFormed = false;
-			return;
-		}
-		$this->wellFormed = true;
 	}
 
 	/**
@@ -161,7 +103,7 @@ class XmlTypeCheck {
 	private function rootElementOpen( $parser, $name, $attribs ) {
 		$this->rootElement = $name;
 
-		if ( is_callable( $this->filterCallback ) ) {
+		if( is_callable( $this->filterCallback ) ) {
 			xml_set_element_handler( $parser, array( $this, 'elementOpen' ), false );
 			$this->elementOpen( $parser, $name, $attribs );
 		} else {
@@ -176,7 +118,7 @@ class XmlTypeCheck {
 	 * @param $attribs
 	 */
 	private function elementOpen( $parser, $name, $attribs ) {
-		if ( call_user_func( $this->filterCallback, $name, $attribs ) ) {
+		if( call_user_func( $this->filterCallback, $name, $attribs ) ) {
 			// Filter hit!
 			$this->filterMatch = true;
 		}

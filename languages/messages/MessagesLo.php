@@ -122,6 +122,8 @@ $messages = array(
 'tog-enotifminoredits' => 'ສົ່ງ ອີເມລ ໃຫ້ຂ້ອຍ ເວລາມີການດັດແກ້ເລັກນ້ອຍນຳ',
 'tog-enotifrevealaddr' => 'ສະແດງ ອີເມລ ຂອງຂ້ອຍ ໃນ ການແຈ້ງວ່າມີຂໍ້ຄວາມອີເມລ',
 'tog-shownumberswatching' => 'ສະແດງ ຈຳນວນຜູ້ໃຊ້ ຕິດຕາມໝ້ານີ້',
+'tog-externaleditor' => 'ໃຊ້ ເອດິດເຕີທາງນອກ ຖ້າບໍ່ມີການຕັ້ງ',
+'tog-externaldiff' => 'ໃຊ້ ສ່ວນຕ່າງທາງນອກ ຖ້າບໍ່ມີ ການກຳໜົດ',
 'tog-forceeditsummary' => 'ເຕື່ອນຂ້ອຍ ຖ້າບໍ່ໄດ້ຂຽນຫຍັງໃສ່ ຊ່ອງ ສະຫຼຸບການດັດແກ້',
 'tog-watchlisthideown' => 'ເຊື່ອງ ການດັດແກ້ໂດຍຂ້ອຍ ໃນ ລາຍການຕິດຕາມຂອງຂ້ອຍ',
 'tog-watchlisthidebots' => 'ເຊື່ອງ ການດັດແກ້ ໂດຍ ບອທ໌ ໃນລາຍການຕິດຕາມຂອງຂ້ອຍ',
@@ -267,7 +269,7 @@ $messages = array(
 'jumptonavigation' => 'ນຳທິດ',
 'jumptosearch' => 'ຄົ້ນຫາ',
 
-# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage).
+# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => 'ກ່ຽວກັບ{{SITENAME}}',
 'aboutpage' => 'Project:ກ່ຽວກັບ',
 'copyright' => 'ເນື້ອໃນ ສະໜອງໃຫ້ ພາຍໃຕ້ $1.',
@@ -277,6 +279,7 @@ $messages = array(
 'disclaimers' => 'ຂໍ້ປະຕິເສດຄວາມຮັບຜິດຊອບ',
 'disclaimerpage' => 'Project:ຂໍ້ປະຕິເສດຄວາມຮັບຜິດຊອບ',
 'edithelp' => 'ວິທີດັດແກ້ໜ້າ',
+'edithelppage' => 'Help:ການດັດແກ້',
 'helppage' => 'Help:ເນື້ອໃນ',
 'mainpage' => 'ໜ້າຫຼັກ',
 'mainpage-description' => 'ໜ້າຫຼັກ',
@@ -377,7 +380,7 @@ $messages = array(
 'newpassword' => 'ລະຫັດຜ່ານໃໝ່:',
 'retypenew' => 'ພິມລະຫັດຜ່ານໃໝ່ອີກ:',
 'resetpass_submit' => 'ຕັ້ງລະຫັດຜ່ານ ແລະ ເຊັນເຂົ້າ',
-'changepassword-success' => 'ສຳເລັດການປ່ຽນແປງ ລະຫັດຜ່ານຂອງທ່ານແລ້ວ! ດຽວນີ້ ທ່ານ ເຊັ່ນເຂົ້າ ໃນ ...',
+'resetpass_success' => 'ສຳເລັດການປ່ຽນແປງ ລະຫັດຜ່ານຂອງທ່ານແລ້ວ! ດຽວນີ້ ທ່ານ ເຊັ່ນເຂົ້າ ໃນ ...',
 
 # Edit page toolbar
 'bold_sample' => 'ໂຕໜັງສືເຂັ້ມ',
@@ -473,6 +476,7 @@ $messages = array(
 'prevn' => '{{PLURAL:$1|$1}} ກ່ອນໜ້າ',
 'nextn' => '{{PLURAL:$1|$1}} ຕໍ່ໄປ',
 'viewprevnext' => 'ເບິ່ງ ($1 {{int:pipe-separator}} $2) ($3).',
+'searchhelp-url' => 'Help:ເນື້ອໃນ',
 'search-result-size' => '$1 ({{PLURAL:$2|1 ຄຳ|$2 ຄຳ}})',
 'search-result-score' => 'ຄວາມກ່ຽວຂ້ອງ: $1%',
 'search-redirect' => '(ໂອນ $1)',
@@ -560,6 +564,7 @@ $messages = array(
 'recentchangeslinked-feed' => 'ການດັດແກ້ທີ່ກ່ຽວຂ້ອງ',
 'recentchangeslinked-toolbox' => 'ການດັດແກ້ທີ່ກ່ຽວຂ້ອງ',
 'recentchangeslinked-title' => 'ການປ່ຽນແປງກ່ຽວຂ້ອງກັບ "$1"',
+'recentchangeslinked-noresult' => 'ບໍ່ມີການປ່ຽນແປງຢູ່ໜ້າລິ້ງຄ໌ໃນໄລຍະດັ່ງກ່າວ.',
 
 # Upload
 'upload' => 'ອັບໂຫຼດໄຟລ໌',
@@ -603,6 +608,11 @@ $messages = array(
 
 # Statistics
 'statistics' => 'ສະຖິຕິ',
+
+'disambiguations' => 'ໜ້າແກ້ຄວາມກຳກວມ',
+'disambiguations-text' => "ໜ້າຕໍ່ໄປນີ້ເຊື່ອມໂຍງໄປຍັງ '''ໜ້າແກ້ຄວາມກຳກວມ'''&nbsp;
+ຊຶ່ງຄວນດັດແກ້ລິງຄ໌ໃຫ້ເຊື່ອມໂຍງໄປທີ່ໜ້າອື່ນທີ່ເໝາະສົມ<br />
+ໜ້າໃດທີ່ຮຽກໃຊ້ແມ່ແບບ [[MediaWiki:Disambiguationspage|ແກ້ກຳກວມ]] ໜ້າເຫຼ່ານັ້ນຖຶກເປັນໜ້າແກ້ຄວາມກຳກວມ",
 
 'doubleredirects' => 'ໂອນໜ້າ 2 ຄັ້ງ',
 
@@ -703,7 +713,8 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'watch' => 'ຕິດຕາມ',
 'watchthispage' => 'ຕິດຕາມໜ້ານີ້',
 'unwatch' => 'ເຊົາຕິດຕາມ',
-'wlheader-showupdated' => "ບັນດາ ໜ້າ ທີ່ມີການປ່ຽນແປງ ຫຼັງຈາກທີ່ທ່ານ ເຂົ້າຊົມຫຼ້າສຸດ ຈະຖືກສະແດງເປັນ ໂຕໜັງສື  '''ເຂັ້ມ'''",
+'watchnochange' => 'ບໍ່ມີໜ້າທີ່ທ່ານຕິດຕາມໃດໆ ຖືກດັດແປງໃນໄລຍະສະແດງຂ້າງເທິງນີ້.',
+'wlheader-showupdated' => "* ບັນດາ ໜ້າ ທີ່ມີການປ່ຽນແປງ ຫຼັງຈາກທີ່ທ່ານ ເຂົ້າຊົມຫຼ້າສຸດ ຈະຖືກສະແດງເປັນ ໂຕໜັງສື  '''ເຂັ້ມ'''",
 'wlshowlast' => 'ສະແດງ $1 ຊົ່ວໂມງຫຼ້າສຸດ $2 ມື້ຫຼ້າສຸດ $3',
 
 # Displayed when you click the "watch" button and it is in the process of watching
@@ -890,7 +901,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # Metadata
 'metadata-expand' => 'ສະແດງລະອຽດຕື່ມ',
 
-# Exif tags
+# EXIF tags
 'exif-imagewidth' => 'ຄວາມກ້ວາງ',
 'exif-imagelength' => 'ຄວາມສູງ',
 'exif-imagedescription' => 'ຫົວຂໍ້ຮູບ',
@@ -950,6 +961,9 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 # Special:Version
 'version' => 'ສະບັບ',
+
+# Special:FilePath
+'filepath' => 'ທາງໄປຫາໄຟລ໌',
 
 # Special:SpecialPages
 'specialpages' => 'ໜ້າພິເສດ',

@@ -23,7 +23,7 @@
 		}
 	}
 
-	$( function () {
+	$( document ).ready( function () {
 		// Lame tip to let user know if its email is valid. See bug 22449.
 		// Only bind once for 'blur' so that the user can fill it in without errors;
 		// after that, look at every keypress for immediate feedback.

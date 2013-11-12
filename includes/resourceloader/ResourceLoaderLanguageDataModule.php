@@ -75,10 +75,9 @@ class ResourceLoaderLanguageDataModule extends ResourceLoaderModule {
 		return $this->language->separatorTransformTable();
 	}
 
+
 	/**
-	 * Get all the dynamic data for the content language to an array.
-	 *
-	 * NOTE: Before calling this you HAVE to make sure $this->language is set.
+	 * Get all the dynamic data for the content language to an array
 	 *
 	 * @return array
 	 */
@@ -106,20 +105,26 @@ class ResourceLoaderLanguageDataModule extends ResourceLoaderModule {
 
 	/**
 	 * @param $context ResourceLoaderContext
-	 * @return int: UNIX timestamp
+	 * @return array|int|Mixed
 	 */
 	public function getModifiedTime( ResourceLoaderContext $context ) {
-		return max( 1, $this->getHashMtime( $context ) );
-	}
+		$this->language = Language::factory( $context ->getLanguage() );
+		$cache = wfGetCache( CACHE_ANYTHING );
+		$key = wfMemcKey( 'resourceloader', 'langdatamodule', 'changeinfo' );
 
-	/**
-	 * @param $context ResourceLoaderContext
-	 * @return string: Hash
-	 */
-	public function getModifiedHash( ResourceLoaderContext $context ) {
-		$this->language = Language::factory( $context->getLanguage() );
+		$data = $this->getData();
+		$hash = md5( serialize( $data ) );
 
-		return md5( serialize( $this->getData() ) );
+		$result = $cache->get( $key );
+		if ( is_array( $result ) && $result['hash'] === $hash ) {
+			return $result['timestamp'];
+		}
+		$timestamp = wfTimestamp();
+		$cache->set( $key, array(
+			'hash' => $hash,
+			'timestamp' => $timestamp,
+		) );
+		return $timestamp;
 	}
 
 	/**

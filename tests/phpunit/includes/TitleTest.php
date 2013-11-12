@@ -1,6 +1,7 @@
 <?php
 
 /**
+ *
  * @group Database
  *        ^--- needed for language cache stuff
  */
@@ -18,10 +19,7 @@ class TitleTest extends MediaWikiTestCase {
 		) );
 	}
 
-	/**
-	 * @covers Title::legalChars
-	 */
-	public function testLegalChars() {
+	function testLegalChars() {
 		$titlechars = Title::legalChars();
 
 		foreach ( range( 1, 255 ) as $num ) {
@@ -35,160 +33,12 @@ class TitleTest extends MediaWikiTestCase {
 	}
 
 	/**
-	 * See also mediawiki.Title.test.js
-	 * @covers Title::secureAndSplit
-	 * @todo This method should be split into 2 separate tests each with a provider
-	 */
-	public function testSecureAndSplit() {
-		// Valid
-		foreach ( array(
-			'Sandbox',
-			'A "B"',
-			'A \'B\'',
-			'.com',
-			'~',
-			'"',
-			'\'',
-			'Talk:Sandbox',
-			'Talk:Foo:Sandbox',
-			'File:Example.svg',
-			'File_talk:Example.svg',
-			'Foo/.../Sandbox',
-			'Sandbox/...',
-			'A~~',
-			// Length is 256 total, but only title part matters
-			'Category:' . str_repeat( 'x', 248 ),
-			str_repeat( 'x', 252 )
-		) as $text ) {
-			$this->assertInstanceOf( 'Title', Title::newFromText( $text ), "Valid: $text" );
-		}
-
-		// Invalid
-		foreach ( array(
-			'',
-			'__  __',
-			'  __  ',
-			// Bad characters forbidden regardless of wgLegalTitleChars
-			'A [ B',
-			'A ] B',
-			'A { B',
-			'A } B',
-			'A < B',
-			'A > B',
-			'A | B',
-			// URL encoding
-			'A%20B',
-			'A%23B',
-			'A%2523B',
-			// XML/HTML character entity references
-			// Note: Commented out because they are not marked invalid by the PHP test as
-			// Title::newFromText runs Sanitizer::decodeCharReferencesAndNormalize first.
-			//'A &eacute; B',
-			//'A &#233; B',
-			//'A &#x00E9; B',
-			// Subject of NS_TALK does not roundtrip to NS_MAIN
-			'Talk:File:Example.svg',
-			// Directory navigation
-			'.',
-			'..',
-			'./Sandbox',
-			'../Sandbox',
-			'Foo/./Sandbox',
-			'Foo/../Sandbox',
-			'Sandbox/.',
-			'Sandbox/..',
-			// Tilde
-			'A ~~~ Name',
-			'A ~~~~ Signature',
-			'A ~~~~~ Timestamp',
-			str_repeat( 'x', 256 ),
-			// Namespace prefix without actual title
-			// ':', // bug 54044
-			'Talk:',
-			'Category: ',
-			'Category: #bar'
-		) as $text ) {
-			$this->assertNull( Title::newFromText( $text ), "Invalid: $text" );
-		}
-	}
-
-	public static function provideConvertByteClassToUnicodeClass() {
-		return array(
-			array(
-				' %!"$&\'()*,\\-.\\/0-9:;=?@A-Z\\\\^_`a-z~\\x80-\\xFF+',
-				' %!"$&\'()*,\\-./0-9:;=?@A-Z\\\\\\^_`a-z~+\\u0080-\\uFFFF',
-			),
-			array(
-				'QWERTYf-\\xFF+',
-				'QWERTYf-\\x7F+\\u0080-\\uFFFF',
-			),
-			array(
-				'QWERTY\\x66-\\xFD+',
-				'QWERTYf-\\x7F+\\u0080-\\uFFFF',
-			),
-			array(
-				'QWERTYf-y+',
-				'QWERTYf-y+',
-			),
-			array(
-				'QWERTYf-\\x80+',
-				'QWERTYf-\\x7F+\\u0080-\\uFFFF',
-			),
-			array(
-				'QWERTY\\x66-\\x80+\\x23',
-				'QWERTYf-\\x7F+#\\u0080-\\uFFFF',
-			),
-			array(
-				'QWERTY\\x66-\\x80+\\xD3',
-				'QWERTYf-\\x7F+\\u0080-\\uFFFF',
-			),
-			array(
-				'\\\\\\x99',
-				'\\\\\\u0080-\\uFFFF',
-			),
-			array(
-				'-\\x99',
-				'\\-\\u0080-\\uFFFF',
-			),
-			array(
-				'QWERTY\\-\\x99',
-				'QWERTY\\-\\u0080-\\uFFFF',
-			),
-			array(
-				'\\\\x99',
-				'\\\\x99',
-			),
-			array(
-				'A-\\x9F',
-				'A-\\x7F\\u0080-\\uFFFF',
-			),
-			array(
-				'\\x66-\\x77QWERTY\\x88-\\x91FXZ',
-				'f-wQWERTYFXZ\\u0080-\\uFFFF',
-			),
-			array(
-				'\\x66-\\x99QWERTY\\xAA-\\xEEFXZ',
-				'f-\\x7FQWERTYFXZ\\u0080-\\uFFFF',
-			),
-		);
-	}
-
-	/**
-	 * @dataProvider provideConvertByteClassToUnicodeClass
-	 * @covers Title::convertByteClassToUnicodeClass
-	 */
-	public function testConvertByteClassToUnicodeClass( $byteClass, $unicodeClass ) {
-		$this->assertEquals( $unicodeClass, Title::convertByteClassToUnicodeClass( $byteClass ) );
-	}
-
-	/**
 	 * @dataProvider provideBug31100
-	 * @covers Title::fixSpecialName
 	 */
-	public function testBug31100FixSpecialName( $text, $expectedParam ) {
+	function testBug31100FixSpecialName( $text, $expectedParam ) {
 		$title = Title::newFromText( $text );
 		$fixed = $title->fixSpecialName();
-		$stuff = explode( '/', $fixed->getDBkey(), 2 );
+		$stuff = explode( '/', $fixed->getDbKey(), 2 );
 		if ( count( $stuff ) == 2 ) {
 			$par = $stuff[1];
 		} else {
@@ -211,11 +61,10 @@ class TitleTest extends MediaWikiTestCase {
 	 * @group Database
 	 * @param string $source
 	 * @param string $target
-	 * @param array|string|bool $expected Required error
+	 * @param array|string|true $expected Required error
 	 * @dataProvider provideTestIsValidMoveOperation
-	 * @covers Title::isValidMoveOperation
 	 */
-	public function testIsValidMoveOperation( $source, $target, $expected ) {
+	function testIsValidMoveOperation( $source, $target, $expected ) {
 		$title = Title::newFromText( $source );
 		$nt = Title::newFromText( $target );
 		$errors = $title->isValidMoveOperation( $nt, false );
@@ -232,7 +81,7 @@ class TitleTest extends MediaWikiTestCase {
 	/**
 	 * Provides test parameter values for testIsValidMoveOperation()
 	 */
-	public function dataTestIsValidMoveOperation() {
+	function dataTestIsValidMoveOperation() {
 		return array(
 			array( 'Test', 'Test', 'selfmove' ),
 			array( 'File:Test.jpg', 'Page', 'imagenocrossnamespace' )
@@ -245,12 +94,12 @@ class TitleTest extends MediaWikiTestCase {
 	 * @param array $whitelistRegexp
 	 * @param string $source
 	 * @param string $action
-	 * @param array|string|bool $expected Required error
+	 * @param array|string|true $expected Required error
 	 *
 	 * @covers Title::checkReadPermissions
 	 * @dataProvider dataWgWhitelistReadRegexp
 	 */
-	public function testWgWhitelistReadRegexp( $whitelistRegexp, $source, $action, $expected ) {
+	function testWgWhitelistReadRegexp( $whitelistRegexp, $source, $action, $expected ) {
 		// $wgWhitelistReadRegexp must be an array. Since the provided test cases
 		// usually have only one regex, it is more concise to write the lonely regex
 		// as a string. Thus we cast to an array() to honor $wgWhitelistReadRegexp
@@ -307,7 +156,7 @@ class TitleTest extends MediaWikiTestCase {
 	/**
 	 * Provides test parameter values for testWgWhitelistReadRegexp()
 	 */
-	public function dataWgWhitelistReadRegexp() {
+	function dataWgWhitelistReadRegexp() {
 		$ALLOWED = true;
 		$DISALLOWED = false;
 
@@ -343,12 +192,11 @@ class TitleTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function flattenErrorsArray( $errors ) {
+	function flattenErrorsArray( $errors ) {
 		$result = array();
 		foreach ( $errors as $error ) {
 			$result[] = $error[0];
 		}
-
 		return $result;
 	}
 
@@ -360,10 +208,9 @@ class TitleTest extends MediaWikiTestCase {
 	}
 
 	/**
-	 * @dataProvider provideGetPageViewLanguage
-	 * @covers Title::getPageViewLanguage
+	 * @dataProvider provideCasesForGetpageviewlanguage
 	 */
-	public function testGetPageViewLanguage( $expected, $titleText, $contLang, $lang, $variant, $msg = '' ) {
+	function testGetpageviewlanguage( $expected, $titleText, $contLang, $lang, $variant, $msg = '' ) {
 		global $wgLanguageCode, $wgContLang, $wgLang, $wgDefaultLanguageVariant, $wgAllowUserJs;
 
 		// Setup environnement for this test
@@ -383,7 +230,7 @@ class TitleTest extends MediaWikiTestCase {
 		);
 	}
 
-	public static function provideGetPageViewLanguage() {
+	function provideCasesForGetpageviewlanguage() {
 		# Format:
 		# - expected
 		# - Title name
@@ -424,9 +271,8 @@ class TitleTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideBaseTitleCases
-	 * @covers Title::getBaseText
 	 */
-	public function testGetBaseText( $title, $expected, $msg = '' ) {
+	function testExtractingBaseTextFromTitle( $title, $expected, $msg = '' ) {
 		$title = Title::newFromText( $title );
 		$this->assertEquals( $expected,
 			$title->getBaseText(),
@@ -434,7 +280,7 @@ class TitleTest extends MediaWikiTestCase {
 		);
 	}
 
-	public static function provideBaseTitleCases() {
+	function provideBaseTitleCases() {
 		return array(
 			# Title, expected base, optional message
 			array( 'User:John_Doe/subOne/subTwo', 'John Doe/subOne' ),
@@ -444,9 +290,8 @@ class TitleTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideRootTitleCases
-	 * @covers Title::getRootText
 	 */
-	public function testGetRootText( $title, $expected, $msg = '' ) {
+	function testExtractingRootTextFromTitle( $title, $expected, $msg = '' ) {
 		$title = Title::newFromText( $title );
 		$this->assertEquals( $expected,
 			$title->getRootText(),
@@ -465,9 +310,8 @@ class TitleTest extends MediaWikiTestCase {
 	/**
 	 * @todo Handle $wgNamespacesWithSubpages cases
 	 * @dataProvider provideSubpageTitleCases
-	 * @covers Title::getSubpageText
 	 */
-	public function testGetSubpageText( $title, $expected, $msg = '' ) {
+	function testExtractingSubpageTextFromTitle( $title, $expected, $msg = '' ) {
 		$title = Title::newFromText( $title );
 		$this->assertEquals( $expected,
 			$title->getSubpageText(),
@@ -475,7 +319,7 @@ class TitleTest extends MediaWikiTestCase {
 		);
 	}
 
-	public static function provideSubpageTitleCases() {
+	function provideSubpageTitleCases() {
 		return array(
 			# Title, expected base, optional message
 			array( 'User:John_Doe/subOne/subTwo', 'subTwo' ),

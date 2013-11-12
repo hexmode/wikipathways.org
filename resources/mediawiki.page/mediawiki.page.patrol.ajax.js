@@ -11,7 +11,7 @@
 		// that didn't have patrolToken yet.
 		return;
 	}
-	$( function () {
+	$( document ).ready( function () {
 		var $patrolLinks = $( '.patrollink a' );
 		$patrolLinks.on( 'click', function ( e ) {
 			var $spinner, href, rcid, apiRequest;

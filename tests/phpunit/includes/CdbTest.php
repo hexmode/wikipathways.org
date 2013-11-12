@@ -66,6 +66,7 @@ class CdbTest extends MediaWikiTestCase {
 			$this->cdbAssert( "PHP error", $key, $v1, $value );
 			$this->cdbAssert( "DBA error", $key, $v2, $value );
 		}
+
 	}
 
 	private function randomString() {
@@ -74,7 +75,6 @@ class CdbTest extends MediaWikiTestCase {
 		for ( $j = 0; $j < $len; $j++ ) {
 			$s .= chr( mt_rand( 0, 255 ) );
 		}
-
 		return $s;
 	}
 

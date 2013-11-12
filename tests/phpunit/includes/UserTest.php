@@ -46,16 +46,8 @@ class UserTest extends MediaWikiTestCase {
 		$wgRevokePermissions['formertesters'] = array(
 			'runtest' => true,
 		);
-
-		# For the options test
-		$wgGroupPermissions['*'] = array(
-			'editmyoptions' => true,
-		);
 	}
 
-	/**
-	 * @covers User::getGroupPermissions
-	 */
 	public function testGroupPermissions() {
 		$rights = User::getGroupPermissions( array( 'unittesters' ) );
 		$this->assertContains( 'runtest', $rights );
@@ -70,9 +62,6 @@ class UserTest extends MediaWikiTestCase {
 		$this->assertNotContains( 'nukeworld', $rights );
 	}
 
-	/**
-	 * @covers User::getGroupPermissions
-	 */
 	public function testRevokePermissions() {
 		$rights = User::getGroupPermissions( array( 'unittesters', 'formertesters' ) );
 		$this->assertNotContains( 'runtest', $rights );
@@ -81,9 +70,6 @@ class UserTest extends MediaWikiTestCase {
 		$this->assertNotContains( 'nukeworld', $rights );
 	}
 
-	/**
-	 * @covers User::getRights
-	 */
 	public function testUserPermissions() {
 		$rights = $this->user->getRights();
 		$this->assertContains( 'runtest', $rights );
@@ -94,7 +80,6 @@ class UserTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideGetGroupsWithPermission
-	 * @covers User::getGroupsWithPermission
 	 */
 	public function testGetGroupsWithPermission( $expected, $right ) {
 		$result = User::getGroupsWithPermission( $right );
@@ -127,7 +112,6 @@ class UserTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideUserNames
-	 * @covers User::isValidUserName
 	 */
 	public function testIsValidUserName( $username, $result, $message ) {
 		$this->assertEquals( $this->user->isValidUserName( $username ), $result, $message );
@@ -182,7 +166,6 @@ class UserTest extends MediaWikiTestCase {
 	/**
 	 * Test User::editCount
 	 * @group medium
-	 * @covers User::getEditCount
 	 */
 	public function testEditCount() {
 		$user = User::newFromName( 'UnitTestUser' );
@@ -207,8 +190,6 @@ class UserTest extends MediaWikiTestCase {
 
 	/**
 	 * Test changing user options.
-	 * @covers User::setOption
-	 * @covers User::getOption
 	 */
 	public function testOptions() {
 		$user = User::newFromName( 'UnitTestUser' );
@@ -226,7 +207,6 @@ class UserTest extends MediaWikiTestCase {
 	/**
 	 * Bug 37963
 	 * Make sure defaults are loaded when setOption is called.
-	 * @covers User::loadOptions
 	 */
 	public function testAnonOptions() {
 		global $wgDefaultUserOptions;

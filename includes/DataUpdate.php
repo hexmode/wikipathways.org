@@ -78,9 +78,7 @@ abstract class DataUpdate implements DeferrableUpdate {
 	 * @throws Exception|null
 	 */
 	public static function runUpdates( $updates ) {
-		if ( empty( $updates ) ) {
-			return; # nothing to do
-		}
+		if ( empty( $updates ) ) return; # nothing to do
 
 		$open_transactions = array();
 		$exception = null;

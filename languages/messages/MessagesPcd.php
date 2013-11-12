@@ -218,7 +218,7 @@ $messages = array(
 'jumptonavigation' => 'navigachon',
 'jumptosearch' => 'tracher',
 
-# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage).
+# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => 'à pérpos éd {{SITENAME}}',
 'aboutpage' => 'Project:à pérpos',
 'copyright' => "Ch'contnu, il est disponipe dsou $1.",
@@ -228,6 +228,7 @@ $messages = array(
 'disclaimers' => 'Démintis',
 'disclaimerpage' => 'Project:Déminti général',
 'edithelp' => 'Éditer el aiyude',
+'edithelppage' => 'Help:Édichion',
 'helppage' => 'Help:Étnus',
 'mainpage' => 'Moaite Pache',
 'mainpage-description' => 'Moaite Pache',
@@ -306,6 +307,7 @@ Si s'n'est poin ch'cas-lo, pététe éq ch'est un bogue din ch'businkillache. <b
 'viewsource' => "Vir l'source",
 'viewsource-title' => "Vir l'source éd $1",
 'protectedpagetext' => "L'pache-lo ale o té garantie pou impétcher chés canjemints.",
+'sqlhidden' => "(l'édminde SQL est muchée)",
 'ns-specialprotected' => "Ches paches éspéchiales, is n'peute poin éte éditées.",
 
 # Virus scanner
@@ -316,6 +318,7 @@ Si s'n'est poin ch'cas-lo, pététe éq ch'est un bogue din ch'businkillache. <b
 'yourpassword' => "Mot d'passe:",
 'yourpasswordagain' => "Intrer à nouvieu ch'mot d'passe:",
 'remembermypassword' => "Intrer oùtonmatiquemint l'prochaine fouos (pour un maximum éd $1 {{PLURAL:$1|jour|jours}})",
+'securelogin-stick-https' => "Réster connécté in HTTPS apré l'connécsion",
 'yourdomainname' => 'Vote donmène:',
 'login' => 'Intrer',
 'nav-login-createaccount' => 'Intrer / créer vote conpte',
@@ -613,6 +616,7 @@ Ale doét mie éte pu longue éq $1 {{PLURAL:$1|caracter|caractéres}}.',
 'recentchangeslinked' => 'Darins canjemints érliés',
 'recentchangeslinked-toolbox' => 'Suivi des paches loïées',
 'recentchangeslinked-title' => 'Cangemints à pérpos éd "$1"',
+'recentchangeslinked-noresult' => "I n’y a poin d' modificacion des paches loïées pindant l'période couésie.",
 'recentchangeslinked-summary' => "Ch'est eune lisse d'chés darins canjemints su chés paches qu'ont un loïen aveuc l'pache-lo. Chés paches din vote [[Special:Watchlist|''lisse à suire'']] il sont in '''cros'''.",
 'recentchangeslinked-page' => 'Nom del pache:',
 'recentchangeslinked-to' => "Vir putot chés canjemints d'chés paches aveuc un loïen su l'pache-lo",
@@ -672,6 +676,9 @@ Vir l'pache [$2 édseur Commons].",
 # Statistics
 'statistics' => 'Éstatistikes',
 'statistics-users' => '[[Special:ListUsers|Uzeus]] inrégistrés',
+
+'disambiguations' => 'Paches aveuc des loïens vers des paches du meume nom',
+'disambiguationspage' => 'Template:Omonymie',
 
 'doubleredirects' => 'Doubes érdireccions',
 
@@ -1051,6 +1058,9 @@ Chés eutes cans is s'ront muchés pèr défeut.
 
 # Special:Version
 'version-specialpages' => 'Paches éspéchiales',
+
+# Special:FilePath
+'filepath-page' => 'Fichié :',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch' => 'Dénicher chés doublons',

@@ -35,22 +35,22 @@ class WantedCategoriesPage extends WantedQueryPage {
 	}
 
 	function getQueryInfo() {
-		return array(
-			'tables' => array( 'categorylinks', 'page' ),
-			'fields' => array( 'namespace' => NS_CATEGORY,
+		return array (
+			'tables' => array ( 'categorylinks', 'page' ),
+			'fields' => array ( 'namespace' => NS_CATEGORY,
 					'title' => 'cl_to',
 					'value' => 'COUNT(*)' ),
-			'conds' => array( 'page_title IS NULL' ),
-			'options' => array( 'GROUP BY' => 'cl_to' ),
-			'join_conds' => array( 'page' => array( 'LEFT JOIN',
-				array( 'page_title = cl_to',
+			'conds' => array ( 'page_title IS NULL' ),
+			'options' => array ( 'GROUP BY' => 'cl_to' ),
+			'join_conds' => array ( 'page' => array ( 'LEFT JOIN',
+				array ( 'page_title = cl_to',
 					'page_namespace' => NS_CATEGORY ) ) )
 		);
 	}
 
 	/**
-	 * @param Skin $skin
-	 * @param object $result Result row
+	 * @param $skin Skin
+	 * @param $result
 	 * @return string
 	 */
 	function formatResult( $skin, $result ) {

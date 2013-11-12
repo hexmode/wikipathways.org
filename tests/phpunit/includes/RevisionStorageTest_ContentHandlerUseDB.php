@@ -6,9 +6,14 @@
  * ^--- important, causes temporary tables to be used instead of the real database
  */
 class RevisionTest_ContentHandlerUseDB extends RevisionStorageTest {
+	var $saveContentHandlerNoDB = null;
 
-	protected function setUp() {
-		$this->setMwGlobals( 'wgContentHandlerUseDB', false );
+	function setUp() {
+		global $wgContentHandlerUseDB;
+
+		$this->saveContentHandlerNoDB = $wgContentHandlerUseDB;
+
+		$wgContentHandlerUseDB = false;
 
 		$dbw = wfGetDB( DB_MASTER );
 
@@ -25,6 +30,14 @@ class RevisionTest_ContentHandlerUseDB extends RevisionStorageTest {
 		}
 
 		parent::setUp();
+	}
+
+	function tearDown() {
+		global $wgContentHandlerUseDB;
+
+		parent::tearDown();
+
+		$wgContentHandlerUseDB = $this->saveContentHandlerNoDB;
 	}
 
 	/**
@@ -63,7 +76,7 @@ class RevisionTest_ContentHandlerUseDB extends RevisionStorageTest {
 	 */
 	public function testGetContentFormat() {
 		try {
-			// @todo change this to test failure on using a non-standard (but supported) format
+			//@todo: change this to test failure on using a non-standard (but supported) format
 			//       for a content model supported in the given location. As of 1.21, there are
 			//       no alternative formats for any of the standard content models that could be
 			//       used for this though.
@@ -78,4 +91,5 @@ class RevisionTest_ContentHandlerUseDB extends RevisionStorageTest {
 			$this->assertTrue( true ); // ok
 		}
 	}
+
 }

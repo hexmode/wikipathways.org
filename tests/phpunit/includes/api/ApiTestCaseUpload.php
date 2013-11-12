@@ -47,7 +47,6 @@ abstract class ApiTestCaseUpload extends ApiTestCase {
 			// see if it now doesn't exist; reload
 			$title = Title::newFromText( $title->getText(), NS_FILE );
 		}
-
 		return !( $title && $title instanceof Title && $title->exists() );
 	}
 
@@ -70,7 +69,6 @@ abstract class ApiTestCaseUpload extends ApiTestCase {
 		foreach ( $dupes as $dupe ) {
 			$success &= $this->deleteFileByTitle( $dupe->getTitle() );
 		}
-
 		return $success;
 	}
 
@@ -107,6 +105,7 @@ abstract class ApiTestCaseUpload extends ApiTestCase {
 		);
 
 		return true;
+
 	}
 
 	function fakeUploadChunk( $fieldName, $fileName, $type, & $chunkData ) {
@@ -146,4 +145,5 @@ abstract class ApiTestCaseUpload extends ApiTestCase {
 	function clearFakeUploads() {
 		$_FILES = array();
 	}
+
 }

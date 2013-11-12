@@ -59,7 +59,7 @@ abstract class Action {
 	 * the action is disabled, or null if it's not recognised
 	 * @param $action String
 	 * @param $overrides Array
-	 * @return bool|null|string|callable
+	 * @return bool|null|string
 	 */
 	final private static function getClass( $action, array $overrides ) {
 		global $wgActions;
@@ -89,18 +89,12 @@ abstract class Action {
 	 *     if it is not recognised
 	 */
 	final public static function factory( $action, Page $page, IContextSource $context = null ) {
-		$classOrCallable = self::getClass( $action, $page->getActionOverrides() );
-
-		if ( is_string( $classOrCallable ) ) {
-			$obj = new $classOrCallable( $page, $context );
+		$class = self::getClass( $action, $page->getActionOverrides() );
+		if ( $class ) {
+			$obj = new $class( $page, $context );
 			return $obj;
 		}
-
-		if ( is_callable( $classOrCallable ) ) {
-			return call_user_func_array( $classOrCallable, array( $page, $context ) );
-		}
-
-		return $classOrCallable;
+		return $class;
 	}
 
 	/**
@@ -142,7 +136,7 @@ abstract class Action {
 			return 'view';
 		}
 
-		$action = Action::factory( $actionName, $context->getWikiPage(), $context );
+		$action = Action::factory( $actionName, $context->getWikiPage() );
 		if ( $action instanceof Action ) {
 			return $action->getName();
 		}
@@ -167,14 +161,8 @@ abstract class Action {
 	final public function getContext() {
 		if ( $this->context instanceof IContextSource ) {
 			return $this->context;
-		} else if ( $this->page instanceof Article ) {
-			// NOTE: $this->page can be a WikiPage, which does not have a context.
-			wfDebug( __METHOD__ . ': no context known, falling back to Article\'s context.' );
-			return $this->page->getContext();
 		}
-
-		wfWarn( __METHOD__ . ': no context known, falling back to RequestContext::getMain().' );
-		return RequestContext::getMain();
+		return $this->page->getContext();
 	}
 
 	/**
@@ -225,7 +213,7 @@ abstract class Action {
 	/**
 	 * Shortcut to get the user Language being used for this instance
 	 *
-	 * @deprecated since 1.19 Use getLanguage instead
+	 * @deprecated 1.19 Use getLanguage instead
 	 * @return Language
 	 */
 	final public function getLang() {
@@ -253,20 +241,12 @@ abstract class Action {
 	}
 
 	/**
-	 * Constructor.
-	 *
-	 * Only public since 1.21
-	 *
+	 * Protected constructor: use Action::factory( $action, $page ) to actually build
+	 * these things in the real world
 	 * @param $page Page
 	 * @param $context IContextSource
 	 */
-	public function __construct( Page $page, IContextSource $context = null ) {
-		if ( $context === null ) {
-			wfWarn( __METHOD__ . ' called without providing a Context object.' );
-			// NOTE: We could try to initialize $context using $page->getContext(),
-			//      if $page is an Article. That however seems to not work seamlessly.
-		}
-
+	protected function __construct( Page $page, IContextSource $context = null ) {
 		$this->page = $page;
 		$this->context = $context;
 	}
@@ -394,23 +374,18 @@ abstract class FormAction extends Action {
 	 * Add pre- or post-text to the form
 	 * @return String HTML which will be sent to $form->addPreText()
 	 */
-	protected function preText() {
-		return '';
-	}
+	protected function preText() { return ''; }
 
 	/**
 	 * @return string
 	 */
-	protected function postText() {
-		return '';
-	}
+	protected function postText() { return ''; }
 
 	/**
 	 * Play with the HTMLForm if you need to more substantially
 	 * @param $form HTMLForm
 	 */
-	protected function alterForm( HTMLForm $form ) {
-	}
+	protected function alterForm( HTMLForm $form ) {}
 
 	/**
 	 * Get the HTMLForm to control behavior
@@ -489,7 +464,7 @@ abstract class FormAction extends Action {
 	public function execute( array $data = null, $captureErrors = true ) {
 		try {
 			// Set a new context so output doesn't leak.
-			$this->context = clone $this->getContext();
+			$this->context = clone $this->page->getContext();
 
 			// This will throw exceptions if there's a problem
 			$this->checkCanExecute( $this->getUser() );
@@ -578,7 +553,7 @@ abstract class FormlessAction extends Action {
 	public function execute( array $data = null, $captureErrors = true ) {
 		try {
 			// Set a new context so output doesn't leak.
-			$this->context = clone $this->getContext();
+			$this->context = clone $this->page->getContext();
 			if ( is_array( $data ) ) {
 				$this->context->setRequest( new FauxRequest( $data, false ) );
 			}

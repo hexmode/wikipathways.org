@@ -37,11 +37,14 @@ class HtmlTest extends MediaWikiTestCase {
 			'wgLanguageCode' => $langCode,
 			'wgContLang' => $langObj,
 			'wgLang' => $langObj,
+			'wgHtml5' => true,
 			'wgWellFormedXml' => false,
 		) );
 	}
 
 	public function testElementBasics() {
+		global $wgWellFormedXml;
+
 		$this->assertEquals(
 			'<img>',
 			Html::element( 'img', null, '' ),
@@ -60,38 +63,13 @@ class HtmlTest extends MediaWikiTestCase {
 			'Close tag for empty element (array, string)'
 		);
 
-		$this->setMwGlobals( 'wgWellFormedXml', true );
+		$wgWellFormedXml = true;
 
 		$this->assertEquals(
 			'<img />',
 			Html::element( 'img', null, '' ),
 			'Self-closing tag for short-tag elements (wgWellFormedXml = true)'
 		);
-	}
-
-	public function dataXmlMimeType() {
-		return array(
-			// ( $mimetype, $isXmlMimeType )
-			# HTML is not an XML MimeType
-			array( 'text/html', false ),
-			# XML is an XML MimeType
-			array( 'text/xml', true ),
-			array( 'application/xml', true ),
-			# XHTML is an XML MimeType
-			array( 'application/xhtml+xml', true ),
-			# Make sure other +xml MimeTypes are supported
-			# SVG is another random MimeType even though we don't use it
-			array( 'image/svg+xml', true ),
-			# Complete random other MimeTypes are not XML
-			array( 'text/plain', false ),
-		);
-	}
-
-	/**
-	 * @dataProvider dataXmlMimeType
-	 */
-	public function testXmlMimeType( $mimetype, $isXmlMimeType ) {
-		$this->assertEquals( $isXmlMimeType, Html::isXmlMimeType( $mimetype ) );
 	}
 
 	public function testExpandAttributesSkipsNullAndFalse() {
@@ -112,6 +90,8 @@ class HtmlTest extends MediaWikiTestCase {
 	}
 
 	public function testExpandAttributesForBooleans() {
+		global $wgHtml5, $wgWellFormedXml;
+
 		$this->assertEquals(
 			'',
 			Html::expandAttributes( array( 'selected' => false ) ),
@@ -134,12 +114,20 @@ class HtmlTest extends MediaWikiTestCase {
 			'Boolean attributes have no value when value is true (passed as numerical array)'
 		);
 
-		$this->setMwGlobals( 'wgWellFormedXml', true );
+		$wgWellFormedXml = true;
 
 		$this->assertEquals(
 			' selected=""',
 			Html::expandAttributes( array( 'selected' => true ) ),
 			'Boolean attributes have empty string value when value is true (wgWellFormedXml)'
+		);
+
+		$wgHtml5 = false;
+
+		$this->assertEquals(
+			' selected="selected"',
+			Html::expandAttributes( array( 'selected' => true ) ),
+			'Boolean attributes have their key as value when value is true (wgWellFormedXml, wgHTML5 = false)'
 		);
 	}
 
@@ -148,6 +136,8 @@ class HtmlTest extends MediaWikiTestCase {
 	 * Please note it output a string prefixed with a space!
 	 */
 	public function testExpandAttributesVariousExpansions() {
+		global $wgWellFormedXml;
+
 		### NOT EMPTY ####
 		$this->assertEquals(
 			' empty_string=""',
@@ -170,7 +160,7 @@ class HtmlTest extends MediaWikiTestCase {
 			'Number 0 value needs no quotes'
 		);
 
-		$this->setMwGlobals( 'wgWellFormedXml', true );
+		$wgWellFormedXml = true;
 
 		$this->assertEquals(
 			' empty_string=""',
@@ -250,7 +240,7 @@ class HtmlTest extends MediaWikiTestCase {
 	 * Test feature added by r96188, let pass attributes values as
 	 * a PHP array. Restricted to class,rel, accesskey.
 	 */
-	public function testExpandAttributesSpaceSeparatedAttributesWithBoolean() {
+	function testExpandAttributesSpaceSeparatedAttributesWithBoolean() {
 		$this->assertEquals(
 			' class="booltrue one"',
 			Html::expandAttributes( array( 'class' => array(
@@ -274,7 +264,7 @@ class HtmlTest extends MediaWikiTestCase {
 	 *
 	 * Feature added by r96188
 	 */
-	public function testValueIsAuthoritativeInSpaceSeparatedAttributesArrays() {
+	function testValueIsAuthoritativeInSpaceSeparatedAttributesArrays() {
 		$this->assertEquals(
 			' class=""',
 			Html::expandAttributes( array( 'class' => array(
@@ -285,7 +275,7 @@ class HtmlTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testNamespaceSelector() {
+	function testNamespaceSelector() {
 		$this->assertEquals(
 			'<select id=namespace name=namespace>' . "\n" .
 				'<option value=0>(Main)</option>' . "\n" .
@@ -364,7 +354,7 @@ class HtmlTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testCanFilterOutNamespaces() {
+	function testCanFilterOutNamespaces() {
 		$this->assertEquals(
 			'<select id=namespace name=namespace>' . "\n" .
 				'<option value=2>User</option>' . "\n" .
@@ -386,7 +376,7 @@ class HtmlTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testCanDisableANamespaces() {
+	function testCanDisableANamespaces() {
 		$this->assertEquals(
 			'<select id=namespace name=namespace>' . "\n" .
 				'<option disabled value=0>(Main)</option>' . "\n" .
@@ -416,7 +406,7 @@ class HtmlTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider provideHtml5InputTypes
 	 */
-	public function testHtmlElementAcceptsNewHtml5TypesInHtml5Mode( $HTML5InputType ) {
+	function testHtmlElementAcceptsNewHtml5TypesInHtml5Mode( $HTML5InputType ) {
 		$this->assertEquals(
 			'<input type=' . $HTML5InputType . '>',
 			Html::element( 'input', array( 'type' => $HTML5InputType ) ),
@@ -428,7 +418,7 @@ class HtmlTest extends MediaWikiTestCase {
 	 * List of input element types values introduced by HTML5
 	 * Full list at http://www.w3.org/TR/html-markup/input.html
 	 */
-	public static function provideHtml5InputTypes() {
+	function provideHtml5InputTypes() {
 		$types = array(
 			'datetime',
 			'datetime-local',
@@ -448,7 +438,6 @@ class HtmlTest extends MediaWikiTestCase {
 		foreach ( $types as $type ) {
 			$cases[] = array( $type );
 		}
-
 		return $cases;
 	}
 
@@ -457,7 +446,7 @@ class HtmlTest extends MediaWikiTestCase {
 	 * @covers Html::dropDefaults
 	 * @dataProvider provideElementsWithAttributesHavingDefaultValues
 	 */
-	public function testDropDefaults( $expected, $element, $attribs, $message = '' ) {
+	function testDropDefaults( $expected, $element, $attribs, $message = '' ) {
 		$this->assertEquals( $expected, Html::element( $element, $attribs ), $message );
 	}
 
@@ -613,7 +602,6 @@ class HtmlTest extends MediaWikiTestCase {
 				isset( $case[3] ) ? $case[3] : ''
 			);
 		}
-
 		return $ret;
 	}
 
@@ -628,4 +616,5 @@ class HtmlTest extends MediaWikiTestCase {
 			'Allow special case "step=any".'
 		);
 	}
+
 }

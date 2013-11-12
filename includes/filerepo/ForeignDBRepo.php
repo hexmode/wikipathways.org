@@ -59,12 +59,11 @@ class ForeignDBRepo extends LocalRepo {
 			$this->dbConn = DatabaseBase::factory( $this->dbType,
 				array(
 					'host' => $this->dbServer,
-					'user' => $this->dbUser,
+					'user'   => $this->dbUser,
 					'password' => $this->dbPassword,
 					'dbname' => $this->dbName,
 					'flags' => $this->dbFlags,
-					'tablePrefix' => $this->tablePrefix,
-					'foreign' => true,
+					'tablePrefix' => $this->tablePrefix
 				)
 			);
 		}

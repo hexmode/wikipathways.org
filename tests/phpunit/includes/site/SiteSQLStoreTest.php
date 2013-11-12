@@ -32,9 +32,6 @@
  */
 class SiteSQLStoreTest extends MediaWikiTestCase {
 
-	/**
-	 * @covers SiteSQLStore::getSites
-	 */
 	public function testGetSites() {
 		$expectedSites = TestSites::getSites();
 		TestSites::insertIntoDb();
@@ -59,9 +56,6 @@ class SiteSQLStoreTest extends MediaWikiTestCase {
 		}
 	}
 
-	/**
-	 * @covers SiteSQLStore::saveSites
-	 */
 	public function testSaveSites() {
 		$store = SiteSQLStore::newInstance();
 
@@ -92,9 +86,6 @@ class SiteSQLStoreTest extends MediaWikiTestCase {
 		$this->assertTrue( $site->getInternalId() >= 0 );
 	}
 
-	/**
-	 * @covers SiteSQLStore::reset
-	 */
 	public function testReset() {
 		$store1 = SiteSQLStore::newInstance();
 		$store2 = SiteSQLStore::newInstance();
@@ -118,9 +109,6 @@ class SiteSQLStoreTest extends MediaWikiTestCase {
 		$this->assertNull( $site );
 	}
 
-	/**
-	 * @covers SiteSQLStore::clear
-	 */
 	public function testClear() {
 		$store = SiteSQLStore::newInstance();
 		$this->assertTrue( $store->clear() );
@@ -131,4 +119,5 @@ class SiteSQLStoreTest extends MediaWikiTestCase {
 		$sites = $store->getSites();
 		$this->assertEquals( 0, $sites->count() );
 	}
+
 }

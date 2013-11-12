@@ -89,9 +89,6 @@ class JavaScriptContentTest extends TextContentTest {
 		);
 	}
 
-	/**
-	 * @covers JavaScriptContent::addSectionHeader
-	 */
 	public function testAddSectionHeader() {
 		$content = $this->newContent( 'hello world' );
 		$c = $content->addSectionHeader( 'test' );
@@ -140,7 +137,7 @@ class JavaScriptContentTest extends TextContentTest {
 	}
 
 	/**
-	 * @todo Test needs database!
+	 * @todo: test needs database!
 	 */
 	/*
 	public function getRedirectChain() {
@@ -150,7 +147,7 @@ class JavaScriptContentTest extends TextContentTest {
 	*/
 
 	/**
-	 * @todo Test needs database!
+	 * @todo: test needs database!
 	 */
 	/*
 	public function getUltimateRedirectTarget() {
@@ -236,9 +233,6 @@ class JavaScriptContentTest extends TextContentTest {
 		);
 	}
 
-	/**
-	 * @covers JavaScriptContent::matchMagicWord
-	 */
 	public function testMatchMagicWord() {
 		$mw = MagicWord::get( "staticredirect" );
 
@@ -246,9 +240,6 @@ class JavaScriptContentTest extends TextContentTest {
 		$this->assertFalse( $content->matchMagicWord( $mw ), "should not have matched magic word, since it's not wikitext" );
 	}
 
-	/**
-	 * @covers JavaScriptContent::updateRedirect
-	 */
 	public function testUpdateRedirect() {
 		$target = Title::newFromText( "testUpdateRedirect_target" );
 
@@ -258,18 +249,12 @@ class JavaScriptContentTest extends TextContentTest {
 		$this->assertTrue( $content->equals( $newContent ), "content should be unchanged since it's not wikitext" );
 	}
 
-	/**
-	 * @covers JavaScriptContent::getModel
-	 */
 	public function testGetModel() {
 		$content = $this->newContent( "hello world." );
 
 		$this->assertEquals( CONTENT_MODEL_JAVASCRIPT, $content->getModel() );
 	}
 
-	/**
-	 * @covers JavaScriptContent::getContentHandler
-	 */
 	public function testGetContentHandler() {
 		$content = $this->newContent( "hello world." );
 
@@ -284,4 +269,5 @@ class JavaScriptContentTest extends TextContentTest {
 			array( new JavaScriptContent( "hallo" ), new JavaScriptContent( "HALLO" ), false ),
 		);
 	}
+
 }

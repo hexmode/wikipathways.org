@@ -31,34 +31,55 @@
 	/**
 	 * Test factory for $.fn.byteLimit
 	 *
-	 * @param {Object} options
-	 * @param {string} options.description Test name
-	 * @param {jQuery} options.$input jQuery object in an input element
-	 * @param {string} options.sample Sequence of characters to simulate being
-	 *  added one by one
-	 * @param {string} options.expected Expected final value of `$input`
+	 * @param $input {jQuery} jQuery object in an input element
+	 * @param hasLimit {Boolean} Wether a limit should apply at all
+	 * @param limit {Number} Limit (if used) otherwise undefined
+	 * The limit should be less than 20 (the sample data's length)
 	 */
 	function byteLimitTest( options ) {
 		var opt = $.extend( {
 			description: '',
 			$input: null,
 			sample: '',
-			expected: ''
+			hasLimit: false,
+			expected: '',
+			limit: null
 		}, options );
 
-		QUnit.asyncTest( opt.description, 1, function ( assert ) {
+		QUnit.asyncTest( opt.description, opt.hasLimit ? 3 : 2, function ( assert ) {
 			setTimeout( function () {
+				var rawVal, fn, effectiveVal;
+
 				opt.$input.appendTo( '#qunit-fixture' );
 
 				// Simulate pressing keys for each of the sample characters
 				addChars( opt.$input, opt.sample );
 
-				assert.equal(
-					opt.$input.val(),
-					opt.expected,
-					'New value matches the expected string'
-				);
+				rawVal = opt.$input.val();
+				fn = opt.$input.data( 'byteLimit.callback' );
+				effectiveVal = fn ? fn( rawVal ) : rawVal;
 
+				if ( opt.hasLimit ) {
+					assert.ltOrEq(
+						$.byteLength( effectiveVal ),
+						opt.limit,
+						'Prevent keypresses after byteLimit was reached, length never exceeded the limit'
+					);
+					assert.equal(
+						$.byteLength( rawVal ),
+						$.byteLength( opt.expected ),
+						'Not preventing keypresses too early, length has reached the expected length'
+					);
+					assert.equal( rawVal, opt.expected, 'New value matches the expected string' );
+
+				} else {
+					assert.equal(
+						$.byteLength( effectiveVal ),
+						$.byteLength( opt.expected ),
+						'Unlimited scenarios are not affected, expected length reached'
+					);
+					assert.equal( rawVal, opt.expected, 'New value matches the expected string' );
+				}
 				QUnit.start();
 			}, 10 );
 		} );
@@ -68,6 +89,7 @@
 		description: 'Plain text input',
 		$input: $( '<input type="text"/>' ),
 		sample: simpleSample,
+		hasLimit: false,
 		expected: simpleSample
 	} );
 
@@ -76,6 +98,7 @@
 		$input: $( '<input type="text"/>' )
 			.byteLimit(),
 		sample: simpleSample,
+		hasLimit: false,
 		expected: simpleSample
 	} );
 
@@ -85,6 +108,8 @@
 			.attr( 'maxlength', '10' )
 			.byteLimit(),
 		sample: simpleSample,
+		hasLimit: true,
+		limit: 10,
 		expected: '1234567890'
 	} );
 
@@ -93,6 +118,8 @@
 		$input: $( '<input type="text"/>' )
 			.byteLimit( 10 ),
 		sample: simpleSample,
+		hasLimit: true,
+		limit: 10,
 		expected: '1234567890'
 	} );
 
@@ -102,6 +129,8 @@
 			.attr( 'maxlength', '10' )
 			.byteLimit( 15 ),
 		sample: simpleSample,
+		hasLimit: true,
+		limit: 15,
 		expected: '123456789012345'
 	} );
 
@@ -110,6 +139,8 @@
 		$input: $( '<input type="text"/>' )
 			.byteLimit( 14 ),
 		sample: mbSample,
+		hasLimit: true,
+		limit: 14,
 		expected: '1234567890' + U_20AC + '1'
 	} );
 
@@ -118,6 +149,8 @@
 		$input: $( '<input type="text"/>' )
 			.byteLimit( 12 ),
 		sample: mbSample,
+		hasLimit: true,
+		limit: 12,
 		expected: '1234567890' + '12'
 	} );
 
@@ -125,11 +158,17 @@
 		description: 'Pass the limit and a callback as input filter',
 		$input: $( '<input type="text"/>' )
 			.byteLimit( 6, function ( val ) {
-				var title = mw.Title.newFromText( String( val ) );
+				// Invalid title
+				if ( val === '' ) {
+					return '';
+				}
+
 				// Return without namespace prefix
-				return title ? title.getMain() : '';
+				return new mw.Title( String( val ) ).getMain();
 			} ),
 		sample: 'User:Sample',
+		hasLimit: true,
+		limit: 6, // 'Sample' length
 		expected: 'User:Sample'
 	} );
 
@@ -138,51 +177,18 @@
 		$input: $( '<input type="text"/>' )
 			.attr( 'maxlength', '6' )
 			.byteLimit( function ( val ) {
-				var title = mw.Title.newFromText( String( val ) );
+				// Invalid title
+				if ( val === '' ) {
+					return '';
+				}
+
 				// Return without namespace prefix
-				return title ? title.getMain() : '';
+				return new mw.Title( String( val ) ).getMain();
 			} ),
 		sample: 'User:Sample',
-		expected: 'User:Sample'
-	} );
-
-	byteLimitTest( {
-		description: 'Pass the limit and a callback as input filter',
-		$input: $( '<input type="text"/>' )
-			.byteLimit( 6, function ( val ) {
-				var title = mw.Title.newFromText( String( val ) );
-				// Return without namespace prefix
-				return title ? title.getMain() : '';
-			} ),
-		sample: 'User:Example',
-		// The callback alters the value to be used to calculeate
-		// the length. The altered value is "Exampl" which has
-		// a length of 6, the "e" would exceed the limit.
-		expected: 'User:Exampl'
-	} );
-
-	byteLimitTest( {
-		description: 'Input filter that increases the length',
-		$input: $( '<input type="text"/>' )
-		.byteLimit( 10, function ( text ) {
-			return 'prefix' + text;
-		} ),
-		sample: simpleSample,
-		// Prefix adds 6 characters, limit is reached after 4
-		expected: '1234'
-	} );
-
-	// Regression tests for bug 41450
-	byteLimitTest( {
-		description: 'Input filter of which the base exceeds the limit',
-		$input: $( '<input type="text"/>' )
-		.byteLimit( 3, function ( text ) {
-			return 'prefix' + text;
-		} ),
-		sample: simpleSample,
 		hasLimit: true,
-		limit: 6, // 'prefix' length
-		expected: ''
+		limit: 6, // 'Sample' length
+		expected: 'User:Sample'
 	} );
 
 	QUnit.test( 'Confirm properties and attributes set', 4, function ( assert ) {

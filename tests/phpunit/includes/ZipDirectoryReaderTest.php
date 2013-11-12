@@ -1,12 +1,7 @@
 <?php
 
-/**
- * @covers ZipDirectoryReader
- * NOTE: this test is more like an integration test than a unit test
- */
 class ZipDirectoryReaderTest extends MediaWikiTestCase {
-	protected $zipDir;
-	protected $entries;
+	var $zipDir, $entries;
 
 	protected function setUp() {
 		parent::setUp();
@@ -29,21 +24,21 @@ class ZipDirectoryReaderTest extends MediaWikiTestCase {
 		$this->assertTrue( $status->isOK(), $assertMessage );
 	}
 
-	public function testEmpty() {
+	function testEmpty() {
 		$this->readZipAssertSuccess( 'empty.zip', 'Empty zip' );
 	}
 
-	public function testMultiDisk0() {
+	function testMultiDisk0() {
 		$this->readZipAssertError( 'split.zip', 'zip-unsupported',
 			'Split zip error' );
 	}
 
-	public function testNoSignature() {
+	function testNoSignature() {
 		$this->readZipAssertError( 'nosig.zip', 'zip-wrong-format',
 			'No signature should give "wrong format" error' );
 	}
 
-	public function testSimple() {
+	function testSimple() {
 		$this->readZipAssertSuccess( 'class.zip', 'Simple ZIP' );
 		$this->assertEquals( $this->entries, array( array(
 			'name' => 'Class.class',
@@ -52,33 +47,33 @@ class ZipDirectoryReaderTest extends MediaWikiTestCase {
 		) ) );
 	}
 
-	public function testBadCentralEntrySignature() {
+	function testBadCentralEntrySignature() {
 		$this->readZipAssertError( 'wrong-central-entry-sig.zip', 'zip-bad',
 			'Bad central entry error' );
 	}
 
-	public function testTrailingBytes() {
+	function testTrailingBytes() {
 		$this->readZipAssertError( 'trail.zip', 'zip-bad',
 			'Trailing bytes error' );
 	}
 
-	public function testWrongCDStart() {
+	function testWrongCDStart() {
 		$this->readZipAssertError( 'wrong-cd-start-disk.zip', 'zip-unsupported',
 			'Wrong CD start disk error' );
 	}
 
 
-	public function testCentralDirectoryGap() {
+	function testCentralDirectoryGap() {
 		$this->readZipAssertError( 'cd-gap.zip', 'zip-bad',
 			'CD gap error' );
 	}
 
-	public function testCentralDirectoryTruncated() {
+	function testCentralDirectoryTruncated() {
 		$this->readZipAssertError( 'cd-truncated.zip', 'zip-bad',
 			'CD truncated error (should hit unpack() overrun)' );
 	}
 
-	public function testLooksLikeZip64() {
+	function testLooksLikeZip64() {
 		$this->readZipAssertError( 'looks-like-zip64.zip', 'zip-unsupported',
 			'A file which looks like ZIP64 but isn\'t, should give error' );
 	}

@@ -322,6 +322,14 @@ Cancellä',
 'powersearch-toggleall' => 'Tütt',
 'powersearch-togglenone' => 'Ansöin',
 
+# Quickbar
+'qbsettings' => 'Quickbar',
+'qbsettings-none' => 'Ansöin',
+'qbsettings-fixedleft' => 'Fiss a sinistar',
+'qbsettings-fixedright' => 'Fiss a destar',
+'qbsettings-floatingleft' => 'Fluttuant a sinistar',
+'qbsettings-floatingright' => 'Fluttuant a destar',
+
 # Preferences page
 'preferences' => 'Prefereinz',
 'mypreferences' => 'Al me prefereinz',
@@ -602,7 +610,7 @@ Vadä la pàgina dal file',
 # Metadata
 'metadata' => 'Metadat',
 
-# Exif tags
+# EXIF tags
 'exif-exposuretime-format' => '$1 s ($2)',
 'exif-gpsareainformation' => "Nom d'la zona GPS",
 'exif-gpsdatestamp' => 'Data GPS',
@@ -648,6 +656,10 @@ Vadä la pàgina dal file',
 'version-version' => '(Version $1)',
 'version-license' => 'Licinza',
 'version-poweredby-others' => 'ätar',
+
+# Special:FilePath
+'filepath-page' => 'Immàgin:',
+'filepath-submit' => 'Vé',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch-filename' => 'Nom dal file:',

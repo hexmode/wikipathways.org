@@ -4,7 +4,7 @@
  * Tests for IEUrlExtension::findIE6Extension
  */
 class IEUrlExtensionTest extends MediaWikiTestCase {
-	public function testSimple() {
+	function testSimple() {
 		$this->assertEquals(
 			'y',
 			IEUrlExtension::findIE6Extension( 'x.y' ),
@@ -12,7 +12,7 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testSimpleNoExt() {
+	function testSimpleNoExt() {
 		$this->assertEquals(
 			'',
 			IEUrlExtension::findIE6Extension( 'x' ),
@@ -20,7 +20,7 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testEmpty() {
+	function testEmpty() {
 		$this->assertEquals(
 			'',
 			IEUrlExtension::findIE6Extension( '' ),
@@ -28,7 +28,7 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testQuestionMark() {
+	function testQuestionMark() {
 		$this->assertEquals(
 			'',
 			IEUrlExtension::findIE6Extension( '?' ),
@@ -36,7 +36,7 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testExtQuestionMark() {
+	function testExtQuestionMark() {
 		$this->assertEquals(
 			'x',
 			IEUrlExtension::findIE6Extension( '.x?' ),
@@ -44,7 +44,7 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testQuestionMarkExt() {
+	function testQuestionMarkExt() {
 		$this->assertEquals(
 			'x',
 			IEUrlExtension::findIE6Extension( '?.x' ),
@@ -52,7 +52,7 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testInvalidChar() {
+	function testInvalidChar() {
 		$this->assertEquals(
 			'',
 			IEUrlExtension::findIE6Extension( '.x*' ),
@@ -60,7 +60,7 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testInvalidCharThenExtension() {
+	function testInvalidCharThenExtension() {
 		$this->assertEquals(
 			'x',
 			IEUrlExtension::findIE6Extension( '*.x' ),
@@ -68,7 +68,7 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testMultipleQuestionMarks() {
+	function testMultipleQuestionMarks() {
 		$this->assertEquals(
 			'c',
 			IEUrlExtension::findIE6Extension( 'a?b?.c?.d?e?f' ),
@@ -76,7 +76,7 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testExeException() {
+	function testExeException() {
 		$this->assertEquals(
 			'd',
 			IEUrlExtension::findIE6Extension( 'a?b?.exe?.d?.e' ),
@@ -84,7 +84,7 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testExeException2() {
+	function testExeException2() {
 		$this->assertEquals(
 			'exe',
 			IEUrlExtension::findIE6Extension( 'a?b?.exe' ),
@@ -92,7 +92,7 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testHash() {
+	function testHash() {
 		$this->assertEquals(
 			'',
 			IEUrlExtension::findIE6Extension( 'a#b.c' ),
@@ -100,7 +100,7 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testHash2() {
+	function testHash2() {
 		$this->assertEquals(
 			'',
 			IEUrlExtension::findIE6Extension( 'a?#b.c' ),
@@ -108,19 +108,11 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 		);
 	}
 
-	public function testDotAtEnd() {
+	function testDotAtEnd() {
 		$this->assertEquals(
 			'',
 			IEUrlExtension::findIE6Extension( '.' ),
 			'Dot at end of string'
-		);
-	}
-
-	public function testTwoDots() {
-		$this->assertEquals(
-			'z',
-			IEUrlExtension::findIE6Extension( 'x.y.z' ),
-			'Two dots'
 		);
 	}
 }

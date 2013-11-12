@@ -1,13 +1,5 @@
 ( function ( mw, $ ) {
-	QUnit.module( 'mediawiki.util', QUnit.newMwEnvironment( {
-		setup: function () {
-			this.taPrefix = mw.util.tooltipAccessKeyPrefix;
-			mw.util.tooltipAccessKeyPrefix = 'ctrl-alt-';
-		},
-		teardown: function () {
-			mw.util.tooltipAccessKeyPrefix = this.taPrefix;
-		}
-	} ) );
+	QUnit.module( 'mediawiki.util', QUnit.newMwEnvironment() );
 
 	QUnit.test( 'rawurlencode', 1, function ( assert ) {
 		assert.equal( mw.util.rawurlencode( 'Test:A & B/Here' ), 'Test%3AA%20%26%20B%2FHere' );
@@ -17,7 +9,7 @@
 		assert.equal( mw.util.wikiUrlencode( 'Test:A & B/Here' ), 'Test:A_%26_B/Here' );
 	} );
 
-	QUnit.test( 'wikiGetlink', 4, function ( assert ) {
+	QUnit.test( 'wikiGetlink', 3, function ( assert ) {
 		// Not part of startUp module
 		mw.config.set( 'wgArticlePath', '/wiki/$1' );
 		mw.config.set( 'wgPageName', 'Foobar' );
@@ -31,10 +23,6 @@
 
 		href = mw.util.wikiGetlink();
 		assert.equal( href, '/wiki/Foobar', 'Default title; Get link for current page ("Foobar")' );
-
-		href = mw.util.wikiGetlink( 'Sandbox', { action: 'edit' } );
-		assert.equal( href, '/wiki/Sandbox?action=edit',
-			'Simple title with query string; Get link for "Sandbox" with action=edit' );
 	} );
 
 	QUnit.test( 'wikiScript', 4, function ( assert ) {
@@ -88,15 +76,15 @@
 
 		assert.strictEqual( mw.util.toggleToc(), null, 'Return null if there is no table of contents on the page.' );
 
-		tocHtml = '<div id="toc" class="toc">' +
+		tocHtml = '<table id="toc" class="toc"><tr><td>' +
 			'<div id="toctitle">' +
 			'<h2>Contents</h2>' +
 			'<span class="toctoggle">&nbsp;[<a href="#" class="internal" id="togglelink">Hide</a>&nbsp;]</span>' +
 			'</div>' +
 			'<ul><li></li></ul>' +
-			'</div>';
-		$( tocHtml ).appendTo( '#qunit-fixture' );
-		$toggleLink = $( '#togglelink' );
+			'</td></tr></table>';
+		$( tocHtml ).appendTo( '#qunit-fixture' ),
+			$toggleLink = $( '#togglelink' );
 
 		assert.strictEqual( $toggleLink.length, 1, 'Toggle link is appended to the page.' );
 
@@ -120,14 +108,10 @@
 		assert.strictEqual( mw.util.getParamValue( 'TEST', url ), 'a b+c d', 'Bug 30441: getParamValue must understand "+" encoding of space (multiple spaces)' );
 	} );
 
-	QUnit.test( 'tooltipAccessKey', 4, function ( assert ) {
-		assert.equal( typeof mw.util.tooltipAccessKeyPrefix, 'string', 'tooltipAccessKeyPrefix must be a string' );
-		assert.equal( $.type( mw.util.tooltipAccessKeyRegexp ), 'regexp', 'tooltipAccessKeyRegexp is a regexp' );
-		assert.ok( mw.util.updateTooltipAccessKeys, 'updateTooltipAccessKeys is non-empty' );
-
-		'Example [a]'.replace( mw.util.tooltipAccessKeyRegexp, function ( sub, m1, m2, m3, m4, m5, m6 ) {
-			assert.equal( m6, 'a', 'tooltipAccessKeyRegexp finds the accesskey hint' );
-		} );
+	QUnit.test( 'tooltipAccessKey', 3, function ( assert ) {
+		assert.equal( typeof mw.util.tooltipAccessKeyPrefix, 'string', 'mw.util.tooltipAccessKeyPrefix must be a string' );
+		assert.ok( mw.util.tooltipAccessKeyRegexp instanceof RegExp, 'mw.util.tooltipAccessKeyRegexp instance of RegExp' );
+		assert.ok( mw.util.updateTooltipAccessKeys, 'mw.util.updateTooltipAccessKeys' );
 	} );
 
 	QUnit.test( '$content', 2, function ( assert ) {
@@ -141,17 +125,17 @@
 	 * Previously, test elements where invisible to the selector since only
 	 * one element can have a given id.
 	 */
-	QUnit.test( 'addPortletLink', 11, function ( assert ) {
-		var pTestTb, pCustom, vectorTabs, tbRL, cuQuux, $cuQuux, tbMW, $tbMW, tbRLDM, caFoo, addedAfter;
+	QUnit.test( 'addPortletLink', 8, function ( assert ) {
+		var pTestTb, pCustom, vectorTabs, tbRL, cuQuux, $cuQuux, tbMW, $tbMW, tbRLDM, caFoo;
 
 		pTestTb = '\
 		<div class="portlet" id="p-test-tb">\
-			<h3>Toolbox</h3>\
+			<h5>Toolbox</h5>\
 			<ul class="body"></ul>\
 		</div>';
 		pCustom = '\
 		<div class="portlet" id="p-test-custom">\
-			<h3>Views</h3>\
+			<h5>Views</h5>\
 			<ul class="body">\
 				<li id="c-foo"><a href="#">Foo</a></li>\
 				<li id="c-barmenu">\
@@ -163,15 +147,14 @@
 		</div>';
 		vectorTabs = '\
 		<div id="p-test-views" class="vectorTabs">\
-			<h3>Views</h3>\
+			<h5>Views</h5>\
 			<ul></ul>\
 		</div>';
 
 		$( '#qunit-fixture' ).append( pTestTb, pCustom, vectorTabs );
 
 		tbRL = mw.util.addPortletLink( 'p-test-tb', '//mediawiki.org/wiki/ResourceLoader',
-			'ResourceLoader', 't-rl', 'More info about ResourceLoader on MediaWiki.org ', 'l'
-		);
+			'ResourceLoader', 't-rl', 'More info about ResourceLoader on MediaWiki.org ', 'l' );
 
 		assert.ok( $.isDomElement( tbRL ), 'addPortletLink returns a valid DOM Element according to $.isDomElement' );
 
@@ -179,31 +162,13 @@
 			'MediaWiki.org', 't-mworg', 'Go to MediaWiki.org ', 'm', tbRL );
 		$tbMW = $( tbMW );
 
-		assert.propEqual(
-			$tbMW.getAttrs(),
-			{
-				id: 't-mworg'
-			},
-			'Validate attributes of created element'
-		);
 
-		assert.propEqual(
-			$tbMW.find( 'a' ).getAttrs(),
-			{
-				href: '//mediawiki.org/',
-				title: 'Go to MediaWiki.org [ctrl-alt-m]',
-				accesskey: 'm'
-			},
-			'Validate attributes of anchor tag in created element'
-		);
-
+		assert.equal( $tbMW.attr( 'id' ), 't-mworg', 'Link has correct ID set' );
 		assert.equal( $tbMW.closest( '.portlet' ).attr( 'id' ), 'p-test-tb', 'Link was inserted within correct portlet' );
-		assert.strictEqual( $tbMW.next()[0], tbRL, 'Link is in the correct position (by passing nextnode)' );
+		assert.equal( $tbMW.next().attr( 'id' ), 't-rl', 'Link is in the correct position (by passing nextnode)' );
 
-		cuQuux = mw.util.addPortletLink( 'p-test-custom', '#', 'Quux', null, 'Example [shift-x]', 'q' );
+		cuQuux = mw.util.addPortletLink( 'p-test-custom', '#', 'Quux' );
 		$cuQuux = $( cuQuux );
-
-		assert.equal( $cuQuux.find( 'a' ).attr( 'title' ), 'Example [ctrl-alt-q]', 'Existing accesskey is stripped and updated' );
 
 		assert.equal(
 			$( '#p-test-custom #c-barmenu ul li' ).length,
@@ -220,9 +185,6 @@
 
 		assert.strictEqual( $tbMW.find( 'span' ).length, 0, 'No <span> element should be added for porlets without vectorTabs class.' );
 		assert.strictEqual( $( caFoo ).find( 'span' ).length, 1, 'A <span> element should be added for porlets with vectorTabs class.' );
-
-		addedAfter = mw.util.addPortletLink( 'p-test-tb', '#', 'After foo', 'post-foo', 'After foo', null, $( tbRL ) );
-		assert.strictEqual( $( addedAfter ).next()[0], tbRL, 'Link is in the correct position (by passing a jQuery object as nextnode)' );
 	} );
 
 	QUnit.test( 'jsMessage', 1, function ( assert ) {

@@ -97,4 +97,5 @@ class TestSites {
 		$sitesTable->clear();
 		$sitesTable->saveSites( TestSites::getSites() );
 	}
+
 }

@@ -3,7 +3,6 @@
 * See: http://www.mediawiki.org/wiki/Extension:UploadWizard/MessageParser for docs
 *
 * @author neilk@wikimedia.org
-* @author mflaschen@wikimedia.org
 */
 ( function ( mw, $ ) {
 	var oldParser,
@@ -12,31 +11,6 @@
 			magic : {
 				'SITENAME' : mw.config.get( 'wgSiteName' )
 			},
-			// This is a whitelist based on, but simpler than, Sanitizer.php.
-			// Self-closing tags are not currently supported.
-			allowedHtmlElements : [
-				'b',
-				'i'
-			],
-			// Key tag name, value allowed attributes for that tag.
-			// See Sanitizer::setupAttributeWhitelist
-			allowedHtmlCommonAttributes : [
-				// HTML
-				'id',
-				'class',
-				'style',
-				'lang',
-				'dir',
-				'title',
-
-				// WAI-ARIA
-				'role'
-			],
-
-			// Attributes allowed for specific elements.
-			// Key is element name in lower case
-			// Value is array of allowed attributes for that element
-			allowedHtmlAttributesByElement : {},
 			messages : mw.messages,
 			language : mw.language,
 
@@ -44,7 +18,7 @@
 			//
 			// Only 'text', 'parse', and 'escaped' are supported, and the
 			// actual escaping for 'escaped' is done by other code (generally
-			// through mediawiki.js).
+			// through jqueryMsg).
 			//
 			// However, note that this default only
 			// applies to direct calls to jqueryMsg. The default for mediawiki.js itself
@@ -52,47 +26,6 @@
 			format: 'parse'
 
 		};
-
-	/**
-	 * Wrapper around jQuery append that converts all non-objects to TextNode so append will not
-	 * convert what it detects as an htmlString to an element.
-	 *
-	 * Object elements of children (jQuery, HTMLElement, TextNode, etc.) will be left as is.
-	 *
-	 * @param {jQuery} $parent Parent node wrapped by jQuery
-	 * @param {Object|string|Array} children What to append, with the same possible types as jQuery
-	 * @return {jQuery} $parent
-	 */
-	function appendWithoutParsing( $parent, children ) {
-		var i, len;
-
-		if ( !$.isArray( children ) ) {
-			children = [children];
-		}
-
-		for ( i = 0, len = children.length; i < len; i++ ) {
-			if ( typeof children[i] !== 'object' ) {
-				children[i] = document.createTextNode( children[i] );
-			}
-		}
-
-		return $parent.append( children );
-	}
-
-	/**
-	 * Decodes the main HTML entities, those encoded by mw.html.escape.
-	 *
-	 * @param {string} encode Encoded string
-	 * @return {string} String with those entities decoded
-	 */
-	function decodePrimaryHtmlEntities( encoded ) {
-		return encoded
-			.replace( /&#039;/g, '\'' )
-			.replace( /&quot;/g, '"' )
-			.replace( /&lt;/g, '<' )
-			.replace( /&gt;/g, '>' )
-			.replace( /&amp;/g, '&' );
-	}
 
 	/**
 	 * Given parser options, return a function that parses a key and replacements, returning jQuery object
@@ -115,7 +48,7 @@
 			try {
 				return parser.parse( key, argsArray );
 			} catch ( e ) {
-				return $( '<span>' ).text( key + ': ' + e.message );
+				return $( '<span>' ).append( key + ': ' + e.message );
 			}
 		};
 	}
@@ -192,10 +125,10 @@
 		 */
 		return function () {
 			var $target = this.empty();
-			// TODO: Simply appendWithoutParsing( $target, failableParserFn( arguments ).contents() )
-			// or Simply appendWithoutParsing( $target, failableParserFn( arguments ) )
+			// TODO: Simply $target.append( failableParserFn( arguments ).contents() )
+			// or Simply $target.append( failableParserFn( arguments ) )
 			$.each( failableParserFn( arguments ).contents(), function ( i, node ) {
-				appendWithoutParsing( $target, node );
+				$target.append( node );
 			} );
 			return $target;
 		};
@@ -273,13 +206,11 @@
 		 * @return {Mixed} abstract syntax tree
 		 */
 		wikiTextToAst: function ( input ) {
-			var pos, settings = this.settings, concat = Array.prototype.concat,
+			var pos,
 				regularLiteral, regularLiteralWithoutBar, regularLiteralWithoutSpace, regularLiteralWithSquareBrackets,
-				doubleQuote, singleQuote, backslash, anyCharacter, asciiAlphabetLiteral,
-				escapedOrLiteralWithoutSpace, escapedOrLiteralWithoutBar, escapedOrRegularLiteral,
-				whitespace, dollar, digits, htmlDoubleQuoteAttributeValue, htmlSingleQuoteAttributeValue,
-				htmlAttributeEquals, openHtmlStartTag, optionalForwardSlash, openHtmlEndTag, closeHtmlTag,
-				openExtlink, closeExtlink, wikilinkPage, wikilinkContents, openWikilink, closeWikilink, templateName, pipe, colon,
+				backslash, anyCharacter, escapedOrLiteralWithoutSpace, escapedOrLiteralWithoutBar, escapedOrRegularLiteral,
+				whitespace, dollar, digits,
+				openExtlink, closeExtlink, wikilinkPage, wikilinkContents, openLink, closeLink, templateName, pipe, colon,
 				templateContents, openTemplate, closeTemplate,
 				nonWhitespaceExpression, paramExpression, expression, curlyBraceTransformExpression, result;
 
@@ -358,15 +289,6 @@
 					return result;
 				};
 			}
-
-			/**
-			 * Makes a regex parser, given a RegExp object.
-			 * The regex being passed in should start with a ^ to anchor it to the start
-			 * of the string.
-			 *
-			 * @param {RegExp} regex anchored regex
-			 * @return {Function} function to parse input based on the regex
-			 */
 			function makeRegexParser( regex ) {
 				return function () {
 					var matches = input.substr( pos ).match( regex );
@@ -393,23 +315,12 @@
 			// but some debuggers can't tell you exactly where they come from. Also the mutually
 			// recursive functions seem not to work in all browsers then. (Tested IE6-7, Opera, Safari, FF)
 			// This may be because, to save code, memoization was removed
-
-			regularLiteral = makeRegexParser( /^[^{}\[\]$<\\]/ );
+			regularLiteral = makeRegexParser( /^[^{}\[\]$\\]/ );
 			regularLiteralWithoutBar = makeRegexParser(/^[^{}\[\]$\\|]/);
 			regularLiteralWithoutSpace = makeRegexParser(/^[^{}\[\]$\s]/);
 			regularLiteralWithSquareBrackets = makeRegexParser( /^[^{}$\\]/ );
-
 			backslash = makeStringParser( '\\' );
-			doubleQuote = makeStringParser( '"' );
-			singleQuote = makeStringParser( '\'' );
 			anyCharacter = makeRegexParser( /^./ );
-
-			openHtmlStartTag = makeStringParser( '<' );
-			optionalForwardSlash = makeRegexParser( /^\/?/ );
-			openHtmlEndTag = makeStringParser( '</' );
-			htmlAttributeEquals = makeRegexParser( /^\s*=\s*/ );
-			closeHtmlTag = makeRegexParser( /^\s*>/ );
-
 			function escapedLiteral() {
 				var result = sequence( [
 					backslash,
@@ -458,10 +369,6 @@
 				return result === null ? null : result.join('');
 			}
 
-			asciiAlphabetLiteral = makeRegexParser( /[A-Za-z]+/ );
-			htmlDoubleQuoteAttributeValue = makeRegexParser( /^[^"]*/ );
-			htmlSingleQuoteAttributeValue = makeRegexParser( /^[^']*/ );
-
 			whitespace = makeRegexParser( /^\s+/ );
 			dollar = makeStringParser( '$' );
 			digits = makeRegexParser( /^\d+/ );
@@ -478,7 +385,7 @@
 			}
 			openExtlink = makeStringParser( '[' );
 			closeExtlink = makeStringParser( ']' );
-			// this extlink MUST have inner contents, e.g. [foo] not allowed; [foo bar] [foo <i>bar</i>], etc. are allowed
+			// this extlink MUST have inner text, e.g. [foo] not allowed; [foo bar] is allowed
 			function extlink() {
 				var result, parsedResult;
 				result = null;
@@ -486,18 +393,11 @@
 					openExtlink,
 					nonWhitespaceExpression,
 					whitespace,
-					nOrMore( 1, expression ),
+					expression,
 					closeExtlink
 				] );
 				if ( parsedResult !== null ) {
-					result = [ 'EXTLINK', parsedResult[1] ];
-					// TODO (mattflaschen, 2013-03-22): Clean this up if possible.
-					// It's avoiding CONCAT for single nodes, so they at least doesn't get the htmlEmitter span.
-					if ( parsedResult[3].length === 1 ) {
-						result.push( parsedResult[3][0] );
-					} else {
-						result.push( ['CONCAT'].concat( parsedResult[3] ) );
-					}
+					 result = [ 'LINK', parsedResult[1], parsedResult[3] ];
 				}
 				return result;
 			}
@@ -514,10 +414,10 @@
 				if ( result === null ) {
 					return null;
 				}
-				return [ 'EXTLINKPARAM', parseInt( result[2], 10 ) - 1, result[4] ];
+				return [ 'LINKPARAM', parseInt( result[2], 10 ) - 1, result[4] ];
 			}
-			openWikilink = makeStringParser( '[[' );
-			closeWikilink = makeStringParser( ']]' );
+			openLink = makeStringParser( '[[' );
+			closeLink = makeStringParser( ']]' );
 			pipe = makeStringParser( '|' );
 
 			function template() {
@@ -548,158 +448,21 @@
 				wikilinkPage // unpiped link
 			] );
 
-			function wikilink() {
+			function link() {
 				var result, parsedResult, parsedLinkContents;
 				result = null;
 
 				parsedResult = sequence( [
-					openWikilink,
+					openLink,
 					wikilinkContents,
-					closeWikilink
+					closeLink
 				] );
 				if ( parsedResult !== null ) {
 					parsedLinkContents = parsedResult[1];
-					result = [ 'WIKILINK' ].concat( parsedLinkContents );
+					result = [ 'WLINK' ].concat( parsedLinkContents );
 				}
 				return result;
 			}
-
-			// TODO: Support data- if appropriate
-			function doubleQuotedHtmlAttributeValue() {
-				var parsedResult = sequence( [
-					doubleQuote,
-					htmlDoubleQuoteAttributeValue,
-					doubleQuote
-				] );
-				return parsedResult === null ? null : parsedResult[1];
-			}
-
-			function singleQuotedHtmlAttributeValue() {
-				var parsedResult = sequence( [
-					singleQuote,
-					htmlSingleQuoteAttributeValue,
-					singleQuote
-				] );
-				return parsedResult === null ? null : parsedResult[1];
-			}
-
-			function htmlAttribute() {
-				var parsedResult = sequence( [
-					whitespace,
-					asciiAlphabetLiteral,
-					htmlAttributeEquals,
-					choice(	[
-						doubleQuotedHtmlAttributeValue,
-						singleQuotedHtmlAttributeValue
-					] )
-				] );
-				return parsedResult === null ? null : [parsedResult[1], parsedResult[3]];
-			}
-
-			/**
-			 * Checks if HTML is allowed
-			 *
-			 * @param {string} startTagName HTML start tag name
-			 * @param {string} endTagName HTML start tag name
-			 * @param {Object} attributes array of consecutive key value pairs,
-			 *  with index 2 * n being a name and 2 * n + 1 the associated value
-			 * @return {boolean} true if this is HTML is allowed, false otherwise
-			 */
-			function isAllowedHtml( startTagName, endTagName, attributes ) {
-				var i, len, attributeName;
-
-				startTagName = startTagName.toLowerCase();
-				endTagName = endTagName.toLowerCase();
-				if ( startTagName !== endTagName || $.inArray( startTagName, settings.allowedHtmlElements ) === -1 ) {
-					return false;
-				}
-
-				for ( i = 0, len = attributes.length; i < len; i += 2 ) {
-					attributeName = attributes[i];
-					if ( $.inArray( attributeName, settings.allowedHtmlCommonAttributes ) === -1 &&
-					     $.inArray( attributeName, settings.allowedHtmlAttributesByElement[startTagName] || [] ) === -1 ) {
-						return false;
-					}
-				}
-
-				return true;
-			}
-
-			function htmlAttributes() {
-				var parsedResult = nOrMore( 0, htmlAttribute )();
-				// Un-nest attributes array due to structure of jQueryMsg operations (see emit).
-				return concat.apply( ['HTMLATTRIBUTES'], parsedResult );
-			}
-
-			// Subset of allowed HTML markup.
-			// Most elements and many attributes allowed on the server are not supported yet.
-			function html() {
-				var result = null, parsedOpenTagResult, parsedHtmlContents,
-					parsedCloseTagResult, wrappedAttributes, attributes,
-					startTagName, endTagName, startOpenTagPos, startCloseTagPos,
-					endOpenTagPos, endCloseTagPos;
-
-				// Break into three sequence calls.  That should allow accurate reconstruction of the original HTML, and requiring an exact tag name match.
-				// 1. open through closeHtmlTag
-				// 2. expression
-				// 3. openHtmlEnd through close
-				// This will allow recording the positions to reconstruct if HTML is to be treated as text.
-
-				startOpenTagPos = pos;
-				parsedOpenTagResult = sequence( [
-					openHtmlStartTag,
-					asciiAlphabetLiteral,
-					htmlAttributes,
-					optionalForwardSlash,
-					closeHtmlTag
-				] );
-
-				if ( parsedOpenTagResult === null ) {
-					return null;
-				}
-
-				endOpenTagPos = pos;
-				startTagName = parsedOpenTagResult[1];
-
-				parsedHtmlContents = nOrMore( 0, expression )();
-
-				startCloseTagPos = pos;
-				parsedCloseTagResult = sequence( [
-					openHtmlEndTag,
-					asciiAlphabetLiteral,
-					closeHtmlTag
-				] );
-
-				if ( parsedCloseTagResult === null ) {
-					// Closing tag failed.  Return the start tag and contents.
-					return [ 'CONCAT', input.substring( startOpenTagPos, endOpenTagPos ) ].concat( parsedHtmlContents );
-				}
-
-				endCloseTagPos = pos;
-				endTagName = parsedCloseTagResult[1];
-				wrappedAttributes = parsedOpenTagResult[2];
-				attributes = wrappedAttributes.slice( 1 );
-				if ( isAllowedHtml( startTagName, endTagName, attributes) ) {
-					result = [ 'HTMLELEMENT', startTagName, wrappedAttributes ].concat( parsedHtmlContents );
-				} else {
-					// HTML is not allowed, so contents will remain how
-					// it was, while HTML markup at this level will be
-					// treated as text
-					// E.g. assuming script tags are not allowed:
-					//
-					// <script>[[Foo|bar]]</script>
-					//
-					// results in '&lt;script&gt;' and '&lt;/script&gt;'
-					// (not treated as an HTML tag), surrounding a fully
-					// parsed HTML link.
-					//
-					// Concatenate everything from the tag, flattening the contents.
-					result = [ 'CONCAT', input.substring( startOpenTagPos, endOpenTagPos ) ].concat( parsedHtmlContents, input.substring( startCloseTagPos, endCloseTagPos ) );
-				}
-
-				return result;
-			}
-
 			templateName = transform(
 				// see $wgLegalTitleChars
 				// not allowing : due to the need to catch "PLURAL:$1"
@@ -762,7 +525,7 @@
 			closeTemplate = makeStringParser('}}');
 			nonWhitespaceExpression = choice( [
 				template,
-				wikilink,
+				link,
 				extLinkParam,
 				extlink,
 				replacement,
@@ -770,7 +533,7 @@
 			] );
 			paramExpression = choice( [
 				template,
-				wikilink,
+				link,
 				extLinkParam,
 				extlink,
 				replacement,
@@ -779,11 +542,10 @@
 
 			expression = choice( [
 				template,
-				wikilink,
+				link,
 				extLinkParam,
 				extlink,
 				replacement,
-				html,
 				literal
 			] );
 
@@ -897,12 +659,12 @@
 			$.each( nodes, function ( i, node ) {
 				if ( node instanceof jQuery && node.hasClass( 'mediaWiki_htmlEmitter' ) ) {
 					$.each( node.contents(), function ( j, childNode ) {
-						appendWithoutParsing( $span, childNode );
+						$span.append( childNode );
 					} );
 				} else {
 					// Let jQuery append nodes, arrays of nodes and jQuery objects
 					// other things (strings, numbers, ..) are appended as text nodes (not as HTML strings)
-					appendWithoutParsing( $span, node );
+					$span.append( $.type( node ) === 'object' ? node : document.createTextNode( node ) );
 				}
 			} );
 			return $span;
@@ -942,7 +704,7 @@
 		 *
 		 * @param nodes
 		 */
-		wikilink: function ( nodes ) {
+		wlink: function ( nodes ) {
 			var page, anchor, url;
 
 			page = nodes[0];
@@ -968,36 +730,6 @@
 		},
 
 		/**
-		 * Converts array of HTML element key value pairs to object
-		 *
-		 * @param {Array} nodes array of consecutive key value pairs, with index 2 * n being a name and 2 * n + 1 the associated value
-		 * @return {Object} object mapping attribute name to attribute value
-		 */
-		htmlattributes: function ( nodes ) {
-			var i, len, mapping = {};
-			for ( i = 0, len = nodes.length; i < len; i += 2 ) {
-				mapping[nodes[i]] = decodePrimaryHtmlEntities( nodes[i + 1] );
-			}
-			return mapping;
-		},
-
-		/**
-		 * Handles an (already-validated) HTML element.
-		 *
-		 * @param {Array} nodes nodes to process when creating element
-		 * @return {jQuery|Array} jQuery node for valid HTML or array for disallowed element
-		 */
-		htmlelement: function ( nodes ) {
-			var tagName, attributes, contents, $element;
-
-			tagName = nodes.shift();
-			attributes = nodes.shift();
-			contents = nodes;
-			$element = $( document.createElement( tagName ) ).attr( attributes );
-			return appendWithoutParsing( $element, contents );
-		},
-
-		/**
 		 * Transform parsed structure into external link
 		 * If the href is a jQuery object, treat it as "enclosing" the link text.
 		 *              ... function, treat it as the click handler
@@ -1006,7 +738,7 @@
 		 * @param {Array} of two elements, {jQuery|Function|String} and {String}
 		 * @return {jQuery}
 		 */
-		extlink: function ( nodes ) {
+		link: function ( nodes ) {
 			var $el,
 				arg = nodes[0],
 				contents = nodes[1];
@@ -1020,11 +752,12 @@
 					$el.attr( 'href', arg.toString() );
 				}
 			}
-			return appendWithoutParsing( $el, contents );
+			$el.append( contents );
+			return $el;
 		},
 
 		/**
-		 * This is basically use a combination of replace + external link (link with parameter
+		 * This is basically use a combination of replace + link (link with parameter
 		 * as url), but we don't want to run the regular replace here-on: inserting a
 		 * url as href-attribute of a link will automatically escape it already, so
 		 * we don't want replace to (manually) escape it as well.
@@ -1032,7 +765,7 @@
 		 * @param {Array} of one element, integer, n >= 0
 		 * @return {String} replacement
 		 */
-		extlinkparam: function ( nodes, replacements ) {
+		linkparam: function ( nodes, replacements ) {
 			var replacement,
 				index = parseInt( nodes[0], 10 );
 			if ( index < replacements.length) {
@@ -1040,7 +773,7 @@
 			} else {
 				replacement = '$' + ( index + 1 );
 			}
-			return this.extlink( [ replacement, nodes[1] ] );
+			return this.link( [ replacement, nodes[1] ] );
 		},
 
 		/**
@@ -1132,7 +865,7 @@
 		// Caching is somewhat problematic, because we do need different message functions for different maps, so
 		// we'd have to cache the parser as a member of this.map, which sounds a bit ugly.
 		// Do not use mw.jqueryMsg unless required
-		if ( this.format === 'plain' || !/\{\{|[\[<>]/.test(this.map.get( this.key ) ) ) {
+		if ( this.format === 'plain' || !/\{\{|\[/.test(this.map.get( this.key ) ) ) {
 			// Fall back to mw.msg's simple parser
 			return oldParser.apply( this );
 		}

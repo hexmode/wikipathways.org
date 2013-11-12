@@ -1,20 +1,17 @@
-/**
- * Interface for the classic edit toolbar.
- *
- * @class mw.toolbar
- * @singleton
- */
 ( function ( mw, $ ) {
-	var toolbar, isReady, $toolbar, queue, slice, $currentFocused;
+	var isReady, toolbar, currentFocused, queue, $toolbar, slice;
+
+	isReady = false;
+	queue = [];
+	$toolbar = false;
+	slice = Array.prototype.slice;
 
 	/**
-	 * Internal helper that does the actual insertion of the button into the toolbar.
-	 *
-	 * See #addButton for parameter documentation.
-	 *
-	 * @private
+	 * Internal helper that does the actual insertion
+	 * of the button into the toolbar.
+	 * See mw.toolbar.addButton for parameter documentation.
 	 */
-	function insertButton( b, speedTip, tagOpen, tagClose, sampleText, imageId ) {
+	function insertButton( b /* imageFile */, speedTip, tagOpen, tagClose, sampleText, imageId, selectText ) {
 		// Backwards compatibility
 		if ( typeof b !== 'object' ) {
 			b = {
@@ -23,10 +20,11 @@
 				tagOpen: tagOpen,
 				tagClose: tagClose,
 				sampleText: sampleText,
-				imageId: imageId
+				imageId: imageId,
+				selectText: selectText
 			};
 		}
-		var $image = $( '<img>' ).attr( {
+		var $image = $( '<img>', {
 			width : 23,
 			height: 22,
 			src   : b.imageFile,
@@ -35,43 +33,30 @@
 			id    : b.imageId || undefined,
 			'class': 'mw-toolbar-editbutton'
 		} ).click( function () {
-			toolbar.insertTags( b.tagOpen, b.tagClose, b.sampleText );
+			toolbar.insertTags( b.tagOpen, b.tagClose, b.sampleText, b.selectText );
 			return false;
 		} );
 
 		$toolbar.append( $image );
+		return true;
 	}
 
-	isReady = false;
-	$toolbar = false;
-	/**
-	 * @private
-	 * @property {Array}
-	 * Contains button objects (and for backwards compatibilty, it can
-	 * also contains an arguments array for insertButton).
-	 */
-	queue = [];
-	slice = queue.slice;
-
 	toolbar = {
-
 		/**
 		 * Add buttons to the toolbar.
-		 *
 		 * Takes care of race conditions and time-based dependencies
 		 * by placing buttons in a queue if this method is called before
 		 * the toolbar is created.
-		 *
-		 * For compatiblity, passing the properties listed below as separate arguments
+		 * @param {Object} button: Object with the following properties:
+		 * - imageFile
+		 * - speedTip
+		 * - tagOpen
+		 * - tagClose
+		 * - sampleText
+		 * - imageId
+		 * - selectText
+		 * For compatiblity, passing the above as separate arguments
 		 * (in the listed order) is also supported.
-		 *
-		 * @param {Object} button Object with the following properties:
-		 * @param {string} button.imageFile
-		 * @param {string} button.speedTip
-		 * @param {string} button.tagOpen
-		 * @param {string} button.tagClose
-		 * @param {string} button.sampleText
-		 * @param {string} [button.imageId]
 		 */
 		addButton: function () {
 			if ( isReady ) {
@@ -81,44 +66,18 @@
 				queue.push( slice.call( arguments ) );
 			}
 		},
-		/**
-		 * Example usage:
-		 *     addButtons( [ { .. }, { .. }, { .. } ] );
-		 *     addButtons( { .. }, { .. } );
-		 *
-		 * @param {Object|Array} [buttons...] An array of button objects or the first
-		 *  button object in a list of variadic arguments.
-		 */
-		addButtons: function ( buttons ) {
-			if ( !$.isArray( buttons ) ) {
-				buttons = slice.call( arguments );
-			}
-			if ( isReady ) {
-				$.each( buttons, function () {
-					insertButton( this );
-				} );
-			} else {
-				// Push each button into the queue
-				queue.push.apply( queue, buttons );
-			}
-		},
 
 		/**
-		 * Apply tagOpen/tagClose to selection in currently focused textarea.
-		 *
-		 * Uses `sampleText` if selection is empty.
-		 *
-		 * @param {string} tagOpen
-		 * @param {string} tagClose
-		 * @param {string} sampleText
+		 * Apply tagOpen/tagClose to selection in textarea,
+		 * use sampleText instead of selection if there is none.
 		 */
 		insertTags: function ( tagOpen, tagClose, sampleText ) {
-			if ( $currentFocused && $currentFocused.length ) {
-				$currentFocused.textSelection(
+			if ( currentFocused && currentFocused.length ) {
+				currentFocused.textSelection(
 					'encapsulateSelection', {
-						pre: tagOpen,
-						peri: sampleText,
-						post: tagClose
+						'pre': tagOpen,
+						'peri': sampleText,
+						'post': tagClose
 					}
 				);
 			}
@@ -136,58 +95,64 @@
 	// Explose API publicly
 	mw.toolbar = toolbar;
 
-	$( function () {
-		var i, b, $iframe, editBox, scrollTop, $editForm;
+	$( document ).ready( function () {
+		var buttons, i, b, $iframe;
 
 		// currentFocus is used to determine where to insert tags
-		$currentFocused = $( '#wpTextbox1' );
+		currentFocused = $( '#wpTextbox1' );
 
 		// Populate the selector cache for $toolbar
 		$toolbar = $( '#toolbar' );
 
-		for ( i = 0; i < queue.length; i++ ) {
-			b = queue[i];
+		// Legacy: Merge buttons from mwCustomEditButtons
+		buttons = [].concat( queue, window.mwCustomEditButtons );
+		// Clear queue
+		queue.length = 0;
+		for ( i = 0; i < buttons.length; i++ ) {
+			b = buttons[i];
 			if ( $.isArray( b ) ) {
 				// Forwarded arguments array from mw.toolbar.addButton
 				insertButton.apply( toolbar, b );
 			} else {
-				// Raw object from mw.toolbar.addButtons
+				// Raw object from legacy mwCustomEditButtons
 				insertButton( b );
 			}
 		}
 
-		// Clear queue
-		queue.length = 0;
-
 		// This causes further calls to addButton to go to insertion directly
-		// instead of to the queue.
+		// instead of to the toolbar.buttons queue.
 		// It is important that this is after the one and only loop through
-		// the the queue
+		// the the toolbar.buttons queue
 		isReady = true;
 
 		// Make sure edit summary does not exceed byte limit
 		$( '#wpSummary' ).byteLimit( 255 );
 
-		// Restore the edit box scroll state following a preview operation,
-		// and set up a form submission handler to remember this state.
-		editBox = document.getElementById( 'wpTextbox1' );
-		scrollTop = document.getElementById( 'wpScrolltop' );
-		$editForm = $( '#editform' );
-		if ( $editForm.length && editBox && scrollTop ) {
-			if ( scrollTop.value ) {
-				editBox.scrollTop = scrollTop.value;
+		/**
+		 * Restore the edit box scroll state following a preview operation,
+		 * and set up a form submission handler to remember this state
+		 */
+		( function scrollEditBox() {
+			var editBox, scrollTop, $editForm;
+
+			editBox = document.getElementById( 'wpTextbox1' );
+			scrollTop = document.getElementById( 'wpScrolltop' );
+			$editForm = $( '#editform' );
+			if ( $editForm.length && editBox && scrollTop ) {
+				if ( scrollTop.value ) {
+					editBox.scrollTop = scrollTop.value;
+				}
+				$editForm.submit( function () {
+					scrollTop.value = editBox.scrollTop;
+				});
 			}
-			$editForm.submit( function () {
-				scrollTop.value = editBox.scrollTop;
-			});
-		}
+		}() );
 
-		// Apply to dynamically created textboxes as well as normal ones
-		$( document ).on( 'focus', 'textarea, input:text', function () {
-			$currentFocused = $( this );
-		} );
+		$( 'textarea, input:text' ).focus( function () {
+			currentFocused = $(this);
+		});
 
-		// HACK: make $currentFocused work with the usability iframe
+		// HACK: make currentFocused work with the usability iframe
 		// With proper focus detection support (HTML 5!) this'll be much cleaner
 		// TODO: Get rid of this WikiEditor code from MediaWiki core!
 		$iframe = $( '.wikiEditor-ui-text iframe' );
@@ -196,7 +161,7 @@
 				// for IE
 				.add( $iframe.get( 0 ).contentWindow.document.body )
 				.focus( function () {
-					$currentFocused = $iframe;
+					currentFocused = $iframe;
 				} );
 		}
 	});

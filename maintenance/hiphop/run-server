@@ -1,21 +1,68 @@
-#!/usr/bin/hhvm -f
+#!/usr/bin/hphpi -f
 <?php
 
-require __DIR__ . '/../Maintenance.php';
+require( __DIR__ . '/../Maintenance.php' );
 
 class RunHipHopServer extends Maintenance {
 	function __construct() {
 		parent::__construct();
+		$this->addOption( 'interpret', 'Run in interpreted mode' );
 	}
 
 	function execute() {
-		global $IP;
+		if ( $this->hasOption( 'interpret' ) ) {
+			$this->runInterpreted();
+		} else {
+			$this->runCompiled();
+		}
+	}
+
+	function runCompiled() {
+		global $wgHipHopBuildDirectory;
+		$thisDir = realpath( __DIR__ );
+		$IP = realpath( "$thisDir/../.." );
+		if ( strval( $wgHipHopBuildDirectory ) !== '' ) {
+			$buildDir = $wgHipHopBuildDirectory;
+		} else {
+			$buildDir = "$thisDir/build";
+		}
+
+		if ( file_exists( "$buildDir/source" ) ) {
+			$sourceBase = "$buildDir/source";
+		} else {
+			$sourceBase = realpath( "$IP/.." );
+		}
 
 		passthru(
-			'cd ' . wfEscapeShellArg( $IP ) . " && " .
+			'cd ' . wfEscapeShellArg( $sourceBase ) . " && " .
+			'MW_INSTALL_PATH=' . wfEscapeShellArg( $IP ) . ' ' .
 			wfEscapeShellArg(
-				'hhvm',
-				'-c', __DIR__."/server.conf",
+				"$buildDir/persistent/mediawiki-hphp",
+				'-c', "$thisDir/server.conf",
+				'-v', "Server.SourceRoot=$sourceBase",
+				'-v', "Server.IncludeSearchPaths.0=$sourceBase",
+				'-v', 'ServerVariables.MW_COMPILED=1',
+				'--mode=server',
+				'--port=8080'
+			),
+			$ret
+		);
+		exit( $ret );
+	}
+
+	function runInterpreted() {
+		$thisDir = realpath( __DIR__ );
+		$IP = realpath( "$thisDir/../.." );
+		$sourceBase = realpath( "$IP/.." );
+
+		passthru(
+			'cd ' . wfEscapeShellArg( $sourceBase ) . " && " .
+			'MW_INSTALL_PATH=' . wfEscapeShellArg( $IP ) . ' ' .
+			wfEscapeShellArg(
+				'hphpi',
+				'-c', "$thisDir/server.conf",
+				'-v', "Server.SourceRoot=$sourceBase",
+				'-v', "Server.IncludeSearchPaths.0=$sourceBase",
 				'--mode=server',
 				'--port=8080'
 			),
@@ -25,4 +72,4 @@ class RunHipHopServer extends Maintenance {
 	}
 }
 $maintClass = 'RunHipHopServer';
-require_once RUN_MAINTENANCE_IF_MAIN;
+require_once( RUN_MAINTENANCE_IF_MAIN );

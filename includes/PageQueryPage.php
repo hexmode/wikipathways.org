@@ -27,11 +27,12 @@
  * @ingroup SpecialPage
  */
 abstract class PageQueryPage extends QueryPage {
+
 	/**
 	 * Format the result as a simple link to the page
 	 *
-	 * @param Skin $skin
-	 * @param object $row Result row
+	 * @param $skin Skin
+	 * @param $row Object: result row
 	 * @return string
 	 */
 	public function formatResult( $skin, $row ) {

@@ -65,14 +65,14 @@ class ApiExpandTemplates extends ApiBase {
 				$xml = $dom->__toString();
 			}
 			$xml_result = array();
-			ApiResult::setContent( $xml_result, $xml );
+			$result->setContent( $xml_result, $xml );
 			$result->addValue( null, 'parsetree', $xml_result );
 		}
 		$retval = $wgParser->preprocess( $params['text'], $title_obj, $options );
 
 		// Return result
 		$retval_array = array();
-		ApiResult::setContent( $retval_array, $retval );
+		$result->setContent( $retval_array, $retval );
 		$result->addValue( null, $this->getModuleName(), $retval_array );
 	}
 

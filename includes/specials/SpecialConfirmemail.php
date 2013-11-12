@@ -30,30 +30,27 @@
  * @author Rob Church <robchur@gmail.com>
  */
 class EmailConfirmation extends UnlistedSpecialPage {
+
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
-		parent::__construct( 'Confirmemail', 'editmyprivateinfo' );
+		parent::__construct( 'Confirmemail' );
 	}
 
 	/**
 	 * Main execution point
 	 *
-	 * @param null|string $code Confirmation code passed to the page
+	 * @param $code Confirmation code passed to the page
 	 */
 	function execute( $code ) {
 		$this->setHeaders();
 
 		$this->checkReadOnly();
-		$this->checkPermissions();
 
-		// This could also let someone check the current email address, so
-		// require both permissions.
-		if ( !$this->getUser()->isAllowed( 'viewmyprivateinfo' ) ) {
-			throw new PermissionsError( 'viewmyprivateinfo' );
-		}
-
-		if ( $code === null || $code === '' ) {
-			if ( $this->getUser()->isLoggedIn() ) {
-				if ( Sanitizer::validateEmail( $this->getUser()->getEmail() ) ) {
+		if( $code === null || $code === '' ) {
+			if( $this->getUser()->isLoggedIn() ) {
+				if( Sanitizer::validateEmail( $this->getUser()->getEmail() ) ) {
 					$this->showRequestForm();
 				} else {
 					$this->getOutput()->addWikiMsg( 'confirmemail_noemail' );
@@ -65,9 +62,7 @@ class EmailConfirmation extends UnlistedSpecialPage {
 					array(),
 					array( 'returnto' => $this->getTitle()->getPrefixedText() )
 				);
-				$this->getOutput()->addHTML(
-					$this->msg( 'confirmemail_needlogin' )->rawParams( $llink )->parse()
-				);
+				$this->getOutput()->addHTML( $this->msg( 'confirmemail_needlogin' )->rawParams( $llink )->parse() );
 			}
 		} else {
 			$this->attemptConfirm( $code );
@@ -80,10 +75,7 @@ class EmailConfirmation extends UnlistedSpecialPage {
 	function showRequestForm() {
 		$user = $this->getUser();
 		$out = $this->getOutput();
-
-		if ( $this->getRequest()->wasPosted() &&
-			$user->matchEditToken( $this->getRequest()->getText( 'token' ) )
-		) {
+		if( $this->getRequest()->wasPosted() && $user->matchEditToken( $this->getRequest()->getText( 'token' ) ) ) {
 			$status = $user->sendConfirmationMail();
 			if ( $status->isGood() ) {
 				$out->addWikiMsg( 'confirmemail_sent' );
@@ -91,7 +83,7 @@ class EmailConfirmation extends UnlistedSpecialPage {
 				$out->addWikiText( $status->getWikiText( 'confirmemail_sendfailed' ) );
 			}
 		} else {
-			if ( $user->isEmailConfirmed() ) {
+			if( $user->isEmailConfirmed() ) {
 				// date and time are separate parameters to facilitate localisation.
 				// $time is kept for backward compat reasons.
 				// 'emailauthenticated' is also used in SpecialPreferences.php
@@ -102,22 +94,14 @@ class EmailConfirmation extends UnlistedSpecialPage {
 				$t = $lang->userTime( $emailAuthenticated, $user );
 				$out->addWikiMsg( 'emailauthenticated', $time, $d, $t );
 			}
-
-			if ( $user->isEmailConfirmationPending() ) {
-				$out->wrapWikiMsg(
-					"<div class=\"error mw-confirmemail-pending\">\n$1\n</div>",
-					'confirmemail_pending'
-				);
+			if( $user->isEmailConfirmationPending() ) {
+				$out->wrapWikiMsg( "<div class=\"error mw-confirmemail-pending\">\n$1\n</div>", 'confirmemail_pending' );
 			}
-
 			$out->addWikiMsg( 'confirmemail_text' );
-			$form = Html::openElement(
-				'form',
-				array( 'method' => 'post', 'action' => $this->getTitle()->getLocalURL() )
-			) . "\n";
-			$form .= Html::hidden( 'token', $user->getEditToken() ) . "\n";
-			$form .= Xml::submitButton( $this->msg( 'confirmemail_send' )->text() ) . "\n";
-			$form .= Html::closeElement( 'form' ) . "\n";
+			$form = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalUrl() ) );
+			$form .= Html::hidden( 'token', $user->getEditToken() );
+			$form .= Xml::submitButton( $this->msg( 'confirmemail_send' )->text() );
+			$form .= Xml::closeElement( 'form' );
 			$out->addHTML( $form );
 		}
 	}
@@ -130,22 +114,20 @@ class EmailConfirmation extends UnlistedSpecialPage {
 	 */
 	function attemptConfirm( $code ) {
 		$user = User::newFromConfirmationCode( $code );
-		if ( !is_object( $user ) ) {
+		if( is_object( $user ) ) {
+			$user->confirmEmail();
+			$user->saveSettings();
+			$message = $this->getUser()->isLoggedIn() ? 'confirmemail_loggedin' : 'confirmemail_success';
+			$this->getOutput()->addWikiMsg( $message );
+			if( !$this->getUser()->isLoggedIn() ) {
+				$title = SpecialPage::getTitleFor( 'Userlogin' );
+				$this->getOutput()->returnToMain( true, $title );
+			}
+		} else {
 			$this->getOutput()->addWikiMsg( 'confirmemail_invalid' );
-
-			return;
-		}
-
-		$user->confirmEmail();
-		$user->saveSettings();
-		$message = $this->getUser()->isLoggedIn() ? 'confirmemail_loggedin' : 'confirmemail_success';
-		$this->getOutput()->addWikiMsg( $message );
-
-		if ( !$this->getUser()->isLoggedIn() ) {
-			$title = SpecialPage::getTitleFor( 'Userlogin' );
-			$this->getOutput()->returnToMain( true, $title );
 		}
 	}
+
 }
 
 /**
@@ -155,14 +137,16 @@ class EmailConfirmation extends UnlistedSpecialPage {
  * @ingroup SpecialPage
  */
 class EmailInvalidation extends UnlistedSpecialPage {
+
 	public function __construct() {
-		parent::__construct( 'Invalidateemail', 'editmyprivateinfo' );
+		parent::__construct( 'Invalidateemail' );
 	}
 
 	function execute( $code ) {
 		$this->setHeaders();
+
 		$this->checkReadOnly();
-		$this->checkPermissions();
+
 		$this->attemptInvalidate( $code );
 	}
 
@@ -174,18 +158,15 @@ class EmailInvalidation extends UnlistedSpecialPage {
 	 */
 	function attemptInvalidate( $code ) {
 		$user = User::newFromConfirmationCode( $code );
-		if ( !is_object( $user ) ) {
+		if( is_object( $user ) ) {
+			$user->invalidateEmail();
+			$user->saveSettings();
+			$this->getOutput()->addWikiMsg( 'confirmemail_invalidated' );
+			if( !$this->getUser()->isLoggedIn() ) {
+				$this->getOutput()->returnToMain();
+			}
+		} else {
 			$this->getOutput()->addWikiMsg( 'confirmemail_invalid' );
-
-			return;
-		}
-
-		$user->invalidateEmail();
-		$user->saveSettings();
-		$this->getOutput()->addWikiMsg( 'confirmemail_invalidated' );
-
-		if ( !$this->getUser()->isLoggedIn() ) {
-			$this->getOutput()->returnToMain();
 		}
 	}
 }

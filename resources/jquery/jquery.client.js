@@ -6,7 +6,7 @@
 	/* Private Members */
 
 	/**
-	 * @var {Object} profileCache Keyed by userAgent string,
+	 * @var profileCache {Object} Keyed by userAgent string,
 	 * value is the parsed $.client.profile object for that user agent.
 	 */
 	var profileCache = {};
@@ -18,9 +18,9 @@
 		/**
 		 * Get an object containing information about the client.
 		 *
-		 * @param {Object} nav An object with atleast a 'userAgent' and 'platform' key.
+		 * @param nav {Object} An object with atleast a 'userAgent' and 'platform' key.
 		 * Defaults to the global Navigator object.
-		 * @returns {Object} The resulting client object will be in the following format:
+		 * @return {Object} The resulting client object will be in the following format:
 		 *  {
 		 *   'name': 'firefox',
 		 *   'layout': 'gecko',
@@ -50,47 +50,47 @@
 					// Generic version digit
 					x = 'x',
 					// Strings found in user agent strings that need to be conformed
-					wildUserAgents = ['Opera', 'Navigator', 'Minefield', 'KHTML', 'Chrome', 'PLAYSTATION 3', 'Iceweasel'],
+					wildUserAgents = ['Opera', 'Navigator', 'Minefield', 'KHTML', 'Chrome', 'PLAYSTATION 3'],
 					// Translations for conforming user agent strings
 					userAgentTranslations = [
 						// Tons of browsers lie about being something they are not
-						[/(Firefox|MSIE|KHTML,?\slike\sGecko|Konqueror)/, ''],
+						[/(Firefox|MSIE|KHTML,\slike\sGecko|Konqueror)/, ''],
 						// Chrome lives in the shadow of Safari still
 						['Chrome Safari', 'Chrome'],
 						// KHTML is the layout engine not the browser - LIES!
 						['KHTML', 'Konqueror'],
 						// Firefox nightly builds
 						['Minefield', 'Firefox'],
-						// This helps keep different versions consistent
+						// This helps keep differnt versions consistent
 						['Navigator', 'Netscape'],
 						// This prevents version extraction issues, otherwise translation would happen later
 						['PLAYSTATION 3', 'PS3']
 					],
-					// Strings which precede a version number in a user agent string - combined and used as
-					// match 1 in version detection
+					// Strings which precede a version number in a user agent string - combined and used as match 1 in
+					// version detectection
 					versionPrefixes = [
 						'camino', 'chrome', 'firefox', 'iceweasel', 'netscape', 'netscape6', 'opera', 'version', 'konqueror',
-						'lynx', 'msie', 'safari', 'ps3', 'android'
+						'lynx', 'msie', 'safari', 'ps3'
 					],
 					// Used as matches 2, 3 and 4 in version extraction - 3 is used as actual version number
 					versionSuffix = '(\\/|\\;?\\s|)([a-z0-9\\.\\+]*?)(\\;|dev|rel|\\)|\\s|$)',
 					// Names of known browsers
 					names = [
 						'camino', 'chrome', 'firefox', 'iceweasel', 'netscape', 'konqueror', 'lynx', 'msie', 'opera',
-						'safari', 'ipod', 'iphone', 'blackberry', 'ps3', 'rekonq', 'android'
+						'safari', 'ipod', 'iphone', 'blackberry', 'ps3', 'rekonq'
 					],
 					// Tanslations for conforming browser names
 					nameTranslations = [],
 					// Names of known layout engines
-					layouts = ['gecko', 'konqueror', 'msie', 'trident', 'opera', 'webkit'],
+					layouts = ['gecko', 'konqueror', 'msie', 'opera', 'webkit'],
 					// Translations for conforming layout names
 					layoutTranslations = [ ['konqueror', 'khtml'], ['msie', 'trident'], ['opera', 'presto'] ],
 					// Names of supported layout engines for version number
-					layoutVersions = ['applewebkit', 'gecko', 'trident'],
+					layoutVersions = ['applewebkit', 'gecko'],
 					// Names of known operating systems
-					platforms = ['win', 'wow64', 'mac', 'linux', 'sunos', 'solaris', 'iphone'],
+					platforms = ['win', 'mac', 'linux', 'sunos', 'solaris', 'iphone'],
 					// Translations for conforming operating system names
-					platformTranslations = [ ['sunos', 'solaris'], ['wow64', 'win'] ],
+					platformTranslations = [ ['sunos', 'solaris'] ],
 
 					/* Methods */
 
@@ -143,33 +143,18 @@
 				/* Edge Cases -- did I mention about how user agent string lie? */
 
 				// Decode Safari's crazy 400+ version numbers
-				if ( name === 'safari' && version > 400 ) {
+				if ( name.match( /safari/ ) && version > 400 ) {
 					version = '2.0';
 				}
 				// Expose Opera 10's lies about being Opera 9.8
-				if ( name === 'opera' && version >= 9.8 ) {
-					match = ua.match( /\bversion\/([0-9\.]*)/ );
+				if ( name === 'opera' && version >= 9.8) {
+					match = ua.match( /version\/([0-9\.]*)/i );
 					if ( match && match[1] ) {
 						version = match[1];
 					} else {
 						version = '10';
 					}
 				}
-				// And Opera 15's lies about being Chrome
-				if ( name === 'chrome' && ( match = ua.match( /\bopr\/([0-9\.]*)/ ) ) ) {
-					if ( match[1] ) {
-						name = 'opera';
-						version = match[1];
-					}
-				}
-				// And IE 11's lies about being not being IE
-				if ( layout === 'trident' && layoutversion >= 7 && ( match = ua.match( /\brv[ :\/]([0-9\.]*)/ ) ) ) {
-					if ( match[1] ) {
-						name = 'msie';
-						version = match[1];
-					}
-				}
-
 				versionNumber = parseFloat( version, 10 ) || 0.0;
 
 				/* Caching */
@@ -188,60 +173,45 @@
 		},
 
 		/**
-		 * Checks the current browser against a support map object.
+		 * Checks the current browser against a support map object to determine if the browser has been black-listed or
+		 * not. If the browser was not configured specifically it is assumed to work. It is assumed that the body
+		 * element is classified as either "ltr" or "rtl". If neither is set, "ltr" is assumed.
 		 *
 		 * A browser map is in the following format:
 		 * {
-		 *   // Multiple rules with configurable operators
-		 *   'msie': [['>=', 7], ['!=', 9]],
-		 *    // Match no versions
-		 *   'iphone': false,
-		 *    // Match any version
-		 *   'android': null
-		 * }
-		 *
-		 * It can optionally be split into ltr/rtl sections:
-		 * {
 		 *   'ltr': {
-		 *     'android': null,
+		 *     // Multiple rules with configurable operators
+		 *     'msie': [['>=', 7], ['!=', 9]],
+		 *      // Blocked entirely
 		 *     'iphone': false
 		 *   },
 		 *   'rtl': {
-		 *     'android': false,
-		 *     // rules are not inherited from ltr
+		 *     // Test against a string
+		 *     'msie': [['!==', '8.1.2.3']],
+		 *     // RTL rules do not fall through to LTR rules, you must explicity set each of them
 		 *     'iphone': false
 		 *   }
 		 * }
 		 *
-		 * @param {Object} map Browser support map
-		 * @param {Object} [profile] A client-profile object
-		 * @param {boolean} [exactMatchOnly=false] Only return true if the browser is matched, otherwise
-		 * returns true if the browser is not found.
+		 * @param map {Object} Browser support map
+		 * @param profile {Object} (optional) a client-profile object.
 		 *
-		 * @returns {boolean} The current browser is in the support map
+		 * @return Boolean true if browser known or assumed to be supported, false if blacklisted
 		 */
-		test: function ( map, profile, exactMatchOnly ) {
+		test: function ( map, profile ) {
 			/*jshint evil: true */
 
 			var conditions, dir, i, op, val;
 			profile = $.isPlainObject( profile ) ? profile : $.client.profile();
-			if ( map.ltr && map.rtl ) {
-				dir = $( 'body' ).is( '.rtl' ) ? 'rtl' : 'ltr';
-				map = map[dir];
-			}
+			dir = $( 'body' ).is( '.rtl' ) ? 'rtl' : 'ltr';
 			// Check over each browser condition to determine if we are running in a compatible client
-			if ( typeof map !== 'object' || map[profile.name] === undefined ) {
-				// Not found, return true if exactMatchOnly not set, false otherwise
-				return !exactMatchOnly;
-			}
-			conditions = map[profile.name];
-			if ( conditions === false ) {
-				// Match no versions
-				return false;
-			}
-			if ( conditions === null ) {
-				// Match all versions
+			if ( typeof map[dir] !== 'object' || map[dir][profile.name] === undefined ) {
+				// Unknown, so we assume it's working
 				return true;
+			}
+			conditions = map[dir][profile.name];
+			if ( conditions === false ) {
+				return false;
 			}
 			for ( i = 0; i < conditions.length; i++ ) {
 				op = conditions[i][0];

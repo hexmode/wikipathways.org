@@ -13,9 +13,8 @@ class BitmapScalingTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider provideNormaliseParams
-	 * @covers BitmapHandler::normaliseParams
 	 */
-	public function testNormaliseParams( $fileDimensions, $expectedParams, $params, $msg ) {
+	function testNormaliseParams( $fileDimensions, $expectedParams, $params, $msg ) {
 		$file = new FakeDimensionFile( $fileDimensions );
 		$handler = new BitmapHandler;
 		$valid = $handler->normaliseParams( $file, $params );
@@ -23,7 +22,7 @@ class BitmapScalingTest extends MediaWikiTestCase {
 		$this->assertEquals( $expectedParams, $params, $msg );
 	}
 
-	public static function provideNormaliseParams() {
+	function provideNormaliseParams() {
 		return array(
 			/* Regular resize operations */
 			array(
@@ -103,10 +102,7 @@ class BitmapScalingTest extends MediaWikiTestCase {
 		);
 	}
 
-	/**
-	 * @covers BitmapHandler::doTransform
-	 */
-	public function testTooBigImage() {
+	function testTooBigImage() {
 		$file = new FakeDimensionFile( array( 4000, 4000 ) );
 		$handler = new BitmapHandler;
 		$params = array( 'width' => '3700' ); // Still bigger than max size.
@@ -114,10 +110,7 @@ class BitmapScalingTest extends MediaWikiTestCase {
 			get_class( $handler->doTransform( $file, 'dummy path', '', $params ) ) );
 	}
 
-	/**
-	 * @covers BitmapHandler::doTransform
-	 */
-	public function testTooBigMustRenderImage() {
+	function testTooBigMustRenderImage() {
 		$file = new FakeDimensionFile( array( 4000, 4000 ) );
 		$file->mustRender = true;
 		$handler = new BitmapHandler;
@@ -126,12 +119,36 @@ class BitmapScalingTest extends MediaWikiTestCase {
 			get_class( $handler->doTransform( $file, 'dummy path', '', $params ) ) );
 	}
 
-	/**
-	 * @covers BitmapHandler::getImageArea
-	 */
-	public function testImageArea() {
+	function testImageArea() {
 		$file = new FakeDimensionFile( array( 7, 9 ) );
 		$handler = new BitmapHandler;
 		$this->assertEquals( 63, $handler->getImageArea( $file ) );
+	}
+}
+
+class FakeDimensionFile extends File {
+	public $mustRender = false;
+
+	public function __construct( $dimensions ) {
+		parent::__construct( Title::makeTitle( NS_FILE, 'Test' ),
+			new NullRepo( null ) );
+
+		$this->dimensions = $dimensions;
+	}
+
+	public function getWidth( $page = 1 ) {
+		return $this->dimensions[0];
+	}
+
+	public function getHeight( $page = 1 ) {
+		return $this->dimensions[1];
+	}
+
+	public function mustRender() {
+		return $this->mustRender;
+	}
+
+	public function getPath() {
+		return '';
 	}
 }

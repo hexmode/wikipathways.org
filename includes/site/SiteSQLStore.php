@@ -189,39 +189,6 @@ class SiteSQLStore implements SiteStore {
 	}
 
 	/**
-	 * Get a new ORMRow from a Site object
-	 *
-	 * @since 1.22
-	 *
-	 * @param Site
-	 *
-	 * @return ORMRow
-	 */
-	protected function getRowFromSite( Site $site ) {
-		$fields = array(
-			// Site data
-			'global_key' => $site->getGlobalId(), // TODO: check not null
-			'type' => $site->getType(),
-			'group' => $site->getGroup(),
-			'source' => $site->getSource(),
-			'language' => $site->getLanguageCode() === null ? '' : $site->getLanguageCode(),
-			'protocol' => $site->getProtocol(),
-			'domain' => strrev( $site->getDomain() ) . '.',
-			'data' => $site->getExtraData(),
-
-			// Site config
-			'forward' => $site->shouldForward(),
-			'config' => $site->getExtraConfig(),
-		);
-
-		if ( $site->getInternalId() !== null ) {
-			$fields['id'] = $site->getInternalId();
-		}
-
-		return new ORMRow( $this->sitesTable, $fields );
-	}
-
-	/**
 	 * Fetches the site from the database and loads them into the sites field.
 	 *
 	 * @since 1.21
@@ -324,11 +291,28 @@ class SiteSQLStore implements SiteStore {
 		$localIds = array();
 
 		foreach ( $sites as $site ) {
+			$fields = array(
+				// Site data
+				'global_key' => $site->getGlobalId(), // TODO: check not null
+				'type' => $site->getType(),
+				'group' => $site->getGroup(),
+				'source' => $site->getSource(),
+				'language' => $site->getLanguageCode() === null ? '' : $site->getLanguageCode(),
+				'protocol' => $site->getProtocol(),
+				'domain' => strrev( $site->getDomain() ) . '.',
+				'data' => $site->getExtraData(),
+
+				// Site config
+				'forward' => $site->shouldForward(),
+				'config' => $site->getExtraConfig(),
+			);
+
 			if ( $site->getInternalId() !== null ) {
+				$fields['id'] = $site->getInternalId();
 				$internalIds[] = $site->getInternalId();
 			}
 
-			$siteRow = $this->getRowFromSite( $site );
+			$siteRow = new ORMRow( $this->sitesTable, $fields );
 			$success = $siteRow->save( __METHOD__ ) && $success;
 
 			foreach ( $site->getLocalIds() as $idType => $ids ) {
