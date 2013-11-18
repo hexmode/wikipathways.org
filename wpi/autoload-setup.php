@@ -1,5 +1,13 @@
 <?php
 
+define( 'CONTENT_MODEL_PATHWAY', 'pathway' );
+$wgContentHandlerTextFallback = 'fail';
+$wgExtraNamespaces[NS_PATHWAY]            = 'Pathway';
+$wgNamespaceContentModels[NS_PATHWAY]     = CONTENT_MODEL_PATHWAY;
+$wgContentHandlers[CONTENT_MODEL_PATHWAY] = 'PathwayHandler';
+$wgAutoloadClasses['PathwayContent']      = "$IP/wpi/extensions/Pathways/PathwayContent.php";
+$wgAutoloadClasses['PathwayHandler']      = "$IP/wpi/extensions/Pathways/PathwayHandler.php";
+
 $wgAutoloadClasses['FeaturedPathway']     = "$IP/wpi/extensions/PathwayOfTheDay/FeaturedPathway.php";
 $wgAutoloadClasses['GpmlHistoryPager']    = "$IP/wpi/extensions/pathwayHistory.php";
 $wgAutoloadClasses['Interaction']         = "$IP/wpi/extensions/Pathways/PathwayData.php";
