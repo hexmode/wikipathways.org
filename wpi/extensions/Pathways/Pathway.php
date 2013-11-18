@@ -526,7 +526,7 @@ class Pathway {
 		$gpmlTitle = $this->getTitleObject();
 		$gpmlRef = Revision::newFromTitle($gpmlTitle, $this->revision);
 
-		return $gpmlRef == NULL ? "" : $gpmlRef->getText();
+		return $gpmlRef == NULL ? "" : $gpmlRef->getContent();
 	}
 
 	/**
@@ -539,7 +539,6 @@ class Pathway {
 
 
 	private function getPath( $fileType ) {
-		/* Duplication, ugh! */
 		$repo = RepoGroup::singleton()->getLocalRepo();
 		$img = LocalFile::newFromTitle( $this->getFileTitle( $fileType ), $repo );
 
@@ -551,10 +550,7 @@ class Pathway {
 	 * \param the file type to get the name for (one of the FILETYPE_* constants)
 	 */
 	public function getFileName($fileType) {
-		/* Duplication, ugh! */
-		$repo = RepoGroup::singleton()->getLocalRepo();
-		$img = LocalFile::newFromTitle( $this->getFileTitle( $fileType ), $repo );
-		$path = $img->getPath();
+		$path = $this->getPath();
 
 		if( $img->isLocal() && $repo->fileExists( $path ) ) {
 			return $repo->getLocalReference( $path )->getPath();

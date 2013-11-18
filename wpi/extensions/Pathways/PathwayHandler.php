@@ -16,7 +16,12 @@ class PathwayHandler extends ContentHandler {
 	 * @return string Serialized form of the content
 	 */
 	public function serializeContent( Content $content, $format = null ) {
-		var_dump( __METHOD__ );
+		global $wgTitle;
+
+		if ( !( $content instanceOf PathwayContent ) ) {
+			throw new MWException( "Expected PathwayContent object, got " . get_class( $content ) );
+		}
+		return $content->getHtml( $wgTitle );
 	}
 
 	/**
@@ -29,7 +34,7 @@ class PathwayHandler extends ContentHandler {
 	 * @return Content the Content object created by deserializing $blob
 	 */
 	public function unserializeContent( $blob, $format = null ) {
-		var_dump( __METHOD__ );
+		return new PathwayContent( $format );
 	}
 
 	/**
@@ -41,7 +46,7 @@ class PathwayHandler extends ContentHandler {
 	 * @return Content
 	 */
 	public function makeEmptyContent() {
-		var_dump( __METHOD__ );
+		return new PathwayContent();
 	}
 
 }

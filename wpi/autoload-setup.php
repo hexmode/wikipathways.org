@@ -1,7 +1,7 @@
 <?php
 
 define( 'CONTENT_MODEL_PATHWAY', 'pathway' );
-$wgContentHandlerTextFallback = 'fail';
+$wgContentHandlerTextFallback = 'serialize';
 $wgExtraNamespaces[NS_PATHWAY]            = 'Pathway';
 $wgNamespaceContentModels[NS_PATHWAY]     = CONTENT_MODEL_PATHWAY;
 $wgContentHandlers[CONTENT_MODEL_PATHWAY] = 'PathwayHandler';
