@@ -143,7 +143,7 @@ class StatisticsCache
 			$page_id = $pathway->getPageIdDB();
 			if (in_array($page_id, $taggedIds)) continue; // skip Tutorial pathways
 			$species = $pathway->getSpecies();
-			if ($species == '') continue; //skip pathways without a species category
+			if ( $species == '' || !isset( $pathwaysPerSpecies[$species] ) ) continue; //skip pathways without a species category
 			$pathwaysPerSpecies{$species} += 1;
 			$total += 1;
 		}
