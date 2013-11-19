@@ -446,3 +446,5 @@ $wpiXrefPanelDisableAttributes = true;
 
 require_once( "$IP/skins/bootstrap/bootstrap.php");
 $wgDefaultSkin = 'bootstrap';
+
+$wgUseGzip = false;

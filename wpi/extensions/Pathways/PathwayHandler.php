@@ -2,8 +2,9 @@
 
 class PathwayHandler extends ContentHandler {
 
-	public function __construct( $x ) {
-		parent::__construct( CONTENT_MODEL_PATHWAY, array( $x ) );
+	public function __construct( $modelId = CONTENT_MODEL_PATHWAY,
+		$formats = array( CONTENT_MODEL_PATHWAY ) ) {
+		parent::__construct( $modelId, $formats );
 	}
 
 	/**
@@ -34,7 +35,9 @@ class PathwayHandler extends ContentHandler {
 	 * @return Content the Content object created by deserializing $blob
 	 */
 	public function unserializeContent( $blob, $format = null ) {
-		return new PathwayContent( $format );
+		$this->checkFormat( $format );
+
+		return new PathwayContent( $blob );
 	}
 
 	/**

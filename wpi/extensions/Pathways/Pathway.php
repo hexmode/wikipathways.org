@@ -36,10 +36,6 @@ class Pathway {
 		if($updateCache) $this->updateCache();
 	}
 
-	function hasNewer( $tag, $diff ) {
-		return false;
-	}
-
 	public function getIdentifier() {
 		return $this->id;
 	}
@@ -55,12 +51,12 @@ class Pathway {
 	}
 
 	/**
-	   Constructor for this class.
-	   \param name The name of the pathway (without namespace and species prefix!)
-	   \param species The species (full name, e.g. Human)
-	   \param updateCache Whether the cache should be updated if needed
-	   @deprecated This constructor will be removed after the transision to stable identifiers.
-	*/
+	 * Constructor for this class.
+	 * \param name The name of the pathway (without namespace and species prefix!)
+	 * \param species The species (full name, e.g. Human)
+	 * \param updateCache Whether the cache should be updated if needed
+	 * @deprecated This constructor will be removed after the transision to stable identifiers.
+	 */
 	public static function newFromName($name, $species, $updateCache = false) {
 		wfDebug("Creating pathway: $name, $species\n");
 		if(!$name) throw new Exception("name argument missing in constructor for Pathway");
@@ -525,8 +521,7 @@ class Pathway {
 		$this->checkReadable();
 		$gpmlTitle = $this->getTitleObject();
 		$gpmlRef = Revision::newFromTitle($gpmlTitle, $this->revision);
-
-		return $gpmlRef == NULL ? "" : $gpmlRef->getContent();
+		return $gpmlRef == NULL ? "" : $gpmlRef->getRawText();
 	}
 
 	/**
@@ -539,36 +534,19 @@ class Pathway {
 
 
 	private function getPath( $fileType ) {
-		$repo = RepoGroup::singleton()->getLocalRepo();
-		$img = LocalFile::newFromTitle( $this->getFileTitle( $fileType ), $repo );
-
-		return $img->getPath();
+		throw new MWException( "don't use getPath" );
 	}
 
 	/**
 	 * Get the filename of a cached file following the naming conventions
 	 * \param the file type to get the name for (one of the FILETYPE_* constants)
 	 */
-	public function getFileName($fileType) {
-		$path = $this->getPath();
-
-		if( $img->isLocal() && $repo->fileExists( $path ) ) {
-			return $repo->getLocalReference( $path )->getPath();
+	public function getFileObj( $fileType ) {
+		if($this->revision) {
+			$rev_suffix = "_" . $this->revision;
 		}
-		return null;
-	}
-
-	/**
-	 * Gets the path that points to the cached file
-	 * \param the file type to get the name for (one of the FILETYPE_* constants)
-	 * \param whether to update the cache (if needed) or not
-	 */
-	public function getFileLocation($fileType, $updateCache = true) {
-		if($updateCache) { //Make sure to have up to date version
-			$this->updateCache($fileType);
-		}
-		$fn = $this->getFileName($fileType);
-		return $fn;
+		$filename = "{$this->getIdentifier()}{$rev_suffix}";
+		return PathwayCache::newFromKey( $filename, $fileType );
 	}
 
 	/**
@@ -1033,7 +1011,8 @@ class Pathway {
 			}
 			return;
 		}
-		if($this->isOutOfDate($fileType)) {
+		$obj = $this->getFileObj( $fileType );
+		if(!$obj->isCacheGood()) {
 			wfDebug("\t->Updating cached file for $fileType\n");
 			switch($fileType) {
 				case FILETYPE_PNG:
@@ -1179,9 +1158,8 @@ class Pathway {
 		$gpml = $this->getGpml();
 		/* FIXME -- THIS writes multiple times per request */
 		if($gpml) { //Only write cache if there is GPML
-			$file = $this->getFileLocation(FILETYPE_GPML, false);
-			writeFile($file, $gpml);
-			wfDebug( "GPML CACHE SAVED: $file\n" );
+			$obj = $this->getFileObj( FILETYPE_GPML );
+			$obj->saveText( $gpml );
 		}
 	}
 
@@ -1211,5 +1189,17 @@ class Pathway {
 		}
 		$ex = file_exists($output);
 		wfDebug("PNG CACHE SAVED: $output, $ex;\n");
+	}
+
+	/**
+	 * Gets the path that points to the cached file
+	 * \param the file type to get the name for (one of the FILETYPE_* constants)
+	 * \param whether to update the cache (if needed) or not
+	 */
+	public function getFileLocation( $fileType, $updateCache = true ) {
+		if( $updateCache ) {
+			$this->updateCache( $fileType );
+		}
+		return $this->getFileObj( $fileType )->getPath();
 	}
 }

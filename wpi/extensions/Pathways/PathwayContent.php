@@ -32,6 +32,10 @@
  */
 class PathwayContent extends AbstractContent {
 
+	public function __construct( $text ) {
+		parent::__construct( $text, CONTENT_MODEL_PATHWAY );
+	}
+
 	/**
 	 * @since 1.21
 	 *

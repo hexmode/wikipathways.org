@@ -3,8 +3,10 @@
 define( 'CONTENT_MODEL_PATHWAY', 'pathway' );
 $wgContentHandlerTextFallback = 'serialize';
 $wgExtraNamespaces[NS_PATHWAY]            = 'Pathway';
-$wgNamespaceContentModels[NS_PATHWAY]     = CONTENT_MODEL_PATHWAY;
+$wgNamespaceContentModels[NS_PATHWAY]     = CONTENT_MODEL_WIKITEXT;
 $wgContentHandlers[CONTENT_MODEL_PATHWAY] = 'PathwayHandler';
+
+$wgAutoloadClasses['PathwayCache']      = "$IP/wpi/extensions/Pathways/PathwayCache.php";
 $wgAutoloadClasses['PathwayContent']      = "$IP/wpi/extensions/Pathways/PathwayContent.php";
 $wgAutoloadClasses['PathwayHandler']      = "$IP/wpi/extensions/Pathways/PathwayHandler.php";
 
