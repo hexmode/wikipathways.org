@@ -243,11 +243,11 @@ function writeFile($filename, $data) {
 	if(!$handle) {
 		throw new MWException ("Couldn't open file $filename");
 	}
-	if(fwrite($handle, $data) === FALSE) {
+	if(fwrite($handle, $data) === false) {
 		throw new MWException ("Couldn't write file $filename");
 	}
-	if(fclose($handle) === FALSE) {
-		throw new MWException ("Couln't close file $filename");
+	if(fclose($handle) === false) {
+		throw new MWException ("Couldn't close file $filename");
 	}
 }
 
