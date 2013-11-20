@@ -75,13 +75,6 @@ class XrefPanel {
 
 		$jsRequireJQuery = true;
 
-		//Add CSS
-		//Hack to add a css that's not in the skins directory
-		$oldStylePath = $wgStylePath;
-		$wgStylePath = dirname($cssJQueryUI);
-		$wgOut->addStyle(basename($cssJQueryUI));
-		$wgStylePath = $oldStylePath;
-
 		$wpiJavascriptSources = array_merge($wpiJavascriptSources, self::getJsDependencies());
 		$wpiJavascriptSnippets = array_merge($wpiJavascriptSnippets, self::getJsSnippets());
 	}
