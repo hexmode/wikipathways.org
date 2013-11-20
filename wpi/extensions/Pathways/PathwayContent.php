@@ -33,7 +33,12 @@
 class PathwayContent extends AbstractContent {
 
 	public function __construct( $text ) {
-		parent::__construct( $text, CONTENT_MODEL_PATHWAY );
+		parent::__construct( CONTENT_MODEL_PATHWAY );
+		$this->mText = $text;
+	}
+
+	public function getModel() {
+		return CONTENT_MODEL_PATHWAY;
 	}
 
 	/**
@@ -85,7 +90,7 @@ class PathwayContent extends AbstractContent {
 	 *
 	 * @note Caller must be aware of content model!
 	 */
-	public function getNativeData() { return null; }
+	public function getNativeData() { return $this->mText; }
 
 	/**
 	 * Returns the content's nominal size in bogo-bytes.

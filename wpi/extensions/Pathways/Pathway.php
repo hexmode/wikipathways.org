@@ -176,18 +176,7 @@ class Pathway {
 	 * Find out if the current user has permissions to view this pathway
 	 */
 	public function isReadable() {
-		return $this->getTitleObject()->userCan('read');
-	}
-
-	/**
-	 * Utility function that throws an exception if the
-	 * current user doesn't have permissions to view the
-	 * pathway.
-	 */
-	private function checkReadable() {
-		if(!$this->isReadable()) {
-			throw new Exception("Current user doesn't have permissions to view this pathway");
-		}
+		throw new MWException("use ->getTitleObject()->userCan('read'); instead");
 	}
 
 	/**
@@ -518,10 +507,14 @@ class Pathway {
 	 * used, see Pathway::getActiveRevision)
 	 */
 	public function getGpml() {
-		$this->checkReadable();
-		$gpmlTitle = $this->getTitleObject();
-		$gpmlRef = Revision::newFromTitle($gpmlTitle, $this->revision);
-		return $gpmlRef == NULL ? "" : $gpmlRef->getRawText();
+		if ( $this->getTitleObject()->userCan('read') ) {
+			$gpmlTitle = $this->getTitleObject();
+			$gpmlRef = Revision::newFromTitle($gpmlTitle, $this->revision);
+			return $gpmlRef == null ? null : $gpmlRef->getContent();
+		} else {
+			# permission denied -- use internal MW function
+			throw new MWException("Fill in this permission denied bit");
+		}
 	}
 
 	/**
@@ -1102,10 +1095,6 @@ class Pathway {
 	private function saveConvertedCache($fileType) {
 		# Convert gpml to fileType
 		$gpmlFile = $this->getFileLocation(FILETYPE_GPML);
-		if( !file_exists( $gpmlFile ) ) {
-			throw new MWException( "File does not exist: $gpmlFile" );
-		}
-		$gpmlFile = realpath( $gpmlFile );
 		$conFile = $this->getFileLocation($fileType, false);
 		$outFile = basename( $gpmlFile, FILETYPE_GPML );
 
@@ -1113,7 +1102,7 @@ class Pathway {
 			$conFile = wfTempDir() . "/$outFile$fileType";
 		}
 		wfDebug( "Saving $gpmlFile to $fileType in $conFile\n" );
-		self::convert($gpmlFile, $conFile);
+		$this->convert($gpmlFile, $conFile);
 		return $conFile;
 	}
 
@@ -1122,9 +1111,9 @@ class Pathway {
 	 * file format. The file format will be determined by the
 	 * output file extension.
 	 */
-	public static function convert($gpmlFile, $outFile) {
+	public function convert($gpmlFile, $outFile) {
 		global $wgMaxShellMemory;
-		$gpmlFile = realpath( $gpmlFile );
+		$this->saveGpmlCache();
 		$baseName = basename( $outFile );
 		$final = wfTempDir() . "/$baseName";
 
@@ -1156,9 +1145,9 @@ class Pathway {
 
 	private function saveGpmlCache() {
 		$gpml = $this->getGpml();
-		/* FIXME -- THIS writes multiple times per request */
-		if($gpml) { //Only write cache if there is GPML
-			$obj = $this->getFileObj( FILETYPE_GPML );
+
+		$obj = $this->getFileObj( FILETYPE_GPML );
+		if($gpml !== null && !$obj->isCacheGood()) { //Only write cache if there is GPML
 			$obj->saveText( $gpml );
 		}
 	}

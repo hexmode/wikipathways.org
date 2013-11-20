@@ -74,4 +74,22 @@ class PathwayCache extends FileCacheBase {
 		return $this->cachePath();
 	}
 
+	public function saveText( $pathway ) {
+		if ( $this->useGzip() ) {
+			$text = gzencode( $pathway->serialize() );
+		} else {
+			$text = $pathway->serialize();
+		}
+
+		$this->checkCacheDirs(); // build parent dir
+		if ( !file_put_contents( $this->cachePath(), $text, LOCK_EX ) ) {
+			wfDebug( __METHOD__ . "() failed saving ". $this->cachePath() . "\n" );
+			$this->mCached = null;
+			return false;
+		}
+
+		$this->mCached = true;
+		return $text;
+	}
+
 }

@@ -17,12 +17,10 @@ class PathwayHandler extends ContentHandler {
 	 * @return string Serialized form of the content
 	 */
 	public function serializeContent( Content $content, $format = null ) {
-		global $wgTitle;
-
 		if ( !( $content instanceOf PathwayContent ) ) {
 			throw new MWException( "Expected PathwayContent object, got " . get_class( $content ) );
 		}
-		return $content->getHtml( $wgTitle );
+		return $content->getNativeData();
 	}
 
 	/**
