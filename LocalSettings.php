@@ -24,6 +24,8 @@ $path = array( $IP, "$IP/includes", "$IP/languages" );
 set_include_path( implode( PATH_SEPARATOR, $path ) . PATH_SEPARATOR . get_include_path() );
 
 require_once( "includes/DefaultSettings.php" );
+# Load passwords/usernames
+require_once('pass.php');
 
 # If PHP's memory limit is very low, some operations may fail.
 ini_set( 'memory_limit', '128M' );
@@ -40,10 +42,6 @@ if ( $wgCommandLineMode ) {
 }
 
 $wgSitename         = "WikiPathways";
-
-## The URL base path to the directory containing the wiki;
-## defaults for all runtime URL paths are based off of this.
-$wgScriptPath       = '';
 
 $wgThumbnailScriptPath = "$wgScriptPath/thumb.php";
 
@@ -81,8 +79,6 @@ require_once( "$IP/extensions/ConfirmEdit/ConfirmEdit.php" );
 require_once( "$IP/extensions/ConfirmEdit/QuestyCaptcha.php" );
 $wgCaptchaClass = 'QuestyCaptcha';
 
-# Load passwords/usernames
-require_once('pass.php');
 # Load globals
 require_once('wpi/globals.php');
 
