@@ -615,10 +615,11 @@ class Pathway {
 
 	/**
 	 * Get first revision for current title
+	 * @FIXME this should use the Revision::fetchRevision() method, not fetchAllRevisions() which never worked anyway (and was removed.)v
 	 */
 	public function getFirstRevision() {
 		if($this->exists() && !$this->firstRevision) {
-			$revs = Revision::fetchAllRevisions($this->getTitleObject());
+			$revs = LocalHooks::fetchAllRevisions($this->getTitleObject());
 			$revs->seek($revs->numRows() - 1);
 			$row = $revs->fetchRow();
 			$this->firstRevision = Revision::newFromId($row['rev_id']);
@@ -640,6 +641,7 @@ class Pathway {
 	 * the archive.
 	 */
 	public function getLastRevisionPriorToDate($timestamp) {
+		throw new Exception( "getLastRevisionPriorToDate() doesn't do what you think. It uses the old fetchAllRevisions which was broken and has been removed.  See https://bugzilla.wikimedia.org/18821" );
 		/* This code should be more efficient than what was here, but
 		 * it is untested.  Leaving it here because I couldn't find
 		 * any use of this function. */
@@ -647,7 +649,7 @@ class Pathway {
 			$this->getTitleObject(), $timestamp );
 		return $rev->getPrevious();
 
-		$revs =  Revision::fetchAllRevisions( $this->getTitleObject() );
+		$revs =  LocalHooks::fetchAllRevisions( $this->getTitleObject() );
 		foreach($revs as $eachRev){
 			$revTime = $eachRev->rev_timestamp;
 			print "$revTime\n";

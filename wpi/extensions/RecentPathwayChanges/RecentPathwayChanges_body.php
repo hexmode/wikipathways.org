@@ -1,7 +1,4 @@
 <?php
-require_once("QueryPage.php");
-require_once("ChangesList.php");
-require_once("wpi/wpi.php");
 
 class RecentPathwayChanges extends SpecialPage
 {

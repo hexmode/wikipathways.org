@@ -426,6 +426,29 @@ content requires special attention. <b>Please keep your
 			return "Error: $e";
 		}
 	}
+
+	/**
+	 * Replacement for old method in Revision class
+	 * See Bug #18821
+	 */
+	static function fetchAllRevisions( Title $title ) {
+		$db = wfGetDB( DB_SLAVE );
+		$fields = Revision::selectFields();
+		$fields[] = 'page_namespace';
+		$fields[] = 'page_title';
+		$fields[] = 'page_latest';
+		$res = $db->select(
+			array( 'page', 'revision' ),
+			$fields,
+			array(
+				'page_namespace' => $title->getNamespace(),
+				'page_title'     => $title->getDBkey(),
+				'page_id=rev_page' ),
+			__METHOD__,
+			array( 'LIMIT' => 1 ) ); /* See Bug #18821 */
+		$ret = $db->resultObject( $res );
+		return $ret;
+	}
 }
 
 $wgHooks['SpecialListusersFormatRow'][] = 'LocalHooks::addSnoopLink';
