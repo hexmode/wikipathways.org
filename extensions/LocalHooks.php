@@ -299,6 +299,7 @@ content requires special attention. <b>Please keep your
 		$magicWords['pathwayOfTheDay'] = array( 0, 'pathwayOfTheDay' );
 		$magicWords['pathwayInfo'] = array( 0, 'pathwayInfo' );
 		$magicWords['maxImageSize'] = array( 0, 'maxImageSize' );
+		$magicWords['siteStats'] = array( 0, 'siteStats' );
 		return true;
 	}
 
@@ -312,6 +313,8 @@ content requires special attention. <b>Please keep your
 		$wgParser->setFunctionHook( 'maxImageSize',    'LocalHooks::getSize' );
 		$wgParser->setFunctionHook( 'pathwayOfTheDay', 'LocalHooks::getPathwayOfTheDay' );
 		$wgParser->setFunctionHook( 'pathwayInfo',     'LocalHooks::getPathwayInfoText' );
+		$wgParser->setFunctionHook( 'siteStats',       'wpiSiteStats::getSiteStats' );
+		return true;
 	}
 
 	static function getPathwayInfoText( &$parser, $pathway, $type ) {

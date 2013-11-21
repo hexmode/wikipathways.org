@@ -6,10 +6,11 @@ $wgExtraNamespaces[NS_PATHWAY]            = 'Pathway';
 $wgNamespaceContentModels[NS_PATHWAY]     = CONTENT_MODEL_PATHWAY;
 $wgContentHandlers[CONTENT_MODEL_PATHWAY] = 'PathwayHandler';
 
-$wgAutoloadClasses['PathwayCache']      = "$IP/wpi/extensions/Pathways/PathwayCache.php";
+$wgAutoloadClasses['wpiSiteStats']        = "$IP/wpi/extensions/siteStats.php";
+$wgAutoloadClasses['StatisticsCache']     = "$IP/wpi/StatisticsCache.php";
+$wgAutoloadClasses['PathwayCache']        = "$IP/wpi/extensions/Pathways/PathwayCache.php";
 $wgAutoloadClasses['PathwayContent']      = "$IP/wpi/extensions/Pathways/PathwayContent.php";
 $wgAutoloadClasses['PathwayHandler']      = "$IP/wpi/extensions/Pathways/PathwayHandler.php";
-
 $wgAutoloadClasses['FeaturedPathway']     = "$IP/wpi/extensions/PathwayOfTheDay/FeaturedPathway.php";
 $wgAutoloadClasses['GpmlHistoryPager']    = "$IP/wpi/extensions/pathwayHistory.php";
 $wgAutoloadClasses['Interaction']         = "$IP/wpi/extensions/Pathways/PathwayData.php";
@@ -38,7 +39,6 @@ $wfPathwayViewerPath = WPI_URL . "/extensions/PathwayViewer";
 
 /* Need autoloader here */
 require_once( "$IP/wpi/wpi.php" );
-require_once( "$IP/wpi/extensions/siteStats.php" );
 require_once( "$IP/wpi/extensions/pathwayInfo.php" );
 require_once( "$IP/wpi/extensions/magicWords.php" );
 require_once( "$IP/wpi/extensions/PopularPathwaysPage2/PopularPathwaysPage.php" );
