@@ -233,7 +233,7 @@ class CurationTag {
 	 **/
 	public static function getTagDefinition() {
 		if(!self::$tagDefinition) {
-			$ref = wfMsg( self::$TAG_LIST );
+			$ref = wfMessage( self::$TAG_LIST )->text();
 			if(!$ref) {
 				throw new Exception("No content for [[".self::$TAG_LIST_PAGE."]].  It must be a valid XML document.");
 			}

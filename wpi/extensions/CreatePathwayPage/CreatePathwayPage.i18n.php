@@ -6,3 +6,16 @@ $messages['en'] = array(
 			'wpi-createpage-permission'    => "You do not have the necessary permissions."
 
 );
+
+/**
+ * Aliases for Create Pathways
+ */
+
+$specialPageAliases = array();
+
+/** English
+ * @author Mark A. Hershberger
+ */
+$specialPageAliases[ 'en' ] = array(
+		'CreatePathwayPage' => array( 'CreatePathwayPage', 'Create Pathway' ),
+);

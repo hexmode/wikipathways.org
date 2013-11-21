@@ -309,21 +309,20 @@ class ListPathwaysPager extends BasePathwaysPager {
 
 		$link = "";
 		$queries = $this->getPagingQueries();
-		$opts = array( 'parsemag', 'escapenoentities' );
 
 		if( isset( $queries['prev'] ) && $queries['prev'] ) {
-			$link .= $this->getSkin()->makeKnownLinkObj( $this->getTitle(),
-				wfMsgExt( 'prevn', $opts, $wgLang->formatNum( $this->mLimit ) ),
-				wfArrayToCGI( $queries['prev'], $this->getDefaultQuery() ), '', '',
-				"style='float: left;'" );
-		}
+			$link .= $this->getSkin()->linkKnown( $this->getTitle(),
+				wfMessage( 'prevn', $wgLang->formatNum( $this->mLimit ) )->text(),
+				array( 'style' => 'float: left' ),
+				$queries['prev'] );
+			}
 
 		if( isset( $queries['next'] ) && $queries['next'] ) {
-			$link .= $this->getSkin()->makeKnownLinkObj( $this->getTitle(),
-				wfMsgExt( 'nextn', $opts, $wgLang->formatNum( $this->mLimit ) ),
-				wfArrayToCGI( $queries['next'], $this->getDefaultQuery() ), '', '',
-				"style='float: right;'" );
-		}
+			$link .= $this->getSkin()->linkKnown( $this->getTitle(),
+				wfMessage( 'nextn', $wgLang->formatNum( $this->mLimit ) )->text(),
+				array( 'style' => 'float: right' ),
+				$queries['next'] );
+			}
 
 		return $link;
 	}
@@ -398,13 +397,13 @@ class ThumbPathwaysPager extends BasePathwaysPager {
 		$link = "<a class='infinite-more-link' href='data:'></a>";
 
 		$queries = $this->getPagingQueries();
-		$opts = array( 'parsemag', 'escapenoentities' );
 
 		if( isset( $queries['next'] ) && $queries['next'] ) {
-			$link = $this->getSkin()->makeKnownLinkObj( $this->getTitle(),
-				wfMsgExt( 'nextn', $opts, $wgLang->formatNum( $this->mLimit ) ),
-				wfArrayToCGI( $queries['next'], $this->getDefaultQuery() ), '', '',
-				"class='infinite-more-link'" );
+
+			$link = $this->getSkin()->linkKnown( $this->getTitle(),
+				wfMessage( 'nextn', $wgLang->formatNum( $this->mLimit ) )->text(),
+				array( "class" => 'infinite-more-link' ),
+				$queries['next'] );
 		}
 
 		return $link;;

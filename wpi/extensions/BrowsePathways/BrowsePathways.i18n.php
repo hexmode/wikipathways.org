@@ -14,3 +14,17 @@ $messages['en'] = array(
 	'browsepathways-view-thumbs' => 'Thumbnail Mode',
 	'browsepathways-view-single' => 'Single Mode',
 );
+
+/**
+ * Aliases for Browse Pathways
+ */
+
+$specialPageAliases = array();
+
+/** English
+ * @author Mark A. Hershberger
+ */
+$specialPageAliases[ 'en' ] = array(
+		'BrowsePathways' => array( 'BrowsePathways', 'Browse Pathways' ),
+		'BrowsePathwaysPage' => array( 'BrowsePathwaysPage', 'Browse Pathways' ),
+);

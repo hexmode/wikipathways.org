@@ -12,6 +12,10 @@ class LegacyBrowsePathways extends LegacySpecialPage {
 
 class BrowsePathways extends SpecialPage {
 
+	function __construct() {
+		parent::__construct( "BrowsePathways" );
+	}
+
 	protected $maxPerPage  = 960;
 	protected $name        = 'BrowsePathways';
 	static private $defaultView = "thumbs";
@@ -21,10 +25,6 @@ class BrowsePathways extends SpecialPage {
 
 	# Determines, which message describes the input field 'nsfrom' (->SpecialPrefixindex.php)
 	var $nsfromMsg='browsepathwaysfrom';
-
-	function __construct( $empty = null ) {
-		SpecialPage::SpecialPage( $this->name );
-	}
 
 	static function initMsg( ) {
 		if( function_exists( 'wfLoadExtensionMessages' ) ) {
@@ -40,7 +40,8 @@ class BrowsePathways extends SpecialPage {
 	function execute( $par) {
 		global $wgOut, $wgRequest;
 
-		$wgOut->setPagetitle( wfmsg( "browsepathways" ) );
+		$wgOut->setPagetitle(
+			wfMessage( 'browsepathways' )->text() );
 
 		$this->species   = $wgRequest->getVal( "browse", 'Homo_sapiens' );
 		$this->tag       = $wgRequest->getVal( "tag", CurationTag::defaultTag() );
@@ -104,7 +105,7 @@ class BrowsePathways extends SpecialPage {
 	protected function getViewSelectionList( ) {
 		$sel = "\n<select onchange='this.form.submit()' name='view' class='namespaceselector'>\n";
 		foreach ( self::$views as $s ) {
-			$sel .= $this->makeSelectionOption( $s, $this->view, wfMsg("browsepathways-view-".$s) );
+			$sel .= $this->makeSelectionOption( $s, $this->view, wfMessage("browsepathways-view-".$s)->text() );
 		}
 		$sel .= "</select>\n";
 		return $sel;

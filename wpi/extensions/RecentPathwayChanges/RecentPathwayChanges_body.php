@@ -5,8 +5,8 @@ require_once("wpi/wpi.php");
 
 class RecentPathwayChanges extends SpecialPage
 {
-	function RecentPathwayChanges() {
-		SpecialPage::SpecialPage("RecentPathwayChanges");
+	function __construct() {
+		parent::__construct("RecentPathwayChanges");
 	}
 
 	function execute( $par ) {

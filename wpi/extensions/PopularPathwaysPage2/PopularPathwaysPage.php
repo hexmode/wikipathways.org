@@ -11,3 +11,4 @@ EOT;
 $wgAutoloadClasses['PopularPathwaysPage'] = dirname(__FILE__) . '/PopularPathwaysPage_body.php';
 $wgSpecialPages['PopularPathwaysPage'] = 'PopularPathwaysPage';
 $wgHooks['LoadAllMessages'][] = 'PopularPathwaysPage::loadMessages';
+$wgExtensionMessagesFiles['PopularPathwaysPage'] = dirname( __FILE__ ) . '/PopularPathwaysPage.i18n.php';
