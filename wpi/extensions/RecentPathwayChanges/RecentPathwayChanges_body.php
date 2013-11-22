@@ -1,33 +1,12 @@
 <?php
 
-class RecentPathwayChanges extends SpecialPage
-{
-	function __construct() {
-		parent::__construct("RecentPathwayChanges");
-	}
-
-	function execute( $par ) {
-		global $wgRequest, $wgOut;
-
-		$this->setHeaders();
-
-		list( $limit, $offset ) = wfCheckLimits();
-		//Recently changed pathway articles
-		$ppp = new RecentQueryPage(NS_PATHWAY);
-
-		$ppp->doQuery( $offset, $limit );
-
-		return true;
-	}
-
-}
-
-class RecentQueryPage extends QueryPage {
+class RecentPathwayChanges extends QueryPage {
 	var $requestedSort = '';
 	private $namespace;
 
-	function __construct($namespace) {
-		$this->namespace = $namespace;
+	function __construct() {
+		parent::__construct( "RecentPathwayChanges" );
+		$this->namespace = NS_PATHWAY;
 	}
 
 	function getName() {
@@ -49,26 +28,43 @@ class RecentQueryPage extends QueryPage {
 
 		$self = $this->getTitle();
 
-		# Form tag
-		$out = wfOpenElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
-
-		# Drop-down list
-		$out .= wfElement( 'label', array( 'for' => 'sort' ), 'Sort by:' ) . ' ';
-		$out .= wfOpenElement( 'select', array( 'name' => 'sort' ) );
 		$fields = array('Date','Title','User');
+		$fieldEl = "";
 		foreach( $fields as $field ) {
 			$attribs = array( 'value' => $field );
 			if( $field == $requestedSort )
 				$attribs['selected'] = 'selected';
-			$out .= wfElement( 'option', $attribs, $field );
+			$fieldEl .= Html::element( 'option', $attribs, $field );
 		}
-		$out .= wfCloseElement( 'select' ) . ' ';;# . wfElement( 'br' );
+		# Form tag
+		$out = Html::rawElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ),
+			Html::element( 'label', array( 'for' => 'sort' ), 'Sort by:' ) . ' ' .
+			Html::rawElement( 'select', array( 'name' => 'sort' ), $fieldEl ) .
 
-		# Submit button and form bottom
-		$out .= wfElement( 'input', array( 'type' => 'submit', 'value' => wfMessage( 'allpagessubmit' )->text() ) );
-		$out .= wfCloseElement( 'form' );
+			# Submit button and form bottom
+			Html::element( 'input', array( 'type' => 'submit', 'value' => wfMessage( 'allpagessubmit' )->text() ) )
+		);
 
 		return $out;
+	}
+
+	function getQueryInfo() {
+		return array(
+			'fields' => array(
+				"*",
+				"'RecentPathwayChanges' as type",
+				"rc_namespace as namespace",
+				"rc_title as title",
+				"UNIX_TIMESTAMP(rc_timestamp) as unix_time",
+				"rc_timestamp as value"
+			),
+			'tables' => 'recentchanges',
+			'query'  => array(
+				'rc_namespace' => $this->namespace,
+				'rc_bot'       => 0,
+				'rc_minor'     => 0
+			)
+		);
 	}
 
 	function getSQL() {
@@ -95,6 +91,7 @@ class RecentQueryPage extends QueryPage {
 			" AND rc_bot = 0
 			AND rc_minor = 0 ";
 
+		mwDebug::log( "getSQL: $sql" );
 		return $sql;
 	}
 
@@ -113,9 +110,8 @@ class RecentQueryPage extends QueryPage {
 
 	function formatResult( $skin, $result ) {
 		global $wgLang, $wgContLang;
-
 		$userPage = Title::makeTitle( NS_USER, $result->rc_user_text );
-		$name = $skin->makeLinkObj( $userPage, htmlspecialchars( $userPage->getText() ) );
+		$name = $skin->link( $userPage, htmlspecialchars( $userPage->getText() ) );
 		$date = date('d F Y', $result->unix_time);
 		$comment = ($result->rc_comment ? $result->rc_comment : "no comment");
 		$titleName = $result->title;
@@ -127,13 +123,13 @@ class RecentQueryPage extends QueryPage {
 		$title = Title::makeTitle( $result->namespace, $titleName );
 		$id = Title::makeTitle( $result->namespace, $result->title );
 
-		$this->message['hist'] = wfMsgExt( 'hist', array( 'escape'));
-		$histLink = $skin->makeKnownLinkObj($id, $this->message['hist'],
-			wfArrayToCGI( array(
-					'curid' => $result->rc_cur_id,
-					'action' => 'history')));
+		$this->message['hist'] = wfMessage( 'hist' )->escaped();
+		$histLink = $skin->linkKnown($id, $this->message['hist'], array(),
+			array(
+				'curid' => $result->rc_cur_id,
+				'action' => 'history'));
 
-		$this->message['diff'] = wfMsgExt('diff', array( 'escape'));
+		$this->message['diff'] = wfMessage( 'diff' )->escaped();
 		if( $result->rc_type > 0 ) { //not an edit of an existing page
 			$diffLink = $this->message['diff'];
 		} else {
@@ -143,14 +139,15 @@ class RecentQueryPage extends QueryPage {
 		}
 
 		$text = $wgContLang->convert($result->rc_comment);
-		$plink = $skin->makeKnownLinkObj( $id, htmlspecialchars( $wgContLang->convert($title->getBaseText())) );
+		$plink = $skin->linkKnown( $wgContLang->convert($id, $title->getBaseText()) );
 
 		/* Not link to history for now, later on link to our own pathway history
 		   $nl = wfMsgExt( 'nrevisions', array( 'parsemag', 'escape'),
 		   $wgLang->formatNum( $result->value ) );
-		   $nlink = $skin->makeKnownLinkObj( $nt, $nl, 'action=history' );
+		   $nlink = $skin->linkKnown( $nt, $nl, 'action=history' );
 		*/
 
-		return wfSpecialList("(".$diffLink.") . . ".$plink. ": <b>".$date."</b> by <b>".$name."</b>","<i>".$text."</i>");
+		global $wgLang;
+		return $wgLang->specialList("(".$diffLink.") . . ".$plink. ": <b>".$date."</b> by <b>".$name."</b>","<i>".$text."</i>");
 	}
 }
