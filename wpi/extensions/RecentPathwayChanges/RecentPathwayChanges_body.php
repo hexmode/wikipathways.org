@@ -74,7 +74,7 @@ class RecentQueryPage extends QueryPage {
 	function getSQL() {
 		global $wgUser, $wgOut;
 
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		list( $recentchanges, $watchlist ) = $dbr->tableNamesN( 'recentchanges', 'watchlist' );
 
 		//$days = 90;
