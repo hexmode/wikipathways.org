@@ -26,7 +26,7 @@ class MostEditedPathwayPage extends QueryPage {
 				"page_id as id",
 				"page_title as title",
 				"COUNT(*) as value"
-			)
+			),
 			'tables' => array( 'revision', 'page' ),
 			'query'  => array(
 				'page_namespace'   => $this->namespace,
