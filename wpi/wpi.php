@@ -10,10 +10,11 @@ try {
 		implode( PATH_SEPARATOR, array_map( 'realpath', array( $wpiDir, "$wpiDir/includes",
 					"$wpiDir/../includes", "$dir/../" ) ) ) );
 	putenv( "MW_INSTALL_PATH=$IP" );
-	require_once( "WebStart.php" );
-	require_once( "Wiki.php" );
-	require_once( 'globals.php' );
-
+	if ( !defined( 'MEDIAWIKI' ) ) {
+		require_once( "WebStart.php" );
+		require_once( "Wiki.php" );
+		require_once( 'globals.php' );
+	}
 	//Parse HTTP request (only if script is directly called!)
 	if(realpath($_SERVER['SCRIPT_FILENAME']) == realpath(__FILE__)) {
 		if( !isset( $_GET['action'] ) ) {
