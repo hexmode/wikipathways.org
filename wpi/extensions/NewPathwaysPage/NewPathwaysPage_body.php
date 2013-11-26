@@ -2,7 +2,7 @@
 
 class NewPathwaysPage extends QueryPage {
 	function __construct() {
-		parent::__construct("NewPathwaysPage");
+		parent::__construct(__CLASS__);
 	}
 
 	function getName() {
