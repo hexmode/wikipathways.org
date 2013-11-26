@@ -67,34 +67,6 @@ class RecentPathwayChanges extends QueryPage {
 		);
 	}
 
-	function getSQL() {
-		global $wgUser, $wgOut;
-
-		$dbr = wfGetDB( DB_SLAVE );
-		list( $recentchanges, $watchlist ) = $dbr->tableNamesN( 'recentchanges', 'watchlist' );
-
-		//$days = 90;
-		//$cutoff_unixtime = time() - ( $days * 86400 );
-		//$cutoff_unixtime = $cutoff_unixtime - ($cutoff_unixtime % 86400);
-		//$cutoff = $dbr->timestamp( $cutoff_unixtime );
-
-		$forceclause = $dbr->useIndexClause("rc_timestamp");
-
-		$sql = "SELECT *,
-				'RecentPathwayChanges' as type,
-				rc_namespace as namespace,
-				rc_title as title,
-				UNIX_TIMESTAMP(rc_timestamp) as unix_time,
-				rc_timestamp as value
-			FROM $recentchanges $forceclause
-			WHERE rc_namespace = " . $this->namespace .
-			" AND rc_bot = 0
-			AND rc_minor = 0 ";
-
-		mwDebug::log( "getSQL: $sql" );
-		return $sql;
-	}
-
 	function getOrder() {
 		global $wgRequest;
 		$requestedSort = $wgRequest->getVal('sort');
