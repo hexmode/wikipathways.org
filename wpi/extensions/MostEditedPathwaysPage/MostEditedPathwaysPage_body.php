@@ -1,9 +1,10 @@
 <?php
 
-class MostEditedPathwayPage extends QueryPage {
+class MostEditedPathwaysPage extends QueryPage {
 	private $namespace;
 
 	function __construct() {
+		parent::__construct(__CLASS__);
 		$this->namespace = NS_PATHWAY;
 		$this->taggedIds = CurationTag::getPagesForTag('Curation:Tutorial');
 	}
@@ -27,10 +28,15 @@ class MostEditedPathwayPage extends QueryPage {
 				"page_title as title",
 				"COUNT(*) as value"
 			),
-			'tables' => array( 'revision', 'page' ),
-			'query'  => array(
+			'tables' => array( 'revision', 'page'),
+			'conds'  => array(
 				'page_namespace'   => $this->namespace,
 				'page_is_redirect' => 0,
+                'page_id = rev_page'
+			),
+		    'options' => array(
+				'GROUP BY' => '1,2,3',
+				'HAVING' => 'value > 1'
 			)
 		);
 	}
@@ -42,13 +48,17 @@ class MostEditedPathwayPage extends QueryPage {
 		if (in_array($result->id, $this->taggedIds)){
 			return null;
 		}
-		$pathway = Pathway::newFromTitle($result->title);
-		if(!$pathway->isReadable()) return null; //Skip private pathways
-		$title = Title::makeTitle( $result->namespace, $pathway->getSpecies().":".$pathway->getName() );
-		$id = Title::makeTitle( $result->namespace, $result->title );
-		$text = $wgContLang->convert("$result->value revisions");
-		$plink = $skin->linkKnown( $id, $wgContLang->convert( $title->getBaseText() ) );
 
-		return wfSpecialList($plink, $text);
+		if ( $result->title !== null ) {
+			$pathway = Pathway::newFromTitle($result->title);
+			if(!$pathway->getTitleObject()->userCan('read')) return null; //Skip private pathways
+			$title = Title::makeTitle( $result->namespace, $pathway->getSpecies().":".$pathway->getName() );
+			$id = Title::makeTitle( $result->namespace, $result->title );
+			$text = $wgContLang->convert("$result->value revisions");
+			$plink = $skin->linkKnown( $id, $wgContLang->convert( $title->getBaseText() ) );
+
+			return wfSpecialList($plink, $text);
+		}
+		return null;
 	}
 }
