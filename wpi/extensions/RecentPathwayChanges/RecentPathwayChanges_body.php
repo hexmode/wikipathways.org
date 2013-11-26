@@ -63,8 +63,8 @@ class RecentPathwayChanges extends QueryPage {
 				'rc_namespace' => $this->namespace,
 				'rc_bot'       => 0,
 				'rc_minor'     => 0
-			)
-		);
+			),
+			"order" => $this->getOrder(),);
 	}
 
 	function getOrder() {

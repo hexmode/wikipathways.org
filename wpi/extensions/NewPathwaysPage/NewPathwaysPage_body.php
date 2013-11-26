@@ -1,26 +1,9 @@
 <?php
-require_once("QueryPage.php");
 
-class NewPathwaysPage extends SpecialPage {
-	function NewPathwaysPage() {
-		SpecialPage::SpecialPage("NewPathwaysPage");
+class NewPathwaysPage extends QueryPage {
+	function __construct() {
+		parent::__construct("NewPathwaysPage");
 	}
-
-	function execute( $par ) {
-		global $wgRequest, $wgOut;
-
-		$this->setHeaders();
-
-		list( $limit, $offset ) = wfCheckLimits();
-
-		$rcp = new RCQueryPage();
-
-		return $rcp->doQuery( $offset, $limit );
-	}
-
-}
-
-class RCQueryPage extends QueryPage {
 
 	function getName() {
 		return "NewPathwaysPage";
@@ -32,23 +15,24 @@ class RCQueryPage extends QueryPage {
 	}
 	function isSyndicated() { return false; }
 
-	function getSQL() {
-		$dbr =& wfGetDB( DB_SLAVE );
-		$page = $dbr->tableName( 'page');
-		$recentchanges = $dbr->tableName( 'recentchanges');
-
-		return
-			"SELECT DISTINCT 'Newpathwaypages' as type,
-					rc_namespace as namespace,
-					page_title as title,
-				rc_user as user_id,
-				rc_user_text as utext,
-				rc_timestamp as value
-			FROM $page, $recentchanges
-			WHERE page_title=rc_title
-			AND rc_new=1
-			AND rc_bot=0
-			AND rc_namespace=".NS_PATHWAY." ";
+	function getQueryInfo() {
+		return array(
+			'fields' => array(
+				"rc_namespace as namespace",
+				"page_title as title",
+				"rc_user as user_id",
+				"rc_user_text as utext",
+				"rc_timestamp as value"
+			),
+			"tables" => array( "recentchanges", "page" ),
+			"query" => array(
+				"page_title" => "rc_title",
+				"rc_new" => 1,
+				"rc_bot" => 0,
+				"rc_namespace" => NS_PATHWAY,
+				"rc_namespace" => "page_namespace"
+			)
+		);
 	}
 
 	function formatResult( $skin, $result ) {
@@ -56,16 +40,19 @@ class RCQueryPage extends QueryPage {
 		$titleName = $result->title;
 		try {
 			$pathway = Pathway::newFromTitle($result->title);
-			if(!$pathway->isReadable() || $pathway->isDeleted()) {
-				return ''; //Don't display this title when user is not allowed to read
+			if( !$pathway->getTitleObject->userCan( 'read' ) ||
+				$pathway->isDeleted() ) {
+				//Don't display this title when user is not allowed to read
+				return null;
 			}
 			$titleName = $pathway->getSpecies().":".$pathway->getName();
 		} catch(Exception $e) {}
 		$title = Title::makeTitle( $result->namespace, $titleName );
 		$id = Title::makeTitle( $result->namespace, $result->title );
-		$link = $skin->makeKnownLinkObj( $id, htmlspecialchars( $wgContLang->convert( $title->getBaseText() ) ) );
+		$link = $skin->linkKnown( $id, htmlspecialchars( $wgContLang->convert( $title->getBaseText() ) ) );
 		$nv = "<b>". $wgLang->date($result->value) . "</b> by <b>" . RequestContext::getMain()->getSkin()->userlink($result->user_id, $result->utext) ."</b>";
-		return wfSpecialList($link, $nv);
+
+		global $wgLang;
+		return $wgLang->specialList( $link, $nv );
 	}
 }
-
