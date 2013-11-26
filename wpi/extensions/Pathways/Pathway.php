@@ -256,7 +256,7 @@ class Pathway {
 		//Remove url and namespace from title
 		$id = self::parseIdentifier($title);
 		if(!$id) {
-			throw new Exception("Couldn't parse pathway identifier from title " . $title);
+			throw new MWException("Couldn't parse pathway identifier from title: '" . $title . "'");
 		}
 		return new Pathway($id, $checkCache);
 	}
