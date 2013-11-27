@@ -11,8 +11,6 @@ class PathwayViewer {
 		$jsRequireJQuery = true;
 
 		try {
-			$parser->disableCache();
-
 			//Force flash renderer
 			//<meta name="svg.render.forceflash" content="true">
 			$wgOut->addMeta('svg.render.forceflash', 'true');

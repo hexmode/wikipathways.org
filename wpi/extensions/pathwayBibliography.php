@@ -2,7 +2,6 @@
 
 class PathwayBibliography {
 	public static function output($input, $argv, $parser) {
-		$parser->disableCache();
 		try {
 			$pathway = Pathway::newFromTitle($parser->mTitle);
 			return self::getHTML($pathway, $parser);

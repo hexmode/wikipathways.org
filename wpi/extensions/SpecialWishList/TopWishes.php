@@ -3,15 +3,13 @@
 $wgExtensionFunctions[] = "wfWishList";
 
 function wfWishList() {
-    global $wgParser;
-    $wgParser->setHook( "wishlist", "renderWishlist" );
+	global $wgParser;
+	$wgParser->setHook( "wishlist", "renderWishlist" );
 }
 
 function renderWishlist( $input, $argv, &$parser ) {
-	$parser->disableCache();
-	
 	$wishlist = new PathwayWishList();
-	
+
 	$type = $argv['type'];
 	$tableAttr = $argv['tableattr'];
 	switch($type) {
@@ -23,7 +21,7 @@ function renderWishlist( $input, $argv, &$parser ) {
 			$limit = $argv['limit'];
 			$threshold = $argv['threshold'];
 			return createTopVoted($wishlist, $limit, $threshold, $tableAttr);
-			
+
 	}
 }
 
@@ -39,7 +37,7 @@ function createNewest($wishlist, $limit = 5, $tableAttr = '') {
 	$i = 0;
 	foreach($top as $wish) {
 		if($i >= $limit) break;
-			
+
 		$name = $wish->getTitle()->getText();
 		$date = off($wgLang->date($wish->getRequestDate()));
 		$href = SITE_URL . "/index.php/Special:SpecialWishlist";
@@ -47,7 +45,7 @@ function createNewest($wishlist, $limit = 5, $tableAttr = '') {
 		$i++;
 	}
 	$out = $out . "</ul><p align='right'><a href='$href'>more...</a></p>";
-	
+
 	/* table version
 	$out = "<table $tableAttr><tbody>";
 	$out .= "<th>Pathway<th>User<th>";
@@ -57,7 +55,7 @@ function createNewest($wishlist, $limit = 5, $tableAttr = '') {
 	$i = 0;
 	foreach($top as $wish) {
 		if($i >= $limit) break;
-			
+
 		$name = $wish->getTitle()->getText();
 		$user = $wish->getRequestUser();
 		$by = RequestContext::getMain()->getSkin()->userLink( $user, $user->getName());
@@ -87,7 +85,7 @@ function createTopVoted($wishlist, $limit = 5, $threshold = 1, $tableAttr = '') 
 	$threshold = (int)$threshold;
 	$limit = (int)$limit;
 	$top = $wishlist->getWishlist('votes');
-	
+
 	// list version
 	$out = "<ul>";
 	$i = 0;
@@ -95,14 +93,14 @@ function createTopVoted($wishlist, $limit = 5, $threshold = 1, $tableAttr = '') 
 		if($i >= $limit) break;
 		$votes = $wish->countVotes();
 		if($votes < $threshold) break;
-			
+
 		$name = $wish->getTitle()->getText();
 		$href = SITE_URL . "/index.php/Special:SpecialWishlist";
 		$out .= "<li><a href='$href'>$name</a> ($votes votes), ";
 		$i++;
 	}
 	$out = $out . "</ul><p align='right'><a href='$href'>more...</a></p>";
-	
+
 	/* table version
 	$out = "<table $tableAttr><tbody>";
 	$out .= "<th>Pathway<th>Votes";
@@ -114,11 +112,11 @@ function createTopVoted($wishlist, $limit = 5, $threshold = 1, $tableAttr = '') 
 		if($i >= $limit) break;
 		$votes = $wish->countVotes();
 		if($votes < $threshold) break;
-		
+
 		$name = $wish->getTitle()->getText();
 		//$user = $wish->getRequestUser();
 		//$by = RequestContext::getMain()->getSkin()->userLink( $user, $user->getName());
-		
+
 		$out .= "<tr><td>$name<td align='center'>$votes";
 		$i++;
 	}

@@ -4,21 +4,20 @@ $wgExtensionFunctions[] = 'wfSearchPathwaysBox';
 $wgHooks['LanguageGetMagic'][]  = 'wfSearchPathwaysBox_Magic';
 
 function wfSearchPathwaysBox() {
-    global $wgParser;
-    $wgParser->setFunctionHook( "searchPathwaysBox", "renderSearchPathwaysBox" );
+	global $wgParser;
+	$wgParser->setFunctionHook( "searchPathwaysBox", "renderSearchPathwaysBox" );
 }
 
 function wfSearchPathwaysBox_Magic( &$magicWords, $langCode ) {
-        $magicWords['searchPathwaysBox'] = array( 0, 'searchPathwaysBox' );
-        return true;
+		$magicWords['searchPathwaysBox'] = array( 0, 'searchPathwaysBox' );
+		return true;
 }
 
-# The callback function for converting the input text to HTML output
+/* The callback function for converting the input text to HTML output */
 function renderSearchPathwaysBox(&$parser) {
 	global $siteURL;
-	
-        $parser->disableCache();
-        $output= <<<SEARCH
+
+		$output= <<<SEARCH
 <form id="searchbox_cref" action="$siteURL/index.php">
 <table width="190" frame="void" border="0">
 <tr>
@@ -31,7 +30,7 @@ function renderSearchPathwaysBox(&$parser) {
 </table></form>
 SEARCH;
 
-        return array($output, 'isHTML'=>1, 'noparse'=>1);
+		return array($output, 'isHTML'=>1, 'noparse'=>1);
 }
 
 ?>

@@ -58,7 +58,6 @@ class GpmlHistoryPager extends HistoryPager {
 	}
 
 	static function history( $input, $argv, $parser ) {
-		$parser->disableCache();
 		try {
 			$pathway = Pathway::newFromTitle($parser->mTitle);
 			return self::getHistory($pathway);

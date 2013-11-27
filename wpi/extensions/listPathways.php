@@ -7,20 +7,17 @@ define('PAR_PATHWAYS', 'pathways');
 $wgExtensionFunctions[] = 'wfListPathways';
 
 function wfListPathways() {
-        global $wgParser;
-        $wgParser->setHook('listPathways', 'createPathwayList');
+		global $wgParser;
+		$wgParser->setHook('listPathways', 'createPathwayList');
 }
 
 function createPathwayList($input, $argv, &$parser) {
-	$parser->disableCache();
-
 	//Try to get the input parameters from $input and $argv
 	if($input) $pwString = $input . SEPARATOR;
 
-
 	//Try to get the input from the url request
 	if($_GET[PAR_PATHWAYS]) $pwString .= $_GET[PAR_PATHWAYS];
-	
+
 	//Parse the pathway array
 	$pathways = explode(SEPARATOR, $pwString);
 
@@ -34,7 +31,7 @@ function createPathwayList($input, $argv, &$parser) {
 			//Ignore..
 		}
 	}
-	
+
 	//Create HTML
 	foreach($pwTagList as $pwTag) {
 		$html .= tag('li', $pwTag);
@@ -42,4 +39,3 @@ function createPathwayList($input, $argv, &$parser) {
 	$html = tag('ul', $html);
 	return $html;
 }
-?>

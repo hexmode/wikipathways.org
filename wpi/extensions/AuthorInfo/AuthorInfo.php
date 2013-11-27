@@ -12,7 +12,6 @@ function wfAuthorInfo() {
 
 function renderAuthorInfo($input, $argv, $parser) {
 	global $wfAuthorInfoPath;
-	$parser->disableCache();
 
 	if( isset( $argv["limit"] ) )
 		$limit = htmlentities( $argv["limit"] );

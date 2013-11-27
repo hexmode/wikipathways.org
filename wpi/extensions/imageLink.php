@@ -22,7 +22,6 @@ function wfImageLink_Magic( &$magicWords, $langCode ) {
  */
 function renderImageLink( &$parser, $img, $width = 200, $align = '', $caption = '', $namespace = '', $pagetitle = '', $tooltip = '', $id='imglink') {
 	global $wgUser;
-	$parser->disableCache();
 	try {
 
 		$caption = html_entity_decode($caption);        //This can be quite dangerous (injection),

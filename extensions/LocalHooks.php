@@ -350,7 +350,6 @@ content requires special attention. <b>Please keep your
 	static function getPathwayInfoText( &$parser, $pathway, $type ) {
 		wfProfileIn( __METHOD__ );
 		global $wgRequest;
-		$parser->disableCache();
 		try {
 			$pathway = Pathway::newFromTitle($pathway);
 			$oldid = $wgRequest->getval('oldid');
@@ -392,7 +391,6 @@ content requires special attention. <b>Please keep your
 
 	static function getPathwayOfTheDay( &$parser, $date, $listpage = 'FeaturedPathways', $isTag = false) {
 		wfProfileIn( __METHOD__ );
-		$parser->disableCache();
 		wfDebug("GETTING PATHWAY OF THE DAY for date: $date\n");
 		try {
 			if($isTag) {

@@ -38,8 +38,6 @@ function createApplet( &$parser, $idClick = 'direct', $idReplace = 'pwThumb', $n
 		return ""; //Don't return any applet code
 	}
 
-	$parser->disableCache();
-
 	$param = array(); //Extra parameters
 	$main = 'org.wikipathways.applet.gui.';
 	$noresize = 'false';

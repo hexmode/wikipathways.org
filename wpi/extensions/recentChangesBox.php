@@ -21,7 +21,6 @@ class RecentChangesBox {
 	}
 
 	public static function create($input, $argv, $parser) {
-		$parser->disableCache();
 
 		$ns = $argv['namespace'];
 		$limit = $argv['limit'];

@@ -8,7 +8,6 @@ class PathwayThumb {
 		global $wgUser, $wgRequest;
 
 		$pwTitle = urldecode ($pwTitleEncoded);
-		$parser->disableCache();
 		try {
 			$pathway = Pathway::newFromTitle($pwTitle);
 			$revision = $wgRequest->getVal('oldid');
