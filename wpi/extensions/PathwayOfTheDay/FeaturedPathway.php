@@ -17,12 +17,14 @@ class FeaturedPathway extends PathwayOfTheDay {
 	on the wiki page FeaturedPathway
 	**/
 	protected function fetchRandomPathway() {
+		wfProfileIn( __METHOD__ );
 		wfDebug("Fetching random pathway...\n");
 		$pathwayList = Pathway::parsePathwayListPage($this->listPage);
 		if(count($pathwayList) == 0) {
 			throw new Exception("{$this->listPage} doesn't contain any valid pathway!");
 		}
-		return $pathwayList[rand(0, count($pathwayList) - 1)]->getTitleObject()->getDbKey();
+		$pathway = $pathwayList[rand(0, count($pathwayList) - 1)]->getTitleObject()->getDbKey();
+		wfProfileOut( __METHOD__ );
+		return $pathway;
 	}
 }
-

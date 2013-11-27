@@ -78,6 +78,7 @@ class MetaTag {
 	}
 
 	public static function getTags($tag_name) {
+		wfProfileIn( __METHOD__ );
 		$tags = array();
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -91,6 +92,7 @@ class MetaTag {
 		}
 
 		$dbr->freeResult( $res );
+		wfProfileOut( __METHOD__ );
 		return $tags;
 	}
 
@@ -100,6 +102,7 @@ class MetaTag {
 	 * @return An array of MetaTag objects
 	 */
 	public static function getTagsForPage($page_id) {
+		wfProfileIn( __METHOD__ );
 		$tags = array();
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -113,6 +116,7 @@ class MetaTag {
 		}
 
 		$dbr->freeResult( $res );
+		wfProfileOut( __METHOD__ );
 		return $tags;
 	}
 
@@ -124,6 +128,7 @@ class MetaTag {
 	 * @return An array with page ids
 	 */
 	public static function getPagesForTag($name, $text = false, $case = true) {
+		wfProfileIn( __METHOD__ );
 		$pages = array();
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -157,6 +162,7 @@ class MetaTag {
 		}
 
 		$dbr->freeResult( $res );
+		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
 
@@ -245,6 +251,7 @@ class MetaTag {
 	}
 
 	private function doWriteToDB() {
+		wfProfileIn( __METHOD__ );
 		$dbw =& wfGetDB(DB_MASTER);
 		$dbw->begin();
 
@@ -284,6 +291,7 @@ class MetaTag {
 			$this->writeHistory(self::$ACTION_CREATE);
 		}
 
+		wfProfileOut( __METHOD__ );
 
 	}
 

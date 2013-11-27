@@ -13,6 +13,7 @@ class TaggedPathway extends PathwayOfTheDay {
 	with the given tag
 	**/
 	protected function fetchRandomPathway() {
+		wfProfileIn( __METHOD__ );
 		wfDebug("Fetching random pathway...\n");
 		$pages = MetaTag::getPagesForTag($this->tag);
 		if(count($pages) == 0) {
@@ -28,7 +29,7 @@ class TaggedPathway extends PathwayOfTheDay {
 				}
 			}
 		}
+		wfProfileOut( __METHOD__ );
 		return $pathways[rand(0, count($pathways) - 1)]->getTitleObject()->getDbKey();
 	}
 }
-

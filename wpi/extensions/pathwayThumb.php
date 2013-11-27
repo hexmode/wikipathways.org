@@ -4,6 +4,7 @@ class PathwayThumb {
 
 	static function render( &$parser, $pwTitleEncoded, $width = 0, $align = '', $caption = '',
 		$href = '', $tooltip = '', $id='pwthumb') {
+		wfProfileIn( __METHOD__ );
 		global $wgUser, $wgRequest;
 
 		$pwTitle = urldecode ($pwTitleEncoded);
@@ -42,8 +43,10 @@ class PathwayThumb {
 			$output = self::makeThumbLinkObj($pathway, $caption, $href, $tooltip, $align, $id, $width);
 
 		} catch(Exception $e) {
+			wfProfileOut( __METHOD__ );
 			return "invalid pathway title: $e";
 		}
+		wfProfileOut( __METHOD__ );
 		return array($output, 'isHTML'=>1, 'noparse'=>1);
 	}
 
@@ -88,6 +91,7 @@ class PathwayThumb {
 	 */
 	static function makeThumbLinkObj( $pathway, $label = '', $href = '', $alt, $align = 'right', $id = 'thumb',
 		$boxwidth = 180, $boxheight=false, $framed=false ) {
+		wfProfileIn( __METHOD__ );
 		global $wgStylePath, $wgContLang;
 
 		$pathway->updateCache();
@@ -148,6 +152,7 @@ class PathwayThumb {
 				'longdesc="'.$href.'" class="thumbimage" /></a>';
 		}
 		$s .= '  <div class="thumbcaption"'.$textalign.'>'.$label."</div></div></div>";
+		wfProfileOut( __METHOD__ );
 		return str_replace("\n", ' ', $s);
 		//return $s;
 	}
