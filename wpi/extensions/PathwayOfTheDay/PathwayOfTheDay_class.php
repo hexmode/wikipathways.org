@@ -8,7 +8,6 @@ class PathwayOfTheDay {
 	var $id; //Id to support multiple pathway of the day caches
 
 	function __construct($id, $date) {
-		PathwayOfTheDay::setupDB(); //TODO: remove this after first use
 		$this->id = $id;
 		if($date) {
 			$this->today = $date;
