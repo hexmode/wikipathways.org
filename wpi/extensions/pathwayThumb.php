@@ -15,7 +15,6 @@ class PathwayThumb {
 			if($revision) {
 				$pathway->setActiveRevision($revision);
 			}
-			$img = new LocalFile($pathway->getFileTitle(FILETYPE_IMG), RepoGroup::singleton()->getLocalRepo());
 			switch($href) {
 				case 'svg':
 					$href = wfLocalFile($pathway->getFileTitle(FILETYPE_IMG)->getPartialURL())->getURL();
@@ -40,8 +39,8 @@ class PathwayThumb {
 					//you know a way to do that (TK)
 			}
 
-			$output = self::makeThumbLinkObj($pathway, $caption, $href, $tooltip, $align, $id, $width);
-
+			/* $output = self::makeThumbLinkObj($pathway, $caption, $href, $tooltip, $align, $id, $width); */
+			$output = "";
 		} catch(Exception $e) {
 			wfProfileOut( __METHOD__ );
 			return "invalid pathway title: $e";

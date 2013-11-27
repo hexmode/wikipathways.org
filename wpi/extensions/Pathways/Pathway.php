@@ -1024,31 +1024,31 @@ class Pathway {
 	 */
 	public function updateCache($fileType = null) {
 		wfProfileIn( __METHOD__ );
-		wfDebug("updateCache called for filetype $fileType\n");
+		wfDebug( "updateCache called for filetype $fileType\n" );
 		//Make sure to update GPML cache first
-		if(!$fileType == FILETYPE_GPML) {
-			$this->updateCache(FILETYPE_GPML);
+		if( !$fileType == FILETYPE_GPML ) {
+			$this->updateCache( FILETYPE_GPML );
 		}
 
 		if(!$fileType) { //Update all
-			foreach(self::$fileTypes as $type) {
-				$this->updateCache($type);
+			foreach( self::$fileTypes as $type ) {
+				$this->updateCache( $type );
 			}
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 		$obj = $this->getFileObj( $fileType );
-		if(!$obj->isCacheGood()) {
-			wfDebug("\t->Updating cached file for $fileType\n");
-			switch($fileType) {
+		if( !$obj->isCacheGood() ) {
+			wfDebug( "\t->Updating cached file for $fileType\n" );
+			switch( $fileType ) {
 				case FILETYPE_PNG:
-					$this->savePngCache();
+					$this->savePngCache( $obj );
 					break;
 				case FILETYPE_GPML:
-					$this->saveGpmlCache();
+					$this->saveGpmlCache( $obj );
 					break;
 				default:
-					$this->saveConvertedCache($fileType);
+					$this->saveConvertedCache( $fileType );
 					break;
 			}
 		}
@@ -1057,6 +1057,7 @@ class Pathway {
 
 	public function getImage() {
 		wfProfileIn( __METHOD__ );
+		throw new Exception("Replace repo!");
 		$repo = RepoGroup::singleton()->getLocalRepo();
 		$img = new LocalFile($this->getFileTitle(FILETYPE_IMG), $repo);
 		$img->loadFromFile();
@@ -1082,9 +1083,6 @@ class Pathway {
 			$this->clearCache(FILETYPE_IMG);
 		} else {
 			$file = $this->getFileName($fileType, false);
-			if( $file ) {
-				$repo->delete( $file, "archive" );
-			}
 		}
 	}
 
@@ -1133,9 +1131,14 @@ class Pathway {
 	 */
 	private function saveConvertedCache($fileType) {
 		wfProfileIn( __METHOD__ );
-		# Convert gpml to fileType
-		$gpmlFile = $this->getFileLocation(FILETYPE_GPML);
+		/* Convert gpml to fileType */
 		$conFile = $this->getFileLocation($fileType, false);
+		if( $this->getFileObj( $fileType )->isCacheGood() ) {
+			wfProfileOut( __METHOD__ );
+			wfDebug("not Saving");
+			return $conFile;
+		}
+		$gpmlFile = $this->getFileLocation(FILETYPE_GPML);
 		$outFile = basename( $gpmlFile, FILETYPE_GPML );
 
 		if ( $conFile === null ) {
@@ -1166,20 +1169,18 @@ class Pathway {
 		$msg = wfJavaExec($cmd, $status);
 
 		if($status != 0 ) {
-			//Not needed anymore, since we now use a unique file name for
-			//each revision, so it's guaranteed to update.
-			////Remove cached GPML file
-			//unlink($gpmlFile);
+			// Not needed anymore, since we now use a unique file name
+			// for each revision, so it's guaranteed to update.
 			wfDebug("Unable to convert to $outFile:\n<BR>Status:$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
 			wfProfileOut( __METHOD__ );
 			throw new Exception("Unable to convert to $outFile:\n<BR>Status:$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
 		}
-		$repo = RepoGroup::singleton()->getLocalRepo();
-		$img = new LocalFile( $baseName, $repo );
-		wfDebug("moving into place $baseName\n");
-		$comment = $pageText = "";
-		$status = $img->upload( $final, $comment, $pageText );
-		if( !$status->isOk() ) {
+		wfDebug("moving into place $outFile\n");
+		$dir = dirname( $outFile );
+		if( !file_exists( $dir ) ) {
+			mkdir( $dir, 0755, true );
+		}
+		if( !rename( $final, $outFile ) ) {
 			wfProfileOut( __METHOD__ );
 			throw new MWException( "Error while uploading from $final: "  . $status->getHTML() );
 		}
@@ -1188,18 +1189,17 @@ class Pathway {
 		return true;
 	}
 
-	private function saveGpmlCache() {
+	private function saveGpmlCache( $obj ) {
 		wfProfileIn( __METHOD__ );
 		$gpml = $this->getGpml();
 
-		$obj = $this->getFileObj( FILETYPE_GPML );
 		if($gpml !== null && !$obj->isCacheGood()) { //Only write cache if there is GPML
 			$obj->saveText( $gpml );
 		}
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function savePngCache() {
+	private function savePngCache( $obj ) {
 		global $wgSVGConverters, $wgSVGConverter, $wgSVGConverterPath;
 		wfProfileIn( __METHOD__ );
 
