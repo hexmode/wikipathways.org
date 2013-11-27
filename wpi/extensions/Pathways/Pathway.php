@@ -1138,6 +1138,7 @@ class Pathway {
 			wfDebug("not Saving");
 			return $conFile;
 		}
+		$gpmlObj = $this->getFileObj( FILETYPE_GPML );
 		$gpmlFile = $this->getFileLocation(FILETYPE_GPML);
 		$outFile = basename( $gpmlFile, FILETYPE_GPML );
 
@@ -1145,7 +1146,7 @@ class Pathway {
 			$conFile = wfTempDir() . "/$outFile$fileType";
 		}
 		wfDebug( "Saving $gpmlFile to $fileType in $conFile\n" );
-		$this->convert($gpmlFile, $conFile);
+		$this->convert($gpmlObj, $conFile);
 		wfProfileOut( __METHOD__ );
 		return $conFile;
 	}
@@ -1155,10 +1156,11 @@ class Pathway {
 	 * file format. The file format will be determined by the
 	 * output file extension.
 	 */
-	public function convert($gpmlFile, $outFile) {
+	public function convert($gpmlObj, $outFile) {
 		global $wgMaxShellMemory;
 		wfProfileIn( __METHOD__ );
-		$this->saveGpmlCache();
+		$this->saveGpmlCache( $gpmlObj );
+		$gpmlFile = $gpmlObj->getPath();
 		$baseName = basename( $outFile );
 		$final = wfTempDir() . "/$baseName";
 
@@ -1192,8 +1194,9 @@ class Pathway {
 	private function saveGpmlCache( $obj ) {
 		wfProfileIn( __METHOD__ );
 		$gpml = $this->getGpml();
+		$time = $this->getGpmlModificationTime();
 
-		if($gpml !== null && !$obj->isCacheGood()) { //Only write cache if there is GPML
+		if($gpml !== null && !$obj->isCacheGood( $time ) ) { //Only write cache if there is GPML
 			$obj->saveText( $gpml );
 		}
 		wfProfileOut( __METHOD__ );
