@@ -20,7 +20,7 @@ class PathwayPage {
 {$this->bibliographyText()}
 {{Template:PathwayPage:Bottom}}
 TEXT;
-return $text;
+		return $text;
 	}
 
 	function titleEditor() {
@@ -52,6 +52,8 @@ return $text;
 	}
 
 	function descriptionText() {
+		wfProfileIn( __METHOD__ );
+
 		//Get WikiPathways description
 		$content = $this->data->getWikiDescription();
 
@@ -82,6 +84,7 @@ return $text;
 		if($comments) {
 			$description .= "\n=== Comments ===\n<div id='comments'>\n$comments<div>";
 		}
+		wfProfileOut( __METHOD__ );
 		return $description;
 	}
 
@@ -145,19 +148,20 @@ return $text;
 
 	static function editDropDown($pathway) {
 		global $wgOut;
+		wfProfileIn( __METHOD__ );
 
 		//AP20081218: Operating System Detection
 		require_once 'DetectBrowserOS.php';
 		//echo (browser_detection( 'os' ));
-		 $download = array(
-						'PathVisio (.gpml)' => self::getDownloadURL($pathway, 'gpml'),
-						'Scalable Vector Graphics (.svg)' => self::getDownloadURL($pathway, 'svg'),
-						'Gene list (.txt)' => self::getDownloadURL($pathway, 'txt'),
-						'Biopax level 3 (.owl)' => self::getDownloadURL($pathway, 'owl'),
-						'Eu.Gene (.pwf)' => self::getDownloadURL($pathway, 'pwf'),
-						'Png image (.png)' => self::getDownloadURL($pathway, 'png'),
-						'Acrobat (.pdf)' => self::getDownloadURL($pathway, 'pdf'),
-		   );
+		$download = array(
+			'PathVisio (.gpml)' => self::getDownloadURL($pathway, 'gpml'),
+			'Scalable Vector Graphics (.svg)' => self::getDownloadURL($pathway, 'svg'),
+			'Gene list (.txt)' => self::getDownloadURL($pathway, 'txt'),
+			'Biopax level 3 (.owl)' => self::getDownloadURL($pathway, 'owl'),
+			'Eu.Gene (.pwf)' => self::getDownloadURL($pathway, 'pwf'),
+			'Png image (.png)' => self::getDownloadURL($pathway, 'png'),
+			'Acrobat (.pdf)' => self::getDownloadURL($pathway, 'pdf'),
+		);
 		$downloadlist = '';
 		foreach(array_keys($download) as $key) {
 			$downloadlist .= "<li><a href='{$download[$key]}'>$key</a></li>";
@@ -192,16 +196,20 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
 
 </script>
 SCRIPT;
-$wgOut->addScript($script);
-return $dropdown;
+		$wgOut->addScript($script);
+		wfProfileIn( __METHOD__ );
+		return $dropdown;
 	}
+	
 	static function formatPubMed($text) {
+		wfProfileIn( __METHOD__ );
 		$link = "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=Retrieve&dopt=AbstractPlus&list_uids=";
 		if(preg_match_all("/PMID: ([0-9]+)/", $text, $ids)) {
 			foreach($ids[1] as $id) {
 				$text = str_replace($id, "[$link$id $id]", $text);
 			}
 		}
+		wfProfileOut( __METHOD__ );
 		return $text;
 	}
 }

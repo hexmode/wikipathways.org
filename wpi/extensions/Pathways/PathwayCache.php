@@ -2,12 +2,14 @@
 
 class PathwayCache extends FileCacheBase {
 	static public function newFromKey( $name, $type ) {
+		wfProfileIn( __METHOD__ );
 		$cache = new self();
 
 		$cache->mKey = (string)$name;
 		$cache->mType = $type;
 		$cache->mExt = $type;
 
+		wfProfileOut( __METHOD__ );
 		return $cache;
 	}
 
@@ -25,6 +27,7 @@ class PathwayCache extends FileCacheBase {
 	 * or null to remove all files
 	 */
 	public function clearCache($fileType = null) {
+		wfProfileIn( __METHOD__ );
 		if(!$fileType) { //Update all
 			$this->clearCache(FILETYPE_PNG);
 			$this->clearCache(FILETYPE_GPML);
@@ -35,16 +38,20 @@ class PathwayCache extends FileCacheBase {
 				$repo->delete( $file, "archive" );
 			}
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function getGpmlModificationTime() {
+		wfProfileIn( __METHOD__ );
 		$gpmlTitle = $this->getTitleObject();
 		$gpmlRev = Revision::newFromTitle($gpmlTitle);
 		if($gpmlRev) {
 			$gpmlDate = $gpmlRev->getTimestamp();
 		} else {
+			wfProfileOut( __METHOD__ );
 			throw new Exception("No GPML page");
 		}
+		wfProfileOut( __METHOD__ );
 		return $gpmlDate;
 	}
 
@@ -53,9 +60,11 @@ class PathwayCache extends FileCacheBase {
 	 * from GPML
 	 */
 	private function saveConvertedCache($fileType) {
+		wfProfileIn( __METHOD__ );
 		# Convert gpml to fileType
-		$gpmlFile = $this->getFileLocation(FILETYPE_GPML);
+			$gpmlFile = $this->getFileLocation(FILETYPE_GPML);
 		if( !file_exists( $gpmlFile ) ) {
+			wfProfileOut( __METHOD__ );
 			throw new MWException( "File does not exist: $gpmlFile" );
 		}
 		$gpmlFile = realpath( $gpmlFile );
@@ -67,6 +76,7 @@ class PathwayCache extends FileCacheBase {
 		}
 		wfDebug( "Saving $gpmlFile to $fileType in $conFile\n" );
 		self::convert($gpmlFile, $conFile);
+		wfProfileOut( __METHOD__ );
 		return $conFile;
 	}
 
@@ -75,6 +85,7 @@ class PathwayCache extends FileCacheBase {
 	}
 
 	public function saveText( $pathway ) {
+		wfProfileIn( __METHOD__ );
 		if ( $this->useGzip() ) {
 			$text = gzencode( $pathway->serialize() );
 		} else {
@@ -85,10 +96,12 @@ class PathwayCache extends FileCacheBase {
 		if ( !file_put_contents( $this->cachePath(), $text, LOCK_EX ) ) {
 			wfDebug( __METHOD__ . "() failed saving ". $this->cachePath() . "\n" );
 			$this->mCached = null;
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		$this->mCached = true;
+		wfProfileOut( __METHOD__ );
 		return $text;
 	}
 

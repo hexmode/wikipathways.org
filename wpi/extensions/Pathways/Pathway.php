@@ -41,12 +41,14 @@ class Pathway {
 	}
 
 	public function getPageIdDB() {
+		wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE );
 		$query = "SELECT page_id FROM `page` WHERE page_title = '$this->id' AND page_namespace = 102";
 		$res = $dbr->query($query);
 		while ($row = $dbr->fetchRow($res)){
 			$page_id = $row["page_id"];
 		}
+		wfProfileOut( __METHOD__ );
 		return $page_id;
 	}
 
@@ -66,10 +68,9 @@ class Pathway {
 
 		//~ $rxIllegal = '/[^' . Title::legalChars() . ']/';
 		$rxIllegal = '/[^a-zA-Z0-9_ -]/';
-		if (preg_match ($rxIllegal, $name, $matches))
-			{
+		if (preg_match ($rxIllegal, $name, $matches)) {
 				throw new Exception("Illegal character '" . $matches[0] . "' in pathway name");
-			}
+		}
 
 		return self::newFromTitle("$species:$name", $checkCache);
 	}
@@ -151,6 +152,7 @@ class Pathway {
 	 * will reset all existing permissions.
 	 */
 	public function makePrivate($user) {
+		wfProfileIn( __METHOD__ );
 		$title = $this->getTitleObject();
 		if($title->userCan(PermissionManager::$ACTION_MANAGE)) {
 			$mgr = $this->getPermissionManager();
@@ -160,8 +162,10 @@ class Pathway {
 			$pp = PermissionManager::resetExpires($pp);
 			$mgr->setPermissions($pp);
 		} else {
+			wfProfileOut( __METHOD__ );
 			throw new Exception("Current user is not allowed to manage permissions for " . $this->getIdentifier());
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -208,9 +212,11 @@ class Pathway {
 	}
 
 	public static function getAllPathways($species = false) {
+		wfProfileIn( __METHOD__ );
 		//Check if species is supported
 		if($species) {
 			if(!in_array($species, self::getAvailableSpecies())) {
+				wfProfileOut( __METHOD__ );
 				throw new Exception("Species '$species' is not supported.");
 			}
 		}
@@ -234,6 +240,7 @@ class Pathway {
 		}
 		$dbr->freeResult($res);
 		ksort($allPathways);
+		wfProfileOut( __METHOD__ );
 		return $allPathways;
 	}
 
@@ -286,6 +293,7 @@ class Pathway {
 	 * @returns A list of pathway objects for the pathways that match the name/species
 	 */
 	static public function getPathwaysByName($name, $species = '') {
+		wfProfileIn( __METHOD__ );
 		$pages = MetaDataCache::getPagesByCache(MetaDataCache::$FIELD_NAME, $name);
 		$pathways = array();
 		foreach($pages as $page_id) {
@@ -296,6 +304,7 @@ class Pathway {
 				}
 			}
 		}
+		wfProfileOut( __METHOD__ );
 		return $pathways;
 	}
 
@@ -431,13 +440,16 @@ class Pathway {
 	 * metadata cache for performance.
 	 */
 	public function getUniqueXrefs() {
+		wfProfileIn( __METHOD__ );
 		if($this->exists()) { //Only use cache if this pathway exists
 			$xrefStr = $this->getMetaDataCache()->getValue(MetaDataCache::$FIELD_XREFS);
 			$xrefStr = explode(MetaDataCache::$XREF_SEP, $xrefStr);
 			$xrefs = array();
 			foreach($xrefStr as $s) $xrefs[$s] = Xref::fromText($s);
+			wfProfileOut( __METHOD__ );
 			return $xrefs;
 		} else {
+			wfProfileOut( __METHOD__ );
 			return array();
 		}
 	}
@@ -485,6 +497,7 @@ class Pathway {
 	 * matching pathway was found
 	 */
 	public function findCaseInsensitive() {
+		wfProfileIn( __METHOD__ );
 		$title = strtolower($this->getTitleObject()->getDbKey());
 		$dbr =& wfGetDB(DB_SLAVE);
 		$ns = NS_PATHWAY;
@@ -499,6 +512,7 @@ class Pathway {
 			$title = Title::newFromID($row[0]);
 		}
 		$dbr->freeResult($res);
+		wfProfileOut( __METHOD__ );
 		return $title;
 	}
 
@@ -641,7 +655,8 @@ class Pathway {
 	 * the archive.
 	 */
 	public function getLastRevisionPriorToDate($timestamp) {
-		throw new Exception( "getLastRevisionPriorToDate() doesn't do what you think. It uses the old fetchAllRevisions which was broken and has been removed.  See https://bugzilla.wikimedia.org/18821" );
+		throw new Exception( "getLastRevisionPriorToDate() doesn't do what you think. It uses the old ".
+			"fetchAllRevisions which was broken and has been removed.  See https://bugzilla.wikimedia.org/18821" );
 		/* This code should be more efficient than what was here, but
 		 * it is untested.  Leaving it here because I couldn't find
 		 * any use of this function. */
@@ -696,6 +711,7 @@ class Pathway {
 	}
 
 	private static function generateUniqueId() {
+		wfProfileIn( __METHOD__ );
 		//Get the highest identifier
 		$dbr = wfGetDB( DB_SLAVE );
 		$ns = NS_PATHWAY;
@@ -718,6 +734,7 @@ class Pathway {
 		$lastidNum = substr($lastid, 2);
 		$newidNum = $lastidNum + 1;
 		$newid = Pathway::$ID_PREFIX . $newidNum;
+		wfProfileOut( __METHOD__ );
 		return $newid;
 	}
 
@@ -774,6 +791,7 @@ class Pathway {
 	 * Assumes one pathway per line, invalid lines will be ignored.
 	 */
 	public static function parsePathwayListPage($listPage) {
+		wfProfileIn( __METHOD__ );
 		$listRev = Revision::newFromTitle(Title::newFromText($listPage), 0);
 		if($listRev != null) {
 			$lines = explode("\n", $listRev->getText());
@@ -806,6 +824,7 @@ class Pathway {
 				}
 			}
 		}
+		wfProfileOut( __METHOD__ );
 		return $pathwayList;
 	}
 
@@ -821,6 +840,7 @@ class Pathway {
 	 * @return <code>null</code> if the GPML is valid, the error if it's invalid
 	 **/
 	static function validateGpml($gpml) {
+		wfProfileIn( __METHOD__ );
 		$return = null;
 		//First, check if species is supported
 		try {
@@ -832,16 +852,19 @@ class Pathway {
 		$xml = new DOMDocument();
 		$parsed = $xml->loadXML($gpml);
 		if(!$parsed) {
+			wfProfileOut( __METHOD__ );
 			return "Error: no valid XML provided\n$gpml";
 		}
 
 		if( !method_exists( $xml->firstChild, "getAttribute" ) ) {
+			wfProfileOut( __METHOD__ );
 			return "Not valid GPML!";
 		}
 
 		$ns = $xml->firstChild->getAttribute('xmlns');
 		$schema = self::$gpmlSchemas[$ns];
 		if(!$schema) {
+			wfProfileOut( __METHOD__ );
 			return "Error: no xsd found for $ns\n$gpml";
 		}
 
@@ -870,6 +893,7 @@ class Pathway {
 				$return .= "\n  File: $error->file";
 			}
 		}
+		wfProfileOut( __METHOD__ );
 		return $return;
 	}
 
@@ -882,7 +906,8 @@ class Pathway {
 		$rev = Revision::newFromId($oldId);
 		$gpml = $rev->getText();
 		if(self::isDeletedMark($gpml)) {
-			throw new Exception("You are trying to revert to a deleted version of the pathway. Please choose another version to revert to.");
+			throw new Exception("You are trying to revert to a deleted version of the pathway. ".
+				"Please choose another version to revert to.");
 		}
 		if($gpml) {
 			$usr = RequestContext::getMain()->getSkin()->userLink($wgUser->getId(), $wgUser->getName());
@@ -902,7 +927,9 @@ class Pathway {
 	 * given revision is a deletion mark (not the newest revision).
 	 **/
 	public function isDeleted($useCache = true, $revision = '') {
+		wfProfileIn( __METHOD__ );
 		if(!$this->exists()) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 		if($useCache && !$revision) {
@@ -912,10 +939,12 @@ class Pathway {
 				if($rev == 0 || $rev == $deprev->getPageRevision()) return true;
 			}
 
+			wfProfileOut( __METHOD__ );
 			return false;
 		} else {
 			if(!$revision) $revision = $this->getLatestRevision();
 			$text = Revision::newFromId($revision)->getText();
+			wfProfileOut( __METHOD__ );
 			return self::isDeletedMark($text);
 		}
 	}
@@ -994,6 +1023,7 @@ class Pathway {
 	 * or null to check all files
 	 */
 	public function updateCache($fileType = null) {
+		wfProfileIn( __METHOD__ );
 		wfDebug("updateCache called for filetype $fileType\n");
 		//Make sure to update GPML cache first
 		if(!$fileType == FILETYPE_GPML) {
@@ -1004,6 +1034,7 @@ class Pathway {
 			foreach(self::$fileTypes as $type) {
 				$this->updateCache($type);
 			}
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 		$obj = $this->getFileObj( $fileType );
@@ -1021,9 +1052,11 @@ class Pathway {
 					break;
 			}
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function getImage() {
+		wfProfileIn( __METHOD__ );
 		$repo = RepoGroup::singleton()->getLocalRepo();
 		$img = new LocalFile($this->getFileTitle(FILETYPE_IMG), $repo);
 		$img->loadFromFile();
@@ -1033,6 +1066,7 @@ class Pathway {
 			$img->loadFromFile();
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $img;
 	}
 
@@ -1056,6 +1090,7 @@ class Pathway {
 
 	//Check if the cached version of the GPML data derived file is out of date
 	private function isOutOfDate($fileType) {
+		wfProfileIn( __METHOD__ );
 		wfDebug("isOutOfDate for $fileType\n");
 
 		$gpmlTitle = $this->getTitleObject();
@@ -1072,9 +1107,11 @@ class Pathway {
 		if( $repo->fileExists( $path ) ) {
 			$fmt = $repo->getFileTimestamp( $path );
 			wfDebug("\tFile exists, cache: $fmt, gpml: $gpmlDate\n");
+			wfProfileOut( __METHOD__ );
 			return  $fmt < $gpmlDate;
 		} else { //No cached version yet, so definitely out of date
 			wfDebug("\tFile doesn't exist\n");
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 	}
@@ -1095,6 +1132,7 @@ class Pathway {
 	 * from GPML
 	 */
 	private function saveConvertedCache($fileType) {
+		wfProfileIn( __METHOD__ );
 		# Convert gpml to fileType
 		$gpmlFile = $this->getFileLocation(FILETYPE_GPML);
 		$conFile = $this->getFileLocation($fileType, false);
@@ -1105,6 +1143,7 @@ class Pathway {
 		}
 		wfDebug( "Saving $gpmlFile to $fileType in $conFile\n" );
 		$this->convert($gpmlFile, $conFile);
+		wfProfileOut( __METHOD__ );
 		return $conFile;
 	}
 
@@ -1115,6 +1154,7 @@ class Pathway {
 	 */
 	public function convert($gpmlFile, $outFile) {
 		global $wgMaxShellMemory;
+		wfProfileIn( __METHOD__ );
 		$this->saveGpmlCache();
 		$baseName = basename( $outFile );
 		$final = wfTempDir() . "/$baseName";
@@ -1131,6 +1171,7 @@ class Pathway {
 			////Remove cached GPML file
 			//unlink($gpmlFile);
 			wfDebug("Unable to convert to $outFile:\n<BR>Status:$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
+			wfProfileOut( __METHOD__ );
 			throw new Exception("Unable to convert to $outFile:\n<BR>Status:$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
 		}
 		$repo = RepoGroup::singleton()->getLocalRepo();
@@ -1139,23 +1180,28 @@ class Pathway {
 		$comment = $pageText = "";
 		$status = $img->upload( $final, $comment, $pageText );
 		if( !$status->isOk() ) {
+			wfProfileOut( __METHOD__ );
 			throw new MWException( "Error while uploading from $final: "  . $status->getHTML() );
 		}
 		wfDebug("moved into place $baseName\n");
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	private function saveGpmlCache() {
+		wfProfileIn( __METHOD__ );
 		$gpml = $this->getGpml();
 
 		$obj = $this->getFileObj( FILETYPE_GPML );
 		if($gpml !== null && !$obj->isCacheGood()) { //Only write cache if there is GPML
 			$obj->saveText( $gpml );
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function savePngCache() {
 		global $wgSVGConverters, $wgSVGConverter, $wgSVGConverterPath;
+		wfProfileIn( __METHOD__ );
 
 		$input = $this->getFileLocation(FILETYPE_IMG);
 		$output = $this->getFileLocation(FILETYPE_PNG, false);
@@ -1172,14 +1218,16 @@ class Pathway {
 				$wgSVGConverters[$wgSVGConverter] ) . " 2>&1";
 			$err = wfShellExec( $cmd, $retval );
 			if($retval != 0 || !file_exists($output)) {
+				wfProfileOut( __METHOD__ );
 				throw new Exception("Unable to convert to png: $err\nCommand: $cmd");
-
 			}
 		} else {
+			wfProfileOut( __METHOD__ );
 			throw new Exception("Unable to convert to png, no SVG rasterizer found");
 		}
 		$ex = file_exists($output);
 		wfDebug("PNG CACHE SAVED: $output, $ex;\n");
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**

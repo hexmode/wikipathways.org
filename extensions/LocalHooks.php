@@ -3,6 +3,7 @@
 class LocalHooks {
 	/* http://developers.pathvisio.org/ticket/1559 */
 	static function stopDisplay( $output, $sk ) {
+		wfProfileIn( __METHOD__ );
 		if( strtolower( 'MediaWiki:Questycaptcha-qna' ) === strtolower( $output->getPageTitle() ) ||
 			strtolower( 'MediaWiki:Questycaptcha-q&a' ) === strtolower( $output->getPageTitle() ) ) {
 			global $wgUser, $wgTitle;
@@ -11,9 +12,11 @@ class LocalHooks {
 				$wgUser->mBlock = new Block( '127.0.0.1', 'WikiSysop', 'WikiSysop', 'none', 'indefinite' );
 				$wgUser->mBlockedby = 0;
 				$output->blockedPage();
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 		}
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -43,6 +46,7 @@ class LocalHooks {
 		# Hook changed to include attribs in 1.15
 		if( $attribs !== null ) {
 			$attribs["target"] = $linkTarget;
+			wfProfileOut( __METHOD__ );
 			return true;		/* nothing else should be needed, so we can leave the rest */
 		}
 
@@ -55,21 +59,24 @@ class LocalHooks {
 		}
 
 		$link = '<a href="'.$url.'" target="'.$linkTarget.'"'.$style.'>'.$text.'</a>';
-		wfProfileOut( __METHOD__ );
 
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
 
 	static public function updateTags( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags,
 		$revision, &$status = null, $baseRevId = null ) {
+		wfProfileIn( __METHOD__ );
 		$title = $article->getTitle();
 		if( $title->getNamespace() !== NS_PATHWAY ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		if( !$title->userCan( "autocurate" ) ) {
 			wfDebug( __METHOD__ . ": User can't autocurate\n" );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -86,10 +93,12 @@ class LocalHooks {
 				wfDebug( __METHOD__ . ": No revision information for {$tag->getName()}\n" );
 			}
 		}
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	static public function blockPage( &$pagePriv ) {
+		wfProfileIn( __METHOD__ );
 		$setPerms = array(
 			'Listusers', 'Statistics', 'Randompage', 'Lonelypages',
 			'Uncategorizedpages', 'Uncategorizedcategories',
@@ -115,11 +124,13 @@ class LocalHooks {
 				}
 			}
 		}
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public static function loginMessage( &$user, &$html ) {
 		global $wgScriptPath;
+		wfProfileIn( __METHOD__ );
 
 		# Run any hooks; ignore results
 		$addr = $user->getEmail();
@@ -139,20 +150,24 @@ altered or commented on by other users. Your <i>email</i> is the
 only means by which WikiPathways can contact you if any of your
 content requires special attention. <b>Please keep your
 <i>email</i> up-to-date.</b></p>";
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public static function addSnoopLink( &$item, $row ) {
 		//AP20081006 - replaced group info with links to User_snoop
+		wfProfileIn( __METHOD__ );
 		$snoop = Title::makeTitle( NS_SPECIAL, 'User_snoop');
 		$snooplink = $this->getSkin()->makeKnownLinkObj( $snoop, 'info', wfArrayToCGI( array('username' => $row->user_name)), '','','');
 
 		$item = wfSpecialList( $name, $snooplink);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	// This one, based on preg_replace, is a bit more iffy.  Needs some good testing.
 	public static function contributionLineEnding( $specialPage, &$ret, $row ) {
+		wfProfileIn( __METHOD__ );
 		$page = Title::makeTitle( $row->page_namespace, $row->page_title );
 		if (!$page->isRedirect() && $row->page_namespace == NS_PATHWAY){
 			$linkOld = $sk->makeKnownLinkObj( $page );
@@ -160,8 +175,10 @@ content requires special attention. <b>Please keep your
 			$name = $pathway->getSpecies() .":". $pathway->getName();
 			$linkNew = $sk->makeKnownLinkObj( $page, $name );
 			preg_replace( "/$linkOld/", $linkNew, $ret );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -172,6 +189,7 @@ content requires special attention. <b>Please keep your
 
 	public static function subtitleOverride(&$article, &$oldid) {
 		global $wgLang, $wgOut, $wgUser;
+		wfProfileIn( __METHOD__ );
 
 
 		$revision = Revision::newFromId( $oldid );
@@ -232,16 +250,19 @@ content requires special attention. <b>Please keep your
 			? 'revision-info-current'
 			: 'revision-info';
 
-		$r = "\n\t\t\t\t<div id=\"mw-{$infomsg}\">" . wfMsgExt( $infomsg, array( 'parseinline', 'replaceafter' ), $td, $userlinks, $revision->getID() ) . "</div>\n" .
-
-			 "\n\t\t\t\t<div id=\"mw-revision-nav\">" . $cdel . wfMsgExt( 'revision-nav', array( 'escapenoentities', 'parsemag', 'replaceafter' ),
+		$r = "\n\t\t\t\t<div id=\"mw-{$infomsg}\">" . wfMsgExt( $infomsg, array( 'parseinline', 'replaceafter' ),
+			$td, $userlinks, $revision->getID() ) . "</div>\n" .
+			"\n\t\t\t\t<div id=\"mw-revision-nav\">" . $cdel .
+			wfMsgExt( 'revision-nav', array( 'escapenoentities', 'parsemag', 'replaceafter' ),
 				$prevdiff, $prevlink, $lnk, $curdiff, $nextlink, $nextdiff ) . "</div>\n\t\t\t";
 		$wgOut->setSubtitle( $r );
 
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
 	static public function linkText( $linker, $target, &$text ) {
+		wfProfileIn( __METHOD__ );
 		$text = "";
 		if( $target instanceOf Title ) {
 			if ($target->getNamespace() == NS_PATHWAY){
@@ -253,13 +274,16 @@ content requires special attention. <b>Please keep your
 					$text = Title::makeTitle( $target->getNsText(),
 						$pathway->getSpecies().":".$pathway->getName() );
 				}
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 		}
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	static public function checkPathwayImgAuth( &$title, &$path, &$name, &$result ) {
+		wfProfileIn( __METHOD__ );
 		## WPI Mod 2013-Aug-22
 		//Check for pathway cache
 		$id = Pathway::parseIdentifier($title);
@@ -270,14 +294,17 @@ content requires special attention. <b>Please keep your
 			if(!$pwTitle->userCan('read')) {
 				wfDebugLog( 'img_auth', "User not permitted to view pathway $id" );
 				wfForbidden();
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 		}
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	static function addPreloaderScript($out) {
 		global $wgTitle, $wgUser, $wgScriptPath;
+		wfProfileIn( __METHOD__ );
 
 		if($wgTitle->getNamespace() == NS_PATHWAY && $wgUser->isLoggedIn() &&
 			strstr( $out->getHTML(), "pwImage" ) !== false ) {
@@ -287,6 +314,7 @@ content requires special attention. <b>Please keep your
 			$out->addHTML("<applet code='$class' codebase='$base'
 			width='1' height='1' name='preloader'></applet>");
 		}
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -304,6 +332,7 @@ content requires special attention. <b>Please keep your
 	}
 
 	static function extensionFunctions() {
+		wfProfileIn( __METHOD__ );
 		global $wgParser;
 		$wgParser->setHook( "pathwayBibliography",     "PathwayBibliography::output" );
 		$wgParser->setHook( "pathwayHistory",          "GpmlHistoryPager::history" );
@@ -314,10 +343,12 @@ content requires special attention. <b>Please keep your
 		$wgParser->setFunctionHook( 'pathwayOfTheDay', 'LocalHooks::getPathwayOfTheDay' );
 		$wgParser->setFunctionHook( 'pathwayInfo',     'LocalHooks::getPathwayInfoText' );
 		$wgParser->setFunctionHook( 'siteStats',       'wpiSiteStats::getSiteStats' );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	static function getPathwayInfoText( &$parser, $pathway, $type ) {
+		wfProfileIn( __METHOD__ );
 		global $wgRequest;
 		$parser->disableCache();
 		try {
@@ -328,11 +359,14 @@ content requires special attention. <b>Please keep your
 			}
 			$info = new PathwayInfo($parser, $pathway);
 			if(method_exists($info, $type)) {
+				wfProfileOut( __METHOD__ );
 				return $info->$type();
 			} else {
+				wfProfileOut( __METHOD__ );
 				throw new Exception("method PathwayInfo->$type doesn't exist");
 			}
 		} catch(Exception $e) {
+			wfProfileOut( __METHOD__ );
 			return "Error: $e";
 		}
 	}
@@ -357,6 +391,7 @@ content requires special attention. <b>Please keep your
 	*/
 
 	static function getPathwayOfTheDay( &$parser, $date, $listpage = 'FeaturedPathways', $isTag = false) {
+		wfProfileIn( __METHOD__ );
 		$parser->disableCache();
 		wfDebug("GETTING PATHWAY OF THE DAY for date: $date\n");
 		try {
@@ -372,6 +407,7 @@ content requires special attention. <b>Please keep your
 			wfDebug("Couldn't make pathway of the day: {$e->getMessage()}");
 		}
 		$out = $parser->recursiveTagParse( $out );
+		wfProfileOut( __METHOD__ );
 		return array( $out, 'isHTML' => true, 'noparse' => true, 'nowiki' => true );
 	}
 
@@ -380,6 +416,7 @@ content requires special attention. <b>Please keep your
 	 * TODO: Disable this hook for running script to transfer to stable ids
 	 */
 	static function checkUserCan($title, $user, $action, $result) {
+		wfProfileIn( __METHOD__ );
 		if( $title->getNamespace() == NS_PATHWAY ) {
 			if($action == 'edit') {
 				$pathway = Pathway::newFromTitle($title);
@@ -387,11 +424,13 @@ content requires special attention. <b>Please keep your
 					if(MwUtils::isOnlyAuthor($user, $title->getArticleId())) {
 						//Users that are sole author of a pathway can always revert deletion
 						$result = true;
+						wfProfileOut( __METHOD__ );
 						return false;
 					} else {
 						//Only users with 'delete' permission can revert deletion
 						//So disable edit for all other users
 						$result = $title->getUserPermissionsErrors('delete', $user) == array();
+						wfProfileOut( __METHOD__ );
 						return false;
 					}
 				}
@@ -399,11 +438,13 @@ content requires special attention. <b>Please keep your
 				//Users are allowed to delete their own pathway
 				if(MwUtils::isOnlyAuthor($user, $title->getArticleId()) && $title->userCan('edit')) {
 					$result = true;
+					wfProfileOut( __METHOD__ );
 					return false;
 				}
 			}
 		}
 		$result = null;
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -416,13 +457,16 @@ content requires special attention. <b>Please keep your
 	}
 
 	static function getSize( &$parser, $image, $maxWidth ) {
+		wfProfileIn( __METHOD__ );
 		try {
 			$img = new LocalFile(Title::newFromText($image), RepoGroup::singleton()->getLocalRepo());
 			$img->loadFromFile();
 			$w = $img->getWidth();
 			if($w > $maxWidth) $w = $maxWidth;
+			wfProfileOut( __METHOD__ );
 			return $w . 'px';
 		} catch (Exception $e) {
+			wfProfileOut( __METHOD__ );
 			return "Error: $e";
 		}
 	}
@@ -432,6 +476,7 @@ content requires special attention. <b>Please keep your
 	 * See Bug #18821
 	 */
 	static function fetchAllRevisions( Title $title ) {
+		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_SLAVE );
 		$fields = Revision::selectFields();
 		$fields[] = 'page_namespace';
@@ -447,6 +492,7 @@ content requires special attention. <b>Please keep your
 			__METHOD__,
 			array( 'LIMIT' => 1 ) ); /* See Bug #18821 */
 		$ret = $db->resultObject( $res );
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 }

@@ -155,6 +155,7 @@ class PathwayContent extends AbstractContent {
 		$revId = null,
 		ParserOptions $options = null, $generateHtml = true
 	) {
+		wfProfileIn( __METHOD__ );
 		global $wgParser, $wgTextModelsToParse;
 
 		if ( !$options ) {
@@ -176,16 +177,19 @@ class PathwayContent extends AbstractContent {
 		}
 
 		$po->setText( $html );
+		wfProfileOut( __METHOD__ );
 		return $po;
 	}
 
 	public function getHtml( Title $title, $revId = null ) {
+		wfProfileIn( __METHOD__ );
 		$pathway = Pathway::newFromTitle($title);
 		if($revId) {
 			$pathway->setActiveRevision($revId);
 		}
 		$pathway->updateCache(FILETYPE_IMG); //In case the image page is removed
 		$page = new PathwayPage($pathway);
+		wfProfileOut( __METHOD__ );
 		return $page->getContent();
 	}
 

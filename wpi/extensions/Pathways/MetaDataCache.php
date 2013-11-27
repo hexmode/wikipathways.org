@@ -55,6 +55,7 @@ class MetaDataCache {
 	 * the pathway was changed after the last cache update.
 	 */
 	public function updateCache($field = '') {
+		wfProfileIn( __METHOD__ );
 		if(!$this->isValid($field) && $this->pathway->isReadable()) {
 			if($this->pathway->isDeleted(false)) {
 				//leave the old cached values the same
@@ -76,18 +77,22 @@ class MetaDataCache {
 				$this->doUpdate(self::$FIELD_DELETED, '');
 			}
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function doDelete($field) {
+		wfProfileIn( __METHOD__ );
 		$tag = $this->tags[$field];
 		if($tag) {
 			$tag->setPermissions(array());
 			$tag->setUseHistory(false);
 			$tag->remove();
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function doUpdate($field, $value) {
+		wfProfileIn( __METHOD__ );
 		$tag = isset( $this->tags[$field] ) ? $this->tags[$field] : null;
 
 		if(!$tag) {
@@ -98,11 +103,16 @@ class MetaDataCache {
 		$tag->setUseHistory(false);
 		$tag->setText($value);
 		$tag->save();
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function isValid($field) {
+		wfProfileIn( __METHOD__ );
 		$tag = $this->tags[$field];
-		if(!$tag) return false;
+		if(!$tag) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
 
 		if(!$this->revtime) { //Load the latest revision
 			$prev = Revision::newFromId(
@@ -115,9 +125,11 @@ class MetaDataCache {
 
 		$tmod = $tag->getTimeMod();
 		if($this->revtime > $tmod) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
