@@ -179,7 +179,7 @@ class PathwayData {
 		if(!$this->gpml) {
 			$gpml = $this->pathway->getGpml();
 
-			$this->gpml = new SimpleXMLElement($gpml);
+			$this->gpml = new SimpleXMLElement( $gpml->getNativeData() );
 
 			//Pre-parse some data
 			$this->findPublicationXRefs();
