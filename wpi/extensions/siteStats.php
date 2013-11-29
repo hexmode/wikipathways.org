@@ -19,7 +19,6 @@ class wpiSiteStats {
 		}
 
 		$table = <<<EOD
-
 * Number of '''pathways''' ''(and unique genes)'' per species:
 {| align="center" $tableAttr
 EOD;

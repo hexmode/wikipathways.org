@@ -91,3 +91,6 @@ require_once( "$IP/wpi/extensions/ContributionScores/ContributionScores.php" );
 require_once( "$IP/wpi/extensions/PullPages/PullPages.php" );
 require_once( "$IP/wpi/DetectBrowserOS.php");
 require_once( "$IP/wpi/search.php");
+
+//Register the default organisms
+Organism::registerDefaultOrganisms();
