@@ -18,4 +18,5 @@ $specialPageAliases = array();
  */
 $specialPageAliases[ 'en' ] = array(
 		'CreatePathway' => array( 'CreatePathway', 'Create Pathway' ),
+		'CreatePathwayPage' => array( 'CreatePathwayPage', 'Create Pathway' ),
 );

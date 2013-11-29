@@ -11,4 +11,5 @@ $specialPageAliases = array();
  */
 $specialPageAliases[ 'en' ] = array(
 		'PopularPathways' => array( 'PopularPathways', 'Popular pathways' ),
+		'PopularPathwaysPage' => array( 'PopularPathwaysPage', 'Popular pathways' ),
 );
