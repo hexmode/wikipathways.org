@@ -1,7 +1,7 @@
 <?php
 $messages = array(
 	'en' => array(
-		'newpathwayspage' => 'New pathways'
+		'newpathways' => 'New pathways'
 	)
 );
 $specialPageAliases = array();
@@ -10,5 +10,5 @@ $specialPageAliases = array();
  *  @author Mark A. Hershberger
  */
 $specialPageAliases[ 'en' ] = array(
-		'NewPathwaysPage' => array( 'NewPathwaysPage', 'New pathways' ),
+		'NewPathways' => array( 'NewPathways', 'New pathways' ),
 );

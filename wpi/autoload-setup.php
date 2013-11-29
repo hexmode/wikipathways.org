@@ -29,6 +29,7 @@ $wgAutoloadClasses['PathwayViewer']       = "$IP/wpi/extensions/PathwayViewer/Pa
 $wgAutoloadClasses['TaggedPathway']       = "$IP/wpi/extensions/PathwayOfTheDay/TaggedPathway.php";
 $wgAutoloadClasses['Xref']                = "$IP/wpi/extensions/Pathways/PathwayData.php";
 
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'PathwayOfTheDay::SetupDB';
 $wgExtensionMessagesFiles['PathwayPage'] = "$IP/wpi/extensions/Pathways/PathwayPage.i18n.php";
 
 $wgExtensionFunctions[] = "LocalHooks::extensionFunctions";
@@ -43,7 +44,7 @@ require_once( "$IP/wpi/extensions/pathwayInfo.php" );
 require_once( "$IP/wpi/extensions/magicWords.php" );
 require_once( "$IP/wpi/extensions/PopularPathwaysPage2/PopularPathwaysPage.php" );
 require_once( "$IP/wpi/extensions/MostEditedPathwaysPage/MostEditedPathwaysPage.php" );
-require_once( "$IP/wpi/extensions/NewPathwaysPage/NewPathwaysPage.php" );
+require_once( "$IP/wpi/extensions/NewPathways/NewPathways.php" );
 require_once( "$IP/wpi/extensions/CreatePathwayPage/CreatePathwayPage.php" );
 require_once( "$IP/wpi/extensions/LabeledSectionTransclusion/compat.php" );
 require_once( "$IP/wpi/extensions/LabeledSectionTransclusion/lst.php" );

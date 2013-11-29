@@ -1,13 +1,18 @@
 <?php
 
-class NewPathwaysPage extends QueryPage {
+
+class LegacyNewPathways extends LegacySpecialPage {
+	function __construct() {
+		parent::__construct( "NewPathwaysPage", "NewPathways" );
+	}
+}
+
+class NewPathways extends QueryPage {
 	function __construct() {
 		parent::__construct(__CLASS__);
 	}
 
-	function getName() {
-		return "NewPathwaysPage";
-	}
+	protected $name = __CLASS__;
 
 	function isExpensive() {
 		# page_counter is not indexed
@@ -31,6 +36,9 @@ class NewPathwaysPage extends QueryPage {
 				"rc_bot" => 0,
 				"rc_namespace" => NS_PATHWAY,
 				"rc_namespace" => "page_namespace"
+			),
+			'join_conds' => array(
+				'page' => array( 'LEFT JOIN', 'rc_cur_id=page_id' )
 			)
 		);
 	}
@@ -40,7 +48,7 @@ class NewPathwaysPage extends QueryPage {
 		$titleName = $result->title;
 		try {
 			$pathway = Pathway::newFromTitle($result->title);
-			if( !$pathway->getTitleObject->userCan( 'read' ) ||
+			if( !$pathway->getTitleObject()->userCan( 'read' ) ||
 				$pathway->isDeleted() ) {
 				//Don't display this title when user is not allowed to read
 				return null;

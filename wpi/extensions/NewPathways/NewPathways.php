@@ -8,7 +8,11 @@ EOT;
 		exit( 1 );
 }
 
-$c = "NewPathwaysPage";
-$wgAutoloadClasses[$c] = dirname(__FILE__) . "/{$c}_body.php";
+$c = "NewPathways";
+
 $wgSpecialPages[$c] = $c;
-$wgExtensionMessagesFiles[$c] = dirname( __FILE__ ) . "/{$c}.i18n.php";
+$wgAutoloadClasses[$c] = __DIR__ . "/{$c}_body.php";
+$wgExtensionMessagesFiles[$c] = __DIR__ . "/{$c}.i18n.php";
+
+$wgSpecialPages["{$c}Page"] = "Legacy{$c}";
+$wgAutoloadClasses["Legacy{$c}"] = __DIR__ . "/{$c}_body.php";
