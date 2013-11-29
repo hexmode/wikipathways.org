@@ -13,11 +13,11 @@ class LegacyBrowsePathways extends LegacySpecialPage {
 class BrowsePathways extends SpecialPage {
 
 	function __construct() {
-		parent::__construct( "BrowsePathways" );
+		parent::__construct( __CLASS__ );
 	}
 
 	protected $maxPerPage  = 960;
-	protected $name        = 'BrowsePathways';
+	protected $name        = __CLASS__;
 	static private $defaultView = "thumbs";
 	//	static private $sizes       = array( "list", "thumbs", "single" );
 	static private $views  = array( "list", "thumbs" );
