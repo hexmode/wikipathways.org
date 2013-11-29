@@ -56,7 +56,7 @@ class MetaDataCache {
 	 */
 	public function updateCache($field = '') {
 		wfProfileIn( __METHOD__ );
-		if(!$this->isValid($field) && $this->pathway->isReadable()) {
+		if(!$this->isValid($field) && $this->pathway->getTitleObject()->userCan('read')) {
 			if($this->pathway->isDeleted(false)) {
 				//leave the old cached values the same
 				//but update to set modified timestamp

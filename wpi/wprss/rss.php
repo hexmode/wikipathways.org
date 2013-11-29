@@ -1,5 +1,5 @@
 <?php
-    require_once('../wpi.php');
+	require_once('../wpi.php');
 
 	function getThumb($pathway, $width = 200) {
 		$img = $pathway->getImage();
@@ -37,7 +37,7 @@
 								$ts = $row['rc_title'];
 						$p = Pathway::newFromTitle($ts);
 						$p->setActiveRevision($row['rc_this_oldid']);
-						if(!$p->getTitleObject()->isRedirect() && $p->isReadable()) {
+						if(!$p->getTitleObject()->isRedirect() && $p->getTitleObject()->userCan('read')) {
 								$objects[] = $p;
 						}
 				} catch(Exception $e) {
@@ -89,7 +89,7 @@ $GetTags = isset( $_GET["tags"] ) ? explode( ",", $_GET["tags"] ) : array();
 
 $printItem = false;
 foreach ($changedPathways["pathways"] as $p){
-	if(!$p->isReadable()) continue; //Skip private pathways
+	if(!$p->getTitleObject()->userCan('read')) continue; //Skip private pathways
 
 	$mwtitle = $p->getTitleObject();
 

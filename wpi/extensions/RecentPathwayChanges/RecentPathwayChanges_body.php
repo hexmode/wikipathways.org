@@ -89,7 +89,7 @@ class RecentPathwayChanges extends QueryPage {
 		$titleName = $result->title;
 		try {
 			$pathway = Pathway::newFromTitle($result->title);
-			if(!$pathway->isReadable()) return null; //Skip private pathways
+			if(!$pathway->getTitleObject()->userCan('read')) return null; //Skip private pathways
 			$titleName = $pathway->getSpecies().":".$pathway->getName();
 		} catch(Exception $e) {}
 		$title = Title::makeTitle( $result->namespace, $titleName );

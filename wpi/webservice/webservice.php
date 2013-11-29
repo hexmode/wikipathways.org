@@ -427,7 +427,7 @@ function getRecentChanges($timestamp)
 		try {
 				$ts = $row['rc_title'];
 			$p = Pathway::newFromTitle($ts);
-			if(!$p->getTitleObject()->isRedirect() && $p->isReadable()) {
+			if(!$p->getTitleObject()->isRedirect() && $p->getTitleObject()->userCan('read')) {
 				$objects[] = new WSPathwayInfo($p);
 			}
 		} catch(Exception $e) {
@@ -743,7 +743,7 @@ function authenticate($username, $token, $write = false) {
 }
 
 /**
- * Apply a ontology tag to a pahtway. 
+ * Apply a ontology tag to a pahtway.
  * @param string $pwId The pathway identifier
  * @param string $term The ontology term to apply
  * @param string $termId The identifier of the term in the ontology
@@ -758,7 +758,7 @@ function saveOntologyTag($pwId, $term, $termId, $auth) {
 		$pathway = new Pathway($pwId);
 		if($pathway->exists()) {
 			OntologyFunctions::addOntologyTag($termId, $term, $pwId);
-      }
+	  }
 	} catch(Exception $e) {
 		wfDebug("ERROR: $e");
 		throw new WSFault("Receiver", $e);
@@ -1069,7 +1069,7 @@ class WSCurationTag {
 		$title = Title::newFromId($metatag->getPageId());
 		if($title) {
 			$pathway = Pathway::newFromTitle($title);
-			if($pathway->isReadable() && !$pathway->isDeleted()) {
+			if($pathway->getTitleObject()->userCan('read') && !$pathway->isDeleted()) {
 				$this->pathway = new WSPathwayInfo($pathway);
 			}
 		}

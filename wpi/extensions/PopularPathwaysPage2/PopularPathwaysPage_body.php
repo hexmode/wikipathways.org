@@ -53,7 +53,7 @@ class PPQueryPage extends QueryPage {
 			return null;
 		}
 		$pathway = Pathway::newFromTitle($result->title);
-		if(!$pathway->isReadable()) return null; //Skip private pathways
+		if(!$pathway->getTitleObject()->userCan('read')) return null; //Skip private pathways
 		$title = Title::makeTitle( $result->namespace, $pathway->getSpecies().":".$pathway->getName() );
 				$id = Title::makeTitle( $result->namespace, $result->title );
 		$link = $skin->makeKnownLinkObj( $id, htmlspecialchars( $wgContLang->convert( $title->getBaseText() ) ) );
