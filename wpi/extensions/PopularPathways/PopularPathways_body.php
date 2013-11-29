@@ -7,8 +7,10 @@ class LegacyPopularPathways extends LegacySpecialPage {
 
 class PopularPathways extends QueryPage {
 	public $namespace = NS_PATHWAY;
+	public $tagged;
 	function __construct( ) {
 		parent::__construct( __CLASS__ );
+		$this->tagged = CurationTag::getPagesForTag('Curation:Tutorial');
 	}
 
 	function isExpensive() {
@@ -36,8 +38,7 @@ class PopularPathways extends QueryPage {
 
 	function formatResult( $skin, $result ) {
 		global $wgLang, $wgContLang;
-		$taggedIds = CurationTag::getPagesForTag('Curation:Tutorial');
-		if (in_array($result->id, $taggedIds)){
+		if (in_array($result->id, $this->tagged)){
 			return null;
 		}
 		$pathway = Pathway::newFromTitle($result->title);
