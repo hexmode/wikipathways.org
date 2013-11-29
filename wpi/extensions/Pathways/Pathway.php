@@ -1138,15 +1138,13 @@ class Pathway {
 			wfDebug("not Saving");
 			return $conFile;
 		}
-		$gpmlObj = $this->getFileObj( FILETYPE_GPML );
-		$gpmlFile = $this->getFileLocation(FILETYPE_GPML);
 		$outFile = basename( $gpmlFile, FILETYPE_GPML );
 
 		if ( $conFile === null ) {
 			$conFile = wfTempDir() . "/$outFile$fileType";
 		}
 		wfDebug( "Saving $gpmlFile to $fileType in $conFile\n" );
-		$this->convert($gpmlObj, $conFile);
+		$this->convert($conFile);
 		wfProfileOut( __METHOD__ );
 		return $conFile;
 	}
@@ -1156,10 +1154,11 @@ class Pathway {
 	 * file format. The file format will be determined by the
 	 * output file extension.
 	 */
-	public function convert($gpmlObj, $outFile) {
+	public function convert( $outFile ) {
 		global $wgMaxShellMemory;
 		wfProfileIn( __METHOD__ );
 		$this->saveGpmlCache( $gpmlObj );
+		$gpmlObj = $this->getFileObj( FILETYPE_GPML );
 		$gpmlFile = $gpmlObj->getPath();
 		$baseName = basename( $outFile );
 		$final = wfTempDir() . "/$baseName";
