@@ -1,5 +1,5 @@
 <?php
-class SearchPathways extends SpecialPage
+class SearchPathways extends SpecialSearch
 {
 	private $this_url;
 
@@ -8,7 +8,7 @@ class SearchPathways extends SpecialPage
 	}
 
 	function execute( $par ) {
-		global $wgRequest, $wgOut, $wpiScriptURL, $wgUser, $wfSearchPagePath;
+		global $wgRequest, $wgOut, $wpiScriptURL, $wgUser, $wgSearchPagePath;
 
 		$this->setHeaders();
 		$this->this_url = SITE_URL . '/index.php';
@@ -25,13 +25,7 @@ class SearchPathways extends SpecialPage
 		if ((!$query || $query =='') && $type == 'query') $query = 'glucose';
 		if ($species == 'ALL SPECIES') $species = '';
 
-		//Add CSS
-		//Hack to add a css that's not in the skins directory
-		global $wgStylePath;
-		$oldStylePath = $wgStylePath;
-		$wgStylePath = $wfSearchPagePath;
-		$wgOut->addStyle("SearchPathways.css");
-		$wgStylePath = $oldStylePath;
+		$wgOut->addStyle("$wgSearchPagePath/SearchPathways.css");
 
 		if($_GET['doSearch'] == '1') { //Submit button pressed
 			$this->showForm($query, $species, $ids, $codes, $type);
@@ -48,7 +42,7 @@ class SearchPathways extends SpecialPage
 
 
 	function showForm($query, $species = '', $ids = '', $codes = '', $type) {
-		global $wgRequest, $wgOut, $wpiScriptURL, $wgJsMimeType, $wfSearchPagePath, $wgScriptPath;
+		global $wgRequest, $wgOut, $wpiScriptURL, $wgJsMimeType, $wgSearchPagePath, $wgScriptPath;
 		#For now, hide the form when id search is done (no gui for that yet)
 		$hide = "";
 		$xrefInfo = "";
@@ -95,23 +89,13 @@ class SearchPathways extends SpecialPage
 			$search_form
 			</DIV>
 						");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"$wfSearchPagePath/SearchPathways.js\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"$wgSearchPagePath/SearchPathways.js\"></script>\n");
 		$wgOut->addHTML("<DIV id='searchResults'></DIV>");
 		$wgOut->addHTML(
 			"<DIV id='loading'><IMG src='$wgScriptPath/skins/common/images/progress.gif'/> Loading...</DIV>"
 		);
 		$wgOut->addHTML("<DIV id='more'></DIV>");
 		$wgOut->addHTML("<DIV id='error'></DIV>");
-	}
-
-	function showResults() {
-		global $wgOut, $wgJsMimeType;
-
-		$wgOut->addHTML(
-			"<script type=\"{$wgJsMimeType}\">" .
-			"SearchPathways.doSearch();" .
-			"</script>\n"
-		);
 	}
 
 	static function makeThumbNail( $pathway, $label = '', $href = '', $alt, $align = 'right', $id = 'thumb', $boxwidth = 300, $boxheight=false, $framed=false ) {
