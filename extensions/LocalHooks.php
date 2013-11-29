@@ -268,7 +268,7 @@ content requires special attention. <b>Please keep your
 			if ($target->getNamespace() == NS_PATHWAY){
 				$pathway = Pathway::newFromTitle($target);
 				// Keep private pathway names obscured
-				if(!$pathway->isReadable()) {
+				if(!$pathway->getTitleObject()->userCan('read')) {
 					$text = $target->getName();
 				} else {
 					$text = Title::makeTitle( $target->getNsText(),
@@ -508,3 +508,4 @@ $wgHooks['BeforePageDisplay'][]         = 'LocalHooks::addPreloaderScript';
 $wgHooks['BeforePageDisplay'][]         = 'LocalHooks::stopDisplay';
 $wgHooks['LinkText'][]                  = 'LocalHooks::linkText';
 $wgHooks['userCan'][]                   = 'LocalHooks::checkUserCan';
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'PathwayOfTheDay::SetupDB';
