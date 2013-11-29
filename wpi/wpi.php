@@ -156,7 +156,7 @@ function createJnlpArg($flag, $value) {
 
 function getFilename( $fileType, $pwTitle ) {
 	$pathway = Pathway::newFromTitle($pwTitle);
-	if(!$pathway->isReadable()) {
+	if(!$pathway->getTitleObject()->userCan('read')) {
 		throw new Exception("You don't have permissions to view this pathway");
 	}
 

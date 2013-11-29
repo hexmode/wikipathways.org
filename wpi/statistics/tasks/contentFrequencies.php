@@ -24,7 +24,7 @@ class ContentFrequencies {
 				$i++;
 
 				$wp = new Pathway($p->getPwId());
-				if(!$wp->isReadable()) continue;
+				if(!$wp->getTitleObject()->userCan('read')) continue;
 
 				$wp->setActiveRevision($p->getRevision());
 				$data = new PathwayData($wp);
