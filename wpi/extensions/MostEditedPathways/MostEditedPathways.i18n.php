@@ -1,7 +1,7 @@
 <?php
 $messages = array(
 		'en' => array(
-				'mosteditedpathwayspage' => 'Most edited pathways'
+				'mosteditedpathways' => 'Most edited pathways'
 		)
 );
 $specialPageAliases = array();
@@ -10,5 +10,5 @@ $specialPageAliases = array();
  *  @author Mark A. Hershberger
  */
 $specialPageAliases[ 'en' ] = array(
-		'MostEditedPathwaysPage' => array( 'MostEditedPathwaysPage', 'Most edited pathways' ),
+		'MostEditedPathways' => array( 'MostEditedPathways', 'Most edited pathways' ),
 );

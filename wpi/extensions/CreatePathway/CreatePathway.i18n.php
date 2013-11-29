@@ -1,6 +1,6 @@
 <?php
 $messages['en'] = array(
-			'createpathwaypage' => 'Create new pathway',
+			'createpathway' => 'Create new pathway',
 			'create_private' => "Make pathway private ([[Help::Private Pathway|how does this work?]])",
 			'wpi-createpage-not-logged-in' => "You are not logged in.",
 			'wpi-createpage-permission'    => "You do not have the necessary permissions."
@@ -17,5 +17,5 @@ $specialPageAliases = array();
  * @author Mark A. Hershberger
  */
 $specialPageAliases[ 'en' ] = array(
-		'CreatePathwayPage' => array( 'CreatePathwayPage', 'Create Pathway' ),
+		'CreatePathway' => array( 'CreatePathway', 'Create Pathway' ),
 );

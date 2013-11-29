@@ -1,10 +1,16 @@
 <?php
-require_once("wpi/wpi.php");
 
-class DiffAppletPage extends SpecialPage
+
+class LegacyBrowsePathways extends LegacySpecialPage {
+	function __construct() {
+		parent::__construct( "DiffAppletPage", "DiffApplet" );
+	}
+}
+
+class DiffApplet extends SpecialPage
 {
 	function __construct( ) {
-		parent::__construct( "DiffAppletPage" );
+		parent::__construct( __CLASS__ );
 	}
 
 	function execute( $par ) {

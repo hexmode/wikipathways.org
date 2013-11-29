@@ -1,6 +1,13 @@
 <?php
 
-class MostEditedPathwaysPage extends QueryPage {
+class LegacyMostEditedPathways extends LegacySpecialPage {
+	function __construct() {
+		parent::__construct( "MostEditedPathwaysPage", "MostEditedPathways" );
+	}
+}
+
+
+class MostEditedPathways extends QueryPage {
 	private $namespace;
 
 	function __construct() {
@@ -10,7 +17,7 @@ class MostEditedPathwaysPage extends QueryPage {
 	}
 
 	function getName() {
-		return "MostEditedPathwaysPage";
+		return "MostEditedPathways";
 	}
 
 	function isExpensive() {
@@ -32,9 +39,9 @@ class MostEditedPathwaysPage extends QueryPage {
 			'conds'  => array(
 				'page_namespace'   => $this->namespace,
 				'page_is_redirect' => 0,
-                'page_id = rev_page'
+				'page_id = rev_page'
 			),
-		    'options' => array(
+			'options' => array(
 				'GROUP BY' => '1,2,3',
 				'HAVING' => 'value > 1'
 			)

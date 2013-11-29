@@ -1,11 +1,18 @@
 <?php
 
-class CreatePathwayPage extends SpecialPage {
+class LegacyCreatePathway extends LegacySpecialPage {
+	function __construct() {
+		parent::__construct( "CreatePathwayPage", "CreatePathway" );
+	}
+}
+
+
+class CreatePathway extends SpecialPage {
 	private $this_url;
 	private $create_priv_msg;
 
 	function __construct(  ) {
-		parent::__construct("CreatePathwayPage");
+		parent::__construct( __CLASS__ );
 	}
 
 	function execute( $par ) {
@@ -161,7 +168,7 @@ class CreatePathwayPage extends SpecialPage {
 					<tr><td>
 					<INPUT type='checkbox' name='private2' value='1' $private2> $this->create_priv_msg
 					<input type='hidden' name='upload' value='1'>
-				<input type='hidden' name='title' value='Special:CreatePathwayPage'>
+				<input type='hidden' name='title' value='Special:CreatePathway'>
 					<tr><td><INPUT type='submit' value='Upload pathway'></table></FORM>";
 			$html_editor =" <FORM action='$this->this_url' method='get'>
 				<table style='margin-left: 20px;'><td>Pathway name:
@@ -183,7 +190,7 @@ class CreatePathwayPage extends SpecialPage {
 				if($private) $private = 'CHECKED'; //private is array? array to string conversion notice
 				$html_editor .= "<tr><td colspan='2'><input type='checkbox' name='private' value='1' $private> $this->create_priv_msg
 				<input type='hidden' name='create' value='1'>
-				<input type='hidden' name='title' value='Special:CreatePathwayPage'>
+				<input type='hidden' name='title' value='Special:CreatePathway'>
 				<tr><td><input type='submit' value='Create pathway'> </table></FORM><BR>";
 
 					$wgOut->addHTML("
@@ -219,9 +226,7 @@ class CreatePathwayPage extends SpecialPage {
 						elm.style.display = 'none';
 				}
 
-</script>
-
-		");
+</script>");
 	}
 
 }

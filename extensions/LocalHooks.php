@@ -508,4 +508,3 @@ $wgHooks['BeforePageDisplay'][]         = 'LocalHooks::addPreloaderScript';
 $wgHooks['BeforePageDisplay'][]         = 'LocalHooks::stopDisplay';
 $wgHooks['LinkText'][]                  = 'LocalHooks::linkText';
 $wgHooks['userCan'][]                   = 'LocalHooks::checkUserCan';
-$wgHooks['LoadExtensionSchemaUpdates'][] = 'PathwayOfTheDay::SetupDB';
