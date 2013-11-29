@@ -49,9 +49,6 @@ html, body {
 <?php
 	  echo '<link rel="stylesheet" href="' . $cssJQueryUI . '" type="text/css" />' . "\n";
 
-//Initialize javascript
-echo '<script type="text/javascript" src="' . $jsJQuery . '"></script>' . "\n";
-
 $jsSnippets = XrefPanel::getJsSnippets();
 foreach($jsSnippets as $js) {
 	echo "<script type=\"text/javascript\">$js</script>\n";

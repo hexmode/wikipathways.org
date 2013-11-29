@@ -1,7 +1,7 @@
 <?php
 /**
  * Bootstrap Skin
- * 
+ *
  * @file
  * @ingroup Skins
  * @author Matt Yeh (http://www.github.com/mtyeh411)
@@ -46,15 +46,15 @@
 		),
 		'remoteBasePath' => &$GLOBALS['wgStylePath'],
 		'localBasePath' => &$GLOBALS['wgStyleDirectory'],
-	);	
+	);
 
 	// MW 1.19 ships with jQuery 1.7.1
 	if( !version_compare( $wgVersion, '1.19', '==')) {
-	array_unshift($wgResourceModules['skins.bootstrap']['scripts'], $skinAssets . 'jquery-1.7.1.min.js');
+		array_unshift($wgResourceModules['skins.bootstrap']['scripts'], $skinAssets . 'jquery-1.7.1.min.js');
 	}
-	
+
 	$sgNavbarOptions['page'] = 'MediaWiki:bootstrap-navbar';
-	$sgNavbarOptions['dropdown'] = true; 
+	$sgNavbarOptions['dropdown'] = true;
 
 	$sgSidebarOptions['page'] = 'MediaWiki:bootstrap-sidebar';
 	$sgSidebarOptions['type'] = 'pills'; # tabs, pills, list
