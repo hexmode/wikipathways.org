@@ -31,9 +31,11 @@
  * @ingroup Content
  */
 class PathwayContent extends AbstractContent {
+	protected $title;
+	protected $revId;
 
 	public function __construct( $text ) {
-		parent::__construct( CONTENT_MODEL_PATHWAY );
+			parent::__construct( CONTENT_MODEL_PATHWAY );
 		$this->mText = $text;
 	}
 
@@ -78,6 +80,10 @@ class PathwayContent extends AbstractContent {
 	 */
 	public function getTextForSummary( $maxLength = 250 ) { return "basic log message"; }
 
+	public function serialize( $format = null ) {
+		return $this->mText;
+	}
+
 	/**
 	 * Returns native representation of the data. Interpretation depends on
 	 * the data model used, as given by getDataModel().
@@ -90,7 +96,9 @@ class PathwayContent extends AbstractContent {
 	 *
 	 * @note Caller must be aware of content model!
 	 */
-	public function getNativeData() { return $this->mText; }
+	public function getNativeData( ) {
+		return $this->mText;
+	}
 
 	/**
 	 * Returns the content's nominal size in bogo-bytes.
@@ -133,8 +141,10 @@ class PathwayContent extends AbstractContent {
 	 */
 	public function isCountable( $hasLinks = null ) { return true; }
 
+		/* No redirects on pathways */
+		public function getRedirectTarget() { return null; }
+
 	/**
-	 * FOR NOW THIS IS COPYPASTA FROM TextContent.php
 	 * Parse the Content object and generate a ParserOutput from the result.
 	 * $result->getText() can be used to obtain the generated HTML. If no HTML
 	 * is needed, $generateHtml can be set to false; in that case,
@@ -154,50 +164,71 @@ class PathwayContent extends AbstractContent {
 	public function getParserOutput( Title $title,
 		$revId = null,
 		ParserOptions $options = null, $generateHtml = true
-	) {
+		) {
 		wfProfileIn( __METHOD__ );
 		global $wgParser, $wgTextModelsToParse;
-
 		if ( !$options ) {
-			//NOTE: use canonical options per default to produce cacheable output
-			$options = $this->getContentHandler()->makeParserOptions( 'canonical' );
+			// NOTE: use canonical options per default to produce
+			// cacheable output
+			$options = $this->getContentHandler()
+				->makeParserOptions( 'canonical' );
 		}
 
-		if ( in_array( $this->getModel(), $wgTextModelsToParse ) ) {
-			// parse just to get links etc into the database
-			$po = $wgParser->parse( $this->getNativeData(), $title, $options, true, true, $revId );
-		} else {
-			$po = new ParserOutput();
+		if( !$this->title ) {
+			global $wgTitle;
+			$this->title = $wgTitle;
 		}
-
-		if ( $generateHtml ) {
-			$html = $this->getHtml( $title, $revId );
-		} else {
-			$html = '';
-		}
-
-		$po->setText( $html );
-		wfProfileOut( __METHOD__ );
-		return $po;
-	}
-
-	public function getHtml( Title $title, $revId = null ) {
-		wfProfileIn( __METHOD__ );
-		$pathway = Pathway::newFromTitle($title);
+		$id = Pathway::parseIdentifier($this->title);
+		$pathway = new Pathway( $id );
 		if($revId) {
 			$pathway->setActiveRevision($revId);
 		}
-		$pathway->updateCache(FILETYPE_IMG); //In case the image page is removed
-		$page = new PathwayPage($pathway);
+
+		// title editor
+		$title = $pathway->getName();
+		$out = "";
+
+		// Start permission warning;
+		global $wgLang;
+		$url = SITE_URL;
+		$msg = wfMessage( 'private_warning' )->text();
+		$pp = $pathway->getPermissionManager()->getPermissions();
+		if ( $pp ) {
+			$expdate = $pp->getExpires();
+			$expdate = $wgLang->date($expdate, true);
+			$msg = str_replace('$DATE', $expdate, $msg);
+			$out .= "<div class='private_warn'>$msg</div>";
+		}
+
+		$out .= "{{Template:PathwayPage:Top}}\n" .
+			"== Curation Tags ==\n" .
+			"<CurationTags></CurationTags>\n";
+
+		// descriptionText
+		$out .= "== Description ==\n";
+		$out .= $pathway->getPathwayData()->getWikiDescription();
+
+		// ontologytags
+		global $wpiEnableOtag;
+		if($wpiEnableOtag) {
+			$out .= "\n== Ontology Tags ==\n" .
+				"<OntologyTags></OntologyTags>\n";
+		}
+
+		global $wgUser;
+		$out .= "== Bibliography ==\n" .
+			"<pathwayBibliography></pathwayBibliography>\n";
+		## FIXME display {{Template:Help:LiteratureReferences}} if user
+		## is logged in here -- should use JS
+
+		$out .= "{{Template:PathwayPage:Bottom}}\n";
+		$po = $wgParser->parse( $out, $this->title, $options, true, true,
+			$revId );
+		$po->setDisplayTitle( $title );
+		## FIXME use js to allow editing that was done using pageEditor on
+		## #pageTitle
+
 		wfProfileOut( __METHOD__ );
-		return $page->getContent();
+		return $po;
 	}
-
-	// TODO: make RenderOutput and RenderOptions base classes
-
-	// TODO: ImagePage and CategoryPage interfere with per-content action handlers
-	// TODO: nice&sane integration of GeSHi syntax highlighting
-	//   [11:59] <vvv> Hooks are ugly; make CodeHighlighter interface and a
-	//   config to set the class which handles syntax highlighting
-	//   [12:00] <vvv> And default it to a DummyHighlighter
 }
