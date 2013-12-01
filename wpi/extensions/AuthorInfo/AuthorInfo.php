@@ -3,7 +3,7 @@ $wgExtensionFunctions[] = "wfAuthorInfo";
 
 $wgAjaxExportList[] = "jsGetAuthors";
 
-$wfAuthorInfoPath = WPI_URL . "/extensions/AuthorInfo";
+$wgAuthorInfoPath = WPI_URL . "/extensions/AuthorInfo";
 
 function wfAuthorInfo() {
 	global $wgParser;
@@ -11,7 +11,7 @@ function wfAuthorInfo() {
 }
 
 function renderAuthorInfo($input, $argv, $parser) {
-	global $wfAuthorInfoPath;
+	global $wgAuthorInfoPath;
 
 	if( isset( $argv["limit"] ) )
 		$limit = htmlentities( $argv["limit"] );
@@ -22,15 +22,10 @@ function renderAuthorInfo($input, $argv, $parser) {
 	else
 		$bots = false;
 
-	//Add CSS
-	//Hack to add a css that's not in the skins directory
-	global $wgStylePath, $wgOut;
-	$oldStylePath = $wgStylePath;
-	$wgStylePath = $wfAuthorInfoPath;
-	$wgOut->addStyle("AuthorInfo.css");
-	$wgStylePath = $oldStylePath;
+	global $wgOut;
+	$wgOut->addStyle("$wgAuthorInfoPath/AuthorInfo.css");
 
-	$html = "<script type=\"text/javascript\" src=\"$wfAuthorInfoPath/AuthorInfo.js\"></script>\n";
+	$html = "<script type=\"text/javascript\" src=\"$wgAuthorInfoPath/AuthorInfo.js\"></script>\n";
 	$id = $parser->getTitle()->getArticleId();
 	$html .= "<div id='authorInfoContainer'></div><script type=\"text/javascript\">" .
 		"AuthorInfo.init('authorInfoContainer', '$id', '$limit', '$bots');</script>";
