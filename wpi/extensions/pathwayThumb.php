@@ -77,11 +77,72 @@ class PathwayThumb {
 		//Create dropdown action menu
 		$pwTitle = $pathway->getTitleObject()->getFullText();
 		//disable dropdown for now
-		$drop = PathwayPage::editDropDown($pathway);
+		$drop = self::editDropDown($pathway);
 		$drop = '<div style="float:right;">' . $drop . '</div>';
 		return $caption . $drop;
 	}
 
+	static function getDownloadURL($pathway, $type) {
+		if($pathway->getActiveRevision()) {
+			$oldid = "&oldid={$pathway->getActiveRevision()}";
+		}
+		return WPI_SCRIPT_URL . "?action=downloadFile&type=$type&pwTitle={$pathway->getTitleObject()->getFullText()}{$oldid}";
+	}
+
+	static function editDropDown($pathway) {
+		global $wgOut;
+		wfProfileIn( __METHOD__ );
+
+		//AP20081218: Operating System Detection
+		require_once 'DetectBrowserOS.php';
+		//echo (browser_detection( 'os' ));
+		$download = array(
+			'PathVisio (.gpml)' => self::getDownloadURL($pathway, 'gpml'),
+			'Scalable Vector Graphics (.svg)' => self::getDownloadURL($pathway, 'svg'),
+			'Gene list (.txt)' => self::getDownloadURL($pathway, 'txt'),
+			'Biopax level 3 (.owl)' => self::getDownloadURL($pathway, 'owl'),
+			'Eu.Gene (.pwf)' => self::getDownloadURL($pathway, 'pwf'),
+			'Png image (.png)' => self::getDownloadURL($pathway, 'png'),
+			'Acrobat (.pdf)' => self::getDownloadURL($pathway, 'pdf'),
+		);
+		$downloadlist = '';
+		foreach(array_keys($download) as $key) {
+			$downloadlist .= "<li><a href='{$download[$key]}'>$key</a></li>";
+		}
+
+		$dropdown = <<<DROPDOWN
+<ul id="nav" name="nav">
+<li><a href="#nogo2" class="button buttondown"><span>Download</span></a>
+		<ul>
+			$downloadlist
+		</ul>
+</li>
+</ul>
+
+DROPDOWN;
+
+		$script = <<<SCRIPT
+<script type="text/javascript">
+
+sfHover = function() {
+	var sfEls = document.getElementById("nav").getElementsByTagName("LI");
+	for (var i=0; i<sfEls.length; i++) {
+		sfEls[i].onmouseover=function() {
+			this.className+=" sfhover";
+		}
+		sfEls[i].onmouseout=function() {
+			this.className=this.className.replace(" sfhover", "");
+		}
+	}
+}
+if (window.attachEvent) window.attachEvent("onload", sfHover);
+
+</script>
+SCRIPT;
+		$wgOut->addScript($script);
+		wfProfileOut( __METHOD__ );
+		return $dropdown;
+	}
 
 	/** MODIFIED FROM Linker.php
 	 * Make HTML for a thumbnail including image, border and caption
