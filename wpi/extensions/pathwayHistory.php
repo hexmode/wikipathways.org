@@ -4,7 +4,7 @@ class GpmlHistoryPager extends HistoryPager {
 	private $pathway;
 	private $nrShow = 5;
 	private $style;
-	private $linesonpage;
+	private $linesOnPage;
 
 	function __construct( $pathway, $pageHistory ) {
 		parent::__construct( $pageHistory );
@@ -16,7 +16,15 @@ class GpmlHistoryPager extends HistoryPager {
 		$firstInList = $this->mCounter == 1;
 		$this->style = ($this->mCounter <= $this->nrShow) ? '' : 'class="toggleMe"';
 
-		$s = $this->historyRow($this->historyLine($row, $this->getNumRows(), $this->mCounter++, $latest, $firstInList));
+		$s = $this->historyRow(
+			$this->historyLine(
+				$row,
+				$this->getNumRows(),
+				$this->mCounter++,
+				$latest,
+				$firstInList
+			)
+		);
 
 		$this->mLastRow = $row;
 		return $s;
@@ -143,19 +151,27 @@ class GpmlHistoryPager extends HistoryPager {
 		$date = $wgLang->timeanddate( $rev->getTimestamp(), true );
 		$user = RequestContext::getMain()->getSkin()->userLink( $rev->getUser(), $rev->getUserText() );
 		$descr = $rev->getComment();
-		return array('diff'=>$diff, 'rev'=>$revert, 'view'=>$view, 'date'=>$date, 'user'=>$user, 'descr'=>$descr, 'id'=>$rev->getId());
+		return array(
+			'diff' => $diff,
+			'rev'=>$revert,
+			'view'=>$view,
+			'date'=>$date,
+			'user'=>$user,
+			'descr'=>$descr,
+			'id'=>$rev->getId()
+		);
 	}
 
 	/**
 	 * Generates dynamic display of radio buttons for selecting versions to compare
 	 */
 	function diffButtons( $rev, $firstInList) {
-		if( $this->linesonpage > 1) {
+		if( $this->linesOnPage > 1) {
 			$radio = array(
 				'type'  => 'radio',
 				'value' => $rev->getId(),
 				# do we really need to flood this on every item?
-				#                               'title' => wfMessage( 'selectolderversionfordiff' )->escaped()
+				#'title' => wfMessage( 'selectolderversionfordiff' )->escaped()
 			);
 
 			if( !$rev->userCan( Revision::DELETED_TEXT ) ) {
@@ -164,8 +180,8 @@ class GpmlHistoryPager extends HistoryPager {
 
 			/** @todo: move title texts to javascript */
 			if ( $firstInList ) {
-				$first = wfElement( 'input', array_merge(
-						$radio,
+				$first = Html::Element( 'input',
+					array_merge( $radio,
 						array(
 							'style' => 'visibility:hidden',
 							'name'  => 'old' ) ) );
@@ -176,13 +192,14 @@ class GpmlHistoryPager extends HistoryPager {
 				} else {
 					$checkmark = array();
 				}
-				$first = wfElement( 'input', array_merge(
+				$first = Html::Element( 'input',
+					array_merge(
 						$radio,
 						$checkmark,
 						array( 'name'  => 'old' ) ) );
 				$checkmark = array();
 			}
-			$second = wfElement( 'input', array_merge(
+			$second = Html::Element( 'input', array_merge(
 					$radio,
 					$checkmark,
 					array( 'name'  => 'new' ) ) );
