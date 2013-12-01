@@ -4,7 +4,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This file is part of MediaWiki, it is not a valid entry point.\n";
 	exit( 1 );
 }
-$opath = WPI_URL . "/extensions/otag" ;
+$wgOpath = WPI_URL . "/extensions/otag" ;
 $wgExtensionFunctions[] = "wfotag";
 
 function wfotag() {
@@ -25,26 +25,22 @@ function oheader(&$parser, &$text) {
 }
 
 function ofunction( $input, $argv, $parser ) {
-	global $wgTitle, $wgOut,  $opath, $wgOntologiesJSON, $wgStylePath, $wgJsMimeType;
-	$oldStylePath = $wgStylePath;
-	$wgStylePath = $opath . "/css/";
-
+	global $wgTitle, $wgOut,  $wgOpath, $wgOntologiesJSON, $wgStylePath, $wgJsMimeType;
 	$title = $parser->getTitle();
 	$loggedIn = $title->userCan('edit') ? 1 : 0;
 
 	if($loggedIn) {
-		$wgOut->addScript('<script type="text/javascript" src="' . $opath . '/js/yui2.7.0.allcomponents.js"></script>');
+		$wgOut->addScript('<script type="text/javascript" src="' . $wgOpath . '/js/yui2.7.0.allcomponents.js"></script>');
 		$wgOut->addStyle("yui2.7.0.css");
 	} else {
-		$wgOut->addScript('<script type="text/javascript" src="' . $opath . '/js/yui2.7.0.mincomponents.js"></script>');
+		$wgOut->addScript('<script type="text/javascript" src="' . $wgOpath . '/js/yui2.7.0.mincomponents.js"></script>');
 	}
 
-	$wgOut->addStyle("otag.css");
-	$wgStylePath = $oldStylePath;
+	$wgOut->addStyle("$wgOpath/css/otag.css");
 
 	$wgOut->addScript(
 		"<script type=\"{$wgJsMimeType}\">" .
-		"var opath=\"$opath\";" .
+		"var opath=\"$wgOpath\";" .
 		"var otagloggedIn = \"$loggedIn\";" .
 		"var ontologiesJSON = '$wgOntologiesJSON';" .
 		"</script>\n"
@@ -69,7 +65,7 @@ function ofunction( $input, $argv, $parser ) {
 	</div>
 </div>
 <div style="clear:both;"></div>
-<script type="text/javascript" src="$opath/js/script.js"></script>
+<script type="text/javascript" src="$wgOpath/js/script.js"></script>
 <script type="text/javascript">
 	YAHOO.util.Event.onDOMReady(ontologytree.init, ontologytree,true);
 </script>
@@ -82,7 +78,7 @@ HTML;
 <div id="ontologyTags" style="display:none;"> </div>
 <div id="ontologyTagDisplay">&nbsp;</div>
 </div>
-<script type="text/javascript" src="$opath/js/script.js"></script>
+<script type="text/javascript" src="$wgOpath/js/script.js"></script>
 HTML;
 	}
 	return   '<!-- ENCODED_CONTENT '.base64_encode($output).' -->' ;
