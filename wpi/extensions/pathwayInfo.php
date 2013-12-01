@@ -1,6 +1,5 @@
 <?php
 
-$wgAutoloadClasses['PathwayData']   = "$IP/wpi/extensions/Pathways/PathwayData.php";
 class PathwayInfo extends PathwayData {
 	private $parser;
 
