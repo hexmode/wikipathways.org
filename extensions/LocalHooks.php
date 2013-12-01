@@ -24,6 +24,8 @@ class LocalHooks {
 	static public function externalLink ( &$url, &$text, &$link, &$attribs = null ) {
 		global $wgExternalLinkTarget;
 		wfProfileIn( __METHOD__ );
+
+		//This can clutter up the logs on some pages
 		wfDebug(__METHOD__.": Looking at the link: $url\n");
 
 		$linkTarget = "_blank";
