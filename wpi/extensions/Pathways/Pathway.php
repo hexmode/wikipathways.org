@@ -1138,6 +1138,7 @@ class Pathway {
 			wfDebug("not Saving");
 			return $conFile;
 		}
+		$gpmlFile = $this->getFileLocation( FILETYPE_GPML );
 		$outFile = basename( $gpmlFile, FILETYPE_GPML );
 
 		if ( $conFile === null ) {
@@ -1157,8 +1158,8 @@ class Pathway {
 	public function convert( $outFile ) {
 		global $wgMaxShellMemory;
 		wfProfileIn( __METHOD__ );
-		$this->saveGpmlCache( $gpmlObj );
 		$gpmlObj = $this->getFileObj( FILETYPE_GPML );
+		$this->saveGpmlCache( $gpmlObj );
 		$gpmlFile = $gpmlObj->getPath();
 		$baseName = basename( $outFile );
 		$final = wfTempDir() . "/$baseName";
