@@ -203,7 +203,7 @@ class GpmlHistoryPager extends HistoryPager {
 					$radio,
 					$checkmark,
 					array( 'name'  => 'new' ) ) );
-			return $first . $second;
+			return $first . "&nbsp;" . $second;
 		} else {
 			return '';
 		}
