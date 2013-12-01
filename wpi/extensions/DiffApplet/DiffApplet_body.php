@@ -1,7 +1,7 @@
 <?php
 
 
-class LegacyBrowsePathways extends LegacySpecialPage {
+class LegacyDiffApplet extends LegacySpecialPage {
 	function __construct() {
 		parent::__construct( "DiffAppletPage", "DiffApplet" );
 	}
