@@ -549,6 +549,7 @@ class Pathway {
 	 * \param the file type to get the name for (one of the FILETYPE_* constants)
 	 */
 	public function getFileObj( $fileType ) {
+		$rev_suffix = "";
 		if($this->revision) {
 			$rev_suffix = "_" . $this->revision;
 		}
