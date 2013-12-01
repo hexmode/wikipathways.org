@@ -212,8 +212,7 @@ class PathwayData {
 				}
 			}
 		}
-		wfProfileIn( __METHOD__ );
-
+		wfProfileOut( __METHOD__ );
 	}
 }
 
