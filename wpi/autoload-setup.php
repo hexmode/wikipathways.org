@@ -23,14 +23,13 @@ $wgAutoloadClasses['PathwayBibliography'] = "$IP/wpi/extensions/pathwayBibliogra
 $wgAutoloadClasses['PathwayData']         = "$IP/wpi/extensions/Pathways/PathwayData.php";
 $wgAutoloadClasses['PathwayInfo']         = "$IP/wpi/extensions/pathwayInfo.php";
 $wgAutoloadClasses['PathwayOfTheDay']     = "$IP/wpi/extensions/PathwayOfTheDay/PathwayOfTheDay_class.php";
-$wgAutoloadClasses['PathwayPage']         = "$IP/wpi/extensions/Pathways/PathwayPage.php";
 $wgAutoloadClasses['PathwayThumb']        = "$IP/wpi/extensions/pathwayThumb.php";
 $wgAutoloadClasses['PathwayViewer']       = "$IP/wpi/extensions/PathwayViewer/PathwayViewer.php";
 $wgAutoloadClasses['TaggedPathway']       = "$IP/wpi/extensions/PathwayOfTheDay/TaggedPathway.php";
 $wgAutoloadClasses['Xref']                = "$IP/wpi/extensions/Pathways/PathwayData.php";
+$wgAutoloadClasses['DataSource']          = "$IP/wpi/DataSources.php";
 
 $wgHooks['LoadExtensionSchemaUpdates'][] = 'PathwayOfTheDay::SetupDB';
-$wgExtensionMessagesFiles['PathwayPage'] = "$IP/wpi/extensions/Pathways/PathwayPage.i18n.php";
 
 $wgExtensionFunctions[] = "LocalHooks::extensionFunctions";
 
@@ -58,7 +57,6 @@ require_once( "$IP/wpi/extensions/editApplet.php" );
 require_once( "$IP/wpi/extensions/listPathways.php" );
 require_once( "$IP/wpi/extensions/movePathway.php" );
 require_once( "$IP/wpi/batchDownload.php" );
-require_once( "$IP/wpi/extensions/Pathways/PathwayPage.php" );
 require_once( "$IP/wpi/extensions/SpecialWishList/PathwayWishList.php");
 require_once( "$IP/wpi/extensions/SpecialWishList/SpecialWishList.php" );
 require_once( "$IP/wpi/extensions/SpecialWishList/TopWishes.php" );
