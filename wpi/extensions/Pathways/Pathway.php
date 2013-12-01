@@ -565,7 +565,8 @@ class Pathway {
 		if($updateCache) {
 			$this->updateCache($fileType);
 		}
-		return "http://" . $_SERVER['HTTP_HOST'] . wfLocalFile($this->getFileName($fileType))->getUrl();
+		return "http://" . $_SERVER['HTTP_HOST'] .
+			wfLocalFile($this->getFileLocation($fileType))->getUrl();
 	}
 
 	/**
@@ -1082,7 +1083,7 @@ class Pathway {
 			$this->clearCache(FILETYPE_GPML);
 			$this->clearCache(FILETYPE_IMG);
 		} else {
-			$file = $this->getFileName($fileType, false);
+			$file = $this->getFileLocation($fileType, false);
 		}
 	}
 
