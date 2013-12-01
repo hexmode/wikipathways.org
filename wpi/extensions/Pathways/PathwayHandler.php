@@ -18,13 +18,15 @@ class PathwayHandler extends ContentHandler {
 	 */
 	public function serializeContent( Content $content, $format = null ) {
 		if ( !( $content instanceOf PathwayContent ) ) {
-			throw new MWException( "Expected PathwayContent object, got " . get_class( $content ) );
+			throw new MWException( "Expected PathwayContent object, got " .
+				get_class( $content ) );
 		}
 		return $content->getNativeData();
 	}
 
 	/**
-	 * Unserializes a Content object of the type supported by this ContentHandler.
+	 * Unserializes a Content object of the type supported by this
+	 * ContentHandler.
 	 *
 	 * @since 1.21
 	 *
