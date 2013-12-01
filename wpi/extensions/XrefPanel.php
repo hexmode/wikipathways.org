@@ -6,22 +6,10 @@ Provide an information and cross-reference panel for xrefs on a wiki page.
 
 **/
 
-$wgExtensionFunctions[] = "XrefPanel::xref";
-
+//$wgExtensionFunctions[] = "XrefPanel::xref";
 
 
 class XrefPanel {
-	static function xref() {
-		global $wgParser;
-		$wgParser->setHook( "Xref", "XrefPanel::renderXref" );
-
-		wpiAddXrefPanelScripts();
-	}
-
-	static function renderXref($input, $argv, &$parser) {
-		return wpiXrefHTML($argv['id'], $argv['datasource'], $input, $argv['species']);
-	}
-
 	static function getXrefHTML($id, $datasource, $label, $text, $species) {
 		$datasource = json_encode($datasource);
 		$label = json_encode($label);
