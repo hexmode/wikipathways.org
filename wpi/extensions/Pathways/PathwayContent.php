@@ -141,8 +141,8 @@ class PathwayContent extends AbstractContent {
 	 */
 	public function isCountable( $hasLinks = null ) { return true; }
 
-		/* No redirects on pathways */
-		public function getRedirectTarget() { return null; }
+	/* No redirects on pathways */
+	public function getRedirectTarget() { return null; }
 
 	/**
 	 * Parse the Content object and generate a ParserOutput from the result.
