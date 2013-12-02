@@ -44,14 +44,17 @@ class PathwayViewer {
 			if($getStart == 'true' || $getStart == '1') $start = $dostart;
 
 			$script = <<<SCRIPT
-				var viewer = new PathwayViewer({
-					  imageId: "$imgId",
-							svgUrl: "$svg",
-							gpmlUrl: "$gpml"$start
-							});
-			PathwayViewer_viewers.push(viewer);
+<script type="{$wgJsMimeType}">
+	$(document).ready( function() {
+		var viewer = new PathwayViewer({
+						imageId: "$imgId",
+						svgUrl: "$svg",
+						gpmlUrl: "$gpml"$start
+					});
+		PathwayViewer_viewers.push(viewer);
+	});
+</script>
 SCRIPT;
-			$script = "<script type=\"{$wgJsMimeType}\">" . $script . "</script>\n";
 			return array($script, 'isHTML'=>1, 'noparse'=>1);
 		} catch(Exception $e) {
 			echo "<pre>"; debug_print_backtrace();

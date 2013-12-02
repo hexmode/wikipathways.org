@@ -90,15 +90,16 @@ $gpml = $pathway->getFileURL(FILETYPE_GPML);
  */
 echo <<<SCRIPT
 <script type="text/javascript">
-	PathwayViewer_basePath = '$wfPathwayViewerPath/';
-	PathwayViewer_viewers.push(new PathwayViewer({
-		imageId: "pathwayImage",
-		svgUrl: "$svg",
-		gpmlUrl: "$gpml",
-		start: true,
-		width: '100%',
-		height: '100%'
-	}));
+	$(document).ready( function() {
+			PathwayViewer_basePath = '$wfPathwayViewerPath/';
+			PathwayViewer_viewers.push(new PathwayViewer(
+					{ imageId: "pathwayImage",
+					  svgUrl: "$svg",
+					  gpmlUrl: "$gpml",
+					  start: true,
+					  width: '100%',
+					  height: '100%'
+					}))});
 </script>
 SCRIPT;
 ?>

@@ -53,7 +53,9 @@ function displayCurationTags($input, $argv, $parser) {
 
 	$pageId = $parser->mTitle->getArticleID();
 	$elementId = 'curationTagDiv';
-	return "<div id='$elementId'></div><script type=\"{$wgJsMimeType}\">CurationTags.insertDiv('$elementId', '$pageId');</script>\n";
+	return Html::element( "div", array( "id" => $elementId ) ).
+		Html::rawElement( "script", array( "type" => $wgJsMimeType ),
+			'$(document).' . "ready( function() { CurationTags.insertDiv('$elementId', '$pageId'); } );" );
 }
 
 /**
