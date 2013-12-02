@@ -188,7 +188,8 @@ class EditApplet {
 			$jarfile = "$jardir/$jar";
 			if( is_readable( $jarfile ) ) {
 				$mod = filemtime( $jarfile );
-				if($ver = $cache_version[$jar]) {
+				if( isset( $cache_version[$jar] ) &&
+					$ver = $cache_version[$jar]) {
 					if($ver['mod'] < $mod) {
 						$realversion = increase_version($ver['ver']);
 					} else {
