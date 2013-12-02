@@ -426,7 +426,7 @@ PathwayViewer.prototype.removeStartButton = function() {
  */
 PathwayViewer.prototype.getImg = function() {
     var $img = $('#' + this.info.imageId);
-    if ($img.get(0).nodeName.toLowerCase() != 'img') {
+    if (!$img.get(0) || $img.get(0).nodeName.toLowerCase() != 'img') {
         //Get the IMG descendants
         $img = $('#' + this.info.imageId + ' img');
     }
