@@ -54,14 +54,7 @@ class PathwayBibliography {
 		if($hasRefs) {
 			$out = "<OL id='$id'>$out</OL>";
 			$nrNodes = count($pubXRefs);
-			if($nrNodes > $nrShow) {
-				$expand = "<b>View all...</b>";
-				$collapse = "<b>View last " . ($nrShow) . "</b>";
-				$button = "<table><td width='51%'><div onClick='".
-					'doToggle("'.$id.'", this, "'.$expand.'", "'.$collapse.'")'."' style='cursor:pointer;color:#0000FF'>".
-					"$expand</div><td width='45%'></table>";
-				$out = $button . $out;
-			}
+			$out = Pathway::toggleAll( $nrNodes, $nrShow ) . $out;
 		} else {
 			$out = "<I>No bibliography</i>\n";
 		}

@@ -47,28 +47,7 @@ class GpmlHistoryPager extends HistoryPager {
 
 		}
 
-		if($nr >= $this->nrShow) {
-			$expand = "<b>View all...</b>";
-			$collapse = "<b>View last " . ($this->nrShow) . "</b>";
-			$button =
-				Html::rawElement("a",
-					array(
-						"href" => "javascript:".
-						"doToggle('historyTable', this, " .
-						"'$expand', '$collapse');",
-					),
-					$expand);
-			$table =
-				Html::rawElement( "table", null,
-					Html::rawElement( "tr", null,
-						Html::rawElement( "td",
-							array( "width" => "51%" ),
-							$button ) .
-						Html::rawElement( "td",
-							array( "width" => "20%" )
-						)
-					) ) . $table;
-		}
+		$table = Pathway::toggleAll( $nr, $this->nrShow ) . $table;
 
 		return $table;
 	}

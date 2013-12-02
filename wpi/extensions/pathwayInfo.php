@@ -30,13 +30,7 @@ class PathwayInfo extends PathwayData {
 		$nrShow = 5;
 		$button = "";
 		$nrNodes = count($nodes);
-		if(count($nodes) > $nrShow) {
-			$expand = "<b>View all...</b>";
-			$collapse = "<b>View last " . ($nrShow) . "...</b>";
-			$button = "<table><td width='51%'> <div onClick='".
-				'doToggle("dnTable", this, "'.$expand.'", "'.$collapse.'")'."' style='cursor:pointer;color:#0000FF'>".
-				"$expand<td width='45%'></table>";
-		}
+		$button = Pathway::toggleAll( count( $nodes ), $nrShow);
 		//Sort and iterate over all elements
 		$species = $this->getOrganism();
 		sort($nodes);
