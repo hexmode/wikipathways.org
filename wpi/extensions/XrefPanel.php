@@ -11,13 +11,13 @@ Provide an information and cross-reference panel for xrefs on a wiki page.
 
 class XrefPanel {
 	static function getXrefHTML($id, $datasource, $label, $text, $species) {
-		$datasource = json_encode($datasource);
-		$label = json_encode($label);
-		$id = json_encode($id);
-		$species = json_encode($species);
+		$datasource = htmlentities($datasource);
+		$label = htmlentities($label);
+		$id = htmlentities($id);
+		$species = htmlentities($species);
 		$url = SITE_URL . '/skins/common/images/info.png';
-		$fun = "XrefPanel.registerTrigger(this, $id, $datasource, $species, $label);";
-		$html = $text . " <img title='Show additional info and linkouts' style='cursor:pointer;' onload='$fun' src='$url'/>";
+
+		$html = $text . " <img title='Show additional info and linkouts' style='cursor:pointer;' class='infoLinkout' data-id='$id' data-source='$datasource' data-species='$species' data-label='$label' src='$url'/>";
 		return $html;
 	}
 

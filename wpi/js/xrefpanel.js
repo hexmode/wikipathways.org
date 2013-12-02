@@ -1,9 +1,9 @@
 
-if (typeof(XrefPanel_dataSourcesUrl) == "undefined") 
+if (typeof(XrefPanel_dataSourcesUrl) == "undefined")
     var XrefPanel_dataSourcesUrl = '../../cache/datasources.txt';
-if (typeof(XrefPanel_bridgeUrl) == "undefined") 
+if (typeof(XrefPanel_bridgeUrl) == "undefined")
     var XrefPanel_bridgeUrl = ''; //Disable bridgedb webservice queries if url is not specified
-if (typeof(XrefPanel_searchUrl) == "undefined") 
+if (typeof(XrefPanel_searchUrl) == "undefined")
     var XrefPanel_searchUrl = false;
 if (typeof(XrefPanel_lookupAttributes) == "undefined")
 	var XrefPanel_lookupAttributes = true;
@@ -12,9 +12,9 @@ if (typeof(XrefPanel_lookupAttributes) == "undefined")
  * Change this if the base path of the script (and resource files) is
  * different than the page root.
  */
-if (typeof(XrefPanel_imgPath) == "undefined") 
+if (typeof(XrefPanel_imgPath) == "undefined")
     var XrefPanel_imgPath = wgServer + '/' + wgScriptPath + '/skins/common/images/';
-    
+
 /**
  * A panel that displays information for an xref.
  * The xref information is provided by a bridgedb web service.
@@ -73,7 +73,7 @@ XrefPanel.createInfoCallback = function($div){
         $div.empty();
         var $container = $('<div />');
         var lines = data.split("\n");
-        
+
         //Group equal attributes
         var attributes = {};
         for (var i in lines) {
@@ -87,9 +87,9 @@ XrefPanel.createInfoCallback = function($div){
             attributes[cols[0]].push(cols[1]);
         }
         for (a in attributes) {
-            if (a in XrefPanel.ignoreAttributes) 
+            if (a in XrefPanel.ignoreAttributes)
                 continue;
-            
+
             $row = $('<div />').html('<B>' + a + ': </B>' + attributes[a].join(', '));
             $container.append($row);
         }
@@ -174,7 +174,7 @@ XrefPanel.registerTrigger = function(elm, id, datasource, species, symbol) {
 		});
 		XrefPanel.currentTriggerDialog = $dialog;
 	});
-}
+};
 
 /**
  * Creates a jquery panel that contains information on the given
@@ -190,26 +190,26 @@ XrefPanel.create = function(id, datasource, species, symbol){
     if ($content) {
         return $content;
     }
-    
+
     var maxXrefLines = 5; //Maximum number of xref links to show (scroll otherwise)
     $content = $('<div><div class="xrefinfo" /><div class="xreflinks"/>').css({
         'text-align': 'left',
         'font-size': '90%'
     });
-    
+
     //Store in cache
     XrefPanel.cacheContent(id, datasource, species, symbol, $content);
-    
+
     //Add the info section
     var $infodiv = $content.find('.xrefinfo');
     var title = symbol ? '<h3>' + symbol + '</h3>' : '';
     var txt = '<b>Annotated with: </b>' + XrefPanel.createXrefLink(id, datasource, true);
-    if (!id) 
+    if (!id)
         txt = '<b><font color="red">Invalid annotation, missing identifier!</font></b>';
-    if (!datasource) 
+    if (!datasource)
         txt = '<b><font color="red">Invalid annotation, missing datasource!</font></b>';
     $infodiv.append(title + '<div>' + txt + '</div>');
-    
+
     //Run hooks that may add items to the info
     if (id && datasource) {
         for (h in XrefPanel.infoHooks) {
@@ -219,20 +219,20 @@ XrefPanel.create = function(id, datasource, species, symbol){
             }
         }
     }
-    
+
     var cbXrefs = function(data, textStatus){
         var $div = $content.find('.xreflinks');
         $div.empty();
-        
+
         if (!data) {
             return;
         }
-        
+
         $div.append('<div><b>External references:</b></div>');
-        
+
         var xrefs = {};
         var lines = data.split("\n");
-        
+
         for (var i in lines) {
             var cols = lines[i].split("\t");
             if (typeof cols[1] == 'undefined' || cols[1] == 'null') {
@@ -243,19 +243,19 @@ XrefPanel.create = function(id, datasource, species, symbol){
             }
             xrefs[cols[1]].push(cols[0]);
         }
-        
+
         //Run hooks that may modify the xrefs
         for (h in XrefPanel.xrefHooks) {
             xrefs = XrefPanel.xrefHooks[h](xrefs);
         }
-        
+
         //Collect data sources and sort
         var dataSources = [];
         for (ds in xrefs) {
             dataSources.push(ds);
         }
         dataSources.sort();
-        
+
         $accordion = $('<div />');
         for (var dsi in dataSources) {
             var ds = dataSources[dsi];
@@ -279,8 +279,8 @@ XrefPanel.create = function(id, datasource, species, symbol){
             autoHeight: false,
             collapsible: true
         });
-    }
-    
+    };
+
     if (id && datasource) {
         var $xdiv = $content.find('.xreflinks');
         $xdiv.html(XrefPanel.createLoadImage() + ' loading links...');
@@ -290,7 +290,7 @@ XrefPanel.create = function(id, datasource, species, symbol){
         $content.find('.xreflinks').empty();
     }
     return $content;
-    
+
 }
 
 XrefPanel.getBaseUrl = function(){
@@ -322,7 +322,7 @@ XrefPanel.createXrefLink = function(id, datasource, withDataSourceLabel){
  */
 XrefPanel.queryXrefs = function(id, datasource, species, success, error){
     var url = XrefPanel.getBaseUrl();
-    if (!url) 
+    if (!url)
         return;
     url = url + '/' + escape(species) + '/xrefs/' + escape(datasource) + '/' + id;
     $.ajax({
@@ -338,7 +338,7 @@ XrefPanel.queryXrefs = function(id, datasource, species, success, error){
  */
 XrefPanel.queryProperties = function(id, datasource, species, success, error){
     var url = XrefPanel.getBaseUrl();
-    if (!url) 
+    if (!url)
         return;
     url = url + '/' + escape(species) + '/attributes/' + escape(datasource) + '/' + id;
     $.ajax({
@@ -363,10 +363,24 @@ XrefPanel.loadDataSources = function(){
                 }
             }
         }
-    }
+    };
     $.get(XrefPanel_dataSourcesUrl, {}, callback);
-}
+};
 
 XrefPanel.log = function(msg) {
 	if(console && console.log) console.log(msg);
-}
+};
+
+$(document)
+    .ready(function() {
+              $('img.infoLinkout')
+                   .bind('click',
+                       function( event ) {
+                           XrefPanel.registerTrigger
+                           (this,
+                            this.getAttribute("data-id"),
+                            this.getAttribute("data-source"),
+                            this.getAttribute("data-species"),
+                            this.getAttribute("data-label"));
+                       });
+              });
