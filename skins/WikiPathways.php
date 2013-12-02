@@ -116,7 +116,6 @@ class WikiPathwaysTemplate extends QuickTemplate {
 		/*]]>*/</style>
 		<!-- TK: Import custom style -->
 		<style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "<?php echo $thisStylePath ?>/wikipathways-custom.css?<?php echo $GLOBALS['wgStyleVersion'] ?>"; /*]]>*/</style>
-		<script src="<?php echo $thisStylePath ?>/jquery-1.8.3.min.js"></script>
 		<script src="<?php echo $thisStylePath ?>/waypoints.js"></script>
 		<script src="<?php echo $thisStylePath ?>/waypoints-infinite.js"></script>
 		<link rel="stylesheet" type="text/css" <?php if(empty($this->data['printable']) ) { ?>media="print"<?php } ?> href="<?php $this->text('printcss') ?>?<?php echo $GLOBALS['wgStyleVersion'] ?>" />
