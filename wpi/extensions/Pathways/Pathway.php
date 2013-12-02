@@ -566,8 +566,9 @@ class Pathway {
 		if($updateCache) {
 			$this->updateCache($fileType);
 		}
-		return "http://" . $_SERVER['HTTP_HOST'] .
-			wfLocalFile($this->getFileLocation($fileType))->getUrl();
+		global $IP, $wgServer, $wgUploadPath;
+		$stem = str_replace( "$IP/images", '', $this->getFileLocation( $fileType ) );
+		return $wgServer . $wgUploadPath . $stem;
 	}
 
 	/**
