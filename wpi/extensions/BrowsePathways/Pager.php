@@ -30,10 +30,14 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 		$path = $img->getPath( );
 
 		$repo = RepoGroup::singleton()->getLocalRepo();
+		/* 20k is probably too much */
 		if( $img->isLocal() && $repo->fileExists( $path )
-			&& $repo->getFileSize( $path ) < 20480 ) { /* 20k is probably too much */
-			$c = file_get_contents( $repo->getLocalReference( $path )->getPath() );
-			return "data:" . $img->getMimeType() . ";base64," . base64_encode( $c );
+			&& $repo->getFileSize( $path ) < 20480 ) {
+			$c = file_get_contents(
+				$repo->getLocalReference( $path )->getPath()
+			);
+			return "data:" . $img->getMimeType() . ";base64," .
+				base64_encode( $c );
 		}
 		return $img->getThumbUrl( $suffix );
 	}
@@ -71,7 +75,8 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 		return $wgRequest->getVal( 'order' );
 	}
 
-	public function __construct( $species = "---", $tag = "---", $sortOrder = 0 ) {
+	public function __construct( $species = "---", $tag = "---",
+		$sortOrder = 0 ) {
 		global $wgCanonicalNamespaceNames;
 
 		if ( ! isset( $wgCanonicalNamespaceNames[ $this->ns ] ) ) {
@@ -84,11 +89,13 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 			$this->tag = $tag;
 		} else {
 			$label = CurationTag::getUserVisibleTagNames();
-			$this->tag = $label[ wfMessage( 'browsepathways-all-tags' )->text() ];
+			$this->tag = $label
+				[ wfMessage( 'browsepathways-all-tags' )->text() ];
 		}
 
-		// Follwing bit copy-pasta from Pager's IndexPager with some bits replace
-		// so we don't rely on $wgRequest in the constructor
+		// Follwing bit copy-pasta from Pager's IndexPager with some
+		// bits replace so we don't rely on $wgRequest in the
+		// constructor
 		global $wgUser;
 
 		# NB: the offset is quoted, not validated. It is treated as an
@@ -145,7 +152,8 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 		if( $this->species !== '---' ) {
 			$species = preg_replace( "/_/", " ", $this->species );
 			$q['tables'][] = 'tag as t2';
-			$q['join_conds']['tag as t2'] = array( 'JOIN', 't2.page_id = page.page_id' );
+			$q['join_conds']['tag as t2'] =
+				array( 'JOIN', 't2.page_id = page.page_id' );
 			$q['conds']['t2.tag_text'] = $species;
 		}
 
@@ -170,74 +178,75 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 			$oldid = "&oldid={$pathway->getActiveRevision()}";
 		}
 		return XML::Element("a",
-			array("href" => WPI_SCRIPT_URL . "?action=downloadFile&type=gpml&pwTitle=".
+			array("href" => WPI_SCRIPT_URL .
+				"?action=downloadFile&type=gpml&pwTitle=".
 				$pathway->getTitleObject()->getFullText() . $oldid), " (gpml) ");
 	}
 
 	function getThumb( $pathway, $icons, $boxwidth = 180, $withText = true ) {
 		global $wgStylePath, $wgContLang;
 
-		$label = $pathway->name() . '<br/>';
-		if( $this->species === '---' ) {
-			$label .= "(" . $pathway->species() . ")<br/>";
-		}
-		$label .= $icons;
+		if ( method_exists( $pathway, "name" ) ) {
+			$label = $pathway->name() . '<br/>';
+			if( $this->species === '---' ) {
+				$label .= "(" . $pathway->species() . ")<br/>";
+			}
+			$label .= $icons;
 
-		$boxheight=-1;
-		$framed=false;
-		$href = $pathway->getFullURL();
-		$class = "browsePathways infinite-item";
-		$id = $pathway->getTitleObject();
-		$textalign = $wgContLang->isRTL() ? ' style="text-align:right"' : '';
-		$oboxwidth = $boxwidth + 2;
-		$s = "<div id=\"{$id}\" class=\"{$class}\"><div class=\"thumbinner\" style=\"width:{$oboxwidth}px;\">".
-			'<a href="'.$href.'" class="internal">';
+			$boxheight=-1;
+			$framed=false;
+			$href = $pathway->getFullURL();
+			$class = "browsePathways infinite-item";
+			$id = $pathway->getTitleObject();
+			$textalign = $wgContLang->isRTL() ? ' style="text-align:right"' : '';
+			$oboxwidth = $boxwidth + 2;
+			$s = "<div id=\"{$id}\" class=\"{$class}\">".
+				"<div class=\"thumbinner\" style=\"width:{$oboxwidth}px;\">".
+				'<a href="'.$href.'" class="internal">';
 
-		$link = "";
-		$img = $pathway->getImage();
-
-		if ( !$img->exists() ) {
-			$s .= "Image does not exist";
-		} else {
-			$imgURL = $img->getURL();
-
+			$link = "";
+			$imgUrl = $pathway->getFileUrl( FILETYPE_IMG );
 			$thumbUrl = '';
 			$error = '';
 
-			$width  = $img->getWidth();
-			$height = $img->getHeight();
+			/* 	$width  = $img->getWidth(); */
+			/* 	$height = $img->getHeight(); */
 
-			try {
-				list( $thumb, $thumUrl, $boxwidth, $boxheight )
-					= wpiGetThumb( $img, $boxwidth, $boxheight );
-			} catch ( MWException $e ) {
-				$error = $e->getMessage();
-			}
+			/* 	try { */
+			/* 		list( $thumb, $thumUrl, $boxwidth, $boxheight ) */
+			/* 			= wpiGetThumb( $img, $boxwidth, $boxheight ); */
+			/* 	} catch ( MWException $e ) { */
+			/* 		$error = $e->getMessage(); */
+			/* 	} */
 
-			if( $thumbUrl == '' ) {
-				// Couldn't generate thumbnail? Scale the image client-side.
-				$thumbUrl = $img->getViewURL();
-				if( $boxheight == -1 ) {
-					// Approximate...
-					$boxheight = intval( $height * $boxwidth / $width );
-				}
+			/* 	if( $thumbUrl == '' ) { */
+			/* 		// Couldn't generate thumbnail? Scale the image client-side. */
+			/* 		$thumbUrl = $img->getViewURL(); */
+			/* 		if( $boxheight == -1 ) { */
+			/* 			// Approximate... */
+			/* 			$boxheight = intval( $height * $boxwidth / $width ); */
+			/* 		} */
+			/* 	} */
+			/* 	if ( $error ) { */
+			/* 		$s .= htmlspecialchars( $error ); */
+			/* 	} else { */
+			/* 		$s .= '<img src="'.$thumbUrl.'" '. */
+			/* 			'width="'.$boxwidth.'" height="'.$boxheight.'" ' . */
+			/* 			'longdesc="'.$href.'" class="thumbimage" />'; */
+			/* 		/\* No link to download $link = $this->getGPMLlink( */
+			/* 		 * $pathway ); *\/ */
+			/* 	} */
+			/* } */
+			$s .= "<img src='$imgUrl'></a>";
+			if( $withText ) {
+				$s .= $link.'<div class="thumbcaption"'.$textalign.'>'.
+					$label."</div>";
 			}
-			if ( $error ) {
-				$s .= htmlspecialchars( $error );
-			} else {
-				$s .= '<img src="'.$thumbUrl.'" '.
-					'width="'.$boxwidth.'" height="'.$boxheight.'" ' .
-					'longdesc="'.$href.'" class="thumbimage" />';
-				/* No link to download $link = $this->getGPMLlink( $pathway ); */
-			}
+			$s .= "</div></div>";
+
+			return str_replace("\n", ' ', $s);
 		}
-		$s .= '</a>';
-		if( $withText ) {
-			$s .= $link.'<div class="thumbcaption"'.$textalign.'>'.$label."</div>";
-		}
-		$s .= "</div></div>";
-
-		return str_replace("\n", ' ', $s);
+		return "passed a non-pathway: " . var_export( $pathway, true );
 	}
 
 	function formatTags( $title ) {
@@ -248,9 +257,12 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 		$tagLabel = "<span class='tag-icons'>";
 		foreach( $tags as $label => $attr ) {
 			$img = wfLocalFile( $attr['img'] );
-			$imgLink = Xml::element('img', array( 'src' => $this->imgToData( $img ), "title" => $label ));
-			$href = $wgRequest->appendQueryArray( array( "tag" => $attr['tag'] ) );
-			$tagLabel .= Xml::element('a', array( 'href' => $href ), null ) . $imgLink . "</a>";
+			$imgLink = Xml::element('img',
+				array( 'src' => $this->imgToData( $img ), "title" => $label ));
+			$href = $wgRequest->appendQueryArray(
+				array( "tag" => $attr['tag'] ) );
+			$tagLabel .= Xml::element('a',
+				array( 'href' => $href ), null ) . $imgLink . "</a>";
 		}
 		$tagLabel .= "</span>";
 		return $tagLabel;
@@ -281,7 +293,7 @@ class ListPathwaysPager extends BasePathwaysPager {
 	function __construct( $species, $tag, $sortOrder ) {
 		parent::__construct( $species, $tag, $sortOrder );
 
-		# We know we have 300, so we'll put 100 in each column
+		# We know we have 300, so we will put 100 in each column
 		$this->mLimitsShown = array( $this->columnSize * self::columnCount );
 		$this->mDefaultLimit = $this->columnSize * self::columnCount;
 		$this->mLimit = $this->columnSize * self::columnCount;
@@ -313,14 +325,16 @@ class ListPathwaysPager extends BasePathwaysPager {
 
 		if( isset( $queries['prev'] ) && $queries['prev'] ) {
 			$link .= $this->getSkin()->linkKnown( $this->getTitle(),
-				wfMessage( 'prevn', $wgLang->formatNum( $this->mLimit ) )->text(),
+				wfMessage( 'prevn',
+					$wgLang->formatNum( $this->mLimit ) )->text(),
 				array( 'style' => 'float: left' ),
 				$queries['prev'] );
 			}
 
 		if( isset( $queries['next'] ) && $queries['next'] ) {
 			$link .= $this->getSkin()->linkKnown( $this->getTitle(),
-				wfMessage( 'nextn', $wgLang->formatNum( $this->mLimit ) )->text(),
+				wfMessage( 'nextn',
+					$wgLang->formatNum( $this->mLimit ) )->text(),
 				array( 'style' => 'float: right' ),
 				$queries['next'] );
 			}
@@ -402,7 +416,8 @@ class ThumbPathwaysPager extends BasePathwaysPager {
 		if( isset( $queries['next'] ) && $queries['next'] ) {
 
 			$link = $this->getSkin()->linkKnown( $this->getTitle(),
-				wfMessage( 'nextn', $wgLang->formatNum( $this->mLimit ) )->text(),
+				wfMessage( 'nextn',
+					$wgLang->formatNum( $this->mLimit ) )->text(),
 				array( "class" => 'infinite-more-link' ),
 				$queries['next'] );
 		}
@@ -430,7 +445,8 @@ class ThumbPathwaysPager extends BasePathwaysPager {
 			$endRow = "</b>";
 		}
 
-		return $row.$this->getThumb( $pathway, $this->formatTags( $title ) ).$endRow;
+		return $row.$this->getThumb( $pathway, $this->formatTags( $title ) ).
+			$endRow;
 	}
 }
 
@@ -460,6 +476,7 @@ class SinglePathwaysPager extends BasePathwaysPager {
 		$title = Title::newFromDBkey( $this->nsName .":". $row->page_title );
 		$pathway = Pathway::newFromTitle( $title );
 
-		return $this->getThumb( $pathway, $this->formatTags( $title ), 100, false );
+		return $this->getThumb( $pathway, $this->formatTags( $title ),
+			100, false );
 	}
 }
