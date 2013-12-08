@@ -32,7 +32,6 @@ function wfEditApplet_Magic( &$magicWords, $langCode ) {
 */
 function createApplet( &$parser, $idClick = 'direct', $idReplace = 'pwThumb', $new = false, $pwTitle = '', $type = 'editor', $width = 0, $height = '500px') {
 	global $wgUser, $wgScriptPath, $loaderAdded, $wpiJavascriptSources, $jsJQuery;
-
 	//Check user rights
 	if( !$wgUser->isLoggedIn() || wfReadOnly()) {
 		return ""; //Don't return any applet code
