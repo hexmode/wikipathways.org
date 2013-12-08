@@ -174,18 +174,14 @@ class PathwayContent extends AbstractContent {
 				->makeParserOptions( 'canonical' );
 		}
 
-		if( !$this->title ) {
-			global $wgTitle;
-			$this->title = $wgTitle;
-		}
-		$id = Pathway::parseIdentifier($this->title);
+		$id = Pathway::parseIdentifier($title);
 		$pathway = new Pathway( $id );
 		if($revId) {
 			$pathway->setActiveRevision($revId);
 		}
 
 		// title editor
-		$title = $pathway->getName();
+		$showTitle = $pathway->getName();
 		$out = "";
 
 		// Start permission warning;
@@ -222,9 +218,9 @@ class PathwayContent extends AbstractContent {
 		## is logged in here -- should use JS
 
 		$out .= "{{Template:PathwayPage:Bottom}}\n";
-		$po = $wgParser->parse( $out, $this->title, $options, true, true,
+		$po = $wgParser->parse( $out, $title, $options, true, true,
 			$revId );
-		$po->setDisplayTitle( $title );
+		$po->setDisplayTitle( $showTitle );
 		## FIXME use js to allow editing that was done using pageEditor on
 		## #pageTitle
 
