@@ -5,27 +5,37 @@
  */
 class PathwayViewer {
 	static function display(&$parser, $pwId, $imgId) {
-		global $wgOut, $wgStylePath, $wfPathwayViewerPath, $wpiJavascriptSources, $wgScriptPath,
-			$wpiJavascriptSnippets, $jsRequireJQuery, $wpiAutoStartViewer, $wgRequest, $wgJsMimeType;
+		global $wgOut, $wgStylePath, $wfPathwayViewerPath,
+			$wpiJavascriptSources, $wgScriptPath, $wpiJavascriptSnippets,
+			$jsRequireJQuery, $wpiAutoStartViewer, $wgRequest, $wgJsMimeType;
 
 		$jsRequireJQuery = true;
 
+		//Force flash renderer
+		//<meta name="svg.render.forceflash" content="true">
+		$wgOut->addMeta('svg.render.forceflash', 'true');
+
+		//Add javascript dependencies
+		XrefPanel::addXrefPanelScripts();
+		$wpiJavascriptSources = array_merge($wpiJavascriptSources,
+			PathwayViewer::getJsDependencies());
+
+		$script = "PathwayViewer_basePath = '" . $wfPathwayViewerPath . "/';";
+		$wpiJavascriptSnippets[] = $script;
+
+		$revision = $wgRequest->getval('oldid');
+		$pvPwAdded[] = $pwId . '@' . $revision;
+
+		if( Title::newFromText( $pwId )->getNamespace() !== NS_PATHWAY ) {
+			return false;
+		}
+		$pathway = Pathway::newFromTitle($pwId);
+
+		if( !method_exists( $pathway, "setActiveRevision" ) ) {
+			return true;
+		}
+
 		try {
-			//Force flash renderer
-			//<meta name="svg.render.forceflash" content="true">
-			$wgOut->addMeta('svg.render.forceflash', 'true');
-
-			//Add javascript dependencies
-			XrefPanel::addXrefPanelScripts();
-			$wpiJavascriptSources = array_merge($wpiJavascriptSources, PathwayViewer::getJsDependencies());
-
-			$script = "PathwayViewer_basePath = '" . $wfPathwayViewerPath . "/';";
-			$wpiJavascriptSnippets[] = $script;
-
-			$revision = $wgRequest->getval('oldid');
-			$pvPwAdded[] = $pwId . '@' . $revision;
-
-			$pathway = Pathway::newFromTitle($pwId);
 			if($revision) {
 				$pathway->setActiveRevision($revision);
 			}
