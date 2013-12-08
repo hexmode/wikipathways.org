@@ -70,6 +70,9 @@ class GpmlHistoryPager extends HistoryPager {
 	static function getHistory($pathway) {
 		global $wgUser, $wpiScriptURL;
 
+		if( !method_exists( $pathway, "getTitleObject" ) ) {
+			return "";
+		}
 		$gpmlTitle = $pathway->getTitleObject();
 		$gpmlArticle = new Article($gpmlTitle);
 		$hist = new HistoryPager($gpmlArticle);
