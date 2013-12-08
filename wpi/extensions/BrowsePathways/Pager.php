@@ -16,7 +16,8 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 		if( $thumb->isLocal() && file_exists( $thumbnail )
 			&& filesize( $thumbnail ) < 20480 ) { /* 20k is probably too much */
 			$c = file_get_contents( $thumbnail );
-			list( $thumbExt, $thumbMime ) = $thumb->handler->getThumbType( $thumb->getExtension(), $thumb->getMimeType() );
+			list( $thumbExt, $thumbMime ) = $thumb->handler->getThumbType
+				( $thumb->getExtension(), $thumb->getMimeType() );
 			return "data:" . $thumbMime . ";base64," . base64_encode( $c );
 		}
 		return $thumb->getThumbUrl( $suffix );
