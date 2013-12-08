@@ -11,24 +11,27 @@ function wfAuthorInfo() {
 }
 
 function renderAuthorInfo($input, $argv, $parser) {
-	global $wgAuthorInfoPath;
+	global $wgAuthorInfoPath, $wgTitle;
 
-	if( isset( $argv["limit"] ) )
-		$limit = htmlentities( $argv["limit"] );
-	else
-		$limit = 0;
-	if( isset( $argv["bots"] ) )
-		$bots = htmlentities( $argv["bots"] );
-	else
-		$bots = false;
+	$html = "";
+	if ( $wgTitle->getNamespace() === NS_PATHWAY ) {
+		if( isset( $argv["limit"] ) )
+			$limit = htmlentities( $argv["limit"] );
+		else
+			$limit = 0;
+		if( isset( $argv["bots"] ) )
+			$bots = htmlentities( $argv["bots"] );
+		else
+			$bots = false;
 
-	global $wgOut;
-	$wgOut->addStyle("$wgAuthorInfoPath/AuthorInfo.css");
+		global $wgOut;
+		$wgOut->addStyle("$wgAuthorInfoPath/AuthorInfo.css");
 
-	$html = "<script type=\"text/javascript\" src=\"$wgAuthorInfoPath/AuthorInfo.js\"></script>\n";
-	$id = $parser->getTitle()->getArticleId();
-	$html .= "<div id='authorInfoContainer'></div><script type=\"text/javascript\">" .
-		"AuthorInfo.init('authorInfoContainer', '$id', '$limit', '$bots');</script>";
+		$html = "<script type=\"text/javascript\" src=\"$wgAuthorInfoPath/AuthorInfo.js\"></script>\n";
+		$id = $parser->getTitle()->getArticleId();
+		$html .= "<div id='authorInfoContainer'></div><script type=\"text/javascript\">" .
+			"AuthorInfo.init('authorInfoContainer', '$id', '$limit', '$bots');</script>";
+	}
 	return $html;
 }
 
