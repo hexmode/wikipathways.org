@@ -13,19 +13,27 @@ class Pathway {
 		FILETYPE_PNG => FILETYPE_IMG,
 	);
 
-	private $pwPageTitle; //The title object for the pathway page
-	private $id; //The pathway identifier
+	//The title object for the pathway page
+	private $pwPageTitle;
+	//The pathway identifier
+	private $id;
 
-	private $pwData; //The PathwayData for this pathway
-	private $firstRevision; //The first revision of the pathway article
-	private $revision; //The active revision for this instance
-	private $metaDataCache; //The MetaDataCache object that handles the cached title/species
-	private $permissionMgr; //Manages permissions for private pathways
+	//The PathwayData for this pathway
+	private $pwData;
+	//The first revision of the pathway article
+	private $firstRevision;
+	//The active revision for this instance
+	private $revision;
+	//The MetaDataCache object that handles the cached title/species
+	private $metaDataCache;
+	//Manages permissions for private pathways
+	private $permissionMgr;
 
 	/**
 	 * Constructor for this class.
-	 * @param $id The pathway identifier (NOTE: during the transition phase to stable identifiers,
-	 * this will be the page title without namespace prefix).
+	 * @param $id The pathway identifier (NOTE: during the transition
+	 * phase to stable identifiers, this will be the page title
+	 * without namespace prefix).
 	 */
 	function __construct($id = null, $updateCache = false) {
 		global $wgTitle;
@@ -46,7 +54,8 @@ class Pathway {
 	public function getPageIdDB() {
 		wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE );
-		$query = "SELECT page_id FROM `page` WHERE page_title = '$this->id' AND page_namespace = 102";
+		$query = "SELECT page_id FROM `page` WHERE page_title = '$this->id' ".
+			"AND page_namespace = 102";
 		$res = $dbr->query($query);
 		while ($row = $dbr->fetchRow($res)){
 			$page_id = $row["page_id"];
@@ -57,22 +66,29 @@ class Pathway {
 
 	/**
 	 * Constructor for this class.
-	 * \param name The name of the pathway (without namespace and species prefix!)
-	 * \param species The species (full name, e.g. Human)
-	 * \param updateCache Whether the cache should be updated if needed
-	 * @deprecated This constructor will be removed after the transision to stable identifiers.
+	 * @param name The name of the pathway (without namespace and
+	 * species prefix!)
+	 * @param species The species (full name, e.g. Human)
+	 * @param updateCache Whether the cache should be updated if needed
+	 * @deprecated This constructor will be removed after the transision
+	 * to stable identifiers.
 	 */
 	public static function newFromName($name, $species, $updateCache = false) {
 		wfDebug("Creating pathway: $name, $species\n");
-		if(!$name) throw new Exception("name argument missing in constructor for Pathway");
-		if(!$species) throw new Exception("species argument missing in constructor for Pathway");
+		if(!$name)
+			throw new Exception("name argument missing in constructor for".
+				"Pathway");
+		if(!$species)
+			throw new Exception("species argument missing in constructor".
+				"for Pathway");
 
 		# general illegal chars
 
 		//~ $rxIllegal = '/[^' . Title::legalChars() . ']/';
 		$rxIllegal = '/[^a-zA-Z0-9_ -]/';
 		if (preg_match ($rxIllegal, $name, $matches)) {
-				throw new Exception("Illegal character '" . $matches[0] . "' in pathway name");
+			throw new Exception("Illegal character '" . $matches[0] .
+				"' in pathway name");
 		}
 
 		return self::newFromTitle("$species:$name", $checkCache);
@@ -114,7 +130,8 @@ class Pathway {
 	 * of this pathway
 	 **/
 	public function getLatestRevision() {
-		return Title::newFromText($this->getIdentifier(), NS_PATHWAY)->getLatestRevID();
+		return Title::newFromText($this->getIdentifier(), NS_PATHWAY)
+			->getLatestRevID();
 	}
 
 	/**
@@ -127,7 +144,8 @@ class Pathway {
 		if($this->revision != $revision) {
 			$this->revision = $revision;
 			$this->pwData = null; //Invalidate loaded pathway data
-			if($updateCache) $this->updateCache(); //Make sure the cache for this revision is up to date
+			//Make sure the cache for this revision is up to date
+			if($updateCache) $this->updateCache();
 		}
 	}
 
@@ -149,7 +167,8 @@ class Pathway {
 
 	public function getPermissionManager() {
 		if(!$this->permissionMgr) {
-			$this->permissionMgr = new PermissionManager($this->getTitleObject()->getArticleId());
+			$this->permissionMgr = new PermissionManager(
+				$this->getTitleObject()->getArticleId());
 		}
 		return $this->permissionMgr;
 	}
@@ -170,7 +189,8 @@ class Pathway {
 			$mgr->setPermissions($pp);
 		} else {
 			wfProfileOut( __METHOD__ );
-			throw new Exception("Current user is not allowed to manage permissions for " . $this->getIdentifier());
+			throw new Exception("Current user is not allowed to manage ".
+				"permissions for " . $this->getIdentifier());
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -187,7 +207,8 @@ class Pathway {
 	 * Find out if the current user has permissions to view this pathway
 	 */
 	public function isReadable() {
-		throw new MWException("use ->getTitleObject()->userCan('read'); instead");
+		throw new MWException
+			("use ->getTitleObject()->userCan('read'); instead");
 	}
 
 	/**
@@ -236,11 +257,13 @@ class Pathway {
 		while( $row = $dbr->fetchRow( $res )) {
 			try {
 				$pathway = Pathway::newFromTitle($row[0]);
-				if($pathway->isDeleted()) continue; //Skip deleted pathways
-				if($species && $pathway->getSpecies() != $species) continue; //Filter by organism
-				if(!$pathway->getTitleObject()->userCan('read')) continue; //Skip hidden pathways
-				$allPathways[
-					$pathway->getIdentifier()] = $pathway;
+				//Skip deleted pathways
+				if($pathway->isDeleted()) continue;
+				//Filter by organism
+				if($species && $pathway->getSpecies() != $species) continue;
+				//Skip hidden pathways
+				if(!$pathway->getTitleObject()->userCan('read')) continue;
+				$allPathways[$pathway->getIdentifier()] = $pathway;
 			} catch(Exception $e) {
 				wfDebug(__METHOD__ . ": Unable to add pathway to list: $e");
 			}
@@ -262,9 +285,11 @@ class Pathway {
 	}
 
 	/**
-	   Create a new Pathway from the given title
-	   \param Title The full title of the pathway page (e.g. Pathway:Human:Apoptosis),
-	   or the MediaWiki Title object
+	 * Create a new Pathway from the given title
+	 *
+	 * @param Title The full title of the pathway page
+	 * (e.g. Pathway:Human:Apoptosis), or the MediaWiki Title object
+	 *
 	*/
 	static public function newFromTitle($title, $checkCache = false) {
 		//Remove url and namespace from title
@@ -273,14 +298,17 @@ class Pathway {
 			if( $id === false ) {
 				return false;
 			}
-			return new Pathway($id, $checkCache);
+			return new Pathway( $id, $checkCache );
+		} else {
+			return new Pathway( $title, $checkCache );
 		}
 	}
 
 	/**
-	   Create a new Pathway based on a filename
-	   \param Title The full title of the pathway file (e.g. Hs_Apoptosis.gpml),
-	   or the MediaWiki Title object
+	 * Create a new Pathway based on a filename
+	 *
+	 * @param Title The full title of the pathway file
+	 * (e.g. Hs_Apoptosis.gpml), or the MediaWiki Title object
 	*/
 	static public function newFromFileTitle($title, $checkCache = false) {
 		if($title instanceof Title) {
@@ -291,19 +319,24 @@ class Pathway {
 			$species = Pathway::speciesFromCode($regs[1]);
 			$name = $regs[2];
 		}
-		if(!$name || !$species) throw new Exception("Couldn't parse file title: $title");
+		if(!$name || !$species)
+			throw new Exception("Couldn't parse file title: $title");
 		return self::newFromTitle("$species:$name", $checkCache);
 	}
 
 	/**
 	 * Get all pathways with the given name and species (optional).
+
 	 * @param $name The name to match
-	 * @param $species The species to match, leave blank to include all species
-	 * @returns A list of pathway objects for the pathways that match the name/species
+	 * @param $species The species to match, leave blank to include
+	 * all species
+	 * @returns A list of pathway objects for the pathways that match
+	 * the name/species
 	 */
 	static public function getPathwaysByName($name, $species = '') {
 		wfProfileIn( __METHOD__ );
-		$pages = MetaDataCache::getPagesByCache(MetaDataCache::$FIELD_NAME, $name);
+		$pages =
+			MetaDataCache::getPagesByCache(MetaDataCache::$FIELD_NAME, $name);
 		$pathways = array();
 		foreach($pages as $page_id) {
 			$pathway = Pathway::newFromTitle(Title::newFromId($page_id));
@@ -328,7 +361,6 @@ class Pathway {
 	 * Get the MediaWiki Title object for the pathway page
 	 */
 	public function getTitleObject() {
-		//wfDebug("TITLE OBJECT:" . $this->species() . ":" . $this->name() . "\n");
 		return $this->pwPageTitle;
 	}
 
@@ -368,9 +400,10 @@ class Pathway {
 
 	/**
 	 * Get or set the pathway name (without namespace or species prefix)
-	 * \param name changes the name to this value if not null
-	 * \return the name of the pathway
-	 * @deprecated use #getName instead! Name can only be set by editing the GPML.
+	 * @param name changes the name to this value if not null
+	 * @return the name of the pathway
+	 * @deprecated use #getName instead! Name can only be set by
+	 * editing the GPML.
 	 */
 	public function name($name = NULL) {
 		if($name) {
@@ -404,7 +437,8 @@ class Pathway {
 	 */
 	public function getName($textForm = true) {
 		if($this->exists()) { //Only use cache if this pathway exists
-			return $this->getMetaDataCache()->getValue(MetaDataCache::$FIELD_NAME);
+			return $this->getMetaDataCache()
+				->getValue(MetaDataCache::$FIELD_NAME);
 		} else {
 			return "";
 		}
@@ -417,7 +451,8 @@ class Pathway {
 	 */
 	public function getSpecies() {
 		if($this->exists()) { //Only use cache if this pathway exists
-			return $this->getMetaDataCache()->getValue(MetaDataCache::$FIELD_ORGANISM)->getText();
+			return $this->getMetaDataCache()
+				->getValue(MetaDataCache::$FIELD_ORGANISM)->getText();
 		} else {
 			return "";
 		}
@@ -430,7 +465,8 @@ class Pathway {
 	 */
 	public function getSpeciesAbbr() {
 		if($this->exists()) { //Only use cache if this pathway exists
-			$species = $this->getMetaDataCache()->getValue(MetaDataCache::$FIELD_ORGANISM);
+			$species = $this->getMetaDataCache()
+				->getValue(MetaDataCache::$FIELD_ORGANISM);
 			$m = array();
 			preg_match( "/(\S)\S*\s*(\S)/", $species, $m );
 			if( count($m) === 3 ) {
@@ -451,7 +487,8 @@ class Pathway {
 	public function getUniqueXrefs() {
 		wfProfileIn( __METHOD__ );
 		if($this->exists()) { //Only use cache if this pathway exists
-			$xrefStr = $this->getMetaDataCache()->getValue(MetaDataCache::$FIELD_XREFS);
+			$xrefStr = $this->getMetaDataCache()
+				->getValue(MetaDataCache::$FIELD_XREFS);
 			$xrefStr = explode(MetaDataCache::$XREF_SEP, $xrefStr);
 			$xrefs = array();
 			foreach($xrefStr as $s) $xrefs[$s] = Xref::fromText($s);
@@ -465,9 +502,10 @@ class Pathway {
 
 	/**
 	 * Get or set the pathway species
-	 * \param species changes the species to this value if not null
-	 * \return the species of the pathway
-	 * @deprecated use #getSpecies instead! Species can only be set by editing the GPML.
+	 * @param species changes the species to this value if not null
+	 * @return the species of the pathway
+	 * @deprecated use #getSpecies instead! Species can only be set by
+	 * editing the GPML.
 	 */
 	public function species($species = NULL) {
 		if($species) {
@@ -555,7 +593,7 @@ class Pathway {
 
 	/**
 	 * Get the filename of a cached file following the naming conventions
-	 * \param the file type to get the name for (one of the FILETYPE_* constants)
+	 * @param the file type to get the name for (one of the FILETYPE_* constants)
 	 */
 	public function getFileObj( $fileType ) {
 		$rev_suffix = "";
@@ -568,8 +606,9 @@ class Pathway {
 
 	/**
 	 * Gets the url that points to the the cached file
-	 * \param the file type to get the name for (one of the FILETYPE_* constants)
-	 * \param whether to update the cache (if needed) or not
+	 * @param the file type to get the name for
+	 * (one of the FILETYPE_* constants)
+	 * @param whether to update the cache (if needed) or not
 	 */
 	public function getFileURL($fileType, $updateCache = true) {
 		if($updateCache) {
@@ -592,7 +631,8 @@ class Pathway {
 	 * Creates a MediaWiki title object that represents the article in the
 	 * NS_IMAGE namespace for cached file of given file type.
 	 * There is no guarantee that an article exists for each filetype.
-	 * Currently articles exist for FILETYPE_IMG (.svg articles in the NS_IMAGE namespace)
+	 * Currently articles exist for FILETYPE_IMG
+	 * (.svg articles in the NS_IMAGE namespace)
 	 */
 	public function getFileTitle($fileType) {
 		//Append revision number if it's not the most recent
@@ -626,9 +666,11 @@ class Pathway {
 		 * Filter out illegal characters, and try to make a legible name
 		 * out of it. We'll strip some silently that Title would die on.
 		 */
-		$filtered = preg_replace ( "/[^".Title::legalChars()."]|:/", '-', $prefix );
+		$filtered = preg_replace ( "/[^".Title::legalChars()."]|:/",
+			'-', $prefix );
 		/*
-		 * Filter out additional illegal character that shouldn't be in a file name
+		 * Filter out additional illegal character that shouldn't be
+		 * in a file name
 		 */
 		$filtered = preg_replace( "/[\/\?\<\>\\\:\*\|\[\]]/", '-', $prefix);
 
@@ -641,7 +683,8 @@ class Pathway {
 
 	/**
 	 * Get first revision for current title
-	 * @FIXME this should use the Revision::fetchRevision() method, not fetchAllRevisions() which never worked anyway (and was removed.)v
+	 * @FIXME this should use the Revision::fetchRevision() method,
+	 * not fetchAllRevisions() which never worked anyway (and was removed.)
 	 */
 	public function getFirstRevision() {
 		if($this->exists() && !$this->firstRevision) {
@@ -667,8 +710,10 @@ class Pathway {
 	 * the archive.
 	 */
 	public function getLastRevisionPriorToDate($timestamp) {
-		throw new Exception( "getLastRevisionPriorToDate() doesn't do what you think. It uses the old ".
-			"fetchAllRevisions which was broken and has been removed.  See https://bugzilla.wikimedia.org/18821" );
+		throw new Exception( "getLastRevisionPriorToDate() doesn't do what ".
+			"you think. It uses the old ".
+			"fetchAllRevisions which was broken and has been removed.  ".
+			"See https://bugzilla.wikimedia.org/18821" );
 		/* This code should be more efficient than what was here, but
 		 * it is untested.  Leaving it here because I couldn't find
 		 * any use of this function. */
@@ -688,15 +733,18 @@ class Pathway {
 	}
 
 	/**
-	 * Creates a new pathway on the wiki. A unique identifier will be generated for the pathway.
+	 * Creates a new pathway on the wiki. A unique identifier will be generated
+	 * for the pathway.
 	 * @param $gpmlData The GPML code for the pathway
 	 * @return The Pathway object for the created pathway
 	 */
-	public static function createNewPathway($gpmlData, $description = "New pathway") {
+	public static function createNewPathway($gpmlData,
+		$description = "New pathway") {
 		$id = self::generateUniqueId();
 		$pathway = new Pathway($id, false);
 		if($pathway->exists()) {
-			throw new Exception("Unable to generate unique id, $id already exists");
+			throw new Exception("Unable to generate unique id, ".
+				"$id already exists");
 		}
 		$pathway->updatePathway($gpmlData, $description);
 		$pathway = new Pathway($id);
@@ -705,20 +753,25 @@ class Pathway {
 
 	private static function checkGpmlSpecies($gpml) {
 		$gpml = utf8_encode($gpml);
-		//preg_match can fail on very long strings, so first try to find the <Pathway ...> part
-		//with strpos
+		//preg_match can fail on very long strings, so first try to find the
+		//<Pathway ...> part with strpos
 		$startTag = strpos($gpml, "<Pathway");
-		if(!$startTag) throw new Exception("Unable to find start of '<Pathway ...>' tag.");
+		if(!$startTag)
+			throw new Exception("Unable to find start of '<Pathway ...>' tag.");
 		$endTag = strpos($gpml, ">", $startTag);
-		if(!$endTag) throw new Exception("Unable to find end of '<Pathway ...>' tag.");
+		if(!$endTag)
+			throw new Exception("Unable to find end of '<Pathway ...>' tag.");
 
-		if(preg_match("/<Pathway.*Organism=\"(.*?)\"/us", substr($gpml, $startTag, $endTag - $startTag), $match)) {
+		if( preg_match("/<Pathway.*Organism=\"(.*?)\"/us",
+				substr($gpml, $startTag, $endTag - $startTag), $match)) {
 			$species = $match[1];
 			if(!in_array($species, self::getAvailableSpecies())) {
-				throw new Exception("The organism '$species' for the pathway is not supported.");
+				throw new Exception("The organism '$species' for the pathway ".
+					"is not supported.");
 			}
 		} else {
-			throw new Exception("The pathway doesn't have an organism attribute.");
+			throw new Exception("The pathway doesn't have an ".
+				"organism attribute.");
 		}
 	}
 
@@ -773,13 +826,15 @@ class Pathway {
 			throw new Exception("User is blocked");
 		}
 		if(!$gpmlTitle->userCan( 'edit' )) {
-			throw new Exception("User has wrong permissions to edit the pathway");
+			throw new Exception("User has wrong permissions to edit ".
+				"the pathway");
 		}
 		if(wfReadOnly()) {
 			throw new Exception("Database is read-only");
 		}
 
-		$gpmlArticle = new Article($gpmlTitle, 0);	//Force update from the newest version
+		//Force update from the newest version
+		$gpmlArticle = new Article($gpmlTitle, 0);
 		if(!$gpmlTitle->exists()) {
 			//This is a new pathway, add the author to the watch list
 			$gpmlArticle->doWatch();
@@ -826,7 +881,8 @@ class Pathway {
 						$redirect = $article->fetchContent();
 						$title = Title::newFromRedirect($redirect);
 					}
-					//If pathway creation works and the pathway exists, add to array
+					//If pathway creation works and the pathway
+					//exists, add to array
 					$pathway = Pathway::newFromTitle($title);
 					if(!is_null($pathway) && $pathway->exists()) {
 						$pathwayList[] = $pathway;
@@ -849,7 +905,8 @@ class Pathway {
 
 	/**
 	 * Validates the GPML code and returns the error if it's invalid
-	 * @return <code>null</code> if the GPML is valid, the error if it's invalid
+	 * @return <code>null</code> if the GPML is valid, the error if
+	 * it's invalid
 	 **/
 	static function validateGpml($gpml) {
 		wfProfileIn( __METHOD__ );
@@ -918,11 +975,12 @@ class Pathway {
 		$rev = Revision::newFromId($oldId);
 		$gpml = $rev->getText();
 		if(self::isDeletedMark($gpml)) {
-			throw new Exception("You are trying to revert to a deleted version of the pathway. ".
-				"Please choose another version to revert to.");
+			throw new Exception("You are trying to revert to a deleted version".
+				" of the pathway. Please choose another version to revert to.");
 		}
 		if($gpml) {
-			$usr = RequestContext::getMain()->getSkin()->userLink($wgUser->getId(), $wgUser->getName());
+			$usr = RequestContext::getMain()->getSkin()
+				->userLink($wgUser->getId(), $wgUser->getName());
 			$date = $wgLang->timeanddate( $rev->getTimestamp(), true );
 			$this->updatePathway($gpml, "Reverted to version '$date' by $usr");
 		} else {
@@ -945,10 +1003,12 @@ class Pathway {
 			return false;
 		}
 		if($useCache && !$revision) {
-			$deprev = $this->getMetaDataCache()->getValue(MetaDataCache::$FIELD_DELETED);
+			$deprev = $this->getMetaDataCache()
+				->getValue(MetaDataCache::$FIELD_DELETED);
 			if($deprev) {
 				$rev = $this->getActiveRevision();
-				if($rev == 0 || $rev == $deprev->getPageRevision()) return true;
+				if($rev == 0 || $rev == $deprev->getPageRevision())
+					return true;
 			}
 
 			wfProfileOut( __METHOD__ );
@@ -985,7 +1045,8 @@ class Pathway {
 			throw new Exception("User is blocked");
 		}
 		if(!$this->getTitleObject()->userCan('delete')) {
-			throw new Exception("User doesn't have permissions to mark this pathway as deleted");
+			throw new Exception("User doesn't have permissions to mark ".
+				"this pathway as deleted");
 		}
 		if(wfReadOnly()) {
 			throw new Exception("Database is read-only");
@@ -995,7 +1056,8 @@ class Pathway {
 		global $wpiDisableValidation; //Temporarily disable GPML validation hook
 		$wpiDisableValidation = true;
 
-		$succ =  $article->doEdit("{{deleted|$reason}}", self::$DELETE_PREFIX . $reason);
+		$succ =  $article->doEdit("{{deleted|$reason}}", self::$DELETE_PREFIX .
+			$reason);
 		if($succ) {
 			//Update metadata cache
 			$this->invalidateMetaDataCache();
@@ -1003,7 +1065,8 @@ class Pathway {
 			//Clean up file cache
 			$this->clearCache(null);
 		} else {
-			throw new Exception("Unable to mark pathway deleted, are you logged in?");
+			throw new Exception("Unable to mark pathway deleted, are you ".
+				"logged in?");
 		}
 	}
 
@@ -1024,15 +1087,16 @@ class Pathway {
 
 		if (wfRunHooks('ArticleDelete', array(&$this, &$wgUser, &$reason))) {
 			$article->doDeleteArticle($reason);
-			wfRunHooks('ArticleDeleteComplete', array(&$this, &$wgUser, $reason));
+			wfRunHooks('ArticleDeleteComplete',
+				array(&$this, &$wgUser, $reason));
 		}
 	}
 
 	/**
 	 * Checks whether the cached files are up-to-data and updates them
 	 * if neccesary
-	 * \param fileType The file type to check the cache for (one of FILETYPE_* constants)
-	 * or null to check all files
+	 * @param fileType The file type to check the cache for (one of
+	 * FILETYPE_* constants) or null to check all files
 	 */
 	public function updateCache($fileType = null) {
 		wfProfileIn( __METHOD__ );
@@ -1085,8 +1149,8 @@ class Pathway {
 
 	/**
 	 * Clear all cached files
-	 * \param fileType The file type to remove the cache for (one of FILETYPE_* constants)
-	 * or null to remove all files
+	 * @param fileType The file type to remove the cache for (one of
+	 * FILETYPE_* constants) or null to remove all files
 	 */
 	public function clearCache($fileType = null) {
 		if(!$fileType) { //Update all
@@ -1177,17 +1241,21 @@ class Pathway {
 		$final = wfTempDir() . "/$baseName";
 
 		$basePath = WPI_SCRIPT_PATH;
-		$maxMemoryM = intval($wgMaxShellMemory / 1024); //Max script memory on java program in megabytes
-		$cmd = "java -Xmx{$maxMemoryM}M -jar $basePath/bin/pathvisio_core.jar \"$gpmlFile\" \"{$final}\" 2>&1";
+		//Max script memory on java program in megabytes
+		$maxMemoryM = intval($wgMaxShellMemory / 1024);
+		$cmd = "java -Xmx{$maxMemoryM}M -jar $basePath/bin/pathvisio_core.jar".
+			"\"$gpmlFile\" \"{$final}\" 2>&1";
 		wfDebug("CONVERTER: $cmd\n");
 		$msg = wfJavaExec($cmd, $status);
 
 		if($status != 0 ) {
 			// Not needed anymore, since we now use a unique file name
 			// for each revision, so it's guaranteed to update.
-			wfDebug("Unable to convert to $outFile:\n<BR>Status:$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
+			wfDebug("Unable to convert to $outFile:\n<BR>Status:$status\n".
+				"<BR>Message:$msg\n<BR>Command:$cmd<BR>");
 			wfProfileOut( __METHOD__ );
-			throw new Exception("Unable to convert to $outFile:\n<BR>Status:$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
+			throw new Exception("Unable to convert to $outFile:\n<BR>Status:".
+				"$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
 		}
 		wfDebug("moving into place $outFile\n");
 		$dir = dirname( $outFile );
@@ -1196,7 +1264,8 @@ class Pathway {
 		}
 		if( !rename( $final, $outFile ) ) {
 			wfProfileOut( __METHOD__ );
-			throw new MWException( "Error while uploading from $final: "  . $status->getHTML() );
+			throw new MWException( "Error while uploading from $final: " .
+				$status->getHTML() );
 		}
 		wfDebug("moved into place $baseName\n");
 		wfProfileOut( __METHOD__ );
@@ -1208,7 +1277,8 @@ class Pathway {
 		$gpml = $this->getGpml();
 		$time = $this->getGpmlModificationTime();
 
-		if($gpml !== null && !$obj->isCacheGood( $time ) ) { //Only write cache if there is GPML
+		//Only write cache if there is GPML
+		if($gpml !== null && !$obj->isCacheGood( $time ) ) {
 			$obj->saveText( $gpml );
 		}
 		wfProfileOut( __METHOD__ );
@@ -1226,7 +1296,8 @@ class Pathway {
 		if(isset($wgSVGConverters[$wgSVGConverter])) {
 			$cmd = str_replace( //TODO: calculate proper height for rsvg
 				array( '$path/', '$width', '$input', '$output' ),
-				array( $wgSVGConverterPath ? wfEscapeShellArg( "$wgSVGConverterPath/" ) : "",
+				array( $wgSVGConverterPath ?
+					wfEscapeShellArg( "$wgSVGConverterPath/" ) : "",
 					intval( $width ),
 					wfEscapeShellArg( $input ),
 					wfEscapeShellArg( $output ) ),
@@ -1234,11 +1305,13 @@ class Pathway {
 			$err = wfShellExec( $cmd, $retval );
 			if($retval != 0 || !file_exists($output)) {
 				wfProfileOut( __METHOD__ );
-				throw new Exception("Unable to convert to png: $err\nCommand: $cmd");
+				throw new Exception("Unable to convert to png: $err\n".
+					"Command: $cmd");
 			}
 		} else {
 			wfProfileOut( __METHOD__ );
-			throw new Exception("Unable to convert to png, no SVG rasterizer found");
+			throw new Exception("Unable to convert to png, no SVG rasterizer"
+				" found");
 		}
 		$ex = file_exists($output);
 		wfDebug("PNG CACHE SAVED: $output, $ex;\n");
@@ -1247,8 +1320,10 @@ class Pathway {
 
 	/**
 	 * Gets the path that points to the cached file
-	 * \param the file type to get the name for (one of the FILETYPE_* constants)
-	 * \param whether to update the cache (if needed) or not
+	 * @param the file type to get the name for (one of the FILETYPE_*
+	 * constants)
+	 * @param whether to update the cache (if needed) or
+	 * not
 	 */
 	public function getFileLocation( $fileType, $updateCache = true ) {
 		if( $updateCache ) {
