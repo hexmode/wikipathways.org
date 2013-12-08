@@ -8,31 +8,31 @@ var AuthorInfo = {};
 AuthorInfo.init = function(toDiv, pageId, limit, showBots) {
 	AuthorInfo.pageId = pageId;
 	AuthorInfo.showBots = showBots;
-	
+
 	parentElm = document.getElementById(toDiv);
-	
+
 	//The top container
 	var contentDiv = document.createElement("div");
 	contentDiv.id = "AuthorInfo_" + pageId;
 	AuthorInfo.contentDiv = contentDiv;
 	parentElm.appendChild(contentDiv);
-	
+
 	var authorDiv = document.createElement("div");
 	AuthorInfo.contentDiv.appendChild(authorDiv);
 	AuthorInfo.authorDiv = authorDiv;
-	
+
 	//Overlay div to show errors
 	AuthorInfo.errorDiv = document.createElement("div");
 	AuthorInfo.errorDiv.className = "authorerror";
 	AuthorInfo.contentDiv.appendChild(AuthorInfo.errorDiv);
-	
+
 	AuthorInfo.loadAuthors(limit);
 }
 
 AuthorInfo.loadAuthors = function(limit) {
 	AuthorInfo.lastLimit = limit;
 	if(limit == 0) limit = -1;
-	
+
 	sajax_do_call(
 		"jsGetAuthors",
 		[AuthorInfo.pageId, parseInt(limit) + 1, false],
@@ -44,10 +44,10 @@ AuthorInfo.loadAuthorsCallback = function(xhr) {
 	if(AuthorInfo.checkResponse(xhr)) {
 		var xml = xhr.responseXML;
 		var elements = xml.getElementsByTagName("Author");
-		
+
 		var showAll = AuthorInfo.lastLimit <= 0 ||
 			elements.length <= AuthorInfo.lastLimit;
-			
+
 		var html = "<span class='author'>";
 		var end = showAll ? elements.length : elements.length - 1;
 		for(i=0;i<end;i++) {
@@ -85,7 +85,7 @@ AuthorInfo.checkResponse = function(xhr) {
 
 AuthorInfo.showError = function(msg) {
 	AuthorInfo.errorDiv.style.display = "block";
-	AuthorInfo.errorDiv.innerHTML = "<p class='authorerror'>Error loading authors: " + msg + 
+	AuthorInfo.errorDiv.innerHTML = "<p class='authorerror'>Error loading authors: " + msg +
 		" - <a href='javascript:AuthorInfo.hideError();'>close</a></p>";
 }
 
