@@ -1310,7 +1310,7 @@ class Pathway {
 			}
 		} else {
 			wfProfileOut( __METHOD__ );
-			throw new Exception("Unable to convert to png, no SVG rasterizer"
+			throw new Exception("Unable to convert to png, no SVG rasterizer".
 				" found");
 		}
 		$ex = file_exists($output);
