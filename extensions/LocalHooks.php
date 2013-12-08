@@ -420,23 +420,27 @@ content requires special attention. <b>Please keep your
 		if( $title->getNamespace() == NS_PATHWAY ) {
 			if($action == 'edit') {
 				$pathway = Pathway::newFromTitle($title);
-				if($pathway->isDeleted()) {
+				if ( method_exists( $pathway, "isDeleted" ) &&
+					$pathway->isDeleted()) {
 					if(MwUtils::isOnlyAuthor($user, $title->getArticleId())) {
-						//Users that are sole author of a pathway can always revert deletion
+						//Users that are sole author of a pathway can
+						//always revert deletion
 						$result = true;
 						wfProfileOut( __METHOD__ );
 						return false;
 					} else {
 						//Only users with 'delete' permission can revert deletion
 						//So disable edit for all other users
-						$result = $title->getUserPermissionsErrors('delete', $user) == array();
+						$result = $title->getUserPermissionsErrors('delete',
+							$user) == array();
 						wfProfileOut( __METHOD__ );
 						return false;
 					}
 				}
 			} else if ( $action == 'delete' ) {
 				//Users are allowed to delete their own pathway
-				if(MwUtils::isOnlyAuthor($user, $title->getArticleId()) && $title->userCan('edit')) {
+				if(MwUtils::isOnlyAuthor($user, $title->getArticleId())
+					&& $title->userCan('edit')) {
 					$result = true;
 					wfProfileOut( __METHOD__ );
 					return false;
