@@ -27,8 +27,11 @@ class Pathway {
 	 * @param $id The pathway identifier (NOTE: during the transition phase to stable identifiers,
 	 * this will be the page title without namespace prefix).
 	 */
-	function __construct($id, $updateCache = false) {
-		if(!$id) throw new Exception("id argument missing in constructor for Pathway");
+	function __construct($id = null, $updateCache = false) {
+		global $wgTitle;
+		if( !$id ) {
+			throw new Exception("Invalid title passed in!");
+		}
 
 		$this->pwPageTitle = Title::newFromText($id, NS_PATHWAY);
 		$this->id = $this->pwPageTitle->getDbKey();
@@ -80,6 +83,10 @@ class Pathway {
 	 * @returns the identifier, of false if no identifier could be found.
 	 */
 	public static function parseIdentifier($title) {
+		if($title instanceof Title && $title->getNamespace() != NS_PATHWAY) {
+			wfDebug( "$title is not a pathway!" );
+			return null;
+		}
 		if($title instanceof Title) {
 			$title = $title->getText();
 		}
@@ -261,11 +268,13 @@ class Pathway {
 	*/
 	static public function newFromTitle($title, $checkCache = false) {
 		//Remove url and namespace from title
-		$id = self::parseIdentifier($title);
-		if(!$id) {
-			throw new MWException("Couldn't parse pathway identifier from title: '" . $title . "'");
+		if( !( $title instanceOf Title ) ) {
+			$id = self::parseIdentifier($title);
+			if( $id === false ) {
+				return false;
+			}
+			return new Pathway($id, $checkCache);
 		}
-		return new Pathway($id, $checkCache);
 	}
 
 	/**
