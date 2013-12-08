@@ -2,14 +2,21 @@
 
 class PathwayThumb {
 
-	static function render( &$parser, $pwTitleEncoded, $width = 0, $align = '', $caption = '',
-		$href = '', $tooltip = '', $id='pwthumb') {
+	static function render( &$parser, $pwTitleEncoded, $width = 0, $align = '',
+		$caption = '', $href = '', $tooltip = '', $id='pwthumb') {
 		wfProfileIn( __METHOD__ );
 		global $wgUser, $wgRequest;
 
-		$pwTitle = urldecode ($pwTitleEncoded);
+		$pwTitle = Title::newFromText( urldecode( $pwTitleEncoded ) );
+		if( $pwTitle->getNamespace() !== NS_PATHWAY ) {
+			return "";
+		}
 		try {
 			$pathway = Pathway::newFromTitle($pwTitle);
+
+			if ( $pathway === null ) {
+				return null;
+			}
 			$revision = $wgRequest->getVal('oldid');
 			if($revision) {
 				$pathway->setActiveRevision($revision);
@@ -48,7 +55,7 @@ class PathwayThumb {
 		return array($output, 'isHTML'=>1, 'noparse'=>1);
 	}
 
-	static function createEditCaption($pathway) {
+	static function createEditCaption(Pathway $pathway) {
 		global $wgUser;
 
 		//Create edit button
