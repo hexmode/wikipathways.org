@@ -40,8 +40,14 @@ class Pathway {
 		if( !$id ) {
 			throw new Exception("Invalid title passed in!");
 		}
-
-		$this->pwPageTitle = Title::newFromText($id, NS_PATHWAY);
+		if( $id instanceOf Title ) {
+			if( $id->getNamespace() !== NS_PATHWAY ) {
+				throw new Exception( "Not a pathway: ". $id );
+			}
+			$this->pwPageTitle = $id;
+		} else {
+			$this->pwPageTitle = Title::newFromText($id, NS_PATHWAY);
+		}
 		$this->id = $this->pwPageTitle->getDbKey();
 		$this->revision = $this->getLatestRevision();
 		if($updateCache) $this->updateCache();
