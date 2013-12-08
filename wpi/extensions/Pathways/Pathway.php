@@ -1139,7 +1139,7 @@ class Pathway {
 
 	public function getImage() {
 		wfProfileIn( __METHOD__ );
-		throw new Exception("Replace repo!");
+		throw new MWException("Replace repo!");
 		$repo = RepoGroup::singleton()->getLocalRepo();
 		$img = new LocalFile($this->getFileTitle(FILETYPE_IMG), $repo);
 		$img->loadFromFile();
@@ -1249,7 +1249,7 @@ class Pathway {
 		$basePath = WPI_SCRIPT_PATH;
 		//Max script memory on java program in megabytes
 		$maxMemoryM = intval($wgMaxShellMemory / 1024);
-		$cmd = "java -Xmx{$maxMemoryM}M -jar $basePath/bin/pathvisio_core.jar".
+		$cmd = "java -Xmx{$maxMemoryM}M -jar $basePath/bin/pathvisio_core.jar ".
 			"\"$gpmlFile\" \"{$final}\" 2>&1";
 		wfDebug("CONVERTER: $cmd\n");
 		$msg = wfJavaExec($cmd, $status);
