@@ -4,12 +4,16 @@ class LocalHooks {
 	/* http://developers.pathvisio.org/ticket/1559 */
 	static function stopDisplay( $output, $sk ) {
 		wfProfileIn( __METHOD__ );
-		if( strtolower( 'MediaWiki:Questycaptcha-qna' ) === strtolower( $output->getPageTitle() ) ||
-			strtolower( 'MediaWiki:Questycaptcha-q&a' ) === strtolower( $output->getPageTitle() ) ) {
+		if( strtolower( 'MediaWiki:Questycaptcha-qna' ) ===
+			strtolower( $output->getPageTitle() ) ||
+			strtolower( 'MediaWiki:Questycaptcha-q&a' ) ===
+			strtolower( $output->getPageTitle()
+			) ) {
 			global $wgUser, $wgTitle;
 			if( !$wgTitle->userCan( "edit" ) ) {
 				$output->clearHTML();
-				$wgUser->mBlock = new Block( '127.0.0.1', 'WikiSysop', 'WikiSysop', 'none', 'indefinite' );
+				$wgUser->mBlock = new Block( '127.0.0.1',
+					'WikiSysop', 'WikiSysop', 'none', 'indefinite' );
 				$wgUser->mBlockedby = 0;
 				$output->blockedPage();
 				wfProfileOut( __METHOD__ );
@@ -21,7 +25,9 @@ class LocalHooks {
 	}
 
 	/* http://www.pathvisio.org/ticket/1539 */
-	static public function externalLink ( &$url, &$text, &$link, &$attribs = null ) {
+	static public function externalLink ( &$url, &$text, &$link,
+		&$attribs = null
+	) {
 		global $wgExternalLinkTarget;
 		wfProfileIn( __METHOD__ );
 
@@ -49,25 +55,29 @@ class LocalHooks {
 		if( $attribs !== null ) {
 			$attribs["target"] = $linkTarget;
 			wfProfileOut( __METHOD__ );
-			return true;		/* nothing else should be needed, so we can leave the rest */
+			return true;		/* nothing else should be needed, so
+								 * we can leave the rest */
 		}
 
 		/* ugh ... had to copy this bit from makeExternalLink */
 		$l = new Linker;
 		$style = $l->getExternalLinkAttributes( $url, $text, 'external ' );
 		global $wgNoFollowLinks, $wgNoFollowNsExceptions;
-		if( $wgNoFollowLinks && !(isset($ns) && in_array($ns, $wgNoFollowNsExceptions)) ) {
+		if( $wgNoFollowLinks && !(isset($ns) &&
+				in_array($ns, $wgNoFollowNsExceptions)) ) {
 			$style .= ' rel="nofollow"';
 		}
 
-		$link = '<a href="'.$url.'" target="'.$linkTarget.'"'.$style.'>'.$text.'</a>';
+		$link = '<a href="'.$url.'" target="'.$linkTarget.'"'.$style.'>'.
+			$text.'</a>';
 
 		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
 
-	static public function updateTags( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags,
+	static public function updateTags( &$article, &$user, $text,
+		$summary, $minoredit, $watchthis, $sectionanchor, &$flags,
 		$revision, &$status = null, $baseRevId = null ) {
 		wfProfileIn( __METHOD__ );
 		$title = $article->getTitle();
@@ -88,11 +98,13 @@ class LocalHooks {
 		foreach( $tags as $tag ) {
 			$oldRev = $tag->getPageRevision();
 			if ( $oldRev ) {
-				wfDebug( __METHOD__ . ": Setting {$tag->getName()} to {$revision->getId()}\n" );
+				wfDebug( __METHOD__ .
+					": Setting {$tag->getName()} to {$revision->getId()}\n" );
 				$tag->setPageRevision( $revision->getId() );
 				$tag->save();
 			} else {
-				wfDebug( __METHOD__ . ": No revision information for {$tag->getName()}\n" );
+				wfDebug( __METHOD__ .
+					": No revision information for {$tag->getName()}\n" );
 			}
 		}
 		wfProfileOut( __METHOD__ );
@@ -160,14 +172,16 @@ content requires special attention. <b>Please keep your
 		//AP20081006 - replaced group info with links to User_snoop
 		wfProfileIn( __METHOD__ );
 		$snoop = Title::makeTitle( NS_SPECIAL, 'User_snoop');
-		$snooplink = $this->getSkin()->makeKnownLinkObj( $snoop, 'info', wfArrayToCGI( array('username' => $row->user_name)), '','','');
+		$snooplink = $this->getSkin()->makeKnownLinkObj( $snoop, 'info',
+			wfArrayToCGI( array('username' => $row->user_name)), '','','');
 
 		$item = wfSpecialList( $name, $snooplink);
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
-	// This one, based on preg_replace, is a bit more iffy.  Needs some good testing.
+	// This one, based on preg_replace, is a bit more iffy.  Needs
+	// some good testing.
 	public static function contributionLineEnding( $specialPage, &$ret, $row ) {
 		wfProfileIn( __METHOD__ );
 		$page = Title::makeTitle( $row->page_namespace, $row->page_title );
@@ -184,7 +198,9 @@ content requires special attention. <b>Please keep your
 		return true;
 	}
 
-	public static function dontWatchRedirect(&$conds,&$tables,&$join_conds,&$fields) {
+	public static function dontWatchRedirect(&$conds,&$tables,
+		&$join_conds,&$fields
+	) {
 		$conds[] = 'page_is_redirect = 0';
 		return true;
 	}
@@ -193,7 +209,6 @@ content requires special attention. <b>Please keep your
 		global $wgLang, $wgOut, $wgUser;
 		wfProfileIn( __METHOD__ );
 
-
 		$revision = Revision::newFromId( $oldid );
 
 		$current = ( $oldid == $article->mLatest );
@@ -201,41 +216,50 @@ content requires special attention. <b>Please keep your
 		$sk = RequestContext::getMain()->getSkin();
 		$lnk = $current
 			? wfMessage( 'currentrevisionlink' )->escaped()
-			: $sk->makeKnownLinkObj( $article->mTitle, wfMessage( 'currentrevisionlink' )->escaped() );
+			: $sk->makeKnownLinkObj( $article->mTitle,
+				wfMessage( 'currentrevisionlink' )->escaped() );
 		$curdiff = $current
 			? wfMessage( 'diff' )->escaped()
-			: $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMessage( 'diff' )->escaped(),
+			: $sk->makeKnownLinkObj( 'Special:DiffAppletPage',
+				wfMessage( 'diff' )->escaped(),
 				"old={$oldid}&new={$article->mLatest}&pwTitle={$article->mTitle}" );
 		$prev = $article->mTitle->getPreviousRevisionID( $oldid ) ;
 		$prevlink = $prev
-			? $sk->makeKnownLinkObj( $article->mTitle, wfMessage( 'previousrevision' )->escaped(), 'direction=prev&oldid='.$oldid )
+			? $sk->makeKnownLinkObj( $article->mTitle,
+				wfMessage( 'previousrevision' )->escaped(),
+				'direction=prev&oldid='.$oldid )
 			: wfMessage( 'previousrevision' )->escaped();
 		$prevdiff = $prev
-			? $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMessage( 'diff' )->escaped(),
+			? $sk->makeKnownLinkObj( 'Special:DiffAppletPage',
+				wfMessage( 'diff' )->escaped(),
 				"old={$oldid}&new={$prev}&pwTitle={$article->mTitle}" )
 			: wfMessage( 'diff' )->escaped();
 		$next = $article->mTitle->getNextRevisionID( $oldid ) ;
 		$nextlink = $current
 			? wfMessage( 'nextrevision' )->escaped()
-			: $sk->makeKnownLinkObj( $article->mTitle, wfMessage( 'nextrevision' )->escaped(), 'direction=next&oldid='.$oldid );
+			: $sk->makeKnownLinkObj( $article->mTitle,
+				wfMessage( 'nextrevision' )->escaped(),
+				'direction=next&oldid='.$oldid );
 		$nextdiff = $current
 			? wfMessage( 'diff' )->escaped()
-			: $sk->makeKnownLinkObj( 'Special:DiffAppletPage', wfMessage( 'diff' )->escaped(),
+			: $sk->makeKnownLinkObj( 'Special:DiffAppletPage',
+				wfMessage( 'diff' )->escaped(),
 				"old={$oldid}&new={$next}&pwTitle={$article->mTitle}" );
 
 		$cdel='';
 		if( $wgUser->isAllowed( 'deleterevision' ) ) {
 			$revdel = SpecialPage::getTitleFor( 'Revisiondelete' );
 			if( $revision->isCurrent() ) {
-			// We don't handle top deleted edits too well
+				// We don't handle top deleted edits too well
 				$cdel = wfMessage( 'rev-delundel' )->escaped();
 			} else if( !$revision->userCan( Revision::DELETED_RESTRICTED ) ) {
-			// If revision was hidden from sysops
+				// If revision was hidden from sysops
 				$cdel = wfMessage( 'rev-delundel' )->escaped();
 			} else {
 				$cdel = $sk->makeKnownLinkObj( $revdel,
 					wfMessage( 'rev-delundel' )->escaped(),
-					'target=' . urlencode( $article->mTitle->getPrefixedDbkey() ) .
+					'target=' .
+					urlencode( $article->mTitle->getPrefixedDbkey() ) .
 					'&oldid=' . urlencode( $oldid ) );
 				// Bolden oversighted content
 				if( $revision->isDeleted( Revision::DELETED_RESTRICTED ) )
@@ -248,15 +272,20 @@ content requires special attention. <b>Please keep your
 		$userlinks = $sk->revUserTools( $revision, false );
 
 		$m = wfMessage( 'revision-info-current' )->text();
-		$infomsg = $current && !wfMessage( 'revision-info-current' )->inContentLanguage()->isBlank() && $m !== '-'
+		$infomsg = $current
+			&& !wfMessage( 'revision-info-current' )
+			->inContentLanguage()->isBlank() && $m !== '-'
 			? 'revision-info-current'
 			: 'revision-info';
 
-		$r = "\n\t\t\t\t<div id=\"mw-{$infomsg}\">" . wfMsgExt( $infomsg, array( 'parseinline', 'replaceafter' ),
+		$r = "\n\t\t\t\t<div id=\"mw-{$infomsg}\">" .
+			wfMsgExt( $infomsg, array( 'parseinline', 'replaceafter' ),
 			$td, $userlinks, $revision->getID() ) . "</div>\n" .
 			"\n\t\t\t\t<div id=\"mw-revision-nav\">" . $cdel .
-			wfMsgExt( 'revision-nav', array( 'escapenoentities', 'parsemag', 'replaceafter' ),
-				$prevdiff, $prevlink, $lnk, $curdiff, $nextlink, $nextdiff ) . "</div>\n\t\t\t";
+			wfMsgExt( 'revision-nav', array( 'escapenoentities', 'parsemag',
+					'replaceafter' ),
+				$prevdiff, $prevlink, $lnk, $curdiff, $nextlink, $nextdiff ) .
+			"</div>\n\t\t\t";
 		$wgOut->setSubtitle( $r );
 
 		wfProfileOut( __METHOD__ );
@@ -284,7 +313,9 @@ content requires special attention. <b>Please keep your
 		return true;
 	}
 
-	static public function checkPathwayImgAuth( &$title, &$path, &$name, &$result ) {
+	static public function checkPathwayImgAuth( &$title, &$path, &$name,
+		&$result
+	) {
 		wfProfileIn( __METHOD__ );
 		## WPI Mod 2013-Aug-22
 		//Check for pathway cache
@@ -294,7 +325,8 @@ content requires special attention. <b>Please keep your
 			$pwTitle = Title::newFromText($id, NS_PATHWAY);
 
 			if(!$pwTitle->userCan('read')) {
-				wfDebugLog( 'img_auth', "User not permitted to view pathway $id" );
+				wfDebugLog( 'img_auth',
+					"User not permitted to view pathway $id" );
 				wfForbidden();
 				wfProfileOut( __METHOD__ );
 				return false;
@@ -322,8 +354,9 @@ content requires special attention. <b>Please keep your
 
 	static function getMagic( &$magicWords, $langCode ) {
 		# Add the magic word
-		# The first array element is case sensitive, in this case it is not case sensitive
-		# All remaining elements are synonyms for our parser function
+		# The first array element is case sensitive, in this case it is not
+		# case sensitive.  All remaining elements are synonyms for our parser
+        # function
 		$magicWords['PathwayViewer'] = array( 0, 'PathwayViewer' );
 		$magicWords['pwImage'] = array( 0, 'pwImage' );
 		$magicWords['pathwayOfTheDay'] = array( 0, 'pathwayOfTheDay' );
@@ -336,15 +369,24 @@ content requires special attention. <b>Please keep your
 	static function extensionFunctions() {
 		wfProfileIn( __METHOD__ );
 		global $wgParser;
-		$wgParser->setHook( "pathwayBibliography",     "PathwayBibliography::output" );
-		$wgParser->setHook( "pathwayHistory",          "GpmlHistoryPager::history" );
-		$wgParser->setHook( "batchDownload",           "BatchDownloader::createDownloadLinks" );
-		$wgParser->setFunctionHook( "PathwayViewer",   "PathwayViewer::display" );
-		$wgParser->setFunctionHook( "pwImage",         "PathwayThumb::render" );
-		$wgParser->setFunctionHook( 'maxImageSize',    'LocalHooks::getSize' );
-		$wgParser->setFunctionHook( 'pathwayOfTheDay', 'LocalHooks::getPathwayOfTheDay' );
-		$wgParser->setFunctionHook( 'pathwayInfo',     'LocalHooks::getPathwayInfoText' );
-		$wgParser->setFunctionHook( 'siteStats',       'wpiSiteStats::getSiteStats' );
+		$wgParser->setHook( "pathwayBibliography",
+			"PathwayBibliography::output" );
+		$wgParser->setHook( "pathwayHistory",
+			"GpmlHistoryPager::history" );
+		$wgParser->setHook( "batchDownload",
+			"BatchDownloader::createDownloadLinks" );
+		$wgParser->setFunctionHook( "PathwayViewer",
+			"PathwayViewer::display" );
+		$wgParser->setFunctionHook( "pwImage",
+			"PathwayThumb::render" );
+		$wgParser->setFunctionHook( 'maxImageSize',
+			'LocalHooks::getSize' );
+		$wgParser->setFunctionHook( 'pathwayOfTheDay',
+			'LocalHooks::getPathwayOfTheDay' );
+		$wgParser->setFunctionHook( 'pathwayInfo',
+			'LocalHooks::getPathwayInfoText' );
+		$wgParser->setFunctionHook( 'siteStats',
+			'wpiSiteStats::getSiteStats' );
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -379,19 +421,23 @@ content requires special attention. <b>Please keep your
 	  - a randomized list of all pathways
 	  - remove pathway that is used
 	  - randomize again when we're at the end!
-	  - update list when new pathways are added....randomize every time (but exclude those we've already had)
+	  - update list when new pathways are added....randomize every
+        time (but exclude those we've already had)
 
 	  Concerning MediaWiki:
 	  - create a new SpecialPage: Special:PathwayOfTheDay
 	  - create an extension that implements above in php
 
 	  We need:
-	  - to pick a random pathway everyday (from all articles in namespace pathway)
+	  - to pick a random pathway everyday (from all articles in
+        namespace pathway)
 	  - remember this pathway and the day it was picked, store that in cache
 	  - on a new day, pick a new pathway, replace cache and update history
 	*/
 
-	static function getPathwayOfTheDay( &$parser, $date, $listpage = 'FeaturedPathways', $isTag = false) {
+	static function getPathwayOfTheDay( &$parser, $date,
+			$listpage = 'FeaturedPathways', $isTag = false
+			) {
 		wfProfileIn( __METHOD__ );
 		wfDebug("GETTING PATHWAY OF THE DAY for date: $date\n");
 		try {
@@ -408,7 +454,8 @@ content requires special attention. <b>Please keep your
 		}
 		$out = $parser->recursiveTagParse( $out );
 		wfProfileOut( __METHOD__ );
-		return array( $out, 'isHTML' => true, 'noparse' => true, 'nowiki' => true );
+		return array( $out, 'isHTML' => true, 'noparse' => true,
+			'nowiki' => true );
 	}
 
 	/**
@@ -423,14 +470,15 @@ content requires special attention. <b>Please keep your
 				if ( method_exists( $pathway, "isDeleted" ) &&
 					$pathway->isDeleted()) {
 					if(MwUtils::isOnlyAuthor($user, $title->getArticleId())) {
-						//Users that are sole author of a pathway can
-						//always revert deletion
+						// Users that are sole author of a pathway can
+						// always revert deletion
 						$result = true;
 						wfProfileOut( __METHOD__ );
 						return false;
 					} else {
-						//Only users with 'delete' permission can revert deletion
-						//So disable edit for all other users
+						// Only users with 'delete' permission can
+						// revert deletion So disable edit for all
+						// other users
 						$result = $title->getUserPermissionsErrors('delete',
 							$user) == array();
 						wfProfileOut( __METHOD__ );
@@ -463,7 +511,8 @@ content requires special attention. <b>Please keep your
 	static function getSize( &$parser, $image, $maxWidth ) {
 		wfProfileIn( __METHOD__ );
 		try {
-			$img = new LocalFile(Title::newFromText($image), RepoGroup::singleton()->getLocalRepo());
+			$img = new LocalFile(Title::newFromText($image),
+				RepoGroup::singleton()->getLocalRepo());
 			$img->loadFromFile();
 			$w = $img->getWidth();
 			if($w > $maxWidth) $w = $maxWidth;
