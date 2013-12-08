@@ -13,6 +13,9 @@ class PathwayBibliography {
 	private static function getHTML($pathway, $parser) {
 		global $wgUser;
 
+		if( !method_exists( $pathway, "getPathwayData" ) ) {
+			return "";
+		}
 		$data = $pathway->getPathwayData();
 		$gpml = $pathway->getGpml();
 
