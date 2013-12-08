@@ -67,7 +67,9 @@ function ofunction( $input, $argv, $parser ) {
 <div style="clear:both;"></div>
 <script type="text/javascript" src="$wgOpath/js/script.js"></script>
 <script type="text/javascript">
-	YAHOO.util.Event.onDOMReady(ontologytree.init, ontologytree,true);
+$(document).ready(
+	function() { YAHOO.util.Event.onDOMReady(ontologytree.init, ontologytree,true); }
+)
 </script>
 HTML;
 	} else {
