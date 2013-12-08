@@ -58,49 +58,51 @@ if(otagloggedIn == 1) {
         };
     } ();
 
-function loadNodeData(node, fnLoadComplete)  {
+    function loadNodeData(node, fnLoadComplete)  {
 
-    //Get the node's label and urlencode it; this is the word/s
-    //on which we'll search for related words:
-    // encodeURI(node.label);
-    var sUrl = opath + "/otags.php?action=tree&tagId=" + encodeURI(node.c_id);
-    var callback = {
-        success: function(oResponse) {
-            var oResults = YAHOO.lang.JSON.parse(oResponse.responseText);
-            if((oResults.ResultSet.Result) && (oResults.ResultSet.Result.length)) {
-                if(YAHOO.lang.isArray(oResults.ResultSet.Result)) {
-                    for (var i=0, j=oResults.ResultSet.Result.length; i<j; i++) {
+        //Get the node's label and urlencode it; this is the word/s
+        //on which we'll search for related words:
+        // encodeURI(node.label);
+        var sUrl = opath + "/otags.php?action=tree&tagId=" + encodeURI(node.c_id);
+        var callback = {
+            success: function(oResponse) {
+                var oResults = YAHOO.lang.JSON.parse(oResponse.responseText);
+                if((oResults.ResultSet.Result) && (oResults.ResultSet.Result.length)) {
+                    if(YAHOO.lang.isArray(oResults.ResultSet.Result)) {
+                        for (var i=0, j=oResults.ResultSet.Result.length; i<j; i++) {
 
-                        var tempNode = new YAHOO.widget.MenuNode(oResults.ResultSet.Result[i], node, false);
-                        tempNode.c_id=tempNode.label.substring(tempNode.label.lastIndexOf(" - ")+3,tempNode.label.length);
-                        if(tempNode.label.lastIndexOf("||")>0)
-                        {
-                            tempNode.isLeaf = true;
-                            tempNode.c_id = tempNode.c_id.replace("||","");
+                            var tempNode = new YAHOO.widget.MenuNode(oResults.ResultSet.Result[i], node, false);
+                            tempNode.c_id=tempNode.label.substring(tempNode.label.lastIndexOf(" - ")+3,tempNode.label.length);
+                            if(tempNode.label.lastIndexOf("||")>0)
+                            {
+                                tempNode.isLeaf = true;
+                                tempNode.c_id = tempNode.c_id.replace("||","");
+                            }
+                            tempNode.label = tempNode.label.substring(0,tempNode.label.lastIndexOf(" - "));
+
                         }
-                        tempNode.label = tempNode.label.substring(0,tempNode.label.lastIndexOf(" - "));
-
                     }
                 }
-            }
-            oResponse.argument.fnLoadComplete();
-        },
+                oResponse.argument.fnLoadComplete();
+            },
 
-        failure: function(oResponse) {
-            oResponse.argument.fnLoadComplete();
-        },
+            failure: function(oResponse) {
+                oResponse.argument.fnLoadComplete();
+            },
 
-        argument: {
-            "node": node,
-            "fnLoadComplete": fnLoadComplete
-        },
+            argument: {
+                "node": node,
+                "fnLoadComplete": fnLoadComplete
+            },
 
-        //timeout -- if more than 7 seconds go by, we'll abort
-        //the transaction and assume there are no children:
-        timeout: 13000
-    };
+            //timeout -- if more than 7 seconds go by, we'll abort
+            //the transaction and assume there are no children:
+            timeout: 13000
+        };
 
-    YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
+
+        YAHOO.util.Event.onDOMReady(ontologytree.init, ontologytree,true);
+        YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
 }
 
 var ontologySearch = function () {
@@ -163,7 +165,7 @@ var ontologySearch = function () {
             oAC: oAC
         };
     };
-}
+};
 
 function getOntologyName(tag_id) {
     var ontology_name;
@@ -176,8 +178,7 @@ function getOntologyName(tag_id) {
     return(ontology_name);
 }
 
-function getOntologyId(type,tag_id)
-{
+function getOntologyId(type,tag_id) {
     var ontology_id;
 
     if(type == "version") {
