@@ -31,7 +31,7 @@ function ofunction( $input, $argv, $parser ) {
 
 	if($loggedIn) {
 		$wgOut->addScript('<script type="text/javascript" src="' . $wgOpath . '/js/yui2.7.0.allcomponents.js"></script>');
-		$wgOut->addStyle("yui2.7.0.css");
+		$wgOut->addStyle("$wgOpath/css/yui2.7.0.css");
 	} else {
 		$wgOut->addScript('<script type="text/javascript" src="' . $wgOpath . '/js/yui2.7.0.mincomponents.js"></script>');
 	}
