@@ -294,6 +294,7 @@ class ListPathwaysPager extends BasePathwaysPager {
 		parent::__construct( $species, $tag, $sortOrder );
 
 		# We know we have 300, so we will put 100 in each column
+		$this->mExtraSortFields = array();
 		$this->mLimitsShown = array( $this->columnSize * self::columnCount );
 		$this->mDefaultLimit = $this->columnSize * self::columnCount;
 		$this->mLimit = $this->columnSize * self::columnCount;
