@@ -161,7 +161,7 @@ abstract class BasePathwaysPager extends AlphabeticPager {
 	}
 
 	function getIndexField() {
-		return 'tag_text';
+		return 't1.tag_text';
 		# This should look at $this->sortOrder for the field to sort on.
 	}
 
