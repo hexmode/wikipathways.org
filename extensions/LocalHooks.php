@@ -8,6 +8,8 @@ class LocalHooks {
 		$thisStylePath = "$wgStylePath/wikipathways";
   		$wgOut->addStyle("$thisStylePath/bootstrap.css");
 		$wgOut->addScript('<script type="'.$wgJsMimeType.'" src="'.
+			$thisStylePath .'/wikipathways-custom.js"></script>');
+		$wgOut->addScript('<script type="'.$wgJsMimeType.'" src="'.
 			$thisStylePath .'/waypoints.js"></script>');
 		$wgOut->addScript('<script type="'.$wgJsMimeType.'" src="'.
 			$thisStylePath .'/waypoints-infinite.js"></script>');
