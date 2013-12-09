@@ -1338,12 +1338,12 @@ class Pathway {
 		return $this->getFileObj( $fileType )->getPath();
 	}
 
-	static public function toggleAll( $count, $show ) {
+	static public function toggleAll( $tableId, $count, $show ) {
 		if($count > $show) {
 			$expand = "<b>View all...</b>";
 			$collapse = "<b>View last " . $show . "...</b>";
 			return "<table><td width='51%'> <div onClick='".
-				'doToggle("dnTable", this, "'.$expand.'", "'.$collapse.'")'.
+				'doToggle("'.$tableId.'", this, "'.$collapse.'", "'.$expand.'")'.
 				"' style='cursor:pointer;color:#0000FF'>".
 				"$expand<td width='45%'></table>";
 		}

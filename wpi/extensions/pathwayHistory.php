@@ -47,7 +47,7 @@ class GpmlHistoryPager extends HistoryPager {
 
 		}
 
-		$table = Pathway::toggleAll( $nr, $this->nrShow ) . $table;
+		$table = Pathway::toggleAll( 'historyTable', $nr, $this->nrShow ) . $table;
 
 		return $table;
 	}

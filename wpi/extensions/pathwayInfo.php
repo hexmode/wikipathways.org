@@ -30,7 +30,7 @@ class PathwayInfo extends PathwayData {
 		$nrShow = 5;
 		$button = "";
 		$nrNodes = count($nodes);
-		$button = Pathway::toggleAll( count( $nodes ), $nrShow);
+		$button = Pathway::toggleAll( 'dnTable', count( $nodes ), $nrShow);
 		//Sort and iterate over all elements
 		$species = $this->getOrganism();
 		sort($nodes);

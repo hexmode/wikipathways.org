@@ -57,7 +57,7 @@ class PathwayBibliography {
 		if($hasRefs) {
 			$out = "<OL id='$id'>$out</OL>";
 			$nrNodes = count($pubXRefs);
-			$out = Pathway::toggleAll( $nrNodes, $nrShow ) . $out;
+			$out = Pathway::toggleAll( $id, $nrNodes, $nrShow ) . $out;
 		} else {
 			$out = "<I>No bibliography</i>\n";
 		}
