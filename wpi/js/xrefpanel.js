@@ -2,7 +2,8 @@
 if (typeof(XrefPanel_dataSourcesUrl) == "undefined")
     var XrefPanel_dataSourcesUrl = '../../cache/datasources.txt';
 if (typeof(XrefPanel_bridgeUrl) == "undefined")
-    var XrefPanel_bridgeUrl = ''; //Disable bridgedb webservice queries if url is not specified
+    //Disable bridgedb webservice queries if url is not specified
+    var XrefPanel_bridgeUrl = '';
 if (typeof(XrefPanel_searchUrl) == "undefined")
     var XrefPanel_searchUrl = false;
 if (typeof(XrefPanel_lookupAttributes) == "undefined")
@@ -12,8 +13,10 @@ if (typeof(XrefPanel_lookupAttributes) == "undefined")
  * Change this if the base path of the script (and resource files) is
  * different than the page root.
  */
-if (typeof(XrefPanel_imgPath) == "undefined")
-    var XrefPanel_imgPath = wgServer + '/' + wgScriptPath + '/skins/common/images/';
+if (typeof(XrefPanel_imgPath) == "undefined") {
+    var XrefPanel_imgPath = wgServer + '/' + wgScriptPath
+        + '/skins/common/images/';
+}
 
 /**
  * A panel that displays information for an xref.
@@ -46,7 +49,7 @@ XrefPanel.xrefHooks = [];
 
 XrefPanel.createLoadImage = function(){
     return '<img src="' + XrefPanel_imgPath + '/progress.gif" />';
-}
+};
 
 /**
  * Add hook functions to customize the info
@@ -90,24 +93,31 @@ XrefPanel.createInfoCallback = function($div){
             if (a in XrefPanel.ignoreAttributes)
                 continue;
 
-            $row = $('<div />').html('<B>' + a + ': </B>' + attributes[a].join(', '));
+            $row = $('<div />').html('<B>' + a + ': </B>' +
+                                     attributes[a].join(', '));
             $container.append($row);
         }
         $div.append($container);
-    }
-}
+    };
+};
 
 XrefPanel.createErrorCallback = function($div, msg){
     return function(hr, errMsg, ex){
         $div.html('<font color="red">' + msg + '</font>');
-    }
-}
+    };
+};
 
 if(XrefPanel_lookupAttributes) {
 	XrefPanel.infoHooks.push(function(id, datasource, symbol, species){
 		 if (XrefPanel_bridgeUrl) {
-		     var $div = $('<div id="bridgeInfo">' + XrefPanel.createLoadImage() + ' loading info...</div>');
-		     XrefPanel.queryProperties(id, datasource, species, XrefPanel.createInfoCallback($div), XrefPanel.createErrorCallback($div, 'Unable to load info.'));
+		     var $div = $('<div id="bridgeInfo">'
+                                  + XrefPanel.createLoadImage()
+                                  + ' loading info...</div>');
+		     XrefPanel.queryProperties(
+                         id, datasource, species,
+                         XrefPanel.createInfoCallback($div),
+                         XrefPanel.createErrorCallback(
+                             $div, 'Unable to load info.'));
 		     return $div;
 		 }
 		 else {
@@ -120,10 +130,16 @@ if(XrefPanel_lookupAttributes) {
  * Add an info hook for search.wikipathways.org.
  */
 XrefPanel.infoHooks.push(function(id, datasource, symbol, species){
+
+
     if (XrefPanel_searchUrl && id && datasource) {
-        var url = XrefPanel_searchUrl.replace('$ID', id).replace('$DATASOURCE', XrefPanel.systemCodes[datasource]);
+        var url = XrefPanel_searchUrl.replace('$ID', id)
+            .replace('$DATASOURCE', XrefPanel.systemCodes[datasource]);
         var $div = $('<div />');
-        var $a = $('<a target="_blank" href="' + url + '"></a>').attr('title', 'Find other pathways with ' + symbol + '...').html('<span style="float:left" class="ui-icon ui-icon-search" />Find pathways with ' + symbol + '...');
+        var $a = $('<a target="_blank" href="' + url + '"></a>')
+            .attr('title', 'Find other pathways with ' + symbol + '...')
+            .html('<span style="float:left" class="ui-icon ui-icon-search" />' +
+                  'Find pathways with ' + symbol + '...');
         var $p = $('<p />');
         $p.append($a);
         $div.append($p);
@@ -141,21 +157,21 @@ XrefPanel.contentCache = {};
 XrefPanel.onPageLoad = function(){
     //Load the datasources file
     XrefPanel.loadDataSources();
-}
+};
 
 $(window).ready(XrefPanel.onPageLoad);
 
 XrefPanel.getCachedContent = function(id, datasource, species, symbol){
     return XrefPanel.cacheContent[id + datasource + species + symbol];
-}
+};
 
 XrefPanel.cacheContent = function(id, datasource, species, symbol, $content){
     XrefPanel.cacheContent[id + datasource + species + symbol] = $content;
-}
+};
 
 XrefPanel.unCacheContent = function(id, datasource, species, symbol){
     XrefPanel.cacheContent[id + datasource + species + symbol] = null;
-}
+};
 
 XrefPanel.currentTriggerDialog = null;
 
@@ -167,7 +183,8 @@ XrefPanel.registerTrigger = function(elm, id, datasource, species, symbol) {
 			XrefPanel.currentTriggerDialog.dialog("destroy");
 		}
 		$content = XrefPanel.create(id, datasource, species, symbol);
-		var x = $(this).offset().left + $(this).width() - $(window).scrollLeft();
+		var x = $(this).offset().left + $(this).width()
+                           - $(window).scrollLeft();
 		var y = $(this).offset().top - $(window).scrollTop();
 		$dialog = $content.dialog({
 			position: [x,y]
@@ -191,7 +208,8 @@ XrefPanel.create = function(id, datasource, species, symbol){
         return $content;
     }
 
-    var maxXrefLines = 5; //Maximum number of xref links to show (scroll otherwise)
+    //Maximum number of xref links to show (scroll otherwise)
+    var maxXrefLines = 5;
     $content = $('<div><div class="xrefinfo" /><div class="xreflinks"/>').css({
         'text-align': 'left',
         'font-size': '90%'
@@ -203,11 +221,16 @@ XrefPanel.create = function(id, datasource, species, symbol){
     //Add the info section
     var $infodiv = $content.find('.xrefinfo');
     var title = symbol ? '<h3>' + symbol + '</h3>' : '';
-    var txt = '<b>Annotated with: </b>' + XrefPanel.createXrefLink(id, datasource, true);
-    if (!id)
-        txt = '<b><font color="red">Invalid annotation, missing identifier!</font></b>';
-    if (!datasource)
-        txt = '<b><font color="red">Invalid annotation, missing datasource!</font></b>';
+    var txt = '<b>Annotated with: </b>'
+        + XrefPanel.createXrefLink(id, datasource, true);
+    if (!id) {
+        txt = '<b><font color="red">Invalid annotation, missing identifier!' +
+            '</font></b>';
+    }
+    if (!datasource) {
+        txt = '<b><font color="red">Invalid annotation, missing datasource!' +
+            '</font></b>';
+    }
     $infodiv.append(title + '<div>' + txt + '</div>');
 
     //Run hooks that may add items to the info
@@ -261,7 +284,8 @@ XrefPanel.create = function(id, datasource, species, symbol){
             var ds = dataSources[dsi];
             var xrefHtml = '<table>';
             for (var i in xrefs[ds]) {
-                xrefHtml += '<tr>' + XrefPanel.createXrefLink(xrefs[ds][i], ds, false);
+                xrefHtml += '<tr>' + XrefPanel.createXrefLink(xrefs[ds][i],
+                                                              ds, false);
             }
             $accordion.append('<h3><a href="#">' + ds + '</a></h3>');
             var $xdiv = $('<div />').html(xrefHtml + '</table>');
@@ -270,7 +294,9 @@ XrefPanel.create = function(id, datasource, species, symbol){
                     height: maxXrefLines + 'em'
                 });
             }
-            var $wdiv = $('<div class="ui-helper-clearfix"/>').css('overflow', 'auto'); //Wrapper to prevent resizing of xref div
+            //Wrapper to prevent resizing of xref div
+            var $wdiv = $('<div class="ui-helper-clearfix"/>')
+                .css('overflow', 'auto');
             $wdiv.append($xdiv);
             $accordion.append($wdiv);
         }
@@ -284,14 +310,16 @@ XrefPanel.create = function(id, datasource, species, symbol){
     if (id && datasource) {
         var $xdiv = $content.find('.xreflinks');
         $xdiv.html(XrefPanel.createLoadImage() + ' loading links...');
-        XrefPanel.queryXrefs(id, datasource, species, cbXrefs, XrefPanel.createErrorCallback($xdiv, 'Unable to load external references.'));
+        XrefPanel.queryXrefs(id, datasource, species, cbXrefs,
+                             XrefPanel.createErrorCallback(
+                                 $xdiv, 'Unable to load external references.'));
     }
     else {
         $content.find('.xreflinks').empty();
     }
     return $content;
 
-}
+};
 
 XrefPanel.getBaseUrl = function(){
     var url = XrefPanel_bridgeUrl;
@@ -300,7 +328,7 @@ XrefPanel.getBaseUrl = function(){
         url = url.substr(0, url.length - 1);
     }
     return url;
-}
+};
 
 XrefPanel.createXrefLink = function(id, datasource, withDataSourceLabel){
     var url = XrefPanel.linkoutPatterns[datasource];
@@ -315,7 +343,7 @@ XrefPanel.createXrefLink = function(id, datasource, withDataSourceLabel){
       XrefPanel.log("Unable to create link for " + id + ", " + datasource);
     }
     return '<span style="font-size:12px;">' + html + '<br></span>';
-}
+};
 
 /**
  * Query all xrefs for the given datasource.
@@ -324,14 +352,15 @@ XrefPanel.queryXrefs = function(id, datasource, species, success, error){
     var url = XrefPanel.getBaseUrl();
     if (!url)
         return;
-    url = url + '/' + escape(species) + '/xrefs/' + escape(datasource) + '/' + id;
+    url = url + '/' + escape(species) + '/xrefs/' + escape(datasource)
+        + '/' + id;
     $.ajax({
         url: url,
         processData: false,
         success: success,
         error: error
     });
-}
+};
 
 /**
  * Query properties for xref
@@ -340,14 +369,15 @@ XrefPanel.queryProperties = function(id, datasource, species, success, error){
     var url = XrefPanel.getBaseUrl();
     if (!url)
         return;
-    url = url + '/' + escape(species) + '/attributes/' + escape(datasource) + '/' + id;
+    url = url + '/' + escape(species) + '/attributes/' + escape(datasource)
+        + '/' + id;
     $.ajax({
         url: url,
         processData: false,
         success: success,
         error: error
     });
-}
+};
 
 XrefPanel.loadDataSources = function(){
     var callback = function(data, textStatus){
@@ -358,8 +388,8 @@ XrefPanel.loadDataSources = function(){
                 var cols = lines[l].split("\t", -1);
                 if (cols.length > 1) XrefPanel.systemCodes[cols[0]] = cols[1];
                 if (cols.length > 3 && cols[3]) {
-                	var ds = cols[0];
-						XrefPanel.linkoutPatterns[cols[0]] = cols[3];
+                    var ds = cols[0];
+		    XrefPanel.linkoutPatterns[cols[0]] = cols[3];
                 }
             }
         }
