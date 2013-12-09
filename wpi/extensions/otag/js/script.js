@@ -1,16 +1,25 @@
 /**
  * Javascript functions for ontology tagging feature.
  */
-$(document).ready(function() {
 var opentag_id = -1;
-var otagroot = document.getElementById('ontologyContainer');
-var treeRoot = document.getElementById('ontologyTrees');
-var oACInput = document.getElementById('ontologyACInput');
-var save_img = document.getElementById('save_img');
-var save_link = document.getElementById('save_link');
-var title = wgPageName;
-var ontologies = YAHOO.lang.JSON.parse(ontologiesJSON);
-var oTagsCount = new Array();
+var otagroot;
+var treeRoot;
+var oACInput;
+var save_img;
+var save_link;
+var title;
+var ontologies;
+var oTagsCount;
+$(document).ready(function() {
+                      opentag_id = -1;
+                      otagroot = document.getElementById('ontologyContainer');
+                      treeRoot = document.getElementById('ontologyTrees');
+                      oACInput = document.getElementById('ontologyACInput');
+                      save_img = document.getElementById('save_img');
+                      save_link = document.getElementById('save_link');
+                      title = wgPageName;
+                      ontologies = YAHOO.lang.JSON.parse(ontologiesJSON);
+                      oTagsCount = new Array();
 
 for(var i=0;i<ontologies.length;i++) {
     document.getElementById('ontologyTags').innerHTML += "<div id='" + ontologies[i][0] + "'><b>" + ontologies[i][0] + "</b> : </div>";
@@ -167,6 +176,7 @@ var ontologySearch = function () {
     };
 };
 
+});
 function getOntologyName(tag_id) {
     var ontology_name;
     for(var i=0;i<ontologies.length;i++) {
@@ -198,7 +208,6 @@ function getOntologyId(type,tag_id) {
     }
     return ontology_id;
 }
-
 
 function removeTag(conceptId) {
     disableSave();
@@ -398,4 +407,3 @@ function toggleOntologyDisplay() {
     document.getElementById('ontologyMessage').style.display = "none";
     document.getElementById('ontologyTags').style.display = "block";
 }
-});
