@@ -1,0 +1,14 @@
+/**
+ * Custom CSS where needed. Picked from old main.css.
+*/
+.browsePathways {
+   float: left;
+   padding: 1em;
+}
+.infinite-container {
+   overflow:hidden;
+}
+.infinite-more-link {
+   float: right;
+}
+

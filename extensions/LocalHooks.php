@@ -1,6 +1,19 @@
 <?php
 
 class LocalHooks {
+
+	static function addCustomAppearance( $output, $sk ) {
+		global $wgOut, $wgStylePath, $wgJsMimeType;
+
+		$thisStylePath = "$wgStylePath/wikipathways";
+  		$wgOut->addStyle("$thisStylePath/bootstrap.css");
+		$wgOut->addScript('<script type="'.$wgJsMimeType.'" src="'.
+			$thisStylePath .'/waypoints.js"></script>');
+		$wgOut->addScript('<script type="'.$wgJsMimeType.'" src="'.
+			$thisStylePath .'/waypoints-infinite.js"></script>');
+		return true;
+	}
+
 	/* http://developers.pathvisio.org/ticket/1559 */
 	static function stopDisplay( $output, $sk ) {
 		wfProfileIn( __METHOD__ );
@@ -559,6 +572,7 @@ $wgHooks['ImgAuthBeforeStream'][]       = 'LocalHooks::checkPathwayImgAuth';
 $wgHooks['ArticleSaveComplete'][]       = 'LocalHooks::updateTags';
 $wgHooks['DisplayOldSubtitle'][]        = 'LocalHooks::subtitleOverride';
 $wgHooks['UserLoginComplete'][]         = 'LocalHooks::loginMessage';
+$wgHooks['BeforePageDisplay'][]         = 'LocalHooks::addCustomAppearance';
 $wgHooks['BeforePageDisplay'][]         = 'LocalHooks::addPreloaderScript';
 $wgHooks['BeforePageDisplay'][]         = 'LocalHooks::stopDisplay';
 $wgHooks['LinkText'][]                  = 'LocalHooks::linkText';
