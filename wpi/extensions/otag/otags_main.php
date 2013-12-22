@@ -15,9 +15,9 @@ function wfotag() {
 }
 
 function oheader(&$parser, &$text) {
-	$text = preg_replace(
-		'/<!-- ENCODED_CONTENT ([0-9a-zA-Z\\+]+=*) -->/e',
-		'base64_decode("$1")',
+	$text = preg_replace_callback(
+		'/<!-- ENCODED_CONTENT ([0-9a-zA-Z\\+]+=*) -->/',
+		function($m) { return base64_decode($m[1]); },
 		$text
 
 	);
