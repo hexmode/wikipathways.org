@@ -60,23 +60,24 @@ class PathwayOfTheDay {
 		return $pathway;
 	}
 
-	//Create and fill the tables  --- needs to be public since it is called in a hook
+	//Create and fill the tables --- needs to be public since it is
+	//called in a hook
 	public static function setupDB() {
 		$tbl = PathwayOfTheDay::$table;
 		$dbw =& wfGetDB(DB_MASTER);
 		wfDebug("\tCreating tables\n");
 		$dbw->query( "CREATE TABLE IF NOT EXISTS $tbl ( pathway varchar(255), day varchar(50) )", DB_MASTER );
-		#Index...doesn't work yet
-		/*$dbw->query( "IF NOT EXISTS (SELECT * from SYSINDEXES
-						WHERE id=object_id('$tbl') AND name='$ind_pw')
-						CREATE INDEX $ind_pw on $tbl(pathway)",
-					DB_MASTER );
-		$dbw->query( "IF NOT EXISTS (SELECT * from SYSINDEXES
-						WHERE id=object_id('$tbl') AND name='$ind_day')
-						CREATE INDEX $ind_day on $tbl(pathway)",
-					DB_MASTER );
-					*/
+		/* #Index...doesn't work yet */
+		/* $dbw->query( "IF NOT EXISTS (SELECT * from SYSINDEXES */
+		/* 				WHERE id=object_id('$tbl') AND name='$ind_pw') */
+		/* 				CREATE INDEX $ind_pw on $tbl(pathway)", */
+		/* 			DB_MASTER ); */
+		/* $dbw->query( "IF NOT EXISTS (SELECT * from SYSINDEXES */
+		/* 				WHERE id=object_id('$tbl') AND name='$ind_day') */
+		/* 				CREATE INDEX $ind_day on $tbl(pathway)", */
+		/* 			DB_MASTER ); */
 		wfDebug("\tDone!\n");
+		return true;
 	}
 
 	//A brand new day, fetch new random patwhay that we haven't had before
