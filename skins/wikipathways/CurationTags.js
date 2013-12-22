@@ -301,7 +301,6 @@ CurationTags.loadHistoryCallback = function(xhr) {
 		tbl += "</TBODY></TABLE></DIV>";
 		CurationTags.histDiv.innerHTML = tbl;
 		CurationTags.histDiv.style.display = "";
-		sortables_init();
 	}
 
 	CurationTags.hideProgress();
