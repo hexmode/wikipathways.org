@@ -26,13 +26,15 @@ class TagChangeNotification extends EmailNotification {
 	 */
 	function notifyOnTagChange() {
 		$taghist = $this->taghist;
+		$watchers = array(); # Need to find out where to get this.
 		$this->actuallyNotifyOnPageChange(
 			User::newFromId($taghist->getUser()),
 			Title::newFromId($taghist->getPageId()),
 			$taghist->getTime(),
 			$taghist->getAction(),
 			"1",
-			false
+			false,
+			$watchers
 		);
 	}
 
@@ -61,9 +63,9 @@ class TagChangeNotification extends EmailNotification {
 
 		$subject = strtr( $subject, $keys );
 
-		# Reveal the page editor's address as REPLY-TO address only if
-		# the user has not opted-out and the option is enabled at the
-		# global configuration level.
+		/* Reveal the page editor's address as REPLY-TO address only if */
+		/* the user has not opted-out and the option is enabled at the */
+		/* global configuration level. */
 		$editor = $this->editor;
 		$name    = $editor->getName();
 		$adminAddress = new MailAddress( $wgPasswordSender, 'WikiPathways' );
@@ -108,5 +110,3 @@ class TagChangeNotification extends EmailNotification {
 		wfDebug(var_export($this->body, TRUE) . " BODY_END\n");
 	}
 }
-
-?>
