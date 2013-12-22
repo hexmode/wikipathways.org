@@ -14,6 +14,7 @@ function renderAuthorInfo($input, $argv, $parser) {
 	global $wgAuthorInfoPath, $wgTitle;
 
 	$html = "";
+	wfDebug("authorInfo: ". var_export( $argv, true ) );
 	if ( $wgTitle->getNamespace() === NS_PATHWAY ) {
 		if( isset( $argv["limit"] ) )
 			$limit = htmlentities( $argv["limit"] );
@@ -197,5 +198,3 @@ class AuthorInfo {
 		return $c;
 	}
 }
-
-?>
