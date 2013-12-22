@@ -21,162 +21,165 @@ $(document).ready(function() {
                       ontologies = YAHOO.lang.JSON.parse(ontologiesJSON);
                       oTagsCount = new Array();
 
-for(var i=0;i<ontologies.length;i++) {
-    document.getElementById('ontologyTags').innerHTML += "<div id='" + ontologies[i][0] + "'><b>" + ontologies[i][0] + "</b> : </div>";
-    oTagsCount[ontologies[i][0]] = 0;
-}
-fetchTags();
+                      for(var i=0;i<ontologies.length;i++) {
+                          document.getElementById('ontologyTags').innerHTML +=
+                          "<div id='" + ontologies[i][0] + "'><b>"
+                              + ontologies[i][0] + "</b> : </div>";
+                          oTagsCount[ontologies[i][0]] = 0;
+                      }
+                      fetchTags();
 
-if(otagloggedIn == 1) {
-    var createDOM = function() {
+                      if(otagloggedIn == 1) {
+                          var createDOM = function() {
 
-        for(var i=0;i<ontologies.length;i++) {
-            var Treediv = document.createElement("span");
-            Treediv.id = "ontologyTree" + (i + 1);
-            Treediv.className = "ontologyTree";
-            treeRoot.appendChild(Treediv);
-        }
-    } ();
+                              for(var i=0;i<ontologies.length;i++) {
+                                  var Treediv = document.createElement("span");
+                                  Treediv.id = "ontologyTree" + (i + 1);
+                                  Treediv.className = "ontologyTree";
+                                  treeRoot.appendChild(Treediv);
+                              }
+                          } ();
 
-    var ontologytree = function() {
-        function buildTree() {
-            var tree = new Array();
-            for (var no=0; no<3; no++) {
-                tree[no] = new YAHOO.widget.TreeView("ontologyTree" + (no + 1));
-                tree[no].setDynamicLoad(loadNodeData);
-                var root = tree[no].getRoot();
-                var aConcepts = [ontologies[no][0] + " - " + ontologies[no][1]] ;
+                          var ontologytree = function() {
+                              function buildTree() {
+                                  var tree = new Array();
+                                  for (var no=0; no<3; no++) {
+                                      tree[no] = new YAHOO.widget.TreeView("ontologyTree" + (no + 1));
+                                      tree[no].setDynamicLoad(loadNodeData);
+                                      var root = tree[no].getRoot();
+                                      var aConcepts = [ontologies[no][0] + " - " + ontologies[no][1]] ;
 
-                for (var i=0, j=aConcepts.length; i<j; i++) {
-                    var tempNode = new YAHOO.widget.TextNode(aConcepts[i], root, false);
-                    tempNode.c_id=tempNode.label.substring(tempNode.label.lastIndexOf(" - ")+3,tempNode.label.length);
-                    tempNode.label = tempNode.label.substring(0,tempNode.label.lastIndexOf(" - "));
-                }
-                tree[no].subscribe("labelClick", function(node) {
-                    displayTag(node.label,node.c_id,"true");
-                    YAHOO.util.Event.onDOMReady(ontologytree.init, ontologytree,true);
-                });
-                tree[no].draw();
-            }
-        }
+                                      for (var i=0, j=aConcepts.length; i<j; i++) {
+                                          var tempNode = new YAHOO.widget.TextNode(aConcepts[i], root, false);
+                                          tempNode.c_id=tempNode.label.substring(tempNode.label.lastIndexOf(" - ")+3,tempNode.label.length);
+                                          tempNode.label = tempNode.label.substring(0,tempNode.label.lastIndexOf(" - "));
+                                      }
+                                      tree[no].subscribe("labelClick", function(node) {
+                                                             displayTag(node.label,node.c_id,"true");
+                                                             YAHOO.util.Event.onDOMReady(ontologytree.init, ontologytree,true);
+                                                         });
+                                      tree[no].draw();
+                                  }
+                              }
 
-        return {
-            init: function() {
-                buildTree();
-            }
-        };
-    } ();
+                              return {
+                                  init: function() {
+                                      buildTree();
+                                  }
+                              };
+                          } ();
 
-    function loadNodeData(node, fnLoadComplete)  {
+                          function loadNodeData(node, fnLoadComplete)  {
 
-        //Get the node's label and urlencode it; this is the word/s
-        //on which we'll search for related words:
-        // encodeURI(node.label);
-        var sUrl = opath + "/otags.php?action=tree&tagId=" + encodeURI(node.c_id);
-        var callback = {
-            success: function(oResponse) {
-                var oResults = YAHOO.lang.JSON.parse(oResponse.responseText);
-                if((oResults.ResultSet.Result) && (oResults.ResultSet.Result.length)) {
-                    if(YAHOO.lang.isArray(oResults.ResultSet.Result)) {
-                        for (var i=0, j=oResults.ResultSet.Result.length; i<j; i++) {
+                              //Get the node's label and urlencode it; this is the word/s
+                              //on which we'll search for related words:
+                              // encodeURI(node.label);
+                              var sUrl = opath + "/otags.php?action=tree&tagId=" + encodeURI(node.c_id);
+                              var callback = {
+                                  success: function(oResponse) {
+                                      var oResults = YAHOO.lang.JSON.parse(oResponse.responseText);
+                                      if((oResults.ResultSet.Result) && (oResults.ResultSet.Result.length)) {
+                                          if(YAHOO.lang.isArray(oResults.ResultSet.Result)) {
+                                              for (var i=0, j=oResults.ResultSet.Result.length; i<j; i++) {
 
-                            var tempNode = new YAHOO.widget.MenuNode(oResults.ResultSet.Result[i], node, false);
-                            tempNode.c_id=tempNode.label.substring(tempNode.label.lastIndexOf(" - ")+3,tempNode.label.length);
-                            if(tempNode.label.lastIndexOf("||")>0)
-                            {
-                                tempNode.isLeaf = true;
-                                tempNode.c_id = tempNode.c_id.replace("||","");
-                            }
-                            tempNode.label = tempNode.label.substring(0,tempNode.label.lastIndexOf(" - "));
+                                                  var tempNode = new YAHOO.widget.MenuNode(oResults.ResultSet.Result[i], node, false);
+                                                  tempNode.c_id=tempNode.label.substring(tempNode.label.lastIndexOf(" - ")+3,tempNode.label.length);
+                                                  if(tempNode.label.lastIndexOf("||")>0)
+                                                  {
+                                                      tempNode.isLeaf = true;
+                                                      tempNode.c_id = tempNode.c_id.replace("||","");
+                                                  }
+                                                  tempNode.label = tempNode.label.substring(0,tempNode.label.lastIndexOf(" - "));
 
-                        }
-                    }
-                }
-                oResponse.argument.fnLoadComplete();
-            },
+                                              }
+                                          }
+                                      }
+                                      oResponse.argument.fnLoadComplete();
+                                  },
 
-            failure: function(oResponse) {
-                oResponse.argument.fnLoadComplete();
-            },
+                                  failure: function(oResponse) {
+                                      oResponse.argument.fnLoadComplete();
+                                  },
 
-            argument: {
-                "node": node,
-                "fnLoadComplete": fnLoadComplete
-            },
+                                  argument: {
+                                      "node": node,
+                                      "fnLoadComplete": fnLoadComplete
+                                  },
 
-            //timeout -- if more than 7 seconds go by, we'll abort
-            //the transaction and assume there are no children:
-            timeout: 13000
-        };
-
-
-        YAHOO.util.Event.onDOMReady(ontologytree.init, ontologytree,true);
-        YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
-}
-
-var ontologySearch = function () {
-
-        var oDS = new YAHOO.util.XHRDataSource( opath + "/otags.php");
-        // Set the responseType
-        oDS.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
-        // Define the schema of the JSON results
-        oDS.responseSchema = {
-            resultsList : "ResultSet.Result",
-            fields : ["label","id","ontology"]
-        };
-        oDS.maxCacheEntries = 15;
-        // Instantiate the AutoComplete
-        var oAC = new YAHOO.widget.AutoComplete("ontologyACInput", "myContainer", oDS);
-        // Throttle requests sent
-        oAC.queryDelay = 0.5;
-        oAC.minQueryLength = 3;
-        oAC.useShadow = true;
-        oAC.prehighlightClassName = "yui-ac-prehighlight";
-
-        // The webservice needs additional parameters
-        oAC.generateRequest = function(sQuery) {
-            return "?action=search&searchTerm=" + sQuery ;
-        };
-
-        oAC.resultTypeList = false;
-        // Customize formatter to show thumbnail images
-        oAC.formatResult = function(oResultData, sQuery, sResultMatch) {
-
-            if(oResultData.label == "No results !")
-                return  "<em>" + oResultData.label + "</em>";
-            else
-                return  "<em>" + oResultData.label + "</em><br />" + oResultData.ontology ;
-        };
-
-        var itemSelectHandler = function(sType, aArgs) {
-            var oData = aArgs[2]; // object literal of data for the result
-            if(oData.label != "No results !")
-            {
-                displayTag(oData.label,oData.id,"true");
-            }
-        };
-
-        oAC.itemSelectEvent.subscribe(itemSelectHandler);
-        oAC.dataRequestEvent.subscribe(function(){
-                oACInput.style.backgroundImage = 'url(' + stylepath + '/common/images/progress.gif)';
-                oACInput.style.backgroundPosition = 'right';
-                oACInput.style.backgroundRepeat = 'no-repeat';
-            }
-        );
-        oAC.containerPopulateEvent.subscribe(function(){
-                oACInput.style.backgroundImage = '';
-            }
-        );
+                                  //timeout -- if more than 7 seconds go by, we'll abort
+                                  //the transaction and assume there are no children:
+                                  timeout: 13000
+                              };
 
 
-        return {
-            oDS: oDS,
-            oAC: oAC
-        };
-    };
-};
+                              YAHOO.util.Event.onDOMReady(ontologytree.init, ontologytree,true);
+                              YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
+                          }
 
-});
+                          var ontologySearch = function () {
+
+                              var oDS = new YAHOO.util.XHRDataSource( opath + "/otags.php");
+                              // Set the responseType
+                              oDS.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
+                              // Define the schema of the JSON results
+                              oDS.responseSchema = {
+                                  resultsList : "ResultSet.Result",
+                                  fields : ["label","id","ontology"]
+                              };
+                              oDS.maxCacheEntries = 15;
+                              // Instantiate the AutoComplete
+                              var oAC = new YAHOO.widget.AutoComplete("ontologyACInput", "myContainer", oDS);
+                              // Throttle requests sent
+                              oAC.queryDelay = 0.5;
+                              oAC.minQueryLength = 3;
+                              oAC.useShadow = true;
+                              oAC.prehighlightClassName = "yui-ac-prehighlight";
+
+                              // The webservice needs additional parameters
+                              oAC.generateRequest = function(sQuery) {
+                                  return "?action=search&searchTerm=" + sQuery ;
+                              };
+
+                              oAC.resultTypeList = false;
+                              // Customize formatter to show thumbnail images
+                              oAC.formatResult = function(oResultData, sQuery, sResultMatch) {
+
+                                  if(oResultData.label == "No results !")
+                                      return  "<em>" + oResultData.label + "</em>";
+                                  else
+                                      return  "<em>" + oResultData.label + "</em><br />" + oResultData.ontology ;
+                              };
+
+                              var itemSelectHandler = function(sType, aArgs) {
+                                  var oData = aArgs[2]; // object literal of data for the result
+                                  if(oData.label != "No results !")
+                                  {
+                                      displayTag(oData.label,oData.id,"true");
+                                  }
+                              };
+
+                              oAC.itemSelectEvent.subscribe(itemSelectHandler);
+                              oAC.dataRequestEvent.subscribe(function(){
+                                                                 oACInput.style.backgroundImage = 'url(' + stylepath + '/common/images/progress.gif)';
+                                                                 oACInput.style.backgroundPosition = 'right';
+                                                                 oACInput.style.backgroundRepeat = 'no-repeat';
+                                                             }
+                                                            );
+                              oAC.containerPopulateEvent.subscribe(function(){
+                                                                       oACInput.style.backgroundImage = '';
+                                                                   }
+                                                                  );
+
+
+                              return {
+                                  oDS: oDS,
+                                  oAC: oAC
+                              };
+                          };
+                      };
+
+                  });
+
 function getOntologyName(tag_id) {
     var ontology_name;
     for(var i=0;i<ontologies.length;i++) {
@@ -299,7 +302,7 @@ function fetchTags() {
                 toggleOntologyControls();
 
             if(totalTagsCount == 0)
-                    document.getElementById('ontologyMessage').style.display = "block";
+                document.getElementById('ontologyMessage').style.display = "block";
             else
                 document.getElementById('ontologyTags').style.display = "block";
         }
@@ -317,7 +320,7 @@ function fetchTags() {
 
     var postData = "action=fetch" + "&title=" + wgTitle +"&rand=" + rand  ;
     var request = YAHOO.util.Connect.asyncRequest('POST', opath + "/otags.php", callback, postData);
-//    makeRequest("Deleted tag : " + tags[index][0] + " (" + ontology_name + ")");
+    //    makeRequest("Deleted tag : " + tags[index][0] + " (" + ontology_name + ")");
 }
 
 function displayTag(concept, conceptId, newTag) {
