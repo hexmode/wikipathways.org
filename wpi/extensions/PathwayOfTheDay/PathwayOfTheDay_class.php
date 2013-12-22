@@ -60,8 +60,8 @@ class PathwayOfTheDay {
 		return $pathway;
 	}
 
-	//Create and fill the tables
-	private static function setupDB() {
+	//Create and fill the tables  --- needs to be public since it is called in a hook
+	public static function setupDB() {
 		$tbl = PathwayOfTheDay::$table;
 		$dbw =& wfGetDB(DB_MASTER);
 		wfDebug("\tCreating tables\n");
