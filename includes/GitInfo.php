@@ -144,7 +144,12 @@ class GitInfo {
 			return false;
 		}
 
+		wfSuppressWarnings();
 		$configArray = parse_ini_file( $config, true );
+		wfRestoreWarnings();
+		if( $configArray === false ) {
+			return false;
+		}
 		$remote = false;
 
 		// Use the "origin" remote repo if available or any other repo if not.
