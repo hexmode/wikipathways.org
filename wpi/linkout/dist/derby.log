@@ -1,0 +1,192 @@
+----------------------------------------------------------------
+2013-12-13 17:42:07.958 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance a816c00e-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Ag_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:09.378 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 582f8014-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/An_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:10.075 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance c851401a-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/At_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:11.244 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 787c0020-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Bs_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:11.419 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance e8afc026-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Bt_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:12.326 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 98ec802c-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Ce_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:13.087 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 09324032-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Cf_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:13.594 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance b9810038-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Ci_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:14.412 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 29d8c03e-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Dm_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:15.005 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance da398044-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Dr_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:15.677 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 4aa3404a-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Ec_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:15.847 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance fb160050-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Gg_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:16.233 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 6b91c056-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Gm_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:17.254 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 1c16805c-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Gz_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:17.588 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 8ca44062-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Hs_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:19.452 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 3d3b0068-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/metabolites_20130627.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:19.754 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance addac06e-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Ml_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:20.706 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 5e838074-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Mm_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:22.324 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance cf35407a-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Mx_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:22.531 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 7ff00080-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Oa_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:23.056 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance f0b3c086-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Oi_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:23.623 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance a180808c-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Oj_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:25.432 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 12564092-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Pi_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:26.001 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance c3350098-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Pt_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:26.681 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 341cc09e-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Qc_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:27.455 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance e50d80a4-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Rn_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:28.190 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 560740aa-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Sc_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:28.545 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 070a00b0-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Sl_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:29.027 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 7815c0b6-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Ss_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:29.554 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 292a80bc-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Vv_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:31.330 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 9a4840c2-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Xt_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2013-12-13 17:42:31.969 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance 4b6f00c8-0142-ed0d-1743-000001a517a0
+on database directory jar:(/var/bridgedb-databases/Zm_Derby_20130701.bridge)database in READ ONLY mode 
+
+Database Class Loader started - derby.database.classpath=''

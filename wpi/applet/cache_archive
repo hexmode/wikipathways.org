@@ -1,0 +1,1 @@
+org.wikipathways.applet.jar com.springsource.org.jdom-1.1.0.jar derbyclient.jar org.bridgedb.bio.jar org.bridgedb.jar org.bridgedb.rdb.jar org.bridgedb.webservice.bridgerest.jar org.pathvisio.jgoodies.forms.jar org.pathvisio.ws.commons.util.jar org.pathvisio.xmlrpc.client.jar org.pathvisio.xmlrpc.common.jar org.pathvisio.core.jar org.pathvisio.gui.jar org.wikipathways.applet.jar
