@@ -525,18 +525,21 @@ content requires special attention. <b>Please keep your
 
 	static function getSize( &$parser, $image, $maxWidth ) {
 		wfProfileIn( __METHOD__ );
-		try {
-			$img = new LocalFile(Title::newFromText($image),
-				RepoGroup::singleton()->getLocalRepo());
-			$img->loadFromFile();
-			$w = $img->getWidth();
-			if($w > $maxWidth) $w = $maxWidth;
-			wfProfileOut( __METHOD__ );
-			return $w . 'px';
-		} catch (Exception $e) {
-			wfProfileOut( __METHOD__ );
-			return "Error: $e";
+		if( $image ) {
+			try {
+				$img = new LocalFile(Title::newFromText($image),
+					RepoGroup::singleton()->getLocalRepo());
+				$img->loadFromFile();
+				$w = $img->getWidth();
+				if($w > $maxWidth) $w = $maxWidth;
+				wfProfileOut( __METHOD__ );
+				return $w . 'px';
+			} catch (Exception $e) {
+				wfProfileOut( __METHOD__ );
+				return "Error: $e";
+			}
 		}
+		return "UGLY!";
 	}
 
 	/**
