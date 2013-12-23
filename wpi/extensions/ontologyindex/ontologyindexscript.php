@@ -2,8 +2,8 @@
 
 require_once('../otag/OntologyFunctions.php');
 
-$ontology_id = $_GET['ontology_id'];
-$concept_id = $_GET['concept_id'];
+$ontology_id = isset( $_GET['ontology_id'] ) ? $_GET['ontology_id'] : "";
+$concept_id = isset( $_GET['concept_id'] ) ? $_GET['concept_id'] : "";
 
 $xml = "";
 $res_array = array();
@@ -42,6 +42,7 @@ if($cacheResult) {
 
 function fetchPathwayList($imageMode) {
 	global $wgOut;
+	$count = 0;
 
 	$term = $_GET['term'];
 	switch($_GET['filter']) {
@@ -368,6 +369,7 @@ function fetch_terms() {
 		}
 	}
 }
+
 function no_paths($match,$ontology_id,$concept_id) {
 	$count = 0;
 	$pwIdArray = array();

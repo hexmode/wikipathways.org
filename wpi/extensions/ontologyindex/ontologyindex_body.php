@@ -13,7 +13,7 @@ class ontologyindex extends SpecialPage {
 		$this->init();
 	}
 
-	function init($name, $restriction, $listed, $function, $file, $includable)
+	function init($name = null, $restriction = null, $listed = null, $function = null, $file = null, $includable = null)
 	{
 		global $wgOut, $wgRequest, $wgOntologiesJSON, $wgStylePath;
 		$opath = WPI_URL . "/extensions/ontologyindex" ;
@@ -24,7 +24,7 @@ class ontologyindex extends SpecialPage {
 		$wgStylePath = $opath;
 		$wgOut->addStyle("otagindex.css");
 
-		$wgOut->addScript('<script type="text/javascript" src="' . $opath . '/yui.js"></script>');
+		$wgOut->addScript('<script type="text/javascript" src="' . $opath . '/yui2.7.0.js"></script>');
 		$wgOut->addHTML("<div id='index_container'></div>");
 		$wgOut->addScript(
 			"<script type='text/javascript'>var opath=\"$opath\";
