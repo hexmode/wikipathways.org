@@ -18,6 +18,7 @@ if($cacheResult) {
 	$output = '';
 	ob_start();
 
+	$action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
 	switch($_GET['action']) {
 		case 'tree':
 			fetch_tree();
