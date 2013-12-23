@@ -171,7 +171,7 @@ function getFilename( $fileType, $pwTitle ) {
 	Pathway::registerFileType($fileType);
 
 	$file = $pathway->getFileLocation($fileType);
-	$fn = $pathway->getFileName($fileType);
+	$fn = basename( $file );
 
 	$mime = MimeTypes::getMimeType($fileType);
 	if(!$mime) $mime = "text/plain";
