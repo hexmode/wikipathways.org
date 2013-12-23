@@ -65,7 +65,7 @@ class OntologyFunctions
 		try {
 			$pathway->updatePathway($gpml,$comment);
 			$dbw =& wfGetDB( DB_MASTER );
-			$dbw->immediateBegin();
+			$dbw->begin();
 			$dbw->insert( 'ontology', array(
 					'term_id' => $tagId,
 					'term'    => $tag,
@@ -74,7 +74,7 @@ class OntologyFunctions
 					'term_path'  => $path ),
 				$fname,
 				'IGNORE' );
-			$dbw->immediateCommit();
+			$dbw->commit();
 			return "SUCCESS";
 		}
 		catch(Exception $e) {
