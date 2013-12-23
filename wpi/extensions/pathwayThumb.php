@@ -40,13 +40,14 @@ class PathwayThumb {
 					$caption = $pathway->name() . " (" . $pathway->species() . ")";
 					break;
 				default:
-					$caption = html_entity_decode($caption);        //This can be quite dangerous (injection),
+					$caption = html_entity_decode($caption);
+					//This can be quite dangerous (injection),
 					//we would rather parse wikitext, let me know if
 					//you know a way to do that (TK)
 			}
 
-			/* $output = self::makeThumbLinkObj($pathway, $caption, $href, $tooltip, $align, $id, $width); */
-			$output = "";
+			$output = self::makeThumbLinkObj($pathway, $caption, $href,
+				$tooltip, $align, $id, $width);
 		} catch(Exception $e) {
 			wfProfileOut( __METHOD__ );
 			return "invalid pathway title: $e";
