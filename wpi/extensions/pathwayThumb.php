@@ -2,7 +2,7 @@
 
 class PathwayThumb {
 
-	static function render( &$parser, $pwTitleEncoded, $width = 0, $align = '',
+	static function render( &$parser, $pwTitleEncoded, $width = 600, $align = '',
 		$caption = '', $href = '', $tooltip = '', $id='pwthumb') {
 		wfProfileIn( __METHOD__ );
 		global $wgUser, $wgRequest;
@@ -156,26 +156,16 @@ SCRIPT;
 	 * Make HTML for a thumbnail including image, border and caption
 	 * $img is an Image object
 	 */
-	static function makeThumbLinkObj( $pathway, $label = '', $href = '', $alt, $align = 'right', $id = 'thumb',
-		$boxwidth = 180, $boxheight=false, $framed=false ) {
+	static function makeThumbLinkObj( $pathway, $label = '', $href = '', $alt,
+		$align = 'right', $id = 'thumb', $boxwidth = 180, $boxheight=false, $framed=false ) {
 		wfProfileIn( __METHOD__ );
 		global $wgStylePath, $wgContLang;
-
-		$pathway->updateCache();
-		$img = $pathway->getImage();
-		$imgURL = $img->getURL();
+		$imgURL = $pathway->getFileUrl( FILETYPE_IMG, true );
 
 		$thumbUrl = '';
 		$error = '';
 
-		$width = $height = 0;
-		if ( $img->exists() ) {
-			$width  = $img->getWidth();
-			$height = $img->getHeight();
-		}
-		if ( 0 == $width || 0 == $height ) {
-			$width = $height = 180;
-		}
+		$width = $height = 600;
 		if ( $boxwidth == 0 ) {
 			$boxwidth = 180;
 		}
@@ -183,14 +173,7 @@ SCRIPT;
 			// Use image dimensions, don't scale
 			$boxwidth  = $width;
 			$boxheight = $height;
-			$thumbUrl  = $img->getViewURL();
-		} else {
-			try {
-				list($thumb, $thumbUrl, $boxwidth, $boxheight) = wpiGetThumb( $img, $boxwidth, $boxheight );
-			} catch (MWException $e) {
-				$error = $e->getMessage();
-
-			}
+			$thumbUrl  = $imgURL;
 		}
 		$oboxwidth = $boxwidth + 2;
 
@@ -201,7 +184,7 @@ SCRIPT;
 		$s = "<div id=\"{$id}\" class=\"thumb t{$align}\"><div class=\"thumbinner\" style=\"width:{$oboxwidth}px;\">";
 		if( $thumbUrl == '' ) {
 			// Couldn't generate thumbnail? Scale the image client-side.
-			$thumbUrl = $img->getViewURL();
+			$thumbUrl = $imgURL;
 			if( $boxheight == -1 ) {
 				// Approximate...
 				$boxheight = intval( $height * $boxwidth / $width );
@@ -210,8 +193,6 @@ SCRIPT;
 		wfDebug("Got thumbUrl: $thumbUrl\n");
 		if ( $error ) {
 			$s .= htmlspecialchars( $error );
-		} elseif( !$img->exists() ) {
-			$s .= "Image does not exist";
 		} else {
 			$s .= '<a href="'.$href.'" class="internal" title="'.$alt.'">'.
 				'<img src="'.$thumbUrl.'" alt="'.$alt.'" ' .
@@ -221,6 +202,5 @@ SCRIPT;
 		$s .= '  <div class="thumbcaption"'.$textalign.'>'.$label."</div></div></div>";
 		wfProfileOut( __METHOD__ );
 		return str_replace("\n", ' ', $s);
-		//return $s;
 	}
 }
