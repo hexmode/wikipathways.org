@@ -1297,6 +1297,13 @@ class Pathway {
 		$input = $this->getFileLocation(FILETYPE_IMG);
 		$output = $this->getFileLocation(FILETYPE_PNG, false);
 
+		$dir = dirname( $output );
+		if( !file_exists( $dir ) ) {
+			if( false === mkdir( $dir, 0777, true ) ) {
+				throw new Exception( "Couldn't create $dir!" );
+			}
+		}
+
 		$width = 1000;
 		$retval = 0;
 		if(isset($wgSVGConverters[$wgSVGConverter])) {
