@@ -314,7 +314,9 @@ function fetch_terms() {
 	global $xml;
 	global $res_array;
 
-	if($_GET['tree_pw'] == "yes") {
+	$tree_pw = isset( $_GET['tree_pw'] ) ? $_GET['tree_pw'] : "";
+
+	if( $tree_pw  == "yes") {
 		$dbr =& wfGetDB(DB_SLAVE);
 		$sql = "SELECT * FROM ontology where `term_id` = '$concept_id'";
 		$res = $dbr->query($sql);
