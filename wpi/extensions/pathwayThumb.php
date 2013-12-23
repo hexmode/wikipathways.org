@@ -167,7 +167,7 @@ SCRIPT;
 
 		$width = $height = 600;
 		if ( $boxwidth == 0 ) {
-			$boxwidth = 180;
+			$boxwidth = 620;
 		}
 		if ( $framed ) {
 			// Use image dimensions, don't scale
