@@ -1342,10 +1342,10 @@ class Pathway {
 		if($count > $show) {
 			$expand = "<b>View all...</b>";
 			$collapse = "<b>View last " . $show . "...</b>";
-			return "<table><td width='51%'> <div onClick='".
+			return "<table><tr><td width='51%'> <div onClick='".
 				'doToggle("'.$tableId.'", this, "'.$collapse.'", "'.$expand.'")'.
 				"' style='cursor:pointer;color:#0000FF'>".
-				"$expand<td width='45%'></table>";
+				"$expand<td width='45%'></tr></table>";
 		}
 	}
 
