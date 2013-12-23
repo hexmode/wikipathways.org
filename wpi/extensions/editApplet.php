@@ -72,23 +72,7 @@ function createApplet( &$parser, $idClick = 'direct', $idReplace = 'pwThumb', $n
 		}
 
 		$appletCode = $editApplet->makeAppletFunctionCall();
-		$jardir = $wgScriptPath . '/wpi/applet';
 
-		/** Don't use jar preloading for now
-		if(!$loaderAdded) {
-			$cache = $editApplet->getCacheParameters();
-			$archive_string = $cache["archive"];
-			$version_string = $cache["version"];
-			$appletCode .= <<<PRELOAD
-
-<applet code="org.pathvisio.wikipathways.Preloader.class" width="1" height="1" archive="{$jardir}/preloader.jar" codebase="{$jardir}">
-	<param name="cache_archive" value="{$archive_string}"/>
-	<param name="cache_version" value="{$version_string}"/>
-</applet>
-PRELOAD;
-			$loaderAdded = true;
-		}
-		**/
 		//Add editapplet.js script
 		$wpiJavascriptSources[] = JS_SRC_EDITAPPLET;
 		wpiAddXrefPanelScripts();
@@ -292,10 +276,12 @@ class EditApplet {
 		} else {
 			return scriptTag(
 				"var elm = document.getElementById('{$this->idClick}');" .
+				"if(elm){".
 				"var listener = function() { $function };" .
 				"if(elm.attachEvent) { elm.attachEvent('onclick',listener); }" .
 				"else { elm.addEventListener('click',listener, false); }" .
-				"registerAppletButton('{$this->idClick}', '$base', $keys, $values);"
+				"registerAppletButton('{$this->idClick}', '$base', $keys, $values);".
+				"}"
 			);
 		}
 	}
