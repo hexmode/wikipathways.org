@@ -66,7 +66,7 @@ class LocalHooks {
 			$linkTarget = "new";
 		}
 
-		# Hook changed to include attribs in 1.15
+		/* Hook changed to include attribs in 1.15 */
 		if( $attribs !== null ) {
 			$attribs["target"] = $linkTarget;
 			wfProfileOut( __METHOD__ );
