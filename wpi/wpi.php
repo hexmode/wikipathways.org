@@ -236,9 +236,6 @@ function writeFile($filename, $data) {
 	if( !is_dir( $dir ) && file_exists( $dir ) ) {
 		mkdir( $dir, 0777, true );
 	}
-	if( !is_writable( $dir ) ) {
-		throw new MWException( "Can't write to $dir." );
-	}
 
 	$handle = fopen($filename, 'w');
 	if(!$handle) {
