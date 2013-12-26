@@ -6,7 +6,7 @@ class LocalHooks {
 		global $wgOut, $wgStylePath, $wgJsMimeType;
 
 		$thisStylePath = "$wgStylePath/wikipathways";
-  		$wgOut->addStyle("$thisStylePath/bootstrap.css");
+		$wgOut->addStyle("$thisStylePath/bootstrap.css");
 		$wgOut->addScript('<script type="'.$wgJsMimeType.'" src="'.
 			$thisStylePath .'/wikipathways-custom.js"></script>');
 		$wgOut->addScript('<script type="'.$wgJsMimeType.'" src="'.
@@ -47,7 +47,7 @@ class LocalHooks {
 		wfProfileIn( __METHOD__ );
 
 		//This can clutter up the logs on some pages
-		wfDebug(__METHOD__.": Looking at the link: $url\n");
+		//wfDebug(__METHOD__.": Looking at the link: $url\n");
 
 		$linkTarget = "_blank";
 		if( isset( $wgExternalLinkTarget ) && $wgExternalLinkTarget != "") {
@@ -371,7 +371,7 @@ content requires special attention. <b>Please keep your
 		# Add the magic word
 		# The first array element is case sensitive, in this case it is not
 		# case sensitive.  All remaining elements are synonyms for our parser
-        # function
+		# function
 		$magicWords['PathwayViewer'] = array( 0, 'PathwayViewer' );
 		$magicWords['pwImage'] = array( 0, 'pwImage' );
 		$magicWords['pathwayOfTheDay'] = array( 0, 'pathwayOfTheDay' );
@@ -437,7 +437,7 @@ content requires special attention. <b>Please keep your
 	  - remove pathway that is used
 	  - randomize again when we're at the end!
 	  - update list when new pathways are added....randomize every
-        time (but exclude those we've already had)
+		time (but exclude those we've already had)
 
 	  Concerning MediaWiki:
 	  - create a new SpecialPage: Special:PathwayOfTheDay
@@ -445,7 +445,7 @@ content requires special attention. <b>Please keep your
 
 	  We need:
 	  - to pick a random pathway everyday (from all articles in
-        namespace pathway)
+		namespace pathway)
 	  - remember this pathway and the day it was picked, store that in cache
 	  - on a new day, pick a new pathway, replace cache and update history
 	*/
