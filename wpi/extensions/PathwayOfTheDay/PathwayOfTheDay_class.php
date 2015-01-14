@@ -86,7 +86,7 @@ class PathwayOfTheDay {
 		$this->findFreshPathway();
 	}
 
-	private function findFreshPathway() {
+	private function findFreshPathway($maxRetries = 10) {
 		wfDebug("\tSearching for fresh pathway\n");
 		$pw = $this->fetchRandomPathway();
 		wfDebug("\t\tPathway in cache: '$pw'\n");
@@ -97,7 +97,7 @@ class PathwayOfTheDay {
 			wfDebug("\t\tTrying: '$pw'\n");
 			$tried++;
 			wfDebug("\t\t\t$tried attempt\n");
-			if($tried > 100) {
+			if($tried > $maxRetries) {
 				wfDebug("\tTried too often, clearing history\n");
 				//However, if we tried too often, just pick a pathway and reset the pathway list
 				//TODO: 'too often' needs to be the number of pathways...
