@@ -435,7 +435,7 @@ $wgImgAuthPublicTest = false;
 $wgScriptExtension = ".php";
 $wpiXrefPanelDisableAttributes = true;
 
-require_once( "$IP/skins/mediawiki-bootstrap/bootstrap.php");
-$wgDefaultSkin = 'bootstrap';
+/* require_once( "$IP/skins/mediawiki-bootstrap/bootstrap.php"); */
+/* $wgDefaultSkin = 'bootstrap'; */
 
 $wgUseGzip = false;
