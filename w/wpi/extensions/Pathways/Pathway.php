@@ -1264,7 +1264,10 @@ class Pathway {
 				"$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
 		}
 		wfDebug("moving into place $outFile\n");
-		$dir = dirname( $outFile );
+		$dir = dirname( realpath( $outFile ) );
+                if ( !file_exists( $dir ) ) {
+                  mkdir( $dir, 0777, true );
+                }
 		if( !is_writable( $dir ) ) {
                   throw new MWException( "Directory ($dir) not writable!" );
 		}
