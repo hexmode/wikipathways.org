@@ -1265,8 +1265,8 @@ class Pathway {
 		}
 		wfDebug("moving into place $outFile\n");
 		$dir = dirname( $outFile );
-		if( !file_exists( $dir ) ) {
-			mkdir( $dir, 0755, true );
+		if( !is_writable( $dir ) ) {
+                  throw new MWException( "Directory ($dir) not writable!" );
 		}
 		if( !rename( $final, $outFile ) ) {
 			wfProfileOut( __METHOD__ );

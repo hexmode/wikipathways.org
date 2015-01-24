@@ -18,6 +18,9 @@ class PathwayCache extends FileCacheBase {
 	 * @return string
 	 */
 	protected function cacheDirectory() {
+		if( !is_writable( $this->baseCacheDirectory() ) ) {
+			throw new MWException( "{$this->baseCacheDirectory()} is not writable." );
+		}
 		return $this->baseCacheDirectory() . '/pathways';
 	}
 
