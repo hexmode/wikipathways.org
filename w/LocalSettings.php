@@ -76,6 +76,9 @@ require_once( "$IP/extensions/ConfirmEdit/QuestyCaptcha.php" );
 $wgCaptchaClass = 'QuestyCaptcha';
 
 # Load globals
+$wgScriptPath = "/w";
+$wgArticlePath = "/wiki/$1";
+
 require_once('wpi/globals.php');
 
 # Default javascript locations
@@ -318,16 +321,6 @@ $wgGroupPermissions[ 'webservice' ][ 'webservice_write'      ] = true;
 
 $wgHooks['AbortNewAccount'][] = 'abortOnBadDomain';
 
-##Debug
-$wgDebugLogFile = WPI_SCRIPT_PATH . '/tmp/wikipathwaysdebug.txt';
-/* $wgProfiling = true; //Set to true for debugging info */
-
-// Uncommenting the following will give you a separate debug log file
-// for each request.
-if ( !defined( "STDIN" ) ) {
-	$wgDebugLogFile .= "-" . $_SERVER['REQUEST_METHOD'] . "-" . urlencode( $_SERVER['REQUEST_URI'] );
-}
-
 ##New Autoloads
 $wgAutoloadClasses['LegacySpecialPage'] = dirname(__FILE__) . '/wpi/LegacySpecialPage.php';
 
@@ -435,7 +428,18 @@ $wgImgAuthPublicTest = false;
 $wgScriptExtension = ".php";
 $wpiXrefPanelDisableAttributes = true;
 
-/* require_once( "$IP/skins/mediawiki-bootstrap/bootstrap.php"); */
-/* $wgDefaultSkin = 'bootstrap'; */
-
 $wgUseGzip = false;
+
+if ( strtolower( $_SERVER['HTTP_HOST'] ) === 'vm1.wikipathways.org' ) {
+	error_reporting( -1 );
+	ini_set( 'display_errors', 1 );
+	##Debug
+	$wgDebugLogFile = WPI_SCRIPT_PATH . '/tmp/wikipathwaysdebug.txt';
+	/* $wgProfiling = true; //Set to true for debugging info */
+
+	// Uncommenting the flolowing will give you a separate debug log file
+	// for each request.
+	if ( !defined( "STDIN" ) ) {
+		$wgDebugLogFile .= "-" . $_SERVER['REQUEST_METHOD'] . "-" . urlencode( $_SERVER['REQUEST_URI'] );
+	}
+}
