@@ -237,6 +237,13 @@ function writeFile($filename, $data) {
 		mkdir( $dir, 0777, true );
 	}
 
+	if ( !is_writable( $dir ) && !file_exists( $filename ) ) {
+		throw new MWException( "Cache dir ($dir) isn't writable." );
+	}
+
+	if ( !( file_exists( $filename ) && is_writable( $filename ) ) ) {
+		throw new MWException( "Cache file ($filename) isn't writable." );
+	}
 	$handle = fopen($filename, 'w');
 	if(!$handle) {
 		throw new MWException ("Couldn't open file $filename");

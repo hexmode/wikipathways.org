@@ -1214,7 +1214,7 @@ class Pathway {
 	private function saveConvertedCache($fileType) {
 		wfProfileIn( __METHOD__ );
 		/* Convert gpml to fileType */
-		$conFile = $this->getFileLocation($fileType, false);
+		$conFile = $this->getFileLocation( $fileType, false );
 		if( $this->getFileObj( $fileType )->isCacheGood() ) {
 			wfProfileOut( __METHOD__ );
 			wfDebug("not Saving");
@@ -1264,12 +1264,13 @@ class Pathway {
 				"$status\n<BR>Message:$msg\n<BR>Command:$cmd<BR>");
 		}
 		wfDebug("moving into place $outFile\n");
-		$dir = dirname( realpath( $outFile ) );
-                if ( !file_exists( $dir ) ) {
-                  mkdir( $dir, 0777, true );
-                }
+		$realpath = realpath( $outFile );
+		$dir = dirname( $outFile );
+		if ( !$realpath && !file_exists( $dir ) ) {
+			mkdir( $dir, 0777, true );
+		}
 		if( !is_writable( $dir ) ) {
-                  throw new MWException( "Directory ($dir) not writable!" );
+			throw new MWException( "Directory ($dir) not writable!" );
 		}
 		if( !rename( $final, $outFile ) ) {
 			wfProfileOut( __METHOD__ );
