@@ -92,8 +92,9 @@ class RecentPathwayChanges extends QueryPage {
 				return null; //Skip private pathways
 			$titleName = $pathway->getSpecies().":".$pathway->getName();
 		} else {
-			throw new MWException( "Pathway::newFromTitle didn't give us an object for pathway: $titleName" );
+			return $wgLang->specialList( "", "<span class='error'>Problem with $titleName</span>" );
 		}
+
 		$title = Title::makeTitle( $result->namespace, $titleName );
 		$id = Title::makeTitle( $result->namespace, $result->title );
 
@@ -121,7 +122,6 @@ class RecentPathwayChanges extends QueryPage {
 		   $nlink = $skin->linkKnown( $nt, $nl, 'action=history' );
 		*/
 
-		global $wgLang;
-		return $wgLang->specialList("(".$diffLink.") . . ".$plink. ": <b>".$date."</b> by <b>".$name."</b>","<i>".$text."</i>");
+		return $wgLang->specialList($title, "(".$diffLink.") . . ".$plink. ": <b>".$date."</b> by <b>".$name."</b>","<i>".$text."</i>");
 	}
 }

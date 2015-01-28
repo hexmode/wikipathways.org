@@ -433,6 +433,7 @@ $wgUseGzip = false;
 if ( strtolower( $_SERVER['HTTP_HOST'] ) === 'vm1.wikipathways.org' ) {
 	error_reporting( -1 );
 	ini_set( 'display_errors', 1 );
+
 	##Debug
 	$wgDebugLogFile = WPI_SCRIPT_PATH . '/tmp/wikipathwaysdebug.txt';
 	/* $wgProfiling = true; //Set to true for debugging info */
@@ -442,4 +443,5 @@ if ( strtolower( $_SERVER['HTTP_HOST'] ) === 'vm1.wikipathways.org' ) {
 	if ( !defined( "STDIN" ) ) {
 		$wgDebugLogFile .= "-" . $_SERVER['REQUEST_METHOD'] . "-" . urlencode( $_SERVER['REQUEST_URI'] );
 	}
+	$wgDebugToolbar = true;
 }
