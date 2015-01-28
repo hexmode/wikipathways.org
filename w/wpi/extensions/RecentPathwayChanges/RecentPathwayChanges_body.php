@@ -6,7 +6,6 @@ class RecentPathwayChanges extends QueryPage {
 
 	function __construct() {
 		parent::__construct( "RecentPathwayChanges" );
-		$this->namespace = NS_PATHWAY;
 	}
 
 	function getName() {
@@ -60,7 +59,7 @@ class RecentPathwayChanges extends QueryPage {
 			),
 			'tables' => 'recentchanges',
 			'query'  => array(
-				'rc_namespace' => $this->namespace,
+				'rc_namespace' => NS_PATHWAY,
 				'rc_bot'       => 0,
 				'rc_minor'     => 0
 			),
@@ -87,11 +86,14 @@ class RecentPathwayChanges extends QueryPage {
 		$date = date('d F Y', $result->unix_time);
 		$comment = ($result->rc_comment ? $result->rc_comment : "no comment");
 		$titleName = $result->title;
-		try {
-			$pathway = Pathway::newFromTitle($result->title);
-			if(!$pathway->getTitleObject()->userCan('read')) return null; //Skip private pathways
+		$pathway = Pathway::newFromTitle( $titleName );
+		if ( $pathway !== false ) {
+			if(!$pathway->getTitleObject()->userCan('read'))
+				return null; //Skip private pathways
 			$titleName = $pathway->getSpecies().":".$pathway->getName();
-		} catch(Exception $e) {}
+		} else {
+			throw new MWException( "Pathway::newFromTitle didn't give us an object for pathway: $titleName" );
+		}
 		$title = Title::makeTitle( $result->namespace, $titleName );
 		$id = Title::makeTitle( $result->namespace, $result->title );
 
