@@ -234,14 +234,23 @@ function writeFile($filename, $data) {
 
 	$dir = dirname( $filename );
 	if( !is_dir( $dir ) && file_exists( $dir ) ) {
-		mkdir( $dir, 0777, true );
+		if ( is_writable( dirname( $dir ) ) ) {
+			mkdir( $dir, 0777, true );
+		} else {
+			throw new MWException( "Can't create $dir." );
+		}
 	}
 
+
+	if ( !file_exists( $dir ) ) {
+		throw new MWException( "Cache dir ($dir) doesn't exist." );
+	}
+	
 	if ( !is_writable( $dir ) && !file_exists( $filename ) ) {
 		throw new MWException( "Cache dir ($dir) isn't writable." );
 	}
-
-	if ( !( file_exists( $filename ) && is_writable( $filename ) ) ) {
+	
+	if ( file_exists( $filename ) && !is_writable( $filename ) ) {
 		throw new MWException( "Cache file ($filename) isn't writable." );
 	}
 	$handle = fopen($filename, 'w');
