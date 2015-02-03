@@ -6,18 +6,30 @@ Provide an information and cross-reference panel for xrefs on a wiki page.
 
 **/
 
-//$wgExtensionFunctions[] = "XrefPanel::xref";
+$wgExtensionFunctions[] = "XrefPanel::xref";
+
 
 
 class XrefPanel {
-	static function getXrefHTML($id, $datasource, $label, $text, $species) {
-		$datasource = htmlentities($datasource);
-		$label = htmlentities($label);
-		$id = htmlentities($id);
-		$species = htmlentities($species);
-		$url = SITE_URL . '/skins/common/images/info.png';
+	static function xref() {
+		global $wgParser;
+		$wgParser->setHook( "Xref", "XrefPanel::renderXref" );
 
-		$html = $text . " <img title='Show additional info and linkouts' style='cursor:pointer;' class='infoLinkout' data-id='$id' data-source='$datasource' data-species='$species' data-label='$label' src='$url'/>";
+		wpiAddXrefPanelScripts();
+	}
+
+	static function renderXref($input, $argv, &$parser) {
+		return wpiXrefHTML($argv['id'], $argv['datasource'], $input, $argv['species']);
+	}
+
+	static function getXrefHTML($id, $datasource, $label, $text, $species) {
+		$datasource = json_encode($datasource);
+		$label = json_encode($label);
+		$id = json_encode($id);
+		$species = json_encode($species);
+		$url = SITE_URL . '/skins/common/images/info.png';
+		$fun = "XrefPanel.registerTrigger(this, $id, $datasource, $species, $label);";
+		$html = $text . " <img title='Show additional info and linkouts' style='cursor:pointer;' onload='$fun' src='$url'/>";
 		return $html;
 	}
 
@@ -62,6 +74,13 @@ class XrefPanel {
 		global $wpiJavascriptSources, $wpiJavascriptSnippets, $cssJQueryUI, $wgScriptPath, $wgStylePath, $wgOut, $jsRequireJQuery;
 
 		$jsRequireJQuery = true;
+
+		//Add CSS
+		//Hack to add a css that's not in the skins directory
+		$oldStylePath = $wgStylePath;
+		$wgStylePath = dirname($cssJQueryUI);
+		$wgOut->addStyle(basename($cssJQueryUI));
+		$wgStylePath = $oldStylePath;
 
 		$wpiJavascriptSources = array_merge($wpiJavascriptSources, self::getJsDependencies());
 		$wpiJavascriptSnippets = array_merge($wpiJavascriptSnippets, self::getJsSnippets());

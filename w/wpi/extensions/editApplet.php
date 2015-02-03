@@ -32,10 +32,13 @@ function wfEditApplet_Magic( &$magicWords, $langCode ) {
 */
 function createApplet( &$parser, $idClick = 'direct', $idReplace = 'pwThumb', $new = false, $pwTitle = '', $type = 'editor', $width = 0, $height = '500px') {
 	global $wgUser, $wgScriptPath, $loaderAdded, $wpiJavascriptSources, $jsJQuery;
+
 	//Check user rights
 	if( !$wgUser->isLoggedIn() || wfReadOnly()) {
 		return ""; //Don't return any applet code
 	}
+
+	$parser->disableCache();
 
 	$param = array(); //Extra parameters
 	$main = 'org.wikipathways.applet.gui.';
@@ -72,7 +75,23 @@ function createApplet( &$parser, $idClick = 'direct', $idReplace = 'pwThumb', $n
 		}
 
 		$appletCode = $editApplet->makeAppletFunctionCall();
+		$jardir = $wgScriptPath . '/wpi/applet';
 
+		/** Don't use jar preloading for now
+		if(!$loaderAdded) {
+			$cache = $editApplet->getCacheParameters();
+			$archive_string = $cache["archive"];
+			$version_string = $cache["version"];
+			$appletCode .= <<<PRELOAD
+
+<applet code="org.pathvisio.wikipathways.Preloader.class" width="1" height="1" archive="{$jardir}/preloader.jar" codebase="{$jardir}">
+	<param name="cache_archive" value="{$archive_string}"/>
+	<param name="cache_version" value="{$version_string}"/>
+</applet>
+PRELOAD;
+			$loaderAdded = true;
+		}
+		**/
 		//Add editapplet.js script
 		$wpiJavascriptSources[] = JS_SRC_EDITAPPLET;
 		wpiAddXrefPanelScripts();
@@ -171,8 +190,7 @@ class EditApplet {
 			$jarfile = "$jardir/$jar";
 			if( is_readable( $jarfile ) ) {
 				$mod = filemtime( $jarfile );
-				if( isset( $cache_version[$jar] ) &&
-					$ver = $cache_version[$jar]) {
+				if($ver = $cache_version[$jar]) {
 					if($ver['mod'] < $mod) {
 						$realversion = increase_version($ver['ver']);
 					} else {
@@ -276,12 +294,10 @@ class EditApplet {
 		} else {
 			return scriptTag(
 				"var elm = document.getElementById('{$this->idClick}');" .
-				"if(elm){".
 				"var listener = function() { $function };" .
 				"if(elm.attachEvent) { elm.attachEvent('onclick',listener); }" .
 				"else { elm.addEventListener('click',listener, false); }" .
-				"registerAppletButton('{$this->idClick}', '$base', $keys, $values);".
-				"}"
+				"registerAppletButton('{$this->idClick}', '$base', $keys, $values);"
 			);
 		}
 	}

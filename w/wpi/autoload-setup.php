@@ -78,6 +78,7 @@ require_once( "$IP/wpi/extensions/PrivatePathways/PrivateContributions.php" );
 require_once( "$IP/wpi/extensions/recentChangesBox.php" );
 require_once( "$IP/wpi/extensions/otag/otags_main.php" );
 require_once( "$IP/wpi/extensions/ontologyindex/ontologyindex.php" );
+require_once( "$IP/wpi/extensions/PathwayViewer/PathwayViewer.php" );
 require_once( "$IP/wpi/extensions/StubManager/StubManager.php" );
 require_once( "$IP/wpi/extensions/ParserFunctionsHelper/ParserFunctionsHelper.php" );
 require_once( "$IP/wpi/extensions/SecureHTML/SecureHTML.php" );

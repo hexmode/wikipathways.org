@@ -82,6 +82,7 @@ $wgArticlePath = "/wiki/$1";
 require_once('wpi/globals.php');
 
 # Default javascript locations
+if( !isset( $jsJQuery ) ) $jsJQuery = "$wgScriptPath/skins/wikipathways/jquery-1.8.3.min.js";
 if( !isset( $jsJQueryUI ) ) $jsJQueryUI = "$wgScriptPath/wpi/js/jquery-ui/jquery-ui-1.8.10.custom.min.js";
 if( !isset( $cssJQueryUI ) ) $cssJQueryUI = "$wgScriptPath/wpi/js/jquery-ui/jquery-ui-1.8.10.custom.css";
 if( !isset( $jsSvgWeb ) ) $jsSvgWeb = "$wgScriptPath/wpi/js/svgweb/svg-uncompressed.js\" data-path=\"$wgScriptPath/wpi/js/svgweb";
