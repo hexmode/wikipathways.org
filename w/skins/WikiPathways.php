@@ -116,17 +116,12 @@ class WikiPathwaysTemplate extends QuickTemplate {
 		/*]]>*/</style>
 		<!-- TK: Import custom style -->
 		<style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "<?php echo $thisStylePath ?>/wikipathways-custom.css?<?php echo $GLOBALS['wgStyleVersion'] ?>"; /*]]>*/</style>
-		<script src="<?php echo $thisStylePath ?>/waypoints.js"></script>
-		<script src="<?php echo $thisStylePath ?>/waypoints-infinite.js"></script>
 		<?php if( in_array( 'IE50', $skin->cssfiles ) ) { ?><!--[if lt IE 5.5000]><style type="text/css">@import "<?php echo $thisStylePath ?>/IE50Fixes.css?<?php echo $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
 		<?php } if( in_array( 'IE55', $skin->cssfiles ) ) { ?><!--[if IE 5.5000]><style type="text/css">@import "<?php echo $thisStylePath ?>/IE55Fixes.css?<?php echo $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
 		<?php } if( in_array( 'IE60', $skin->cssfiles ) ) { ?><!--[if IE 6]><style type="text/css">@import "<?php echo $thisStylePath ?>/IE60Fixes.css?<?php echo $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
 		<?php } if( in_array( 'IE70', $skin->cssfiles ) ) { ?><!--[if IE 7]><style type="text/css">@import "<?php echo $thisStylePath ?>/IE70Fixes.css?<?php echo $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
 		<?php } ?><!--[if lt IE 7]><?php if( in_array( 'IE', $skin->cssfiles ) ) { ?><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath') ?>/common/IEFixes.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"></script>
 		<?php } ?><meta http-equiv="imagetoolbar" content="no" /><![endif]-->
-		<!-- TK: Import custom script -->
-		<script type="<?php $this->text('jsmimetype') ?>" src="<?php echo $thisStylePath ?>/wikipathways-custom.js"></script>
-		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
 		<!-- Head Scripts -->
 <?php $this->html('headscripts') ?>
 <?php	if($this->data['jsvarurl']) { ?>
