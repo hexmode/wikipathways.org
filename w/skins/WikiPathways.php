@@ -20,15 +20,8 @@ if( !defined( 'MEDIAWIKI' ) )
  */
 class SkinWikiPathways extends SkinTemplate {
 	/** Using monobook. */
-	function initPage( OutputPage $out ) {
-		SkinTemplate::initPage( $out );
-		$this->skinname  = 'wikipathways';
-		$this->stylename = 'wikipathways';
-		$this->template  = 'WikipathwaysTemplate';
-		# Bug 14520: skins that just include this file shouldn't load nonexis-
-		# tent CSS fix files.
-		$this->cssfiles = array( 'IE', 'IE50', 'IE55', 'IE60', 'IE70', 'rtl' );
-	}
+	var $skinname  = 'wikipathways', $stylename = 'wikipathways',
+		$template  = 'WikipathwaysTemplate', $useHeadElement = true;
 }
 
 /**
@@ -46,6 +39,7 @@ class WikiPathwaysTemplate extends QuickTemplate {
 	 * @access private
 	 */
 	function execute() {
+		$this->html( 'headelement' );
 		global $wgRequest;
 		global $wgTitle, $wgUser, $siteURL; //Leave this on separate line (for merging with original MW skin)
 		$this->skin = $skin = $this->data['skin'];
