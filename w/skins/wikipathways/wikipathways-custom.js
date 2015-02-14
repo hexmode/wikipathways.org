@@ -78,7 +78,6 @@ $(window).resize(
             function() {
                 $(".infinite-container").children(".infinite-item").each(
                     function(i, el) {
-                        console.log(i + " " + el);
                         itemOnRow($(el));
                     });
             }, 100);
