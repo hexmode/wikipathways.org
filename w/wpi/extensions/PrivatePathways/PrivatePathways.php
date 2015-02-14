@@ -202,7 +202,7 @@ class PagePermissions {
 			$user = $user->getId();
 		}
 		$p = $this->permissions[$action];
-		if($p) {
+		if($p && isset( $p[$user] ) ) {
 			return (boolean)$p[$user];
 		}
 		return false;
