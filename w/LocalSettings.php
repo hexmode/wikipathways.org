@@ -444,5 +444,5 @@ if ( strtolower( $_SERVER['HTTP_HOST'] ) === 'vm1.wikipathways.org' ) {
 	if ( !defined( "STDIN" ) ) {
 		$wgDebugLogFile .= "-" . $_SERVER['REQUEST_METHOD'] . "-" . urlencode( $_SERVER['REQUEST_URI'] );
 	}
-	$wgDebugToolbar = true;
+	// $wgDebugToolbar = true;
 }
