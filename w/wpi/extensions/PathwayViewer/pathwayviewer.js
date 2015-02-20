@@ -42,6 +42,11 @@ $(window).ready(function() {
 
   var pathvisiojsContainer = $('<div />')
   .attr('id', 'pathvisiojs-container')
+  .attr('is', 'wikipathways-pathvisio')
+  .attr('class', 'wikipathways-pathvisio')
+//  .attr('src', window.gpmlFilePath)
+  .attr('display-errors', 'true')
+  .attr('display-warnings','true')
   .css({
     width: viewerWidth,
     'min-width': viewerMinWidth,
@@ -62,7 +67,7 @@ $(window).ready(function() {
 
   var queryStringParameters = window.getQueryStringAsObject();
     $(window).on('pathvisiojsReady', function() {
-      $(function() {
+//      $(function() {
         var colors;
         if (!!queryStringParameters.colors) {
           colors = queryStringParameters.colors.split(',');
@@ -133,5 +138,5 @@ $(window).ready(function() {
 
         pathInstance.render();
       });
-    });
+//    });
 });

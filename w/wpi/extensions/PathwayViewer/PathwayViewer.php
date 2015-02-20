@@ -43,7 +43,7 @@ function displayPathwayViewer(&$parser, $pwId, $imgId) {
 		$png = $pathway->getFileURL(FILETYPE_PNG);
 				$gpml = $pathway->getFileURL(FILETYPE_GPML);
 
-		$script = "<script>var gpmlFilePath = \"$gpml\"; var pngFilePath = \"$png\";</script>";
+               $script = "<script>var gpmlFilePath = \"$gpml\"; var pngFilePath = \"$png\";</script>";
 		return array($script, 'isHTML'=>1, 'noparse'=>1);
 	} catch(Exception $e) {
 		return "invalid pathway title: $e";
@@ -61,7 +61,7 @@ class PathwayViewer {
 			);
 		}
 		else {
-			// if IE>8
+			// if IE>8 or any other browser
 			$scripts = array(
 				"$wgScriptPath/wpi/js/querystring-parameters.js",
 				"$wgScriptPath/wpi/extensions/PathwayViewer/pathwayviewer.js",
@@ -71,7 +71,7 @@ class PathwayViewer {
 				"//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js",
 				"//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js",
 				// pvjs
-				"$wgScriptPath/wpi/lib/pathvisiojs/js/pathvisiojs-2.1.3.bundle.min.js",
+				"$wgScriptPath/wpi/lib/pathvisiojs/js/pathvisiojs-2.2.0.bundle.min.js",
 			);
 		}
 
