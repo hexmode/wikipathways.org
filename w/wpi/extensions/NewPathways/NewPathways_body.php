@@ -18,7 +18,9 @@ class NewPathways extends QueryPage {
 		# page_counter is not indexed
 		return true;
 	}
-	function isSyndicated() { return false; }
+	function isSyndicated() {
+		return false;
+	}
 
 	function getQueryInfo() {
 		return array(
@@ -44,23 +46,29 @@ class NewPathways extends QueryPage {
 	}
 
 	function formatResult( $skin, $result ) {
-		global $wgLang, $wgContLang, $wgUser;
+		global $wgLang, $wgContLang;
 		$titleName = $result->title;
 		try {
 			$pathway = Pathway::newFromTitle($result->title);
-			if( !$pathway->getTitleObject()->userCan( 'read' ) ||
+			if ( !$pathway->getTitleObject()->userCan( 'read' ) ||
 				$pathway->isDeleted() ) {
 				//Don't display this title when user is not allowed to read
 				return null;
 			}
 			$titleName = $pathway->getSpecies().":".$pathway->getName();
-		} catch(Exception $e) {}
+		} catch ( Exception $e ) {
+			// Do nothing
+		}
 		$title = Title::makeTitle( $result->namespace, $titleName );
-		$id = Title::makeTitle( $result->namespace, $result->title );
-		$link = $skin->linkKnown( $id, htmlspecialchars( $wgContLang->convert( $title->getBaseText() ) ) );
-		$nv = "<b>". $wgLang->date($result->value) . "</b> by <b>" . RequestContext::getMain()->getSkin()->userlink($result->user_id, $result->utext) ."</b>";
+		$pathId = Title::makeTitle( $result->namespace, $result->title );
+		$link = $skin->linkKnown( $pathId,
+			htmlspecialchars( $wgContLang->convert( $title->getBaseText() ) )
+		);
+		$newPath = "<b>". $wgLang->date($result->value) . "</b> by <b>"
+			. RequestContext::getMain()->getSkin()->userlink(
+				$result->user_id, $result->utext) ."</b>";
 
 		global $wgLang;
-		return $wgLang->specialList( $link, $nv );
+		return $wgLang->specialList( $link, $newPath );
 	}
 }
