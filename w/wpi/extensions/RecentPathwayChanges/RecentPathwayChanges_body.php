@@ -1,8 +1,7 @@
 <?php
 
 class RecentPathwayChanges extends QueryPage {
-	var $requestedSort = '';
-	private $namespace;
+	public $requestedSort = '';
 
 	function __construct() {
 		parent::__construct( "RecentPathwayChanges" );
@@ -16,7 +15,9 @@ class RecentPathwayChanges extends QueryPage {
 		# page_counter is not indexed
 		return true;
 	}
-	function isSyndicated() { return false; }
+	function isSyndicated() {
+		return false;
+	}
 
 	/**
 	 * Show a drop down list to select a field for sorting.
@@ -29,19 +30,22 @@ class RecentPathwayChanges extends QueryPage {
 
 		$fields = array('Date','Title','User');
 		$fieldEl = "";
-		foreach( $fields as $field ) {
+		foreach ( $fields as $field ) {
 			$attribs = array( 'value' => $field );
-			if( $field == $requestedSort )
+			if ( $field == $requestedSort )
 				$attribs['selected'] = 'selected';
 			$fieldEl .= Html::element( 'option', $attribs, $field );
 		}
 		# Form tag
-		$out = Html::rawElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ),
+		$out = Html::rawElement( 'form', array(
+				'method' => 'post', 'action' => $self->getLocalUrl()
+			),
 			Html::element( 'label', array( 'for' => 'sort' ), 'Sort by:' ) . ' ' .
 			Html::rawElement( 'select', array( 'name' => 'sort' ), $fieldEl ) .
 
 			# Submit button and form bottom
-			Html::element( 'input', array( 'type' => 'submit', 'value' => wfMessage( 'allpagessubmit' )->text() ) )
+			Html::element( 'input', array( 'type' => 'submit',
+					'value' => wfMessage( 'allpagessubmit' )->text() ) )
 		);
 
 		return $out;
@@ -84,37 +88,34 @@ class RecentPathwayChanges extends QueryPage {
 		$userPage = Title::makeTitle( NS_USER, $result->rc_user_text );
 		$name = $skin->link( $userPage, htmlspecialchars( $userPage->getText() ) );
 		$date = date('d F Y', $result->unix_time);
-		$comment = ($result->rc_comment ? $result->rc_comment : "no comment");
 		$titleName = $result->title;
-		$pathway = Pathway::newFromTitle( $titleName );
-		if ( $pathway !== false ) {
-			if(!$pathway->getTitleObject()->userCan('read'))
+		try{
+			$pathway = Pathway::newFromTitle( $titleName );
+			if ( !$pathway->getTitleObject()->userCan('read') ) {
 				return null; //Skip private pathways
+			}
 			$titleName = $pathway->getSpecies().":".$pathway->getName();
-		} else {
-			return $wgLang->specialList( "", "<span class='error'>Problem with $titleName</span>" );
+		} catch ( MWException $e ) {
+			return $wgLang->specialList( "",
+				'<span class="error">'. $e->getMessage() . '</span>' );
 		}
 
 		$title = Title::makeTitle( $result->namespace, $titleName );
-		$id = Title::makeTitle( $result->namespace, $result->title );
+		$titleId = Title::makeTitle( $result->namespace, $result->title );
 
 		$this->message['hist'] = wfMessage( 'hist' )->escaped();
-		$histLink = $skin->linkKnown($id, $this->message['hist'], array(),
-			array(
-				'curid' => $result->rc_cur_id,
-				'action' => 'history'));
-
 		$this->message['diff'] = wfMessage( 'diff' )->escaped();
-		if( $result->rc_type > 0 ) { //not an edit of an existing page
+		if ( $result->rc_type > 0 ) { //not an edit of an existing page
 			$diffLink = $this->message['diff'];
 		} else {
 			$diffLink = "<a href='" . SITE_URL .
-				"/index.php?title=Special:DiffAppletPage&old={$result->rc_last_oldid}&new={$result->rc_this_oldid}" .
-				"&pwTitle={$id->getFullText()}'>diff</a>";
+				"/index.php?title=Special:DiffAppletPage&old=".
+				"{$result->rc_last_oldid}&new={$result->rc_this_oldid}" .
+				"&pwTitle={$titleId->getFullText()}'>diff</a>";
 		}
 
 		$text = $wgContLang->convert($result->rc_comment);
-		$plink = $skin->linkKnown( $wgContLang->convert($id, $title->getBaseText()) );
+		$plink = $skin->linkKnown( $wgContLang->convert($titleId, $title->getBaseText()) );
 
 		/* Not link to history for now, later on link to our own pathway history
 		   $nl = wfMsgExt( 'nrevisions', array( 'parsemag', 'escape'),
@@ -122,6 +123,7 @@ class RecentPathwayChanges extends QueryPage {
 		   $nlink = $skin->linkKnown( $nt, $nl, 'action=history' );
 		*/
 
-		return $wgLang->specialList($title, "(".$diffLink.") . . ".$plink. ": <b>".$date."</b> by <b>".$name."</b>","<i>".$text."</i>");
+		return $wgLang->specialList($title, "($diffLink) . . $plink: " .
+			"<b>$date</b> by <b>$name</b>", "<i>$text</i>");
 	}
 }

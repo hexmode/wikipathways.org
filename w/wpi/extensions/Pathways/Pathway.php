@@ -4,8 +4,8 @@
 Class that represents a Pathway on WikiPathways
 **/
 class Pathway {
-	public static $ID_PREFIX = 'WP';
-	public static $DELETE_PREFIX = "Deleted pathway: ";
+	public static $idPrefix = 'WP';
+	public static $deletePrefix = "Deleted pathway: ";
 
 	private static $fileTypes = array(
 		FILETYPE_IMG => FILETYPE_IMG,
@@ -16,7 +16,7 @@ class Pathway {
 	//The title object for the pathway page
 	private $pwPageTitle;
 	//The pathway identifier
-	private $id;
+	private $pathwayId;
 
 	//The PathwayData for this pathway
 	private $pwData;
@@ -48,26 +48,26 @@ class Pathway {
 		} else {
 			$this->pwPageTitle = Title::newFromText($id, NS_PATHWAY);
 		}
-		$this->id = $this->pwPageTitle->getDbKey();
+		$this->pathwayId = $this->pwPageTitle->getDbKey();
 		$this->revision = $this->getLatestRevision();
 		if($updateCache) $this->updateCache();
 	}
 
 	public function getIdentifier() {
-		return $this->id;
+		return $this->pathwayId;
 	}
 
 	public function getPageIdDB() {
 		wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE );
-		$query = "SELECT page_id FROM `page` WHERE page_title = '$this->id' ".
+		$query = "SELECT page_id FROM `page` WHERE page_title = '$this->pathwayId' ".
 			"AND page_namespace = 102";
 		$res = $dbr->query($query);
 		while ($row = $dbr->fetchRow($res)){
-			$page_id = $row["page_id"];
+			$pageId = $row["page_id"];
 		}
 		wfProfileOut( __METHOD__ );
-		return $page_id;
+		return $pageId;
 	}
 
 	/**
@@ -81,10 +81,10 @@ class Pathway {
 	 */
 	public static function newFromName($name, $species, $updateCache = false) {
 		wfDebug("Creating pathway: $name, $species\n");
-		if(!$name)
+		if ( !$name )
 			throw new Exception("name argument missing in constructor for".
 				"Pathway");
-		if(!$species)
+		if ( !$species )
 			throw new Exception("species argument missing in constructor".
 				"for Pathway");
 
@@ -97,7 +97,7 @@ class Pathway {
 				"' in pathway name");
 		}
 
-		return self::newFromTitle("$species:$name", $checkCache);
+		return self::newFromTitle("$species:$name", $updateCache);
 	}
 
 	/**
@@ -105,18 +105,17 @@ class Pathway {
 	 * @returns the identifier, of false if no identifier could be found.
 	 */
 	public static function parseIdentifier($title) {
-		if($title instanceof Title && $title->getNamespace() != NS_PATHWAY) {
-			wfDebug( "$title is not a pathway!" );
-			return null;
+		if ($title instanceof Title && $title->getNamespace() != NS_PATHWAY) {
+			throw new MWException( "'$title' is not a pathway!" );
 		}
-		if($title instanceof Title) {
+		if ($title instanceof Title) {
 			$title = $title->getText();
 		}
 
 		$match = array();
-		$exists = preg_match("/" . self::$ID_PREFIX . "\d+/", $title, $match);
-		if(!$exists) {
-			return false;
+		$exists = preg_match("/" . self::$idPrefix . "\d+/", $title, $match);
+		if ( !$exists ) {
+			throw new MWException( "'$title' does not exist!" );
 		}
 		return $match[0];
 	}
@@ -297,14 +296,14 @@ class Pathway {
 	 * (e.g. Pathway:Human:Apoptosis), or the MediaWiki Title object
 	 *
 	*/
-	static public function newFromTitle($title, $checkCache = false) {
+	public static function newFromTitle($title, $checkCache = false) {
 		//Remove url and namespace from title
-		if( !( $title instanceOf Title ) ) {
-			$id = self::parseIdentifier($title);
-			if( $id === false ) {
+		if ( !( $title instanceof Title ) ) {
+			$titleId = self::parseIdentifier( $title );
+			if ( $titleId === false ) {
 				return false;
 			}
-			return new Pathway( $id, $checkCache );
+			return new Pathway( $titleId, $checkCache );
 		} else {
 			return new Pathway( $title, $checkCache );
 		}
@@ -316,17 +315,18 @@ class Pathway {
 	 * @param Title The full title of the pathway file
 	 * (e.g. Hs_Apoptosis.gpml), or the MediaWiki Title object
 	*/
-	static public function newFromFileTitle($title, $checkCache = false) {
-		if($title instanceof Title) {
+	public static function newFromFileTitle( $title, $checkCache = false ) {
+		if ($title instanceof Title) {
 			$title = $title->getText();
 		}
 		//"Hs_testpathway.ext"
-		if(ereg("^([A-Z][a-z])_(.+)\.[A-Za-z]{3,4}$", $title, $regs)) {
+		if ( ereg("^([A-Z][a-z])_(.+)\.[A-Za-z]{3,4}$", $title, $regs) ) {
 			$species = Pathway::speciesFromCode($regs[1]);
 			$name = $regs[2];
 		}
-		if(!$name || !$species)
+		if ( !$name || !$species ) {
 			throw new Exception("Couldn't parse file title: $title");
+		}
 		return self::newFromTitle("$species:$name", $checkCache);
 	}
 
@@ -339,15 +339,15 @@ class Pathway {
 	 * @returns A list of pathway objects for the pathways that match
 	 * the name/species
 	 */
-	static public function getPathwaysByName($name, $species = '') {
+	public static function getPathwaysByName($name, $species = '') {
 		wfProfileIn( __METHOD__ );
 		$pages =
 			MetaDataCache::getPagesByCache(MetaDataCache::$FIELD_NAME, $name);
 		$pathways = array();
-		foreach($pages as $page_id) {
-			$pathway = Pathway::newFromTitle(Title::newFromId($page_id));
-			if(!$species || $pathway->getSpecies() == $species) {
-				if(!$pathway->isDeleted()) { //Don't add deleted pathways
+		foreach ($pages as $pageId) {
+			$pathway = Pathway::newFromTitle(Title::newFromId( $pageId ));
+			if (!$species || $pathway->getSpecies() == $species) {
+				if (!$pathway->isDeleted()) { //Don't add deleted pathways
 					$pathways[] = $pathway;
 				}
 			}
@@ -383,7 +383,7 @@ class Pathway {
 	private static function nameFromTitle($title) {
 		$parts = explode(':', $title);
 
-		if(count($parts) < 2) {
+		if (count($parts) < 2) {
 			throw new Exception("Invalid pathway article title: $title");
 		}
 		return array_pop($parts);
@@ -786,7 +786,7 @@ class Pathway {
 		//Get the highest identifier
 		$dbr = wfGetDB( DB_SLAVE );
 		$ns = NS_PATHWAY;
-		$prefix = self::$ID_PREFIX;
+		$prefix = self::$idPrefix;
 		$query = "SELECT page_title FROM page " .
 			"WHERE page_namespace =$ns " .
 			"AND page_is_redirect =0 " .
@@ -798,13 +798,13 @@ class Pathway {
 		if($row) {
 			$lastid = $row->page_title;
 		} else {
-			$lastid = Pathway::$ID_PREFIX . "0";
+			$lastid = Pathway::$idPrefix . "0";
 		}
 		$dbr->freeResult( $res );
 
 		$lastidNum = substr($lastid, 2);
 		$newidNum = $lastidNum + 1;
-		$newid = Pathway::$ID_PREFIX . $newidNum;
+		$newid = Pathway::$idPrefix . $newidNum;
 		wfProfileOut( __METHOD__ );
 		return $newid;
 	}
@@ -1062,7 +1062,7 @@ class Pathway {
 		global $wpiDisableValidation; //Temporarily disable GPML validation hook
 		$wpiDisableValidation = true;
 
-		$succ =  $article->doEdit("{{deleted|$reason}}", self::$DELETE_PREFIX .
+		$succ =  $article->doEdit("{{deleted|$reason}}", self::$deletePrefix .
 			$reason);
 		if($succ) {
 			//Update metadata cache
