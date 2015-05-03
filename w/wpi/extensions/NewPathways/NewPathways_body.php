@@ -50,6 +50,9 @@ class NewPathways extends QueryPage {
 		$titleName = $result->title;
 		try {
 			$pathway = Pathway::newFromTitle($result->title);
+			if ( !$pathway ) {
+				return null;
+			}
 			if ( !$pathway->getTitleObject()->userCan( 'read' ) ||
 				$pathway->isDeleted() ) {
 				//Don't display this title when user is not allowed to read
