@@ -62,7 +62,7 @@ class RecentPathwayChanges extends QueryPage {
 				"rc_timestamp as value"
 			),
 			'tables' => 'recentchanges',
-			'query'  => array(
+			'conds'  => array(
 				'rc_namespace' => NS_PATHWAY,
 				'rc_bot'       => 0,
 				'rc_minor'     => 0
