@@ -361,11 +361,17 @@ HELP;
 		if ( $wish->isResolved() ) {
 			$wgOut->addHTML( "<tr class='{$altrow2}'><td class='table-green-contentcell'>
 $title<td class='table-green-contentcell'>$user<td class='table-green-contentcell'>" );
-			$wgOut->addHTML( "$pwDate<td>" );
+			if( isset( $pwDate ) ) {
+				$wgOut->addHTML( $pwDate );
+			}
+			$wgOut->addHTML( "</td>" );
 			$wgOut->addWikiText( "[[{$pathway->getTitleObject()->getFullText()} |" .
 				"{$pathway->name()} ({$pathway->species()})]]" );
-			$wgOut->addHTML( "<td class='table-green-contentcell'>$resUser" .
-				"<td class='table-green-contentcell'>$resDate" );
+			$wgOut->addHTML( "<td class='table-green-contentcell'>" );
+			if ( isset( $resUser ) ) {
+				$wgOut->addHTML( $resUser );
+			}
+			$wgOut->addHTML( "<td class='table-green-contentcell'>$resDate" );
 			if ( $wish->userCan( 'delete' ) ) {
 				$wgOut->addHTML( "<td class='table-green-contentcell'>" .
 					$this->createButton( "cancel.gif", "remove", "Remove this item",
