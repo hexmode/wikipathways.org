@@ -102,7 +102,7 @@ class Pathway {
 
 
 	public static function titleIsPathway( $title ) {
-		if ( $title->getNamespace() == NS_PATHWAY ) {
+		if ( $title->getNamespace() === NS_PATHWAY ) {
 			return true;
 		}
 		return false;
@@ -123,7 +123,7 @@ class Pathway {
 	 */
 	public static function parseIdentifier($title) {
 		if ( is_a( $title, 'Title' ) ) {
-			if ( self::titleIsPathway( $title ) ) {
+			if ( !self::titleIsPathway( $title ) ) {
 				throw new MWException( "'$title' is not a pathway!" );
 			}
 			$title = $title->getText();
