@@ -435,6 +435,10 @@ if ( isset( $_SERVER['HTTP_HOST'] ) && strtolower( $_SERVER['HTTP_HOST'] ) === '
 	error_reporting( -1 );
 	ini_set( 'display_errors', 1 );
 
+	$wgShowSQLErrors = true;
+	$wgShowExceptionDetails = true;
+	$wgDebugToolbar = true;
+
 	##Debug
 	$wgDebugLogFile = WPI_SCRIPT_PATH . '/tmp/wikipathwaysdebug.txt';
 	/* $wgProfiling = true; //Set to true for debugging info */
