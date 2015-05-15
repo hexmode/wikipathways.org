@@ -102,9 +102,6 @@ class Pathway {
 
 
 	public static function titleIsPathway( $title ) {
-		if ( !is_a( $title, 'Title' ) ) {
-			throw new MWException( "Pathway::titleIsPathway needs a title!" );
-		}
 		if ( $title->getNamespace() == NS_PATHWAY ) {
 			return true;
 		}
@@ -124,12 +121,10 @@ class Pathway {
 	 * @returns the identifier, of false if no identifier could be found.
 	 */
 	public static function parseIdentifier($title) {
-		if ( $title instanceof Title && self::titleIsPathway( $title ) ) {
+		if ( self::titleIsPathway( $title ) ) {
 			throw new MWException( "'$title' is not a pathway!" );
 		}
-		if ($title instanceof Title) {
-			$title = $title->getText();
-		}
+		$title = $title->getText();
 
 		$ret = self::pathwayExists( $title );
 		if ( $ret === false ) {
