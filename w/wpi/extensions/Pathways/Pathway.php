@@ -102,9 +102,10 @@ class Pathway {
 
 
 	public static function titleIsPathway( $title ) {
-		if ( $title->getNamespace() == NS_PATHWAY ) {
+		if ( is_a( $title, 'Title' ) && $title->getNamespace() == NS_PATHWAY ) {
 			return true;
 		}
+		return false;
 	}
 
 	public static function pathwayExists( $title ) {
