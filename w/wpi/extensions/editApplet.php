@@ -186,12 +186,15 @@ class EditApplet {
 		}
 		self::$archive_string = "";
 		self::$version_string = "";
-		foreach($cache_archive as $jar) {
+		foreach ( $cache_archive as $jar ) {
 			$jarfile = "$jardir/$jar";
-			if( is_readable( $jarfile ) ) {
+			if ( is_readable( $jarfile ) ) {
 				$mod = filemtime( $jarfile );
-				if($ver = $cache_version[$jar]) {
-					if($ver['mod'] < $mod) {
+				if ( !isset( $cache_version[$jar] ) ) {
+					$cache_version[$jar] = "0.0.0.0";
+				}
+				if ( $ver = $cache_version[$jar] ) {
+					if ( $ver['mod'] < $mod ) {
 						$realversion = increase_version($ver['ver']);
 					} else {
 						$realversion = $ver['ver'];
