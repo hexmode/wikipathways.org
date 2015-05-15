@@ -431,7 +431,7 @@ $wpiXrefPanelDisableAttributes = true;
 
 $wgUseGzip = false;
 
-if ( strtolower( $_SERVER['HTTP_HOST'] ) === 'vm1.wikipathways.org' ) {
+if ( isset( $_SERVER['HTTP_HOST'] ) && strtolower( $_SERVER['HTTP_HOST'] ) === 'vm1.wikipathways.org' ) {
 	error_reporting( -1 );
 	ini_set( 'display_errors', 1 );
 
