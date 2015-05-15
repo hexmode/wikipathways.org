@@ -334,15 +334,21 @@ content requires special attention. <b>Please keep your
 		wfProfileIn( __METHOD__ );
 		## WPI Mod 2013-Aug-22
 		//Check for pathway cache
-		$id = Pathway::parseIdentifier($title);
-		if($id) {
+		if ( !Pathway::titleIsPathway( $title ) ) {
+			return true;
+		}
+		if ( !Pathway::pathwayExists( $title ) ) {
+			return false;
+		}
+		$pathID = Pathway::parseIdentifier( $title );
+ 		if ( $pathID ) {
 			//Check pathway permissions
-			$pwTitle = Title::newFromText($id, NS_PATHWAY);
+			$pwTitle = Title::newFromText( $pathID, NS_PATHWAY );
 
-			if(!$pwTitle->userCan('read')) {
+			if ( !$pwTitle->userCan('read') ) {
 				wfDebugLog( 'img_auth',
-					"User not permitted to view pathway $id" );
-				wfForbidden();
+					"User not permitted to view pathway $pathID" );
+				$result = array( 'img-auth-accessdenied', 'img-auth-noread', $title );
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
