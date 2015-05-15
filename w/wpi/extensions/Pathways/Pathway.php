@@ -110,6 +110,15 @@ class Pathway {
 		}
 	}
 
+	public static function pathwayExists( $title ) {
+		$exists = preg_match( "/" . self::$idPrefix . "\d+/", $title, $match );
+		if ( !$exists ) {
+			return false;
+		}
+		return $match[1];
+	}
+
+
 	/**
 	 * Parse the pathway identifier from the given string or title object.
 	 * @returns the identifier, of false if no identifier could be found.
@@ -122,12 +131,11 @@ class Pathway {
 			$title = $title->getText();
 		}
 
-		$match = array();
-		$exists = preg_match("/" . self::$idPrefix . "\d+/", $title, $match);
-		if ( !$exists ) {
+		$ret = self::pathwayExists( $title );
+		if ( $ret === false ) {
 			throw new MWException( "'$title' does not exist!" );
 		}
-		return $match[0];
+		return $ret;
 	}
 
 	/**
