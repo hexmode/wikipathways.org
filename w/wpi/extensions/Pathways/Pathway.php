@@ -100,12 +100,22 @@ class Pathway {
 		return self::newFromTitle("$species:$name", $updateCache);
 	}
 
+
+	public static function titleIsPathway( $title ) {
+		if ( !is_a( $title, 'Title' ) ) {
+			throw new MWException( "Pathway::titleIsPathway needs a title!" );
+		}
+		if ( $title->getNamespace() == NS_PATHWAY ) {
+			return true;
+		}
+	}
+
 	/**
 	 * Parse the pathway identifier from the given string or title object.
 	 * @returns the identifier, of false if no identifier could be found.
 	 */
 	public static function parseIdentifier($title) {
-		if ($title instanceof Title && $title->getNamespace() != NS_PATHWAY) {
+		if ( $title instanceof Title && self::titleIsPathway( $title ) ) {
 			throw new MWException( "'$title' is not a pathway!" );
 		}
 		if ($title instanceof Title) {
