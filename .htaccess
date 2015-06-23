@@ -1,8 +1,27 @@
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^/images/thumb/[0-9a-f]/[0-9a-f][0-9a-f]/([^/]+)/([0-9]+)px-.*$ /thumb.php?f=$1&width=$2 [L,QSA,B]
+# http://www.mediawiki.org/wiki/Manual:Short_URL/Apache
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^/images/thumb/archive/[0-9a-f]/[0-9a-f][0-9a-f]/([^/]+)/([0-9]+)px-.*$ /thumb.php?f=$1&width=$2&archived=1 [L,QSA,B]
+# Enable the rewrite engine
+RewriteEngine On
+
+# RewriteEngine on
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^/wiki/images/thumb/[0-9a-f]/[0-9a-f][0-9a-f]/([^/]+)/([0-9]+)px-.*$ /w/thumb.php?f=$1&width=$2 [L,QSA,B]
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^/wiki/images/thumb/archive/[0-9a-f]/[0-9a-f][0-9a-f]/([^/]+)/([0-9]+)px-.*$ /w/thumb.php?f=$1&width=$2&archived=1 [L,QSA,B]
+
+# Short url for wiki pages
+RewriteRule ^/?wiki/?(.*)$ %{DOCUMENT_ROOT}/w/index.php [L]
+
+# Redirect / to Main Page
+RewriteRule ^/?$ %{DOCUMENT_ROOT}/w/index.php [L]
+
+# Redirect old index.php to Main Page
+RewriteRule ^/?index.php/(.*) /wiki/$1 [R,L]
+RewriteRule ^/?index.php /w/index.php [R]
+
+
+
+

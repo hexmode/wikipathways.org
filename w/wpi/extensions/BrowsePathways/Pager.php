@@ -1,0 +1,489 @@
+<?php
+
+abstract class BasePathwaysPager extends AlphabeticPager {
+	protected $species;
+	protected $tag;
+	protected $sortOrder;
+	protected $pathwayNS = NS_PATHWAY;
+	protected $nsName;
+
+	public function thumbToData( $thumb ) {
+		/* FIXME: magic nums for file size and width */
+		$suffix = $thumb->thumbName( array( "width" => 180 ) );
+		$thumbnail = $thumb->getThumbPath( $suffix );
+
+		if ( $thumb->isLocal() && file_exists( $thumbnail )
+			&& filesize( $thumbnail ) < 20480 ) { /* 20k is probably too much */
+			$thumbImg = file_get_contents( $thumbnail );
+			$res = $thumb->handler->getThumbType
+				( $thumb->getExtension(), $thumb->getMimeType() );
+			return "data:" . $res[1] . ";base64," . base64_encode( $thumbImg );
+		}
+		return $thumb->getThumbUrl( $suffix );
+	}
+
+	public function imgToData( $img ) {
+		/* FIXME: magic nums for file size */
+		$suffix = $img->thumbName( array( "width" => 180 ) );
+		$path = $img->getPath( );
+
+		$repo = RepoGroup::singleton()->getLocalRepo();
+		/* 20k is probably too much */
+		if ( $img->isLocal() && $repo->fileExists( $path )
+			&& $repo->getFileSize( $path ) < 20480 ) {
+			$thumbImg = file_get_contents(
+				$repo->getLocalReference( $path )->getPath()
+			);
+			$url =  "data:" . $img->getMimeType() . ";base64," .
+				base64_encode( $thumbImg );
+			wfDebug( __METHOD__ . ": returning data url\n" );
+		} else {
+			$url = $img->getThumbUrl( $suffix );
+			wfDebug( __METHOD__ . ": returning thumbnail url\n" );
+		}
+
+		return $url;
+	}
+
+	public function hasRecentEdit( $title ) {
+		global $wgPathwayRecentSinceDays;
+		$article = new Article( $title );
+
+		$timestamp = wfTimeStamp( TS_UNIX, $article->getTimestamp() );
+		$prev = date_create( "now" );
+		$prev->modify( "-$wgPathwayRecentSinceDays days" );
+		/* @ indicates we have a unix timestmp */
+		$date = date_create( "@$timestamp" );
+
+		return $date > $prev;
+	}
+
+	public function getOffset( ) {
+		global $wgRequest;
+		return $wgRequest->getText( 'offset' );
+	}
+
+	public function getLimit( ) {
+		global $wgRequest;
+		$result = $wgRequest->getLimitOffset();
+		return $result[0];
+	}
+
+	public function isBackwards( ) {
+		global $wgRequest;
+		return ( $wgRequest->getVal( 'dir' ) == 'prev' );
+	}
+
+	public function getOrder( ) {
+		global $wgRequest;
+		return $wgRequest->getVal( 'order' );
+	}
+
+	public function __construct( $species = "---", $tag = "---",
+		$sortOrder = 0 ) {
+		global $wgCanonicalNamespaceNames;
+
+		if ( ! isset( $wgCanonicalNamespaceNames[ $this->pathwayNS ] ) ) {
+			throw new MWException( "Invalid namespace {$this->pathwayNS}" );
+		}
+		$this->nsName = $wgCanonicalNamespaceNames[ $this->pathwayNS ];
+		$this->species = $species;
+		$this->sortOrder = $sortOrder;
+		if ( $tag !== "---" ) {
+			$this->tag = $tag;
+		} else {
+			$label = CurationTag::getUserVisibleTagNames();
+			$this->tag = $label
+				[ wfMessage( 'browsepathways-all-tags' )->text() ];
+		}
+
+		// Follwing bit copy-pasta from Pager's IndexPager with some
+		// bits replace so we don't rely on $wgRequest in the
+		// constructor
+		global $wgUser;
+
+		# NB: the offset is quoted, not validated. It is treated as an
+		# arbitrary string to support the widest variety of index types. Be
+		# careful outputting it into HTML!
+		$this->mOffset = $this->getOffset();
+
+		# Use consistent behavior for the limit options
+		$this->mDefaultLimit = intval( $wgUser->getOption( 'rclimit' ) );
+		$this->mLimit = $this->getLimit();
+
+		$this->mIsBackwards = $this->isBackwards();
+		$this->mDb = wfGetDB( DB_SLAVE );
+
+		$index = $this->getIndexField();
+		$order = $this->getOrder();
+		if ( is_array( $index ) && isset( $index[$order] ) ) {
+			$this->mOrderType = $order;
+			$this->mIndexField = $index[$order];
+		} elseif ( is_array( $index ) ) {
+			# First element is the default
+			reset( $index );
+			list( $this->mOrderType, $this->mIndexField ) = each( $index );
+		} else {
+			# $index is not an array
+			$this->mOrderType = null;
+			$this->mIndexField = $index;
+		}
+
+		if ( !isset( $this->mDefaultDirection ) ) {
+			$dir = $this->getDefaultDirections();
+			$this->mDefaultDirection = is_array( $dir )
+				? $dir[$this->mOrderType]
+				: $dir;
+		}
+	}
+
+	function getQueryInfo() {
+		$query = array(
+			'options' => array( 'DISTINCT' ),
+			'tables' => array( 'page', 'tag as t0', 'tag as t1' ),
+			'fields' => array( 't1.tag_text', 'page_title' ),
+			'conds' => array(
+				'page_is_redirect' => '0',
+				'page_namespace' => $this->pathwayNS,
+				't0.tag_name' => $this->tag,
+				't1.tag_name' => 'cache-name'
+			),
+			'join_conds' => array(
+				'tag as t0' => array( 'JOIN', 't0.page_id = page.page_id'),
+				'tag as t1' => array( 'JOIN', 't1.page_id = page.page_id'),
+			)
+		);
+		if ( $this->species !== '---' ) {
+			$species = preg_replace( "/_/", " ", $this->species );
+			$query['tables'][] = 'tag as t2';
+			$query['join_conds']['tag as t2'] =
+				array( 'JOIN', 't2.page_id = page.page_id' );
+			$query['conds']['t2.tag_text'] = $species;
+		}
+
+		return $query;
+	}
+
+	function getIndexField() {
+		return 't1.tag_text';
+		# This should look at $this->sortOrder for the field to sort on.
+	}
+
+	function getTopNavigationBar() {
+		return $this->getNavigationBar();
+	}
+
+	function getBottomNavigationBar() {
+		return $this->getNavigationBar();
+	}
+
+	function getGPMLlink( $pathway ) {
+		if ( $pathway->getActiveRevision() ) {
+			$oldid = "&oldid={$pathway->getActiveRevision()}";
+		}
+		return XML::Element("a",
+			array("href" => WPI_SCRIPT_URL .
+				"?action=downloadFile&type=gpml&pwTitle=".
+				$pathway->getTitleObject()->getFullText() . $oldid), " (gpml) ");
+	}
+
+	/**
+	 * need to think about this one.
+	 * @SuppressWarnings(BooleanArgumentFlag)
+	 */
+	function getThumb( $pathway, $icons, $boxwidth = 180, $withText = true ) {
+		global $wgContLang;
+
+		if ( method_exists( $pathway, "name" ) ) {
+			$label = $pathway->name() . '<br/>';
+			if ( $this->species === '---' ) {
+				$label .= "(" . $pathway->species() . ")<br/>";
+			}
+			$label .= $icons;
+
+			$href = $pathway->getFullURL();
+			$class = "browsePathways infinite-item";
+			$pathwayTitle = $pathway->getTitleObject();
+			$textalign = $wgContLang->isRTL() ? ' style="text-align:right"' : '';
+			$oboxwidth = $boxwidth + 2;
+			$thumb = "<div id=\"{$pathwayTitle}\" class=\"{$class}\">".
+				"<div class=\"thumbinner\" style=\"width:{$oboxwidth}px;\">".
+				'<a href="'.$href.'" class="internal">';
+
+			$link = "";
+			$imgUrl = $pathway->getFileUrl( FILETYPE_IMG );
+			// $thumbUrl = '';
+			// $error = '';
+
+			/* 	$width  = $img->getWidth(); */
+			/* 	$height = $img->getHeight(); */
+
+			/* 	try { */
+			/* 		list( $thumb, $thumUrl, $boxwidth, $boxheight ) */
+			/* 			= wpiGetThumb( $img, $boxwidth, $boxheight ); */
+			/* 	} catch ( MWException $e ) { */
+			/* 		$error = $e->getMessage(); */
+			/* 	} */
+
+			/* 	if( $thumbUrl == '' ) { */
+			/* 		// Couldn't generate thumbnail? Scale the image client-side. */
+			/* 		$thumbUrl = $img->getViewURL(); */
+			/* 		if( $boxheight == -1 ) { */
+			/* 			// Approximate... */
+			/* 			$boxheight = intval( $height * $boxwidth / $width ); */
+			/* 		} */
+			/* 	} */
+			/* 	if ( $error ) { */
+			/* 		$thumb .= htmlspecialchars( $error ); */
+			/* 	} else { */
+			/* 		$thumb .= '<img src="'.$thumbUrl.'" '. */
+			/* 			'width="'.$boxwidth.'" height="'.$boxheight.'" ' . */
+			/* 			'longdesc="'.$href.'" class="thumbimage" />'; */
+			/* 		/\* No link to download $link = $this->getGPMLlink( */
+			/* 		 * $pathway ); *\/ */
+			/* 	} */
+			/* } */
+			$thumb .= "<img src='$imgUrl'></a>";
+			if ( $withText ) {
+				$thumb .= $link.'<div class="thumbcaption"'.$textalign.'>'.
+					$label."</div>";
+			}
+			$thumb .= "</div></div>";
+
+			return str_replace("\n", ' ', $thumb);
+		}
+		return "passed a non-pathway: " . var_export( $pathway, true );
+	}
+
+	function formatTags( $title ) {
+		global $wgRequest;
+
+		$tags = CurationTag::getCurationImagesForTitle( $title );
+		ksort( $tags );
+		$tagLabel = "<span class='tag-icons'>";
+		foreach ( $tags as $label => $attr ) {
+			$img = wfLocalFile( $attr['img'] );
+			$imgLink = Xml::element('img',
+				array( 'src' => $this->imgToData( $img ), "title" => $label ));
+			$href = $wgRequest->appendQueryArray(
+				array( "tag" => $attr['tag'] ) );
+			$tagLabel .= Xml::element('a',
+				array( 'href' => $href ), null ) . $imgLink . "</a>";
+		}
+		$tagLabel .= "</span>";
+		return $tagLabel;
+	}
+}
+
+class PathwaysPagerFactory {
+	static function get( $type, $species, $tag, $sortOrder ) {
+		switch ( $type ) {
+			case 'list':
+				return new ListPathwaysPager( $species, $tag, $sortOrder );
+				break;
+			case 'single':
+				return new SinglePathwaysPager( $species, $tag, $sortOrder );
+				break;
+			default:
+				return new ThumbPathwaysPager( $species, $tag, $sortOrder );
+		}
+	}
+}
+
+class ListPathwaysPager extends BasePathwaysPager {
+	protected $columnItemCount;
+	protected $columnIndex;
+	protected $columnSize = 100;
+	const COLUMNCOUNT = 3;
+
+	function __construct( $species, $tag, $sortOrder ) {
+		parent::__construct( $species, $tag, $sortOrder );
+
+		# We know we have 300, so we will put 100 in each column
+		$this->mExtraSortFields = array();
+		$this->mLimitsShown = array( $this->columnSize * self::COLUMNCOUNT );
+		$this->mDefaultLimit = $this->columnSize * self::COLUMNCOUNT;
+		$this->mLimit = $this->columnSize * self::COLUMNCOUNT;
+		$this->columnItemCount = 0;
+		$this->columnIndex = 0;
+	}
+
+	function preprocessResults( $result ) {
+		$rows = $result->db->numRows( $result );
+
+		if ( $rows < $this->mLimit ) {
+			$this->columnSize = (int)( $rows / self::COLUMNCOUNT );
+		}
+	}
+
+	function getStartBody() {
+		return "<ul id='browseListBody'>";
+	}
+
+	function getEndBody() {
+		return "</ul></li> <!-- end of column --></ul> <!-- getEndBody -->";
+	}
+
+	function getNavigationBar() {
+		global $wgLang;
+
+		$link = "";
+		$queries = $this->getPagingQueries();
+
+		if ( isset( $queries['prev'] ) && $queries['prev'] ) {
+			$link .= $this->getSkin()->linkKnown( $this->getTitle(),
+				wfMessage( 'prevn',
+					$wgLang->formatNum( $this->mLimit ) )->text(),
+				array( 'style' => 'float: left' ),
+				$queries['prev'] );
+		}
+
+		if ( isset( $queries['next'] ) && $queries['next'] ) {
+			$link .= $this->getSkin()->linkKnown( $this->getTitle(),
+				wfMessage( 'nextn',
+					$wgLang->formatNum( $this->mLimit ) )->text(),
+				array( 'style' => 'float: right' ),
+				$queries['next'] );
+		}
+
+		return $link;
+	}
+
+	function getTopNavigationBar() {
+		$bar = $this->getNavigationBar();
+
+		return "<div class='listNavBar top'>$bar</div>";
+	}
+
+	function getBottomNavigationBar() {
+		$bar = $this->getNavigationBar();
+
+		return "<div class='listNavBar bottom'>$bar</div>";
+	}
+
+	function formatRow( $row ) {
+		$title = Title::newFromDBkey( $this->nsName .":". $row->page_title );
+		$pathway = Pathway::newFromTitle( $title );
+
+		if ( $this->columnItemCount === $this->columnSize ) {
+			$row = '</ul></li> <!-- end of column -->';
+			$this->columnItemCount = 0;
+			$this->columnIndex++;
+		} else {
+			$row = "";
+		}
+
+		if ( $this->columnItemCount === 0 ) {
+			$row .= '<li><ul> <!-- start of column -->';
+		}
+		$this->columnItemCount++;
+
+		$endRow = "</li>";
+		$row .= "<li>";
+		if ( $this->hasRecentEdit( $title ) ) {
+			$row .= "<b>";
+			$endRow = "</b></li>";
+		}
+
+		$row .= '<a href="' . $title->getFullURL() . '">' . $pathway->getName();
+
+		if ( $this->species === '---' ) {
+			$row .= " (". $pathway->getSpeciesAbbr() . ")";
+		}
+
+		return "$row</a>" . $this->formatTags( $title ) . $endRow;
+	}
+}
+
+class ThumbPathwaysPager extends BasePathwaysPager {
+
+	function __construct( $species, $tag, $sortOrder ) {
+		parent::__construct( $species, $tag, $sortOrder );
+
+		$this->mExtraSortFields = array();
+		$this->mLimit = 10;
+	}
+
+	function getStartBody() {
+		return "<div class='infinite-container'>";
+	}
+
+	function getEndBody() {
+		return "</div>";
+	}
+
+	function getNavigationBar() {
+		global $wgLang;
+
+		/* Link to nowhere by default */
+		$link = "<a class='infinite-more-link' href='data:'></a>";
+
+		$queries = $this->getPagingQueries();
+
+		if ( isset( $queries['next'] ) && $queries['next'] ) {
+
+			$link = $this->getSkin()->linkKnown( $this->getTitle(),
+				wfMessage( 'nextn',
+					$wgLang->formatNum( $this->mLimit ) )->text(),
+				array( "class" => 'infinite-more-link' ),
+				$queries['next'] );
+		}
+
+		return $link;
+	}
+
+	function getTopNavigationBar() {
+		return "";
+	}
+
+	function getBottomNavigationBar() {
+		return $this->getNavigationBar();
+	}
+
+	/* From getDownloadURL in PathwayPage */
+	function formatRow( $row ) {
+		$title = Title::newFromDBkey( $this->nsName .":". $row->page_title );
+		$pathway = Pathway::newFromTitle( $title );
+
+		$endRow = "";
+		$row = "";
+		if ( $this->hasRecentEdit( $title ) ) {
+			$row = "<b>";
+			$endRow = "</b>";
+		}
+
+		return $row.$this->getThumb( $pathway, $this->formatTags( $title ) ).
+			$endRow;
+	}
+}
+
+class SinglePathwaysPager extends BasePathwaysPager {
+	function __construct( $species, $tag, $sortOrder ) {
+		parent::__construct( $species, $tag, $sortOrder );
+
+		$this->mLimitsShown = array( 5 );
+		$this->mDefaultLimit = 5;
+		$this->mLimit = 5;
+	}
+
+	function getStartBody() {
+		return "<div id='singleMode'>";
+	}
+
+	function getEndBody() {
+		return "</div><div id='singleModeSlider' style='clear: both'></div>";
+	}
+
+
+	function getNavigationBar() {
+		/* Nothing */
+	}
+
+	function formatRow( $row ) {
+		$title = Title::newFromDBkey( $this->nsName .":". $row->page_title );
+		$pathway = Pathway::newFromTitle( $title );
+
+		return $this->getThumb( $pathway, $this->formatTags( $title ),
+			100, false );
+	}
+}
